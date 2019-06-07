@@ -19,4 +19,6 @@ categories:
   </div></figure>
 </div>
 
+![AltText](uploads/2015/02/img200706111625248125.jpg)
+
 博客开张。。。。
