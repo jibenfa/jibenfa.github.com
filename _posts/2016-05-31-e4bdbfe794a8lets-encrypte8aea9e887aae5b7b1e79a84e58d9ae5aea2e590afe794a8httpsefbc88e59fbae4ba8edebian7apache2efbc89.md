@@ -118,7 +118,7 @@ Deny from all
 
 搞定，简单吧。。。  
 可以到www.ssllabs.com测试一下评级，满足一下虚荣心。。。  
-<img src="../uploads/2016/05/2016053120127.png" alt="2016053120127" width="1083" height="744" class="alignnone size-full wp-image-563" srcset="../uploads/2016/05/2016053120127.png 1083w, ../uploads/2016/05/2016053120127-300x206.png 300w, ../uploads/2016/05/2016053120127-768x528.png 768w" sizes="(max-width: 1083px) 100vw, 1083px" /> 
+<img src="https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2016/05/2016053120127.png" alt="2016053120127" width="1083" height="744" class="alignnone size-full wp-image-563" srcset="https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2016/05/2016053120127.png 1083w, https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2016/05/2016053120127-300x206.png 300w, https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2016/05/2016053120127-768x528.png 768w" sizes="(max-width: 1083px) 100vw, 1083px" /> 
 
 参考资料：  
 1.https://letsencrypt.org/getting-started/  

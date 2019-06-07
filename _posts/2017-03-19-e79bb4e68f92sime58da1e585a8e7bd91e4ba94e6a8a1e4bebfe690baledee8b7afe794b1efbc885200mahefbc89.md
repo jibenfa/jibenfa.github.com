@@ -22,7 +22,7 @@ GSM: 900/1800MHz</pre>
 <!--more-->
 
   
-[<img src="../uploads/2017/03/IMG_20170319_104102.jpg" alt="" width="768" height="1024" class="alignnone size-full wp-image-638" srcset="../uploads/2017/03/IMG_20170319_104102.jpg 768w, ../uploads/2017/03/IMG_20170319_104102-225x300.jpg 225w" sizes="(max-width: 768px) 100vw, 768px" />](../uploads/2017/03/IMG_20170319_104102.jpg)
+[<img src="https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2017/03/IMG_20170319_104102.jpg" alt="" width="768" height="1024" class="alignnone size-full wp-image-638" srcset="https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2017/03/IMG_20170319_104102.jpg 768w, https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2017/03/IMG_20170319_104102-225x300.jpg 225w" sizes="(max-width: 768px) 100vw, 768px" />](https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2017/03/IMG_20170319_104102.jpg)
 
 参数是支持（移动4g 3g 2g，联通4g 3g 2g，电信4g）  
 原厂OP可以支持EC20-CE（高通MDM9215，pid 05c6 vid 9215，注意此CE支持电信3g）但不支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125）  

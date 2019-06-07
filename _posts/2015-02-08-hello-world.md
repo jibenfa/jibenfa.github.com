@@ -15,7 +15,7 @@ categories:
   <figure class='gallery-item'> 
   
   <div class='gallery-icon landscape'>
-    <a href='https://routeragency.com/?attachment_id=6'><img width="1728" height="1080" src="../uploads/2015/02/img200706111625248125.jpg" class="attachment-thumbnail size-thumbnail" alt="" /></a>
+    <a href='https://routeragency.com/?attachment_id=6'><img width="1728" height="1080" src="https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2015/02/img200706111625248125.jpg" class="attachment-thumbnail size-thumbnail" alt="" /></a>
   </div></figure>
 </div>
 
