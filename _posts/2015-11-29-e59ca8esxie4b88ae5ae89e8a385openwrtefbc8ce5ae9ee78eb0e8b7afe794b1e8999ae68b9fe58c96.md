@@ -39,10 +39,10 @@ categories:
   * 内存升级为平民版：Kingston DDR3 1600 8GB ECC 惠普服务器专用内存(KTH-PL316ELV/8G) *2 共16GB
   * 电源搞了个国产的250w 小1U电源，替换了原装的150w 小1U电源，主要是它的光驱位供电居然是迷你小4pin的软驱口。。。换了电源接口多多
   * 风扇捆了2个Wind Ace D35M12 3CM 12V 0.04A ，毕竟原装散热片是35w tdp的，而1230是69w的tdp。。。
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206114231.jpg" alt="QQ图片20151206114231" width="974" height="682" class="alignnone size-full wp-image-492" srcset="uploads/2015/11/QQ图片20151206114231.jpg 974w, uploads/2015/11/QQ图片20151206114231-300x210.jpg 300w" sizes="(max-width: 974px) 100vw, 974px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206114231.jpg)
+[<img src="uploads/2015/11/QQ图片20151206114231.jpg" alt="QQ图片20151206114231" width="974" height="682" class="alignnone size-full wp-image-492" srcset="uploads/2015/11/QQ图片20151206114231.jpg 974w, uploads/2015/11/QQ图片20151206114231-300x210.jpg 300w" sizes="(max-width: 974px) 100vw, 974px" />](uploads/2015/11/QQ图片20151206114231.jpg)
 
   * 硬盘是之前买的西数nas红盘 放在sata1，镁光BX100 500G SSD 放在sata5，都是做成单盘raid0，否则无法从sata5启动，这样的优点是可以不用tf或者u盘引导启动，缺点是所有硬盘不可以休眠。
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206114902.png" alt="QQ图片20151206114902" width="1258" height="708" class="alignnone size-full wp-image-494" srcset="uploads/2015/11/QQ图片20151206114902.png 1258w, uploads/2015/11/QQ图片20151206114902-300x169.png 300w" sizes="(max-width: 1258px) 100vw, 1258px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206114902.png)
+[<img src="uploads/2015/11/QQ图片20151206114902.png" alt="QQ图片20151206114902" width="1258" height="708" class="alignnone size-full wp-image-494" srcset="uploads/2015/11/QQ图片20151206114902.png 1258w, uploads/2015/11/QQ图片20151206114902-300x169.png 300w" sizes="(max-width: 1258px) 100vw, 1258px" />](uploads/2015/11/QQ图片20151206114902.png)
 
 我用的是HP的intelligent provision，也就是ip 装的系统，这坑货不识别6.0的HP定制版的ESXi iso。。。后来才知道6.0的版本要用bundle版本才可以装，不管了，装了HP定制版VMware-ESXi-5.5.0-Update3-3116895-HP-550.9.4.26-Nov2015.iso也行，后来发现也是坑啊。
 
@@ -77,14 +77,14 @@ categories:
 
 3.上传并安装，分区  
 用vmware client把openwrt的vmdk虚拟盘上传到ssd，再把gparted-live-0.21.0-1-i586.iso上传ssd以后，就可以添加虚拟机了，首先我们要建立一个其他的虚拟机，其中光盘使用gparted-live-0.21.0-1-i586.iso引导，然后挂载openwrt的vmdk的虚拟盘进行扩展，一共分3个区，把openwrt分区拉到3G，最后一个分区也拉到3G，最后显示为类似如下图（下图是我用之前硬盘分3个区的）：  
-[<img src="http://routeragency.com/wp-content/uploads/2015/07/IMG_20150725_202654.jpg" alt="????????????" width="1024" height="575" class="size-full wp-image-429" srcset="uploads/2015/07/IMG_20150725_202654.jpg 1024w, uploads/2015/07/IMG_20150725_202654-300x168.jpg 300w" sizes="(max-width: 1024px) 100vw, 1024px" />](http://routeragency.com/wp-content/uploads/2015/07/IMG_20150725_202654.jpg)  
+[<img src="uploads/2015/07/IMG_20150725_202654.jpg" alt="????????????" width="1024" height="575" class="size-full wp-image-429" srcset="uploads/2015/07/IMG_20150725_202654.jpg 1024w, uploads/2015/07/IMG_20150725_202654-300x168.jpg 300w" sizes="(max-width: 1024px) 100vw, 1024px" />](uploads/2015/07/IMG_20150725_202654.jpg)  
 分区完成后，关闭该虚拟机，记得移除挂载的openwrt分区。
 
 4.创建openwrt虚拟机  
 这个就很简答拉，直接添加openwrt的vmdk，然后添加2块网卡，注意都要选择vmxnet3，这样就是万兆卡了  
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151201210547.png" alt="QQ图片20151201210547" width="462" height="517" class="alignnone size-full wp-image-467" srcset="uploads/2015/11/QQ图片20151201210547.png 462w, uploads/2015/11/QQ图片20151201210547-268x300.png 268w" sizes="(max-width: 462px) 100vw, 462px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151201210547.png)
+[<img src="uploads/2015/11/QQ图片20151201210547.png" alt="QQ图片20151201210547" width="462" height="517" class="alignnone size-full wp-image-467" srcset="uploads/2015/11/QQ图片20151201210547.png 462w, uploads/2015/11/QQ图片20151201210547-268x300.png 268w" sizes="(max-width: 462px) 100vw, 462px" />](uploads/2015/11/QQ图片20151201210547.png)
 
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151201210638.png" alt="QQ图片20151201210638" width="708" height="631" class="alignnone size-full wp-image-468" srcset="uploads/2015/11/QQ图片20151201210638.png 708w, uploads/2015/11/QQ图片20151201210638-300x267.png 300w" sizes="(max-width: 708px) 100vw, 708px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151201210638.png)
+[<img src="uploads/2015/11/QQ图片20151201210638.png" alt="QQ图片20151201210638" width="708" height="631" class="alignnone size-full wp-image-468" srcset="uploads/2015/11/QQ图片20151201210638.png 708w, uploads/2015/11/QQ图片20151201210638-300x267.png 300w" sizes="(max-width: 708px) 100vw, 708px" />](uploads/2015/11/QQ图片20151201210638.png)
 
 启动openwrt，最后会看见如下图：
 
@@ -103,7 +103,7 @@ categories:
 
 5.设置链路聚合  
 由于openwrt不支持链路聚合，所以我用的是esxi的简单的方式实现链路聚合，基于ip哈希的策略，对于单机拷贝来说，最多1000Mbps，但是可以支持多个1000Mbps拷贝，如图：  
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151201211138.jpg" alt="QQ图片20151201211138" width="526" height="653" class="alignnone size-full wp-image-470" srcset="uploads/2015/11/QQ图片20151201211138.jpg 526w, uploads/2015/11/QQ图片20151201211138-242x300.jpg 242w" sizes="(max-width: 526px) 100vw, 526px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151201211138.jpg)
+[<img src="uploads/2015/11/QQ图片20151201211138.jpg" alt="QQ图片20151201211138" width="526" height="653" class="alignnone size-full wp-image-470" srcset="uploads/2015/11/QQ图片20151201211138.jpg 526w, uploads/2015/11/QQ图片20151201211138-242x300.jpg 242w" sizes="(max-width: 526px) 100vw, 526px" />](uploads/2015/11/QQ图片20151201211138.jpg)
 
 netgear上的设置也很简单，无需设置vlan，这个交换机好贵。。。
 
@@ -135,18 +135,18 @@ netgear上的设置也很简单，无需设置vlan，这个交换机好贵。。
 
 2015年12月6日更新LACP链路聚合：  
 上行链路uplink配置  
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206095232.png" alt="QQ图片20151206095232" width="1115" height="945" class="alignnone size-full wp-image-477" srcset="uploads/2015/11/QQ图片20151206095232.png 1115w, uploads/2015/11/QQ图片20151206095232-300x254.png 300w" sizes="(max-width: 1115px) 100vw, 1115px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206095232.png)  
+[<img src="uploads/2015/11/QQ图片20151206095232.png" alt="QQ图片20151206095232" width="1115" height="945" class="alignnone size-full wp-image-477" srcset="uploads/2015/11/QQ图片20151206095232.png 1115w, uploads/2015/11/QQ图片20151206095232-300x254.png 300w" sizes="(max-width: 1115px) 100vw, 1115px" />](uploads/2015/11/QQ图片20151206095232.png)  
 端口组portgroup配置  
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206095202.jpg" alt="QQ图片20151206095202" width="1004" height="907" class="alignnone size-full wp-image-478" srcset="uploads/2015/11/QQ图片20151206095202.jpg 1004w, uploads/2015/11/QQ图片20151206095202-300x271.jpg 300w" sizes="(max-width: 1004px) 100vw, 1004px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206095202.jpg)  
+[<img src="uploads/2015/11/QQ图片20151206095202.jpg" alt="QQ图片20151206095202" width="1004" height="907" class="alignnone size-full wp-image-478" srcset="uploads/2015/11/QQ图片20151206095202.jpg 1004w, uploads/2015/11/QQ图片20151206095202-300x271.jpg 300w" sizes="(max-width: 1004px) 100vw, 1004px" />](uploads/2015/11/QQ图片20151206095202.jpg)  
 distribute switch虚拟机配置  
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206094232.png" alt="QQ图片20151206094232" width="762" height="375" class="alignnone size-full wp-image-479" srcset="uploads/2015/11/QQ图片20151206094232.png 762w, uploads/2015/11/QQ图片20151206094232-300x148.png 300w" sizes="(max-width: 762px) 100vw, 762px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206094232.png)  
+[<img src="uploads/2015/11/QQ图片20151206094232.png" alt="QQ图片20151206094232" width="762" height="375" class="alignnone size-full wp-image-479" srcset="uploads/2015/11/QQ图片20151206094232.png 762w, uploads/2015/11/QQ图片20151206094232-300x148.png 300w" sizes="(max-width: 762px) 100vw, 762px" />](uploads/2015/11/QQ图片20151206094232.png)  
 HP交换机lacp配置  
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206094205.png" alt="QQ图片20151206094205" width="986" height="236" class="alignnone size-full wp-image-480" srcset="uploads/2015/11/QQ图片20151206094205.png 986w, uploads/2015/11/QQ图片20151206094205-300x72.png 300w" sizes="(max-width: 986px) 100vw, 986px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206094205.png)
+[<img src="uploads/2015/11/QQ图片20151206094205.png" alt="QQ图片20151206094205" width="986" height="236" class="alignnone size-full wp-image-480" srcset="uploads/2015/11/QQ图片20151206094205.png 986w, uploads/2015/11/QQ图片20151206094205-300x72.png 300w" sizes="(max-width: 986px) 100vw, 986px" />](uploads/2015/11/QQ图片20151206094205.png)
 
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206094147.png" alt="QQ图片20151206094147" width="1244" height="230" class="alignnone size-full wp-image-481" srcset="uploads/2015/11/QQ图片20151206094147.png 1244w, uploads/2015/11/QQ图片20151206094147-300x55.png 300w" sizes="(max-width: 1244px) 100vw, 1244px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206094147.png)
+[<img src="uploads/2015/11/QQ图片20151206094147.png" alt="QQ图片20151206094147" width="1244" height="230" class="alignnone size-full wp-image-481" srcset="uploads/2015/11/QQ图片20151206094147.png 1244w, uploads/2015/11/QQ图片20151206094147-300x55.png 300w" sizes="(max-width: 1244px) 100vw, 1244px" />](uploads/2015/11/QQ图片20151206094147.png)
 
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206094122.png" alt="QQ图片20151206094122" width="1251" height="763" class="alignnone size-full wp-image-482" srcset="uploads/2015/11/QQ图片20151206094122.png 1251w, uploads/2015/11/QQ图片20151206094122-300x183.png 300w" sizes="(max-width: 1251px) 100vw, 1251px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206094122.png)  
+[<img src="uploads/2015/11/QQ图片20151206094122.png" alt="QQ图片20151206094122" width="1251" height="763" class="alignnone size-full wp-image-482" srcset="uploads/2015/11/QQ图片20151206094122.png 1251w, uploads/2015/11/QQ图片20151206094122-300x183.png 300w" sizes="(max-width: 1251px) 100vw, 1251px" />](uploads/2015/11/QQ图片20151206094122.png)  
 可以看到，6,7端口分别承担了一半的流量，在虚拟机openwrt下和在虚拟机windows下可以达到至少1900Mbps（因为只有2台机器测试）  
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206111438.png" alt="QQ图片20151206111438" width="375" height="418" class="alignnone size-full wp-image-484" srcset="uploads/2015/11/QQ图片20151206111438.png 375w, uploads/2015/11/QQ图片20151206111438-269x300.png 269w" sizes="(max-width: 375px) 100vw, 375px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206111438.png)
+[<img src="uploads/2015/11/QQ图片20151206111438.png" alt="QQ图片20151206111438" width="375" height="418" class="alignnone size-full wp-image-484" srcset="uploads/2015/11/QQ图片20151206111438.png 375w, uploads/2015/11/QQ图片20151206111438-269x300.png 269w" sizes="(max-width: 375px) 100vw, 375px" />](uploads/2015/11/QQ图片20151206111438.png)
 
-[<img src="http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206113210.jpg" alt="QQ图片20151206113210" width="749" height="734" class="alignnone size-full wp-image-488" srcset="uploads/2015/11/QQ图片20151206113210.jpg 749w, uploads/2015/11/QQ图片20151206113210-300x294.jpg 300w" sizes="(max-width: 749px) 100vw, 749px" />](http://routeragency.com/wp-content/uploads/2015/11/QQ图片20151206113210.jpg)
+[<img src="uploads/2015/11/QQ图片20151206113210.jpg" alt="QQ图片20151206113210" width="749" height="734" class="alignnone size-full wp-image-488" srcset="uploads/2015/11/QQ图片20151206113210.jpg 749w, uploads/2015/11/QQ图片20151206113210-300x294.jpg 300w" sizes="(max-width: 749px) 100vw, 749px" />](uploads/2015/11/QQ图片20151206113210.jpg)
