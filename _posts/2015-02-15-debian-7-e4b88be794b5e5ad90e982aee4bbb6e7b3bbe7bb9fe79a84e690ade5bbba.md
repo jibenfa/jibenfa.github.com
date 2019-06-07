@@ -613,8 +613,9 @@ Domain 里面 add domain，然后点击新增的domain名字，填写imap和smtp
 按上面的设置，正确的应该是：Port 993 for secure IMAP, Port 995 for secure POP3, and Port 25 with SSL for SMTP  
 大工告成！  
 访问http://webmail.example.com/ 就可以登录邮箱了。或者用第三方客户端进行设置以后也可以使用，第三方客户端设置时，接收服务可选IMAP 993 SSL（接受所有证书）或POP3 995 SSL（接受所有证书），发送服务选SMTP 25 STARTTLS（接收所有证书）。这里之所以用dovecot自签名的证书，是因为穷！商业证书都太贵了，土豪可以选Verisign。。。  
-最后发2个图。[<img class="alignnone size-full wp-image-80" src="https://jibenfa.github.io/uploads/2015/02/QQ20150215002753.png" alt="QQ图片20150215002753" width="514" height="473" srcset="https://jibenfa.github.io/uploads/2015/02/QQ图片20150215002753.png 514w, https://jibenfa.github.io/uploads/2015/02/QQ20150215002753-300x276.png 300w" sizes="(max-width: 514px) 100vw, 514px" />](https://jibenfa.github.io/uploads/2015/02/QQ20150215002753.png)[<img class="alignnone size-full wp-image-81" src="https://jibenfa.github.io/uploads/2015/02/QQ图片20150215002946.png" alt="QQ20150215002946" width="597" height="288" srcset="https://jibenfa.github.io/uploads/2015/02/QQ图片20150215002946.png 597w, https://jibenfa.github.io/uploads/2015/02/QQ20150215002946-300x145.png 300w" sizes="(max-width: 597px) 100vw, 597px" />](https://jibenfa.github.io/uploads/2015/02/QQ20150215002946.png)
-
+最后发2个图。
+ <img src="https://jibenfa.github.io/uploads/2015/02/QQ20150215002753.png" width="100" height="100" alt="AltText" />
+  <img src="https://jibenfa.github.io/uploads/2015/02/QQ20150215002946.png" width="100" height="100" alt="AltText" />
 参考文档：  
 1.https://www.linode.com/docs/getting-started  
 2.https://www.linode.com/docs/websites/hosting-a-website  
