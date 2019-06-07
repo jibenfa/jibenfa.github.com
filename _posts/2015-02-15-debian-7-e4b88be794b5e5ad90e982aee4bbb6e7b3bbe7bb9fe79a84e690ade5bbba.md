@@ -616,11 +616,11 @@ Domain 里面 add domain，然后点击新增的domain名字，填写imap和smtp
 最后发2个图。
 
 <br> 
- <img src="https://jibenfa.github.io/uploads/2015/02/QQ20150215002753.png" width="100" height="100" alt="AltText" />
+ <img src="https://jibenfa.github.io/uploads/2015/02/QQ20150215002753.png" width="1000" height="500" alt="AltText" />
  
  <br> 
  
-  <img src="https://jibenfa.github.io/uploads/2015/02/QQ20150215002946.png" width="100" height="100" alt="AltText" />
+  <img src="https://jibenfa.github.io/uploads/2015/02/QQ20150215002946.png" width="1000" height="500" alt="AltText" />
   <br> 
 参考文档：  
 1.https://www.linode.com/docs/getting-started  
