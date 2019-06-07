@@ -72,7 +72,7 @@ ls</pre>
 
 4.打开192.168.1.1，找到接口，添加一个接口叫‘3g’，内容为：
 
-[<img src="uploads/2015/03/QQ图片20150320151246.png" alt="QQ图片20150320151246" width="464" height="571" class="alignnone size-full wp-image-238" srcset="uploads/2015/03/QQ图片20150320151246.png 464w, uploads/2015/03/QQ图片20150320151246-244x300.png 244w" sizes="(max-width: 464px) 100vw, 464px" />](uploads/2015/03/QQ图片20150320151246.png)
+[<img src="../uploads/2015/03/QQ图片20150320151246.png" alt="QQ图片20150320151246" width="464" height="571" class="alignnone size-full wp-image-238" srcset="../uploads/2015/03/QQ图片20150320151246.png 464w, ../uploads/2015/03/QQ图片20150320151246-244x300.png 244w" sizes="(max-width: 464px) 100vw, 464px" />](../uploads/2015/03/QQ图片20150320151246.png)
 
 保存并应用后查看系统日志。
 
@@ -126,4 +126,4 @@ TIMEOUT 30
 OK      "ATD*99#"
 CONNECT ''</pre>
 
-[<img src="uploads/2015/03/IMG_20150320_153346.jpg" alt="IMG_20150320_153346" width="1024" height="575" class="alignnone size-full wp-image-241" srcset="uploads/2015/03/IMG_20150320_153346.jpg 1024w, uploads/2015/03/IMG_20150320_153346-300x168.jpg 300w" sizes="(max-width: 1024px) 100vw, 1024px" />](uploads/2015/03/IMG_20150320_153346.jpg)
+[<img src="../uploads/2015/03/IMG_20150320_153346.jpg" alt="IMG_20150320_153346" width="1024" height="575" class="alignnone size-full wp-image-241" srcset="../uploads/2015/03/IMG_20150320_153346.jpg 1024w, ../uploads/2015/03/IMG_20150320_153346-300x168.jpg 300w" sizes="(max-width: 1024px) 100vw, 1024px" />](../uploads/2015/03/IMG_20150320_153346.jpg)
