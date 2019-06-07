@@ -126,4 +126,6 @@ TIMEOUT 30
 OK      "ATD*99#"
 CONNECT ''</pre>
 
-[<img src="https://jibenfa.github.io/uploads/2015/03/IMG_20150320_153346.jpg" alt="IMG_20150320_153346" width="1024" height="575" class="alignnone size-full wp-image-241" srcset="https://jibenfa.github.io/uploads/2015/03/IMG_20150320_153346.jpg 1024w, https://jibenfa.github.io/uploads/2015/03/IMG_20150320_153346-300x168.jpg 300w" sizes="(max-width: 1024px) 100vw, 1024px" />](https://jibenfa.github.io/uploads/2015/03/IMG_20150320_153346.jpg)
+<br>
+<img src="https://jibenfa.github.io/uploads/2015/03/IMG_20150320_153346.jpg" width="1000" height="618" alt="AltText" />
+<br>
