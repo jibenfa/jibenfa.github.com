@@ -72,7 +72,7 @@ ls</pre>
 
 4.打开192.168.1.1，找到接口，添加一个接口叫‘3g’，内容为：
 
-[<img src="https://jibenfa.github.io/uploads/2015/03/QQ图片20150320151246.png" alt="QQ图片20150320151246" width="464" height="571" class="alignnone size-full wp-image-238" srcset="https://jibenfa.github.io/uploads/2015/03/QQ图片20150320151246.png 464w, https://jibenfa.github.io/uploads/2015/03/QQ图片20150320151246-244x300.png 244w" sizes="(max-width: 464px) 100vw, 464px" />](https://jibenfa.github.io/uploads/2015/03/QQ图片20150320151246.png)
+[<img src="https://jibenfa.github.io/uploads/2015/03/QQ20150320151246.png" alt="QQ图片20150320151246" width="464" height="571" class="alignnone size-full wp-image-238" srcset="https://jibenfa.github.io/uploads/2015/03/QQ图片20150320151246.png 464w, https://jibenfa.github.io/uploads/2015/03/QQ20150320151246-244x300.png 244w" sizes="(max-width: 464px) 100vw, 464px" />](https://jibenfa.github.io/uploads/2015/03/QQ20150320151246.png)
 
 保存并应用后查看系统日志。
 
