@@ -263,7 +263,7 @@ curl 'http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest' | grep ipv4
 
 更新完成后该文件有5000多行，至此，所有配置完成，路由器实现了动态科学上网，国内网站不用代理，国外网站使用代理，其原理我画了一张图：
 
-[<img class="alignnone size-full wp-image-183" src="https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2015/03/microMsg.1425433929069.jpg" alt="microMsg.1425433929069" width="3744" height="2102" srcset="https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2015/03/microMsg.1425433929069.jpg 3744w, https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2015/03/microMsg.1425433929069-300x168.jpg 300w" sizes="(max-width: 3744px) 100vw, 3744px" />](https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads/2015/03/microMsg.1425433929069.jpg)
+[<img class="alignnone size-full wp-image-183" src="https://jibenfa.github.io/uploads/2015/03/microMsg.1425433929069.jpg" alt="microMsg.1425433929069" width="3744" height="2102" srcset="https://jibenfa.github.io/uploads/2015/03/microMsg.1425433929069.jpg 3744w, https://jibenfa.github.io/uploads/2015/03/microMsg.1425433929069-300x168.jpg 300w" sizes="(max-width: 3744px) 100vw, 3744px" />](https://jibenfa.github.io/uploads/2015/03/microMsg.1425433929069.jpg)
 
 &nbsp;
 

@@ -84,7 +84,7 @@ anon_upload_enable=YES
 anon_world_readable_only=NO
 anon_mkdir_write_enable=YES
 #不允许修改所属
-chown_https://github.com/jibenfa/jibenfa.github.com/tree/master/uploads=NO
+chown_https://jibenfa.github.io/uploads=NO
 #chown_username=nobody
 #设置匿名用户根目录
 anon_root=/mnt/anonymous
