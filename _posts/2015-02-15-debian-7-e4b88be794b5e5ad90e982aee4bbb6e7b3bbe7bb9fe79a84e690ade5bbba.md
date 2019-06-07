@@ -614,9 +614,12 @@ Domain 里面 add domain，然后点击新增的domain名字，填写imap和smtp
 大工告成！  
 访问http://webmail.example.com/ 就可以登录邮箱了。或者用第三方客户端进行设置以后也可以使用，第三方客户端设置时，接收服务可选IMAP 993 SSL（接受所有证书）或POP3 995 SSL（接受所有证书），发送服务选SMTP 25 STARTTLS（接收所有证书）。这里之所以用dovecot自签名的证书，是因为穷！商业证书都太贵了，土豪可以选Verisign。。。  
 最后发2个图。
+
 <br> 
  <img src="https://jibenfa.github.io/uploads/2015/02/QQ20150215002753.png" width="100" height="100" alt="AltText" />
+ 
  <br> 
+ 
   <img src="https://jibenfa.github.io/uploads/2015/02/QQ20150215002946.png" width="100" height="100" alt="AltText" />
   <br> 
 参考文档：  
