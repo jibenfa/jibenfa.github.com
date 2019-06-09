@@ -21,7 +21,7 @@ categories:
 /etc/config/openvpn文件增加内容：  
 <!--more-->
 
-<pre class="lang:vim decode:true " >config openvpn 'tun_router'
+<pre class="lang:vim decode:true " > 
 config openvpn 'tun_router'
         option port '3377'
         option proto 'tcp'
