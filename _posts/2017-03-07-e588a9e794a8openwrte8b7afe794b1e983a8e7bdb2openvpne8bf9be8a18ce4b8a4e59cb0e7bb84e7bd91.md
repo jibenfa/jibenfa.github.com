@@ -22,34 +22,35 @@ categories:
 <!--more-->
 
 <pre class="lang:vim decode:true " >config openvpn 'tun_router'
+config openvpn 'tun_router'
         option port '3377'
         option proto 'tcp'
         option dev 'tun1'
         option ca '/etc/openvpn/ca.crt'
         option cert '/etc/openvpn/server.crt'
         option key '/etc/openvpn/server.key'
-        option dh '/etc/openvpn/dh1024.pem'
+        option dh '/etc/openvpn/dh2048.pem'
         option server '10.0.1.0 255.255.255.0'
         option client_config_dir '/etc/openvpn/ccd'
         option ccd_exclusive '1'
-        option cipher     'AES-256-CBC'
         option ifconfig_pool_persist '/tmp/ipp3.txt'
-        option duplicate_cn '1'
         option client_to_client '1'
         option keepalive '10 120'
-        option comp_lzo 'yes'
+        option compress 'lzo'
         option persist_key '1'
         option persist_tun '1'
         option status '/tmp/openvpn-status3.log'
         option verb '3'
         option enabled '1'
+        option topology 'subnet'
         list push 'route 172.24.1.0 255.255.255.0'
         list route '172.24.8.0 255.255.255.0'
-        list push 'route 172.24.8.0 255.255.255.0'</pre>
+
+</pre>
 
 /etc/openvpn/ccd文件夹内增加一个文件，文件名为客户端证书的common name，例如tbjj，内容为：
 
-<pre class="lang:vim decode:true " >ifconfig-push "10.0.1.6 10.0.1.7"
+<pre class="lang:vim decode:true " >ifconfig-push "10.0.1.6 255.255.255.0"
 iroute 172.24.8.0 255.255.255.0</pre>
 
 然后在防火墙自定义规则里面添加：
@@ -70,32 +71,27 @@ iptables -A FORWARD -o tun1 -s 172.24.1.0/24 -j ACCEPT</pre>
 
 /etc/config/openvpn文件增加内容：
 
-<pre class="lang:vim decode:true " >config openvpn 'vpn_client'
-
-        option enabled '1'
+<pre class="lang:vim decode:true " >
+config openvpn 'vpn_client'
         option client '1'
         option dev 'tun1'
-        option port '1195'
         option proto 'tcp'
-        list remote '远端IP或者网址 3377'
+        list remote '远端地址 3377'
+        option remote_cert_tls 'server'
         option remote_random '1'
         option resolv_retry 'infinite'
-
-        # Try to preserve some state across restarts.
         option persist_key '1'
         option persist_tun '1'
-
         option ca '/etc/openvpn/ca.crt'
         option cert '/etc/openvpn/tbjj.crt'
         option key '/etc/openvpn/tbjj.key'
+        option compress 'lzo'
+        option verb '3'
+        option enabled '1'
+        option nobind '1'
+        option auth_nocache '1'
 
-        option ns_cert_type 'server'
-
-        option cipher 'AES-256-CBC'
-
-        option comp_lzo 'yes'
-
-        option verb '3'</pre>
+        </pre>
 
 然后防火墙自定义规则添加：
 
@@ -104,7 +100,8 @@ iptables -I INPUT 1 -p udp --dport 1195 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 172.24.1.0/24 -d 172.24.8.0/24 -j ACCEPT
 iptables -I INPUT -i tun1 -s 172.24.1.0/24 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 10.0.1.0/24 -d 172.24.8.0/24 -j ACCEPT
-iptables -A FORWARD -o tun1 -s 172.24.8.0/24 -j ACCEPT </pre>
+iptables -A FORWARD -o tun1 -s 172.24.8.0/24 -j ACCEPT
+ </pre>
 
 3.最后重启两个路由，2个局域网就可以互相访问了。
 
