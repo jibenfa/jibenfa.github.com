@@ -121,9 +121,12 @@ service v2ray restart
 
 
 三、在cloudflare上配置cdn
-不提了，说多泪，主要是
+不提了，说多泪，主要是:
+
 1)在dns里面，将解析域名example.com指向被墙ip
+
 2)将ns server设置为cloudflare的ns
+
 3）在crypto菜单里面讲ssl设置为full，将“Always Use HTTPS”设置为ON！！！
 
 四、客户端配置v2ray
