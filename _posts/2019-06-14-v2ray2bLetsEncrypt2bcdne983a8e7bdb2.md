@@ -181,4 +181,5 @@ service v2ray restart
 参考资料：
 
 1).https://certbot.eff.org/lets-encrypt/ubuntubionic-nginx
+
 2).https://zorz.cc/post/v2ray-cdn.html
