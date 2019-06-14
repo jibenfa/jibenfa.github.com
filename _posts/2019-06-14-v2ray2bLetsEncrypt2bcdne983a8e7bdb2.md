@@ -1,0 +1,443 @@
+---
+id: 661
+title: v2ray在openwrt下的安装部署
+date: 2019-06-09T09:44:57+00:00
+author: coffeecat
+layout: post
+
+
+
+
+categories:
+
+
+---
+从本月开始，ss扶墙的服务器全灭，最夸张的是新建一个灭一个，活不过2小时。不得不寻找新的解决方案，终于，花了几天时间搞定了。那就是迁移到v2ray。
+
+一、性能
+
+v2ray比ss强大很多，但是对路由的性能要求高很多，经过测试，发现如果要完整安装v2ray-core，路由本身至少需要256M ROM，32M RAM，这样的话，市面大多数跑得动ss路由都被淘汰了，目前mips路由，我只在MT7621AT上测试成功，使用的是联想newifi3 d2，但是想跑满带宽还是建议使用x86软路由，100M vmess跑满的话，i3 4代大约占用13~24%。
+
+二、安装
+
+1.服务器端
+
+1).首先是找一台墙外的vps，linux就行，推荐debian和ubuntu，根据v2ray官方文档，命令行执行：
+
+<pre lang="bash" line="0"  colla="+">
+bash <(curl -L -s https://install.direct/go.sh)
+</pre>
+
+2).配置服务器端配置文件/etc/v2ray/config.json (v2ray安装完成后此文件就已经存在了，保留id，编辑其他部分)：
+
+<pre lang="vim" line="0" colla="+">
+{
+
+  "inbound": {
+    "port": 11111,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "你的ID",
+          "level": 1,
+          "alterId": 64
+        }
+      ],
+      "detour":{
+        "to":"dynamicPort"
+      }
+    },
+    "streamSettings":{
+      "network":"kcp"
+    }
+  },
+  "inboundDetour":[
+    {
+      "protocol": "vmess",
+      "port": "10000-20000",
+      "tag": "dynamicPort",
+      "settings": {
+        "default": {
+          "level": 1,
+          "alterId": 32
+        }
+      },
+      "allocate": {
+        "strategy": "random",
+        "concurrency": 2,
+        "refresh": 3
+      },
+      "streamSettings": {
+        "network": "kcp"
+      }
+    }
+  ],
+  "outbound": {
+    "protocol": "freedom",
+    "settings": {}
+  },
+  "outboundDetour": [
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+ "transport":{
+      "kcpSettings":{
+         "mtu":1350,
+         "tti":50,
+         "uplinkCapacity":100,
+         "downlinkCapacity":200,
+         "congestion":true,
+         "readBufferSize":2,
+         "writeBufferSize":2,
+         "header":{
+            "type":"wechat-video"
+         }
+      }
+   }
+}
+</pre>
+
+3).运行：
+<pre lang="bash" line="0"  colla="+">
+service v2ray restart
+</pre>
+
+ps查看进程如果出现
+
+<pre lang="bash" line="0"  colla="+">
+/usr/bin/v2ray -config /etc/v2ray/config.json
+</pre>
+即成功了。
+
+2.本地路由安装
+
+1).校准时间
+
+由于v2ray dynamic port对时间要求很高，所以，首先是校准时间，可以在启动项里面添加
+
+<pre lang="bash" line="0"  colla="+">
+sleep 10
+ntpd -q -n -d -p 1.openwrt.pool.ntp.org
+ntpd -q -n -d -p  ntp1.aliyun.com
+</pre>
+
+计划任务里面添加
+
+<pre lang="bash" line="0"  colla="+">
+10 * * * * ntpd -q -n -d -p 1.openwrt.pool.ntp.org
+10 * * * * ntpd -q -n -d -p  ntp1.aliyun.com
+</pre>
+
+2).安装v2ray-core, kuoruan 大神的github仓库里面有release的版本，可以直接去下载合适的架构，我这里下载的是：
+
+https://github.com/kuoruan/openwrt-v2ray/releases/download/v4.19.1-2/v2ray-core_4.19.1-2_x86_64.ipk
+
+尝试自己编译了一下，报错了没有成功，就用了现成的。
+
+opkg直接安装，建议先opkg update一下，如果有关联的package就一起装了。
+
+3)配置v2ray，可以放在/etc/config/v2ray.json
+
+<pre lang="bash" line="0"  colla="+">
+{
+
+  "outbound": {
+    "protocol": "vmess",
+    "tag": "proxy",
+    "settings": {
+      "vnext": [
+        {
+          "address": "VPS的ip地址",
+          "port": 11111,
+          "users": [
+            {
+              "id": "你的id",
+              "level": 1,
+              "alterId": 64
+            }
+          ]
+        }
+      ]
+    },
+    "streamSettings": {
+      "network": "kcp"
+    },
+    "mux": {
+      "enabled": true
+    }
+  },
+  "outboundDetour": [
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    }
+  ],
+  "inbound": {
+    "protocol": "dokodemo-door",
+    "port": 5353,
+    "settings": {
+      "address": "8.8.8.8",
+      "port": 53,
+      "network": "udp",
+      "timeout": 0,
+      "followRedirect": false
+    }
+  },
+  "inboundDetour": [
+    {
+      "domainOverride": [
+        "http",
+        "tls"
+      ],
+      "protocol": "dokodemo-door",
+      "port": 1060,
+      "settings": {
+        "network": "tcp",
+        "timeout": 30,
+        "followRedirect": true
+      }
+    },
+    {
+      "protocol": "socks",
+      "port": 8080,
+      "settings": {
+        "auth": "noauth",
+        "udp": false,
+        "ip": "127.0.0.1"
+      }
+    }
+  ],
+  "dns": {
+    "servers": [
+      "119.29.29.29",
+      "8.8.8.8",
+      "8.8.4.4"
+    ]
+  },
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "domainStrategy": "IPIfNonMatch",
+      "rules": [
+         {
+           "type": "field",
+           "domain": [
+           "googleapis.cn",
+           "google.cn",
+           "ggpht.cn",
+           "1e100.net"
+         ],
+         "outboundTag": "proxy"
+        },
+        {
+          "type": "field",
+          "domain": [
+            "geosite:cn"
+          ],
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "domain": [
+            "googleapis",
+            "google",
+            "facebook",
+            "youtube",
+            "twitter",
+            "instagram",
+            "gmail",
+            "domain:twimg.com",
+            "domain:t.co"
+          ],
+          "outboundTag": "proxy"
+        },
+        {
+          "type": "field",
+          "ip": [
+            "8.8.8.8/32",
+            "8.8.4.4/32",
+            "91.108.56.0/22",
+            "91.108.4.0/22",
+            "109.239.140.0/24",
+            "149.154.164.0/22",
+            "91.108.56.0/23",
+            "67.198.55.0/24",
+            "149.154.168.0/22",
+            "149.154.172.0/22"
+          ],
+          "outboundTag": "proxy"
+        },
+        {
+          "type": "field",
+          "port": "1-21",
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "port": "54-79",
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "port": "81-442",
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "port": "444-3999",
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "port": "4001-65535",
+          "outboundTag": "direct"
+        },
+        {
+          "domain": [
+            "vultr.com"
+          ],
+          "type": "field",
+          "outboundTag": "direct"
+        },
+        {
+          "type": "chinasites",
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "ip": [
+            "0.0.0.0/8",
+            "10.0.0.0/8",
+            "100.64.0.0/10",
+            "127.0.0.0/8",
+            "169.254.0.0/16",
+            "172.16.0.0/12",
+            "192.0.0.0/24",
+            "192.0.2.0/24",
+            "192.168.0.0/16",
+            "198.18.0.0/15",
+            "198.51.100.0/24",
+            "203.0.113.0/24",
+            "::1/128",
+            "fc00::/7",
+            "fe80::/10",
+            "geoip:private"
+          ],
+          "outboundTag": "direct"
+        },
+        {
+          "type": "chinaip",
+          "outboundTag": "direct"
+        }
+      ]
+    }
+  },
+  "transport": {
+    "tcpSettings": {
+      "connectionReuse": true
+    },
+    "kcpSettings": {
+      "mtu": 1350,
+      "tti": 50,
+      "uplinkCapacity": 100,
+      "downlinkCapacity": 200,
+      "congestion": true,
+      "readBufferSize": 2,
+      "writeBufferSize": 2,
+      "header": {
+        "type": "wechat-video"
+      }
+    }
+  }
+}
+</pre>
+
+4)添加文件/etc/init.d/v2ray,填写如下内容：
+
+<pre lang="bash" line="0"  colla="+">
+#!/bin/sh /etc/rc.common
+#
+# Copyright (C) 2017 Ian Li <OpenSource@ianli.xyz>
+#
+# This is free software, licensed under the GNU General Public License v3.
+# See /LICENSE for more information.
+#
+
+START=90
+
+USE_PROCD=1
+
+start_service() {
+        mkdir /var/log/v2ray > /dev/null 2>&1
+        procd_open_instance
+        procd_set_param respawn
+        procd_set_param command /usr/bin/v2ray -config /etc/config/v2ray.json
+        procd_set_param file /etc/config/v2ray.json
+        procd_set_param stdout 1
+        procd_set_param stderr 1
+        procd_set_param pidfile /var/run/v2ray.pid
+        procd_close_instance
+}
+
+</pre>
+
+5)添加服务，开机自动运行，并运行：
+
+<pre lang="bash" line="0"  colla="+">
+chmod +x /etc/init.d/v2ray
+/etc/init.d/v2ray enable
+service v2ray start
+</pre>
+
+ps查看进程，如果存在，即正常启动。
+
+6)添加防火墙规则(直接添加到/etc/firewall.user 或者luci界面 网络->防火墙 编辑)：
+
+<pre lang="bash" line="0"  colla="+">
+iptables -t nat -N V2RAY
+iptables -t nat -A V2RAY -d VPS地址 -j RETURN
+iptables -t nat -A V2RAY -d 0.0.0.0/8 -j RETURN
+iptables -t nat -A V2RAY -d 10.0.0.0/8 -j RETURN
+iptables -t nat -A V2RAY -d 127.0.0.0/8 -j RETURN
+iptables -t nat -A V2RAY -d 169.254.0.0/16 -j RETURN
+iptables -t nat -A V2RAY -d 172.16.0.0/12 -j RETURN
+iptables -t nat -A V2RAY -d 192.168.0.0/16 -j RETURN
+iptables -t nat -A V2RAY -d 224.0.0.0/4 -j RETURN
+iptables -t nat -A V2RAY -d 240.0.0.0/4 -j RETURN
+iptables -t nat -A V2RAY -p tcp -j REDIRECT --to-ports 1060
+iptables -t nat -A PREROUTING -p tcp -j V2RAY
+</pre>
+
+7)配置/etc/dnsmasq.conf，防止dns查询泄露：
+
+<pre lang="bash" line="0"  colla="+">
+server=/google.com/127.0.0.1#5353
+server=/google.com.hk/127.0.0.1#5353
+server=/google.com.tw/127.0.0.1#5353
+server=/google.com.sg/127.0.0.1#5353
+server=/google.co.jp/127.0.0.1#5353
+server=/google.co.kr/127.0.0.1#5353
+server=/freeweibo.com/127.0.0.1#5353
+server=/twitter.com/127.0.0.1#5353
+server=/facebook.com/127.0.0.1#5353
+</pre>
+
+运行：
+
+<pre lang="bash" line="0"  colla="+">
+/etc/init.d/dnsmasq restart
+</pre>
+
+8)重启防火墙/路由即可
+
+注意：如果之前配置过ss+dnsforwarder+chinadns，建议重新刷机或者删除所有配置，否则会有冲突。
+
+参考资料：
+
+1).https://blog.dreamtobe.cn/r7800-openwrt-v2ray/
+
