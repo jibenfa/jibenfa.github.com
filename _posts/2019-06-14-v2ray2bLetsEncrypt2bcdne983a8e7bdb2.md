@@ -37,7 +37,7 @@ certbot --nginx
 然后crontab -e增加计划任务，自动更新https证书
 
 <pre lang="bash" line="0"  colla="+">
-certbot --nginx certonly
+certbot renew --dry-run
 </pre>
 
 二、vps配置Nginx和安装配置v2ray
