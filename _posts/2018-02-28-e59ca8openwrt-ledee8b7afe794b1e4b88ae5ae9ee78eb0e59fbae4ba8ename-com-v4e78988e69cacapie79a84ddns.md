@@ -46,6 +46,8 @@ HOST="www"
 DOMAIN="example.com"
 URL=${HOST}.${DOMAIN}
 IP=`ping ${URL} -c 1 |awk 'NR==2 {print $4}' |awk -F ':' '{print $1}'`
+#如果安装了dig也可以这样
+#IP=`dig ${DOMAIN} @114.114.114.114 | awk 'NR==14  {print $5}'`
 echo "Ip of ${URL} is ${IP}"
 
 if [ -f /tmp/ddnsResult ]; then
