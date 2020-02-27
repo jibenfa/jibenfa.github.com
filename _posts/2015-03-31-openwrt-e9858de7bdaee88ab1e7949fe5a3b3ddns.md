@@ -39,6 +39,8 @@ USER="***********"
 PASS="******"
 DOMAIN="*******.net"
 IP=`ping ${DOMAIN} -c 1 |awk 'NR==2 {print $4}' |awk -F ':' '{print $1}'`
+#如果安装了dig也可以这样
+#IP=`dig ${DOMAIN} @114.114.114.114 | awk -F "[ ]+" '/IN/{print $1}' | awk 'NR==2 {print $5}'`
 echo "Ip of ${DOMAIN} is ${IP}"
 
 if [ -f /tmp/ddnsResult ]; then
