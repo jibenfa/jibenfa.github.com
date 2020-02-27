@@ -20,7 +20,7 @@ opkg install luci-app-ddns ddns-scripts</pre>
 
 <pre class="lang:vim decode:true " >http://[username]:[password]@ddns.oray.com:80/ph/update?hostname=[domain]&myip=[ip]</pre>
 
-其他按照要求填写，注意：‘ip地址来源’选‘接口’，‘接口’ 选‘ppoe-wan’
+其他按照要求填写，注意：‘ip地址来源’选‘接口’，‘接口’ 选‘pppoe-wan’
 
 但是上述方法很不稳定。。。。有时ok有时不行。。
 
