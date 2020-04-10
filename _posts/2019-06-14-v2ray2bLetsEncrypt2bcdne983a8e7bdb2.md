@@ -54,7 +54,7 @@ server {
         location /test
         {
            proxy_redirect off;
-           proxy_pass http://127.0.0.1:123456;
+           proxy_pass http://127.0.0.1:23456;
            proxy_http_version 1.1;
            proxy_set_header Upgrade $http_upgrade;
            proxy_set_header Connection "upgrade";
@@ -133,32 +133,48 @@ service v2ray restart
 
 <pre lang="bash" line="0"  colla="+">
 {
-  "inbounds": [
+  #这个配置项是结合chinadns使用的
+  "inbound": {
+    "protocol": "dokodemo-door",
+    "listen":"0.0.0.0",
+    "port": 5353,
+    "settings": {
+      "address": "8.8.8.8",
+      "port": 53,
+      "network": "udp",
+      "timeout": 0,
+      "followRedirect": false
+    }
+  },
+  "inboundDetour": [
     {
+       "domainOverride": [
+        "http",
+        "tls"
+      ],
+      "protocol": "dokodemo-door",
       "port": 1080,
-      "listen": "127.0.0.1",
-      "protocol": "socks",
-      "sniffing": {
-        "enabled": true,
-        "destOverride": ["http", "tls"]
-      },
+      "listen":"0.0.0.0",
+      
       "settings": {
-        "auth": "noauth",
-        "udp": false
+        "network": "tcp",
+        "timeout": 30,
+        "followRedirect": true
       }
     }
   ],
   "outbounds": [
     {
       "protocol": "vmess",
+      "tag": "proxy",
       "settings": {
         "vnext": [
           {
-            "address": "example.com",
+            "address": "你的网址",
             "port": 443,
             "users": [
               {
-                "id": "你的id",
+                "id": "你的key",
                 "alterId": 64
               }
             ]
@@ -173,9 +189,109 @@ service v2ray restart
         }
       }
     }
-  ]
+  ],
+  "outboundDetour": [
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    }
+  ],
+  
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "domainStrategy": "IPIfNonMatch",
+      "rules": [
+          {
+           "type": "field",
+           "ip": [
+             "8.8.8.8/32",
+             "8.8.4.4/32",
+             "91.108.56.0/22",
+             "91.108.4.0/22",
+             "109.239.140.0/24",
+             "149.154.164.0/22",
+             "91.108.56.0/23",
+             "67.198.55.0/24",
+             "149.154.168.0/22",
+             "149.154.172.0/22"
+           ],
+           "outboundTag": "proxy"
+         },
+         {
+          "type": "field",
+          "domain": [
+            "googleapis.cn",
+            "google.cn",
+            "googleapis",
+            "google",
+            "domain:facebook.com",
+            "domain:github.com",
+            "domain:githubusercontent.com",
+            "youtube",
+            "twitter",
+            "instagram",
+            "gmail",
+            "v2ray.com",
+            "github.io",
+            "domain:twimg.com",
+            "domain:t.co"
+          ],
+          "outboundTag": "proxy"
+        },
+        {
+           "type": "field",           
+           "domain": [
+                "ext:h2y.dat:gfw"   #这个文件可以从https://github.com/ToutyRater/V2Ray-SiteDAT/tree/master/geofiles下载
+           ],
+           "outboundTag": "proxy"
+        },
+        {
+          "type": "field",
+          "domain": [
+            "geosite:cn",
+            "domain:你的网址"
+          ],
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "ip": [
+            "0.0.0.0/8",
+            "10.0.0.0/8",
+            "100.64.0.0/10",
+            "127.0.0.0/8",
+            "169.254.0.0/16",
+            "172.16.0.0/12",
+            "192.0.0.0/24",
+            "192.0.2.0/24",
+            "192.168.0.0/16",
+            "198.18.0.0/15",
+            "198.51.100.0/24",
+            "203.0.113.0/24",
+            "::1/128",
+            "fc00::/7",
+            "fe80::/10",
+            "geoip:cn"
+          ],
+          "outboundTag": "direct"
+        }
+      ]
+    }
+  },
+   "transport": {
+    "tcpSettings": {
+      "connectionReuse": true
+    }
+  }
 }
 </pre>
+
+五、openwrt上配置防火墙
+
+参考上一篇文章
+<a href="https://routeragency.com/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2.html">配置</a>
 
 
 参考资料：
