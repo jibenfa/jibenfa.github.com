@@ -42,18 +42,17 @@ IP=`ping ${DOMAIN} -c 1 |awk 'NR==2 {print $4}' |awk -F ':' '{print $1}'`
 #如果安装了dig也可以这样
 #IP=`dig ${DOMAIN} @114.114.114.114 | awk -F "[ ]+" '/IN/{print $1}' | awk 'NR==2 {print $5}'`
 echo "Ip of ${DOMAIN} is ${IP}"
+LIP=`ifconfig pppoe-wan|awk -F "[: ]+" '/inet addr/{print $4}'`
+echo "Local Ip is ---${LIP}---"
 
-if [ -f /tmp/ddnsResult ]; then
-   OLD_IP=`cat /tmp/ddnsResult | awk '{ print $2}'`
-   if [ "${OLD_IP}" = "${IP}" ]; then
-      exit
-   fi
+if [ "${LIP}" = "${IP}" ]; then
+   exit
 fi
 
 echo "start ddns refresh"
-IP=`ifconfig pppoe-wan|awk -F "[: ]+" '/inet addr/{print $4}'`
-URL="http://${USER}:${PASS}@ddns.oray.com:80/ph/update?hostname=${DOMAIN}&myip=${IP}"
-wget -q -O /tmp/ddnsResult -q ${URL}</pre>
+URL="http://${USER}:${PASS}@ddns.oray.com:80/ph/update?hostname=${DOMAIN}&myip=${LIP}"
+wget -q -O /tmp/orayddnsResult -q ${URL}
+</pre>
 
 <del datetime="2017-07-28T14:47:43+00:00">大概意思就是当路由器的ip和上一次保存在临时文件里的ip不一样的时候就访问花生壳网站更新ip</del>  
 2017-07-28更新了代码，采用ping的方式，如果返回的ip与get发送的ip不一致时，重新发送。
