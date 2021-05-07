@@ -148,32 +148,32 @@ cipher		AES-256-CBC
 tun-mtu		1500
 key-direction 1
 
-#<tls-auth>
+&lt;tls-auth>
 #
 # 2048 bit OpenVPN static key
 #
 -----BEGIN OpenVPN Static key V1-----
 此处省略。。。。。
 -----END OpenVPN Static key V1-----
-#</tls-auth>
+&lt;/tls-auth>
 
-<ca>
+&lt;ca>
 -----BEGIN CERTIFICATE-----
 此处省略。。。。。
 -----END CERTIFICATE-----
-</ca>
+&lt;/ca>
 
-<cert>
+&lt;cert>
 -----BEGIN CERTIFICATE-----
 此处省略。。。。。
 -----END CERTIFICATE-----
-</cert>
+&lt;/cert>
 
-<key>
+&lt;key>
 -----BEGIN PRIVATE KEY-----
 此处省略。。。。。
 -----END PRIVATE KEY-----
-</key>
+&lt;/key>
 
 </pre>
 特别要注意的是，server配置文件中的：
@@ -184,14 +184,14 @@ option tls_auth '/etc/openvpn/ta.key 0'
 要和client配置文件中的：
 <pre class="lang:vim decode:true " >
 key-direction 1
-<tls-auth>
+&lt;tls-auth>
 #
 # 2048 bit OpenVPN static key
 #
 -----BEGIN OpenVPN Static key V1-----
 此处省略。。。。。
 -----END OpenVPN Static key V1-----
-</tls-auth>
+&lt;/tls-auth>
 
 </pre>
 对应，否则无法连通。
