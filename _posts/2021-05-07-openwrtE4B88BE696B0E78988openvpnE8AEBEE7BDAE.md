@@ -147,14 +147,15 @@ verb 3
 cipher		AES-256-CBC
 tun-mtu		1500
 key-direction 1
-<tls-auth>
+
+#<tls-auth>
 #
 # 2048 bit OpenVPN static key
 #
 -----BEGIN OpenVPN Static key V1-----
 此处省略。。。。。
 -----END OpenVPN Static key V1-----
-</tls-auth>
+#</tls-auth>
 
 <ca>
 -----BEGIN CERTIFICATE-----
