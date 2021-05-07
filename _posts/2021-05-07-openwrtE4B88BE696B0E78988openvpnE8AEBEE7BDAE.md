@@ -70,15 +70,15 @@ easyrsa build-client-full coffeecat nopass
 openvpn --genkey --secret ta.key
 </pre>
 
-拷贝到服务器目录下：
+3）拷贝到服务器目录下：
 
 <pre class="lang:sh decode:true " >cd /etc/easy-rsa/keys/
 cp ca.crt ca.key dh4096.pem server.key server.crt ta.key /etc/openvpn/</pre>
 
-将以下文件拷贝到客户端或者将文件的内容贴在客户端配置文件中（移动设备）：  
+4）将以下文件拷贝到客户端或者将文件的内容贴在客户端配置文件中（移动设备）：  
 ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key
 
-然后就是最关键的配置openvpn服务器端和客户端了：  
+5）然后就是最关键的配置openvpn服务器端和客户端了：  
 路由器服务器端：  
 编辑/etc/config/openvpn :
 
@@ -112,6 +112,12 @@ config openvpn 'tun_cert'
 	list push 'dhcp-option DNS 172.24.1.1'
 	list push 'redirect-gateway def1 local'
 	option enabled '1'
+</pre>
+
+在/etc/openvpn/tunstatic文件夹下创建名为coffeecat的文件，内容为：
+
+<pre class="lang:vim decode:true " >
+ifconfig-push 10.1.1.7 255.255.255.0
 </pre>
 
 然后在luci或者命令行启动openvpn：
