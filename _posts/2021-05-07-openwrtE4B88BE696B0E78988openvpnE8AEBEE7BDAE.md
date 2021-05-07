@@ -13,7 +13,7 @@ categories:
 最近更新了openvpn版本，一些命令和设置跟以前不一样了。现记录一下：
 
 1.生成证书
-2.
+
 1）编辑/etc/easy-rsa/vars，修改部分内容
 
 <pre class="lang:vim decode:true " ># Choose a size in bits for your keypairs. The recommended value is 2048.  Using
