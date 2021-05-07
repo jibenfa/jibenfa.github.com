@@ -82,7 +82,7 @@ ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key
 路由器服务器端：  
 编辑/etc/config/openvpn :
 
-_注意：172.24.1.1为路由器的lan ip，10.1.10是为vpn客户端分配的ip段，一定要和路由器为lan dhcp的ip段错开。_
+_注意：172.24.1.1为路由器的lan ip，10.1.1.0/24是为vpn客户端分配的ip段，一定要和路由器为lan dhcp的ip段错开。_
 
 <pre class="lang:vim decode:true " >
 
