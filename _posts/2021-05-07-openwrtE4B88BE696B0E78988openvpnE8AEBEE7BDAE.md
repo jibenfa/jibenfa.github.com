@@ -71,10 +71,10 @@ openvpn --genkey --secret ta.key
 拷贝到服务器目录下：
 
 <pre class="lang:sh decode:true " >cd /etc/easy-rsa/keys/
-cp ca.crt ca.key dh4096.pem server.key server.crt /etc/openvpn/</pre>
+cp ca.crt ca.key dh4096.pem server.key server.crt ta.key /etc/openvpn/</pre>
 
 拷贝到客户端：  
-ca.crt dh4096.pem coffeecat.key coffeecat.crt
+ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key
 
 然后就是最关键的配置openvpn服务器端和客户端了：  
 路由器服务器端：  
@@ -82,25 +82,7 @@ ca.crt dh4096.pem coffeecat.key coffeecat.crt
 
 _注意：172.24.1.1为路由器的lan ip，172.24.1.100-172.24.1.105是为vpn客户端分配的ip端，一定要和路由器为lan dhcp的ip段错开。_
 
-<pre class="lang:vim decode:true " >config openvpn 'tap_cert'
-	option port '1194'
-	option proto 'tcp4'
-	option dev 'tap0'
-	option ca '/etc/openvpn/ca.crt'
-	option cert '/etc/openvpn/server.crt'
-	option key '/etc/openvpn/server.key'
-	option dh '/etc/openvpn/dh4096.pem'
-	option tls_auth '/etc/openvpn/ta.key 0'
-	option server_bridge '172.24.1.2 255.255.255.0 172.24.1.32 172.24.1.63'
-	option ifconfig_pool_persist '/tmp/ipp.txt'
-	option duplicate_cn '1'
-	option client_to_client '1'
-	option keepalive '10 120'
-	option compress 'lzo'
-	option status '/tmp/openvpn-status.log'
-	list push 'redirect-gateway def1 local'
-	option verb '3'
-	option enabled '1'
+<pre class="lang:vim decode:true " >
 
 config openvpn 'tun_cert'
 	option port '3366'
@@ -110,7 +92,7 @@ config openvpn 'tun_cert'
 	option cert '/etc/openvpn/server.crt'
 	option key '/etc/openvpn/server.key'
 	option dh '/etc/openvpn/dh4096.pem'
-  option tls_auth '/etc/openvpn/ta.key 0'
+  	option tls_auth '/etc/openvpn/ta.key 0'
 	option server '10.1.1.0 255.255.255.0'
 	option client_config_dir '/etc/openvpn/tunstatic'
 	option ccd_exclusive '1'
@@ -128,80 +110,84 @@ config openvpn 'tun_cert'
 	list push 'dhcp-option DNS 172.24.1.1'
 	list push 'redirect-gateway def1 local'
 	option enabled '1'
-
-config openvpn 'tun_router'
-	option port '3377'
-	option proto 'tcp4'
-	option dev 'tun1'
-	option ca '/etc/openvpn/ca.crt'
-	option cert '/etc/openvpn/server.crt'
-	option key '/etc/openvpn/server.key'
-	option dh '/etc/openvpn/dh4096.pem'
-	option tls_auth '/etc/openvpn/ta.key 0'
-	option server '10.0.1.0 255.255.255.0'
-	option client_config_dir '/etc/openvpn/ccd'
-	option ccd_exclusive '1'
-	option ifconfig_pool_persist '/tmp/ipp3.txt'
-	option client_to_client '1'
-	option keepalive '10 120'
-	option compress 'lzo'
-	option persist_key '1'
-	option persist_tun '1'
-	option status '/tmp/openvpn-status3.log'
-	option verb '3'
-	option topology 'subnet'
-	list push 'route 172.24.1.0 255.255.255.0'
-	list route '172.24.8.0 255.255.255.0'
-	option enabled '1'
-
 </pre>
 
 然后在luci或者命令行启动openvpn：
 
-<pre class="lang:sh decode:true " >/etc/init.d/openvpn start</pre>
+<pre class="lang:sh decode:true " >/etc/init.d/openvpn restart</pre>
 
 ps一下有进程就对了
 
-windows7 openvpn客户端配置：  
-C:\Program Files\OpenVPN\config\client.ovpn
+openvpn客户端配置client.ovpn,此处设置为单文件模式
 
-<pre class="lang:vim decode:true " >client
+<pre class="lang:vim decode:true " >
+client
+dev tun
+proto tcp4
+connect-retry-max 5
+connect-retry 5
 
-dev tap
-proto tcp
 
-remote xxxxxxxxxxxxx 1194 #路由器的ddns地址或者IP 端口
+remote 你的服务器地址 3366
 resolv-retry infinite
 nobind
-
-persist-tun
-persist-key
-
 float
-ca ca.crt
-cert coffeecat.crt
-key coffeecat.key
-mute-replay-warnings
+persist-key
+persist-tun
+remote-cert-tls server
 comp-lzo
-verb 4
-##下面两行for WIN7
-route-method exe
-route-delay 2</pre>
+verb 3
+cipher		AES-256-CBC
+tun-mtu		1500
+key-direction 1
+<tls-auth>
+#
+# 2048 bit OpenVPN static key
+#
+-----BEGIN OpenVPN Static key V1-----
+此处省略。。。。。
+-----END OpenVPN Static key V1-----
+</tls-auth>
 
-最后在路由器上增加自定义iptables规则：  
-先把tap0放到lan区域中，然后在自定义规则里面加上：
+<ca>
+-----BEGIN CERTIFICATE-----
+此处省略。。。。。
+-----END CERTIFICATE-----
+</ca>
 
-<pre class="lang:sh decode:true " >iptables -I INPUT 1 -p tcp --dport 1194 -j ACCEPT
-iptables -I INPUT 1 -p udp --dport 1194 -j ACCEPT</pre>
+<cert>
+-----BEGIN CERTIFICATE-----
+此处省略。。。。。
+-----END CERTIFICATE-----
+</cert>
 
-另外win7里面要设置一下metric，否则可能不是走的vpn这个路，设完以后，可以看到vpn的跃点最小：
+<key>
+-----BEGIN PRIVATE KEY-----
+此处省略。。。。。
+-----END PRIVATE KEY-----
+</key>
 
-<pre class="lang:vim decode:true " >IPv4 路由表
-===========================================================================
-活动路由:
-网络目标        网络掩码          网关       接口   跃点数
-          0.0.0.0          0.0.0.0       172.24.1.1     172.24.1.100     50
-          0.0.0.0          0.0.0.0       172.24.0.1     172.24.0.150    281</pre>
+</pre>
+特别要注意的是，server配置文件中的：
+<pre class="lang:vim decode:true " >
+option tls_auth '/etc/openvpn/ta.key 0'
+
+</pre>
+要和client配置文件中的：
+<pre class="lang:vim decode:true " >
+key-direction 1
+<tls-auth>
+#
+# 2048 bit OpenVPN static key
+#
+-----BEGIN OpenVPN Static key V1-----
+此处省略。。。。。
+-----END OpenVPN Static key V1-----
+</tls-auth>
+
+</pre>
+对应，否则无法连通。
+
 
 参考：
 
