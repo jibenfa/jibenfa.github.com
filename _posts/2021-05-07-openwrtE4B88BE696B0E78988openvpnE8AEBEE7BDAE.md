@@ -10,8 +10,10 @@ categories:
 
 
 ---
-最近更新了openvpn版本，一些命令和设置跟以前不一样了。记录一下
+最近更新了openvpn版本，一些命令和设置跟以前不一样了。现记录一下：
+
 1.生成证书
+2.
 1）编辑/etc/easy-rsa/vars，修改部分内容
 
 <pre class="lang:vim decode:true " ># Choose a size in bits for your keypairs. The recommended value is 2048.  Using
@@ -73,14 +75,14 @@ openvpn --genkey --secret ta.key
 <pre class="lang:sh decode:true " >cd /etc/easy-rsa/keys/
 cp ca.crt ca.key dh4096.pem server.key server.crt ta.key /etc/openvpn/</pre>
 
-拷贝到客户端：  
+将以下文件拷贝到客户端或者将文件的内容贴在客户端配置文件中（移动设备）：  
 ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key
 
 然后就是最关键的配置openvpn服务器端和客户端了：  
 路由器服务器端：  
 编辑/etc/config/openvpn :
 
-_注意：172.24.1.1为路由器的lan ip，172.24.1.100-172.24.1.105是为vpn客户端分配的ip端，一定要和路由器为lan dhcp的ip段错开。_
+_注意：172.24.1.1为路由器的lan ip，10.1.10是为vpn客户端分配的ip段，一定要和路由器为lan dhcp的ip段错开。_
 
 <pre class="lang:vim decode:true " >
 
