@@ -127,7 +127,7 @@ ifconfig-push 10.1.1.7 255.255.255.0
 ps一下有进程就对了
 
 openvpn客户端配置client.ovpn,此处设置为单文件模式：
-##################################################
+<pre class="lang:vim decode:true " >
 client
 dev tun
 proto tcp4
@@ -174,7 +174,7 @@ key-direction 1
 -----END PRIVATE KEY-----
 </key>
 
-##################################################
+</pre>
 特别要注意的是，server配置文件中的：
 <pre class="lang:vim decode:true " >
 option tls_auth '/etc/openvpn/ta.key 0'
