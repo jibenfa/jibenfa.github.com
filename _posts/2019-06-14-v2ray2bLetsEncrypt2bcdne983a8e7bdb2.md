@@ -291,7 +291,7 @@ service v2ray restart
 五、openwrt上配置防火墙
 
 参考上一篇文章
-<a href="https://routeragency.com/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2.html">配置</a>
+<a href="https://wallsee.org/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2.html">配置</a>
 
 
 参考资料：
