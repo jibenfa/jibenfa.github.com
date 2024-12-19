@@ -110,6 +110,8 @@ config route
 4.最后重启路由A和路由B，两个路由间的局域网就可以互相访问了
 
 参考：
+
 1.https://www.knightli.com/2022/04/14/openwrt-wireguard-connect-two-network/
+
 2.chatgpt
 
