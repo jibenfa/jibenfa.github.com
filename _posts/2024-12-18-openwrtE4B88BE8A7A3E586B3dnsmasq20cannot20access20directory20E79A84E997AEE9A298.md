@@ -19,9 +19,9 @@ daemon.crit dnsmasq[1]: cannot access directory /etc/dnsmasq.d: No such file or 
 处理方式是：
 
 1.将/etc/dnsmasq.conf下的配置注释掉或者删掉：
-
+<pre lang="bash" line="0"  colla="+">
 #conf-dir=/etc/dnsmasq.d
-
+</pre>
 2.在/etc/config/dhcp的配置文件中的dnsmasq配置中增加一条：
 
 <pre lang="bash" line="0"  colla="+">
