@@ -1,7 +1,7 @@
 ---
 id: 800
 title: openwrt路由部署wireguard实现两地组网
-date: 2024-12-19T12:12:12+00:00
+date: 2024-12-19T6:12:12+00:00
 author: coffeecat
 layout: post
 
