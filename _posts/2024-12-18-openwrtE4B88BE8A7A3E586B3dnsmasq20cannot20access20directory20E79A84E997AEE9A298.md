@@ -11,9 +11,9 @@ categories:
 
 ---
 最近更新了openwrt版本，结果设置dnsmasq-full的时候发现无法启动dnsmasq，查日志发现有个报错：
-
+<pre lang="bash" line="0"  colla="+">
 daemon.crit dnsmasq[1]: cannot access directory /etc/dnsmasq.d: No such file or directory
-
+</pre>
 明明已经设置该文件夹为777权限了，还是有这个问题，后来查阅资料发现openwrt 22.03.0版本后，限制了dnsmasq的文件夹访问权限。
 
 处理方式是：
