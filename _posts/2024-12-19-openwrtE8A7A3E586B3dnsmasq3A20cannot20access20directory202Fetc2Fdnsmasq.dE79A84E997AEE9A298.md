@@ -1,6 +1,6 @@
 ---
 id: 781
-title: openwrt解决dnsmasq: cannot access directory 的问题
+title: openwrt解决dnsmasq cannot access directory 的问题
 date: 2024-12-19T09:39:31+00:00
 author: coffeecat
 layout: post
