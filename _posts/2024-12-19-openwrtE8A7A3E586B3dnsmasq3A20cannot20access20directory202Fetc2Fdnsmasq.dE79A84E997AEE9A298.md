@@ -25,9 +25,8 @@ daemon.crit dnsmasq[1]: cannot access directory /etc/dnsmasq.d: No such file or 
 2.在/etc/config/dhcp的配置文件中的dnsmasq配置中增加一条：
 
 config dnsmasq
-
-        ...
-        option confdir '/etc/dnsmasq.d'
+	...
+ 	option confdir '/etc/dnsmasq.d'
 	...
 
 3.重启dnsmasq服务即可。
