@@ -113,5 +113,3 @@ config route
 
 1.https://www.knightli.com/2022/04/14/openwrt-wireguard-connect-two-network/
 
-2.chatgpt
-
