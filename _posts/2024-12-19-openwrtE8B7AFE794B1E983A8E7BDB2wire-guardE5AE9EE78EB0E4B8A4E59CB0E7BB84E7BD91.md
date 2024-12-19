@@ -1,7 +1,7 @@
 ---
 id: 783
 title: openwrt路由部署wire-guard实现两地组网
-date: 2024-12-19T12:12:12+00:00
+date: 2024-12-19T13:12:12+00:00
 author: coffeecat
 layout: post
 
