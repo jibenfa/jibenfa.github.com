@@ -57,7 +57,7 @@ config rule
 
 </pre>
 
-2）在路由A上设置网络接口（/etc/config/network），在最后增加：
+2.在路由A上设置网络接口（/etc/config/network），在最后增加：
 <pre lang="bash" line="0"  colla="+">
 config interface 'wg0'
         option proto 'wireguard'
@@ -81,7 +81,7 @@ config route
         option mtu '1300'
 </pre>
 
-3）在路由B上设置网络接口（/etc/config/network），在最后增加：
+3.在路由B上设置网络接口（/etc/config/network），在最后增加：
 <pre lang="bash" line="0"  colla="+">
 config interface 'wg0'
         option proto 'wireguard'
@@ -106,6 +106,8 @@ config route
         option metric '1'
         option mtu '1300'
 </pre>
+
+4.最后重启路由A和路由B，两个路由间的局域网就可以互相访问了
 
 参考：
 1.https://www.knightli.com/2022/04/14/openwrt-wireguard-connect-two-network/
