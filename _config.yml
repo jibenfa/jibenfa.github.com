@@ -33,7 +33,7 @@ tagline: 一个不务正业的CISSP
 assets: /assets
 url: "http://jibenfa.github.io"
 github_username:  jibenfa
-baseurl: "wallsee.org"
+baseurl:
 plugins:
   - jekyll-feed
 
