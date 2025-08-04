@@ -31,11 +31,10 @@ paginate: 20
 title : Welcome to Coffeecat‘s Blog
 tagline: 一个不务正业的CISSP
 assets: /assets
-url: "http://jibenfa.github.io"
+url: "https://jibenfa.github.io"
 github_username:  jibenfa
 baseurl:
-plugins:
-  - jekyll-feed
+
 
 #### Language
 language: zh-CN    ## blog site languages: en, zh-CN, zh-TW, de
