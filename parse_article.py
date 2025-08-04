@@ -57,7 +57,7 @@ for fname in os.listdir(post_dir):
         meta["categories"] = matched
         changed = True
     if "tags" not in meta or not meta["tags"]:
-        meta["tags"] = matched
+        meta["tags"] = matched.copy()
         changed = True
 
     if changed:
