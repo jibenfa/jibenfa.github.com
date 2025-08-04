@@ -1,14 +1,12 @@
 ---
 id: 455
 title: 在HP GEN8上安装openwrt，实现“万兆”虚拟路由器。。。
-date: 2015-11-29T20:54:28+00:00
+date: 2015-11-29 20:54:28+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+tags: *id001
 ---
 最近搞了一台HP Gen8 microserver，升级cpu，内存，Intel I350-T4口千兆网卡以后就装了个esxi，自己用ESXi-Customizer-v2.7.2把最新版的网卡驱动集成了进去，网卡驱动为igb-5.3.1-1331820-3123166，之前网友说kmod-igb支持I350，所以这次才入的I350-T4，据说转发小包性能强于I340-T4，价格还比I340便宜。。。
 

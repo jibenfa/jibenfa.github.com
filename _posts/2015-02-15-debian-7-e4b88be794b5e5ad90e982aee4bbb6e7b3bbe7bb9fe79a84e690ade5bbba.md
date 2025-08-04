@@ -1,13 +1,12 @@
 ---
 id: 72
 title: Debian 7 下电子邮件系统的搭建（apache2 + postfix + dovecot + rainloop + mysql）
-date: 2015-02-15T00:30:17+00:00
+date: 2015-02-15 00:30:17+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
+categories: &id001
+- linux
+tags: *id001
 ---
 这两天心血来潮，准备在Debian 7 下搭建一个电子邮件系统，然后就去学习了一下。  
 根据度娘定义：电子邮件系统由用户代理MUA（Mail User Agent）以及邮件传输代理MTA（Mail Transfer Agent）,MDA（Mail Delivery Agent）邮件投递代理组成。  

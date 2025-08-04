@@ -6,6 +6,7 @@ author: coffeecat
 layout: post
 
 
-categories:
+categories: 其他
+tags: debian
 
 ---

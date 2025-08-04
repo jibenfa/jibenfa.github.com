@@ -1,16 +1,13 @@
 ---
 id: 58
 title: Debian 7 下Shadowsocks安装与配置，科学上网
-date: 2015-02-10T12:24:11+00:00
+date: 2015-02-10 12:24:11+00:00
 author: coffeecat
 layout: post
-
-
-
-
-categories:
-
-
+categories: &id001
+- linux
+- 科学上网
+tags: *id001
 ---
 大部分参考 http://www.cnblogs.com/hongchenok/p/3790370.html 攻略，增加了多用户实现
 

@@ -1,14 +1,12 @@
 ---
 id: 200
 title: Debian 7 Linode VPS的内核微调——增加Hybla选项和加速调整
-date: 2015-03-06T14:02:38+00:00
+date: 2015-03-06 14:02:38+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- linux
+tags: *id001
 ---
 按照linode官网的内核编译教程，最后在make install的时候总会失败，后来只好放弃，但是因为linode内核不带hybla（hybla可以对高延迟高丢包的网络环境进行加速，特别对于下载等应用比较有效），所以只好另辟蹊径，用相同的内核编译模块加载进去，于是找到了如下教程，我的内核是  
 3.18.5-x86_64-linode52  

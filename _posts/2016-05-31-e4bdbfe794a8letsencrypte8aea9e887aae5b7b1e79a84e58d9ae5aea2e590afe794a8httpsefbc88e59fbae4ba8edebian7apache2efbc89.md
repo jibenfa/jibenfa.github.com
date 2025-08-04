@@ -1,14 +1,12 @@
 ---
 id: 562
-title: '使用lets encrypt让自己的博客启用https（基于debian7+apache2）'
-date: 2016-05-31T20:04:07+00:00
+title: 使用lets encrypt让自己的博客启用https（基于debian7+apache2）
+date: 2016-05-31 20:04:07+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- linux
+tags: *id001
 ---
 之前用过starssl的免费ssl证书，现在到期了，因为申请和续期都很麻烦，所以懒得再弄。最近在网上看到去年底，成立了个新机构（from wiki）：  
 Let&#8217;s Encrypt 是一个将于2015年末推出的数字证书认证机构，将通过旨在消除当前手动创建和安装证书的复杂过程的自动化流程，为安全网站提供免费的SSL/TLS证书。 

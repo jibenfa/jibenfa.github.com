@@ -1,14 +1,13 @@
 ---
 id: 780
 title: openwrt下新版openvpn设置
-date: 2021-05-07T22:39:31+00:00
+date: 2021-05-07 22:39:31+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+- 科学上网
+tags: *id001
 ---
 最近更新了openvpn版本，一些命令和设置跟以前不一样了。现记录一下：
 

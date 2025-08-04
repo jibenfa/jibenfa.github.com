@@ -1,13 +1,12 @@
 ---
 id: 143
 title: Debian 7 Apache2下为子站启用HTTPS，保持主站HTTP
-date: 2015-02-16T23:28:12+00:00
+date: 2015-02-16 23:28:12+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
+categories: &id001
+- linux
+tags: *id001
 ---
 其实不难，简单来说，只要三步即可。。。
 

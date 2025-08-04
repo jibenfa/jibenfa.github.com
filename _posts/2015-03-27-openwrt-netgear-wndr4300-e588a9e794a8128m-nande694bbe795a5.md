@@ -1,14 +1,12 @@
 ---
 id: 260
 title: Openwrt netgear wndr4300 利用128M NAND攻略
-date: 2015-03-27T16:58:20+00:00
+date: 2015-03-27 16:58:20+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+tags: *id001
 ---
 转载自：http://blog.csdn.net/zhiyuan411/article/details/41399273 ，有修改
 

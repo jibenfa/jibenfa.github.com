@@ -1,14 +1,13 @@
 ---
 id: 175
 title: TP-Link wr720n Openwrt 科学上网改造，使用ChinaDNS + Shadowsocks 攻略
-date: 2015-03-04T21:36:09+00:00
+date: 2015-03-04 21:36:09+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+- 科学上网
+tags: *id001
 ---
 最近又在研究openwrt科学上网，正好手头有个TP-link wr720n v4 版本超便携路由，查阅资料以后发现，该机跟v3版本的配置一样，也就是说可以用v3版本的op的rom，由于这个路由内置存储仅有4M，完全不够用，目前有2个解决办法，1.淘宝有大神硬改，把4M flash换成了8或16M，过于彪悍了，2.软改，利用extroot让路由器从u盘启动，我是后者，使用了超mini的sandisk 16G usb3.0（向下兼容2.0）的u盘作为系统盘。一周折腾期间前前后后刷了不少大神的rom，但是都不能正常使用chinadns和shadowsocks，所有努力均以失败告终，最终使用官方rom成功。之前失败的根本原因是openwrt的kernel和软件关联性（dependence）太严格，导致就算是一个版本的kernel，编译版本不同，其很多软件都不能通用，特别是kmod开头的内核相关软件。  
 如果强行安装，就会报错，一个典型的错误内容如下：

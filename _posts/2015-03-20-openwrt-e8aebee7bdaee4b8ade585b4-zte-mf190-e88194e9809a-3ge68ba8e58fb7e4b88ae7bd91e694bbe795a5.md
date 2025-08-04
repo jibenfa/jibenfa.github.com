@@ -1,14 +1,12 @@
 ---
 id: 236
 title: Openwrt 设置中兴 ZTE MF190 联通 3G拨号上网攻略
-date: 2015-03-20T15:27:52+00:00
+date: 2015-03-20 15:27:52+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+tags: *id001
 ---
 首先沉痛哀悼我的tplink wr720n，因为我换ram的时候，弄断了3根电路板上的焊盘引脚，导致挂了。。。  
 后来买了gl-inet 16M版本的小路由，直接ssh登陆mtd -r write刷了720n的op，完全好用。折腾成功在其上的3G上网，记录一下：

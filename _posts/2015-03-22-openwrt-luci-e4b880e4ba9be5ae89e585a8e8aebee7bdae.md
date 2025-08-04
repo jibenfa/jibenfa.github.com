@@ -1,13 +1,12 @@
 ---
 id: 254
 title: Openwrt 路由器管理界面登陆的一些安全设置
-date: 2015-03-22T00:02:44+00:00
+date: 2015-03-22 00:02:44+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
+categories: &id001
+- openwrt
+tags: *id001
 ---
 1.关闭wan远程的http(s)登陆uhttpd的Luci的web管理界面
 

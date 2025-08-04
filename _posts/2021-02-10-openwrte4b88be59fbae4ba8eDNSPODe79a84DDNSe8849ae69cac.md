@@ -1,16 +1,13 @@
 ---
 id: 779
 title: openwrt下基于DNSPOD的DDNS脚本
-date: 2021-02-10T07:25:57+00:00
+date: 2021-02-10 07:25:57+00:00
 author: coffeecat
 layout: post
-
-
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+- 编程
+tags: *id001
 ---
 
 换dns供应商了，撸了一个openwrt下基于dnspod api的ddns脚本：

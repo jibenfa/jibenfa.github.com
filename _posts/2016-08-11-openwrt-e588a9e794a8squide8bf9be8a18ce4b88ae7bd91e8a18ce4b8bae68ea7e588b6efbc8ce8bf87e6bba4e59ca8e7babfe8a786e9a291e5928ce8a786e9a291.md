@@ -1,14 +1,12 @@
 ---
 id: 588
 title: Openwrt 利用squid进行上网行为控制，过滤在线视频和视频下载
-date: 2016-08-11T08:30:42+00:00
+date: 2016-08-11 08:30:42+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+tags: *id001
 ---
 某些情况下，需要过滤在线视频和视频下载，按照IP或者网址过滤当然是可以的，不过要找到那么多视频网址很麻烦，现在大多数视频网站都开启了CDN，即便拿到ip池也是不全的。找了半天，终于看到了一个办法。  
 首先当然是安装squid了：

@@ -1,16 +1,13 @@
 ---
 id: 28
 title: Debian 7 配置L2TP IPSEC 科学上网一键安装脚本
-date: 2015-02-09T21:48:57+00:00
+date: 2015-02-09 21:48:57+00:00
 author: coffeecat
 layout: post
-
-
-
-
-categories:
-
-
+categories: &id001
+- linux
+- 编程
+tags: *id001
 ---
 随着功夫墙的不断升级，连code.google.com都上不去了，做开发的愁啊。而且vpn供应商也封得差不多了，还不如自己搭一个，顺便学习一下。  
 这时无意在网上看到Linode VPS降到$10了，立马入了一个，真是好用。。。  

@@ -1,14 +1,12 @@
 ---
 id: 269
 title: TP-Link WDR7500 v2 拆机硬改16M Flash 刷openwrt攻略
-date: 2015-03-28T19:21:09+00:00
+date: 2015-03-28 19:21:09+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+tags: *id001
 ---
 去年入了一个TP-Link WDR7500 v2，硬件配置是目前家用顶级的，但是原厂软件就是渣，各种不稳定，后来升级到了官方固件140401测试版（2014年6月14日发布）后基本稳定，但是偶尔网络也会抽风，非常不爽，到现在还没有正式版本的固件，我也是对tplink无语了。。。  
 后来到openwrt官网发现还是可以刷的（但没有了5GHz），想想为了稳定，暂时没有5GHz就算了。。  

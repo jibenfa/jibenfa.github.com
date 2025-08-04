@@ -1,14 +1,12 @@
 ---
 id: 246
 title: Openwrt 路由器使用adbyby插件去除网页和视频网站广告
-date: 2015-03-21T19:35:14+00:00
+date: 2015-03-21 19:35:14+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+tags: *id001
 ---
 上网打开网页，看视频都会有广告**弹出**，很是烦人。为了避免这个问题，在op的路由器中装上adbyby插件就能去掉“不[可接受的](https://adblockplus.org/zh_CN/acceptable-ads#criteria)”广告。
 

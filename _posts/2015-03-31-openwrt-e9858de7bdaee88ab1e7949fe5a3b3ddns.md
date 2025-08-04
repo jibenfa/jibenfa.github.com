@@ -1,14 +1,12 @@
 ---
 id: 291
 title: Openwrt 配置花生壳DDNS
-date: 2015-03-31T22:29:13+00:00
+date: 2015-03-31 22:29:13+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+tags: *id001
 ---
 两种办法：  
 1.通过luci配置

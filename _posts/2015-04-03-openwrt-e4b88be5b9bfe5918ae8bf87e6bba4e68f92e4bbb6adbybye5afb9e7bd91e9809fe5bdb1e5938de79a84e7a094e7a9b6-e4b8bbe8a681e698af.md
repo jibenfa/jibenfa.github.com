@@ -1,14 +1,12 @@
 ---
 id: 307
 title: Openwrt 下广告过滤插件adbyby对网速影响的研究 ——主要是软nat不给力
-date: 2015-04-03T12:18:58+00:00
+date: 2015-04-03 12:18:58+00:00
 author: coffeecat
 layout: post
-
-
-categories:
-
-
+categories: &id001
+- openwrt
+tags: *id001
 ---
 家中电信100Mbps光纤，主路由是netgear wndr4300，刷op前后家里的nas迅雷离线均可以达到11MB/s下载速度，但是路由装上adbyby以后，迅雷离线平均速度不会超过6.2MB/s（50Mbps），经过分析测试，原因在于如下语句：
 
