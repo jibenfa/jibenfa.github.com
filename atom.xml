@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-04T07:51:13+00:00</updated>
+ <updated>2025-08-04T08:34:25+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>openwrt下v2ray透明代理配置从iptables向nftables迁移</title>
-   <link href="https://jibenfa.github.io/2025/07/30/openwrtE4B88Bv2rayE9808FE6988EE4BBA3E79086vE9858DE7BDAEE4BB8EiptablesE59091nftablesE8BF81E7A7BB/"/>
+   <link href="https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/07/30/openwrtE4B88Bv2rayE9808FE6988EE4BBA3E79086vE9858DE7BDAEE4BB8EiptablesE59091nftablesE8BF81E7A7BB/"/>
    <updated>2025-07-30T03:22:13+00:00</updated>
-   <id>https://jibenfa.github.io/2025/07/30/openwrtE4B88Bv2rayE9808FE6988EE4BBA3E79086vE9858DE7BDAEE4BB8EiptablesE59091nftablesE8BF81E7A7BB</id>
+   <id>https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/07/30/openwrtE4B88Bv2rayE9808FE6988EE4BBA3E79086vE9858DE7BDAEE4BB8EiptablesE59091nftablesE8BF81E7A7BB</id>
    <content type="html">&lt;p&gt;由于openwrt的防火墙逐步从iptables向nftables升级，官方24.10.2的dnsmasq包默认不将ipset纳入编译选项，只支持nftset，
 由此带来v2ray透明代理的配置必须进行升级，此次主要是调整了v2ray的配置和dnsmasq-full的配置。&lt;/p&gt;
 
@@ -464,9 +464,9 @@ nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4}
  
  <entry>
    <title>openwrt路由部署wireguard实现两地组网</title>
-   <link href="https://jibenfa.github.io/2024/12/19/openwrtE8B7AFE794B1E9A3A8E7BDB2wireguardE5AE9EE78EE7B8AEE4B8A4E59C84E7BB84E7BD91/"/>
+   <link href="https://jibenfa.github.io/openwrt/2024/12/19/openwrtE8B7AFE794B1E9A3A8E7BDB2wireguardE5AE9EE78EE7B8AEE4B8A4E59C84E7BB84E7BD91/"/>
    <updated>2024-12-19T06:12:12+00:00</updated>
-   <id>https://jibenfa.github.io/2024/12/19/openwrtE8B7AFE794B1E9A3A8E7BDB2wireguardE5AE9EE78EE7B8AEE4B8A4E59C84E7BB84E7BD91</id>
+   <id>https://jibenfa.github.io/openwrt/2024/12/19/openwrtE8B7AFE794B1E9A3A8E7BDB2wireguardE5AE9EE78EE7B8AEE4B8A4E59C84E7BB84E7BD91</id>
    <content type="html">&lt;p&gt;很久没升级路由了，最近openwrt和openvpn又更新版本了，导致之前的openwrt路由下opevpn互联配置出了些问题，连同Windows下tap模式访问局域网也失效了，配了半天都未成功，只能使用tun模式。&lt;/p&gt;
 
 &lt;p&gt;然后研究了一下wireguard，发现配置比openvpn简单太多了。于是决定用wireguard。&lt;/p&gt;
@@ -577,15 +577,14 @@ config route
 &lt;p&gt;1.https://www.knightli.com/2022/04/14/openwrt-wireguard-connect-two-network/&lt;/p&gt;
 
 &lt;p&gt;2.chatgpt&lt;/p&gt;
-
 </content>
  </entry>
  
  <entry>
    <title>openwrt下解决dnsmasq cannot access directory 的问题</title>
-   <link href="https://jibenfa.github.io/2024/12/18/openwrtE4B88BE8A7A3E586B3dnsmasq20cannot20access20directory20E79A84E997AEE9A298/"/>
+   <link href="https://jibenfa.github.io/openwrt/2024/12/18/openwrtE4B88BE8A7A3E586B3dnsmasq20cannot20access20directory20E79A84E997AEE9A298/"/>
    <updated>2024-12-18T09:39:31+00:00</updated>
-   <id>https://jibenfa.github.io/2024/12/18/openwrtE4B88BE8A7A3E586B3dnsmasq20cannot20access20directory20E79A84E997AEE9A298</id>
+   <id>https://jibenfa.github.io/openwrt/2024/12/18/openwrtE4B88BE8A7A3E586B3dnsmasq20cannot20access20directory20E79A84E997AEE9A298</id>
    <content type="html">&lt;p&gt;最近更新了openwrt版本，结果设置dnsmasq-full的时候发现无法启动dnsmasq，查日志发现有个报错：&lt;/p&gt;
 &lt;pre lang=&quot;bash&quot; line=&quot;0&quot; colla=&quot;+&quot;&gt;
 daemon.crit dnsmasq[1]: cannot access directory /etc/dnsmasq.d: No such file or directory
@@ -616,9 +615,9 @@ config dnsmasq
  
  <entry>
    <title>openwrt下新版openvpn设置</title>
-   <link href="https://jibenfa.github.io/2021/05/07/openwrtE4B88BE696B0E78988openvpnE8AEBEE7BDAE/"/>
+   <link href="https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2021/05/07/openwrtE4B88BE696B0E78988openvpnE8AEBEE7BDAE/"/>
    <updated>2021-05-07T22:39:31+00:00</updated>
-   <id>https://jibenfa.github.io/2021/05/07/openwrtE4B88BE696B0E78988openvpnE8AEBEE7BDAE</id>
+   <id>https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2021/05/07/openwrtE4B88BE696B0E78988openvpnE8AEBEE7BDAE</id>
    <content type="html">&lt;p&gt;最近更新了openvpn版本，一些命令和设置跟以前不一样了。现记录一下：&lt;/p&gt;
 
 &lt;p&gt;1.生成证书&lt;/p&gt;
@@ -813,9 +812,9 @@ key-direction 1
  
  <entry>
    <title>openwrt下基于DNSPOD的DDNS脚本</title>
-   <link href="https://jibenfa.github.io/2021/02/10/openwrte4b88be59fbae4ba8eDNSPODe79a84DDNSe8849ae69cac/"/>
+   <link href="https://jibenfa.github.io/openwrt/%E7%BC%96%E7%A8%8B/2021/02/10/openwrte4b88be59fbae4ba8eDNSPODe79a84DDNSe8849ae69cac/"/>
    <updated>2021-02-10T07:25:57+00:00</updated>
-   <id>https://jibenfa.github.io/2021/02/10/openwrte4b88be59fbae4ba8eDNSPODe79a84DDNSe8849ae69cac</id>
+   <id>https://jibenfa.github.io/openwrt/%E7%BC%96%E7%A8%8B/2021/02/10/openwrte4b88be59fbae4ba8eDNSPODe79a84DDNSe8849ae69cac</id>
    <content type="html">&lt;p&gt;换dns供应商了，撸了一个openwrt下基于dnspod api的ddns脚本：&lt;/p&gt;
 
 &lt;pre lang=&quot;bash&quot; line=&quot;0&quot; colla=&quot;+&quot;&gt;
@@ -867,9 +866,9 @@ echo &quot;${refreah_result}&quot;
  
  <entry>
    <title>v2ray的ws模式在openwrt上的全局和白名单的优化配置</title>
-   <link href="https://jibenfa.github.io/2020/03/24/v2rayE79A84wsE6A8A1E5BC8FE59CA8openwrtE4B88AE79A84E585A8E5B180E5928CE799BDE5908DE58D95E79A84E4BC98E58C96E9858DE7BDAE/"/>
+   <link href="https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2020/03/24/v2rayE79A84wsE6A8A1E5BC8FE59CA8openwrtE4B88AE79A84E585A8E5B180E5928CE799BDE5908DE58D95E79A84E4BC98E58C96E9858DE7BDAE/"/>
    <updated>2020-03-24T14:25:57+00:00</updated>
-   <id>https://jibenfa.github.io/2020/03/24/v2rayE79A84wsE6A8A1E5BC8FE59CA8openwrtE4B88AE79A84E585A8E5B180E5928CE799BDE5908DE58D95E79A84E4BC98E58C96E9858DE7BDAE</id>
+   <id>https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2020/03/24/v2rayE79A84wsE6A8A1E5BC8FE59CA8openwrtE4B88AE79A84E585A8E5B180E5928CE799BDE5908DE58D95E79A84E4BC98E58C96E9858DE7BDAE</id>
    <content type="html">&lt;p&gt;一、简介&lt;/p&gt;
 
 &lt;p&gt;随着v2ray的ws+tls+cdn成为标配，openwrt上对应的透明代理的配置一般有两种模式：&lt;/p&gt;
@@ -1419,16 +1418,15 @@ nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4}
 附：luci的效果图如下：
 
 &lt;img src=&quot;https://jibenfa.github.io/uploads/2020/03/screencapture-2020-03-29-20_27_10.png&quot; width=&quot;900&quot; height=&quot;1100&quot; alt=&quot;AltText&quot; /&gt;
-
 &lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/pre&gt;
 </content>
  </entry>
  
  <entry>
    <title>定制esxi6.7镜像文件</title>
-   <link href="https://jibenfa.github.io/2020/01/20/e5ae9ae588b6esxi6.7e9959ce5838fe69687e4bbb6/"/>
+   <link href="https://jibenfa.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96/2020/01/20/e5ae9ae588b6esxi6.7e9959ce5838fe69687e4bbb6/"/>
    <updated>2020-01-20T08:25:57+00:00</updated>
-   <id>https://jibenfa.github.io/2020/01/20/e5ae9ae588b6esxi6.7e9959ce5838fe69687e4bbb6</id>
+   <id>https://jibenfa.github.io/%E8%99%9A%E6%8B%9F%E5%8C%96/2020/01/20/e5ae9ae588b6esxi6.7e9959ce5838fe69687e4bbb6</id>
    <content type="html">&lt;p&gt;最近升级了服务器，使用了x550万兆网卡，于是想在esxi6.7中集成最新的1.8.7的网卡驱动，折腾了3个小时，终于搞定：&lt;/p&gt;
 
 &lt;p&gt;1.下载并安装VMware-PowerCLI-6.5.0和ESXi-Customizer-PS封装工具&lt;/p&gt;
@@ -1482,9 +1480,9 @@ $DeployNoSignatureCheck=$true
  
  <entry>
    <title>perl使用mime发送带附件的邮件</title>
-   <link href="https://jibenfa.github.io/2019/08/24/perle4bdbfe794a8mimee58f91e98081e5b8a6e99984e4bbb6e79a84e982aee4bbb6/"/>
+   <link href="https://jibenfa.github.io/%E7%BC%96%E7%A8%8B/2019/08/24/perle4bdbfe794a8mimee58f91e98081e5b8a6e99984e4bbb6e79a84e982aee4bbb6/"/>
    <updated>2019-08-24T11:38:57+00:00</updated>
-   <id>https://jibenfa.github.io/2019/08/24/perle4bdbfe794a8mimee58f91e98081e5b8a6e99984e4bbb6e79a84e982aee4bbb6</id>
+   <id>https://jibenfa.github.io/%E7%BC%96%E7%A8%8B/2019/08/24/perle4bdbfe794a8mimee58f91e98081e5b8a6e99984e4bbb6e79a84e982aee4bbb6</id>
    <content type="html">&lt;p&gt;好久不用perl脚本写东西了，今天突发奇想，需要自动发送带附件的邮件，网上找了很多资料，修改了一下，就是这样了，先用ppm安装MIME::Lite和Authen::SASL包&lt;/p&gt;
 
 &lt;pre lang=&quot;bash&quot; line=&quot;0&quot; colla=&quot;+&quot;&gt;
@@ -1535,9 +1533,9 @@ use Authen::SASL;
  
  <entry>
    <title>v2ray+LetsEncrypt+cdn部署</title>
-   <link href="https://jibenfa.github.io/2019/06/14/v2ray2bLetsEncrypt2bcdne983a8e7bdb2/"/>
+   <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/14/v2ray2bLetsEncrypt2bcdne983a8e7bdb2/"/>
    <updated>2019-06-14T14:46:57+00:00</updated>
-   <id>https://jibenfa.github.io/2019/06/14/v2ray2bLetsEncrypt2bcdne983a8e7bdb2</id>
+   <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/14/v2ray2bLetsEncrypt2bcdne983a8e7bdb2</id>
    <content type="html">&lt;p&gt;为了拯救被墙的ip，参考了一些资料，最终实现了v2ray+LetsEncrypt+cdn部署。
 首先是申请一个域名，example.com&lt;/p&gt;
 
@@ -1827,9 +1825,9 @@ service v2ray restart
  
  <entry>
    <title>v2ray在openwrt下的安装部署</title>
-   <link href="https://jibenfa.github.io/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2/"/>
+   <link href="https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2/"/>
    <updated>2019-06-09T09:44:57+00:00</updated>
-   <id>https://jibenfa.github.io/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2</id>
+   <id>https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2</id>
    <content type="html">&lt;p&gt;从本月开始，ss扶墙的服务器全灭，最夸张的是新建一个灭一个，活不过2小时。不得不寻找新的解决方案，终于，花了几天时间搞定了。那就是迁移到v2ray。&lt;/p&gt;
 
 &lt;p&gt;一、性能&lt;/p&gt;
@@ -2368,15 +2366,14 @@ fs.file-max=90000
 &lt;p&gt;参考资料：&lt;/p&gt;
 
 &lt;p&gt;1).https://blog.dreamtobe.cn/r7800-openwrt-v2ray/&lt;/p&gt;
-
 </content>
  </entry>
  
  <entry>
    <title>在Openwrt/Lede路由上实现基于Name.com V4版本API的快速更新的DDNS</title>
-   <link href="https://jibenfa.github.io/2018/02/28/e59ca8openwrt-ledee8b7afe794b1e4b88ae5ae9ee78eb0e59fbae4ba8ename-com-v4e78988e69cacapie79a84ddns/"/>
+   <link href="https://jibenfa.github.io/openwrt/2018/02/28/e59ca8openwrt-ledee8b7afe794b1e4b88ae5ae9ee78eb0e59fbae4ba8ename-com-v4e78988e69cacapie79a84ddns/"/>
    <updated>2018-02-28T22:21:35+00:00</updated>
-   <id>https://jibenfa.github.io/2018/02/28/e59ca8openwrt-ledee8b7afe794b1e4b88ae5ae9ee78eb0e59fbae4ba8ename-com-v4e78988e69cacapie79a84ddns</id>
+   <id>https://jibenfa.github.io/openwrt/2018/02/28/e59ca8openwrt-ledee8b7afe794b1e4b88ae5ae9ee78eb0e59fbae4ba8ename-com-v4e78988e69cacapie79a84ddns</id>
    <content type="html">&lt;p&gt;之前一直用花生壳的免费DDNS，但是最近一周不知道为啥，服务老是抽风，dns更新速度明显下降，甚至达到1-2天。于是研究了一下，发现name.com最近发布了v4版本的api，看了文档以后，果断写了个脚本，一旦ip变更，新dns可以马上更新，消耗时间无限接近0。。。于是ddns更新时间只基于计划任务的间隔时间了。。。&lt;br /&gt;
 使用此脚本的前提：&lt;br /&gt;
 1.域名必须是由name.com购买的，并且生成一个生产的Token。&lt;br /&gt;
@@ -2436,9 +2433,9 @@ fi&lt;/pre&gt;
  
  <entry>
    <title>使用LEDE/OPENWRT 路由器自动发送邮件</title>
-   <link href="https://jibenfa.github.io/2018/01/30/e4bdbfe794a8ledeopenwrt-e8b7afe794b1e599a8e887aae58aa8e58f91e98081e982aee4bbb6/"/>
+   <link href="https://jibenfa.github.io/openwrt/2018/01/30/e4bdbfe794a8ledeopenwrt-e8b7afe794b1e599a8e887aae58aa8e58f91e98081e982aee4bbb6/"/>
    <updated>2018-01-30T22:32:10+00:00</updated>
-   <id>https://jibenfa.github.io/2018/01/30/e4bdbfe794a8ledeopenwrt-e8b7afe794b1e599a8e887aae58aa8e58f91e98081e982aee4bbb6</id>
+   <id>https://jibenfa.github.io/openwrt/2018/01/30/e4bdbfe794a8ledeopenwrt-e8b7afe794b1e599a8e887aae58aa8e58f91e98081e982aee4bbb6</id>
    <content type="html">&lt;p&gt;今天研究实现了手动或者定时自动通过LEDE/openwrt路由对外发送邮件的功能。&lt;br /&gt;
 1.安装软件包。&lt;/p&gt;
 
@@ -2592,9 +2589,9 @@ cat /tmp/sysinfo/model | mutt  -s &quot;Mail from Router of Coffeecat&quot;  rec
  
  <entry>
    <title>开关openwrt/lede路由上的usb设备电源</title>
-   <link href="https://jibenfa.github.io/2017/10/11/e5bc80e585b3openwrtledee8b7afe794b1e4b88ae79a84usbe8aebee5a487e794b5e6ba90/"/>
+   <link href="https://jibenfa.github.io/openwrt/2017/10/11/e5bc80e585b3openwrtledee8b7afe794b1e4b88ae79a84usbe8aebee5a487e794b5e6ba90/"/>
    <updated>2017-10-11T22:25:43+00:00</updated>
-   <id>https://jibenfa.github.io/2017/10/11/e5bc80e585b3openwrtledee8b7afe794b1e4b88ae79a84usbe8aebee5a487e794b5e6ba90</id>
+   <id>https://jibenfa.github.io/openwrt/2017/10/11/e5bc80e585b3openwrtledee8b7afe794b1e4b88ae79a84usbe8aebee5a487e794b5e6ba90</id>
    <content type="html">&lt;p&gt;最近搞了个华为的usb无线网卡E8372插在lede路由上，但是想实现程序控制其供电，查阅资料后发现可以这样实现：&lt;br /&gt;
 首先：&lt;/p&gt;
 
@@ -2619,9 +2616,9 @@ https://wiki.openwrt.org/doc/howto/usb.overview&lt;/p&gt;
  
  <entry>
    <title>LEDE/Openwrt 挂载USB无线网卡当AP</title>
-   <link href="https://jibenfa.github.io/2017/08/20/ledeopenwrt-e68c82e8bdbdusbe697a0e7babfe7bd91e58da1e5bd93ap/"/>
+   <link href="https://jibenfa.github.io/openwrt/2017/08/20/ledeopenwrt-e68c82e8bdbdusbe697a0e7babfe7bd91e58da1e5bd93ap/"/>
    <updated>2017-08-20T12:42:57+00:00</updated>
-   <id>https://jibenfa.github.io/2017/08/20/ledeopenwrt-e68c82e8bdbdusbe697a0e7babfe7bd91e58da1e5bd93ap</id>
+   <id>https://jibenfa.github.io/openwrt/2017/08/20/ledeopenwrt-e68c82e8bdbdusbe697a0e7babfe7bd91e58da1e5bd93ap</id>
    <content type="html">&lt;p&gt;由于mt7621方案中mt7603e的2.4G lede驱动非常不稳定，导致我买的newifi d1、zbt wg3526、极路由4（HC5962）刷机后的2.4G基本都成了摆设。没办法只能通过挂载USB无线网卡当AP。&lt;br /&gt;
 测试的USB网卡有：&lt;br /&gt;
 X东购买tplink tl-wn725n v2.0 rtl8188eu （0x0bda:0x8179）安装驱动后直接无法启动路由器。。。跟作者发了邮件，回复说不支持。&lt;br /&gt;
@@ -2633,9 +2630,9 @@ X东购买磊科（netcore）NW362，rtl8192cu，安装驱动后完美ap模式�
  
  <entry>
    <title>直插SIM卡全网五模便携LEDE路由（5200mAh）</title>
-   <link href="https://jibenfa.github.io/2017/03/19/e79bb4e68f92sime58da1e585a8e7bd91e4ba94e6a8a1e4bebfe690baledee8b7afe794b1efbc885200mahefbc89/"/>
+   <link href="https://jibenfa.github.io/openwrt/2017/03/19/e79bb4e68f92sime58da1e585a8e7bd91e4ba94e6a8a1e4bebfe690baledee8b7afe794b1efbc885200mahefbc89/"/>
    <updated>2017-03-19T11:42:02+00:00</updated>
-   <id>https://jibenfa.github.io/2017/03/19/e79bb4e68f92sime58da1e585a8e7bd91e4ba94e6a8a1e4bebfe690baledee8b7afe794b1efbc885200mahefbc89</id>
+   <id>https://jibenfa.github.io/openwrt/2017/03/19/e79bb4e68f92sime58da1e585a8e7bd91e4ba94e6a8a1e4bebfe690baledee8b7afe794b1efbc885200mahefbc89</id>
    <content type="html">&lt;p&gt;之前买了个ZTE Q7便携路由，也可以刷op，但是不能直接插sim卡，携带不是很方便，最近在网上逛了逛，发现了一个神器，配置为 mt7620a ROM 16M/RAM 128M 5200mAh，花了一周时间，适配了LEDE 17.07.0 正式版本系统，目前实现了几个功能：&lt;br /&gt;
 1.直插sim卡上网，目前测试了移动3g和联通3g，使用的是上海移远EC20-C 4g mini pcie模块（注意经研究该模块有很多个批次，需要芯片为高通MDM9215才行，pid 05c6 vid 9215），参数为：&lt;br /&gt;
 EC20-C&lt;/p&gt;
@@ -2844,9 +2841,9 @@ git checkout v17.01.0&lt;/pre&gt;
  
  <entry>
    <title>利用Openwrt路由部署Openvpn进行两地组网</title>
-   <link href="https://jibenfa.github.io/2017/03/07/e588a9e794a8openwrte8b7afe794b1e983a8e7bdb2openvpne8bf9be8a18ce4b8a4e59cb0e7bb84e7bd91/"/>
+   <link href="https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2017/03/07/e588a9e794a8openwrte8b7afe794b1e983a8e7bdb2openvpne8bf9be8a18ce4b8a4e59cb0e7bb84e7bd91/"/>
    <updated>2017-03-07T08:42:43+00:00</updated>
-   <id>https://jibenfa.github.io/2017/03/07/e588a9e794a8openwrte8b7afe794b1e983a8e7bdb2openvpne8bf9be8a18ce4b8a4e59cb0e7bb84e7bd91</id>
+   <id>https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2017/03/07/e588a9e794a8openwrte8b7afe794b1e983a8e7bdb2openvpne8bf9be8a18ce4b8a4e59cb0e7bb84e7bd91</id>
    <content type="html">&lt;p&gt;最近实践了一下利用Openwrt路由部署Openvpn进行两地组网，目标是实现两个局域网互相访问。&lt;br /&gt;
 配置：&lt;br /&gt;
 1.Openvpn服务端（内部局域网段172.24.1.0/24）：&lt;br /&gt;
@@ -2950,9 +2947,9 @@ iptables -A FORWARD -o tun1 -s 172.24.8.0/24 -j ACCEPT
  
  <entry>
    <title>使用uClibc Toolchain编译LEDE系统，适配迅雷xware远程下载</title>
-   <link href="https://jibenfa.github.io/2017/02/18/e4bdbfe794a8uclibc-toolchaine7bc96e8af91ledee7b3bbe7bb9fefbc8ce98082e9858de8bf85e99bb7xwaree8bf9ce7a88be4b88be8bdbd/"/>
+   <link href="https://jibenfa.github.io/openwrt/2017/02/18/e4bdbfe794a8uclibc-toolchaine7bc96e8af91ledee7b3bbe7bb9fefbc8ce98082e9858de8bf85e99bb7xwaree8bf9ce7a88be4b88be8bdbd/"/>
    <updated>2017-02-18T21:44:38+00:00</updated>
-   <id>https://jibenfa.github.io/2017/02/18/e4bdbfe794a8uclibc-toolchaine7bc96e8af91ledee7b3bbe7bb9fefbc8ce98082e9858de8bf85e99bb7xwaree8bf9ce7a88be4b88be8bdbd</id>
+   <id>https://jibenfa.github.io/openwrt/2017/02/18/e4bdbfe794a8uclibc-toolchaine7bc96e8af91ledee7b3bbe7bb9fefbc8ce98082e9858de8bf85e99bb7xwaree8bf9ce7a88be4b88be8bdbd</id>
    <content type="html">&lt;p&gt;最近买了MT7621路由，还带sata口，就想适配一个系统，由于：&lt;br /&gt;
 1.Openwrt官方trunk里面kmod-mt76驱动居然还停留在2016年6月，实测2.4G比较弱，所以不予考虑了，再看LEDE的snapshot，更新到2017年2月了，当然要选择LEDE了。&lt;br /&gt;
 2.LEDE目前全面切换到了MUSL库，导致迅雷xware mipsel的32位uclibc版本直接不能用了，为了适配，所以必须编译一个基于uClibc库的系统，但是LEDE/OPENWRT的toolchain默认菜单里面都只有musl和glibc了，uclibc被标记为了broken。。。。所以必须自行研究。&lt;/p&gt;
@@ -3077,18 +3074,18 @@ THE ACTIVE CODE IS: &lt;/pre&gt;
  
  <entry>
    <title>Openwrt的密码api变化带来的影响</title>
-   <link href="https://jibenfa.github.io/2017/02/13/openwrte79a84e5af86e7a081apie58f98e58c96e5b8a6e69da5e79a84e5bdb1e5938d/"/>
+   <link href="https://jibenfa.github.io/openwrt/2017/02/13/openwrte79a84e5af86e7a081apie58f98e58c96e5b8a6e69da5e79a84e5bdb1e5938d/"/>
    <updated>2017-02-13T20:54:41+00:00</updated>
-   <id>https://jibenfa.github.io/2017/02/13/openwrte79a84e5af86e7a081apie58f98e58c96e5b8a6e69da5e79a84e5bdb1e5938d</id>
+   <id>https://jibenfa.github.io/openwrt/2017/02/13/openwrte79a84e5af86e7a081apie58f98e58c96e5b8a6e69da5e79a84e5bdb1e5938d</id>
    <content type="html">&lt;p&gt;从openwrt &lt;a href=&quot;https://dev.openwrt.org/changeset/46483&quot;&gt;r46483&lt;/a&gt; &lt;a href=&quot;https://dev.openwrt.org/browser/trunk/package/kernel/linux/modules/crypto.mk?rev=46820&quot;&gt;r46820&lt;/a&gt;版本开始，kmod-crypto-aes,kmod-crypto-arc4,kmod-crypto-core不再作为单独的软件包提供，而是在kernel中提供，目前测试下来，在mt7621的dd trunk版本中，wifi的wpa2的aes加密未受到影响，但是shadowsocks受到了影响，aes和rc4-md5相关算法均会报cipher not found 的错误导致不能使用。只能使用chacha20或者salsa20的算法，后者是基于libsodium包的，实测未受到影响。&lt;/p&gt;
 </content>
  </entry>
  
  <entry>
    <title>MT7621路由性能评测</title>
-   <link href="https://jibenfa.github.io/2017/02/11/mt7621e8b7afe794b1e680a7e883bde8af84e6b58b/"/>
+   <link href="https://jibenfa.github.io/openwrt/2017/02/11/mt7621e8b7afe794b1e680a7e883bde8af84e6b58b/"/>
    <updated>2017-02-11T17:10:56+00:00</updated>
-   <id>https://jibenfa.github.io/2017/02/11/mt7621e8b7afe794b1e680a7e883bde8af84e6b58b</id>
+   <id>https://jibenfa.github.io/openwrt/2017/02/11/mt7621e8b7afe794b1e680a7e883bde8af84e6b58b</id>
    <content type="html">&lt;p&gt;最近在网上逛的时候发现一款MT7621的路由，由于OPENWRT的TRUNK版官方支持该路由，所以就买了一个回来，型号是ZBT-WG3526,16MB ROM，512MB RAM，MT7603EN的2.4GHz芯片，据说此芯片驱动有不少问题，目前还在解决中，MT7612EN的5GHz芯片，驱动据说非常稳定，支持ac，另外还有一个sata口和mini pcie，可以接一个笔记本硬盘，测试了一下，可以塞进去，不过要想办法固定。&lt;br /&gt;
 出厂系统直接不能用，而且只能识别128MB内存，简直坑爹。。。所以到手就用sysupgrade刷了trunk版本的OP官方系统。。。由于trunk版本是musl的c库，很多软件需要重新编译才能使用，例如chinadns，迅雷xware直接不能用。。。等15.05.2出个glibc的版本才可以。。。&lt;br /&gt;
 &lt;!--more--&gt;&lt;/p&gt;
@@ -3107,9 +3104,9 @@ THE ACTIVE CODE IS: &lt;/pre&gt;
  
  <entry>
    <title>Openwrt 利用squid进行上网行为控制，过滤在线视频和视频下载</title>
-   <link href="https://jibenfa.github.io/2016/08/11/openwrt-e588a9e794a8squide8bf9be8a18ce4b88ae7bd91e8a18ce4b8bae68ea7e588b6efbc8ce8bf87e6bba4e59ca8e7babfe8a786e9a291e5928ce8a786e9a291/"/>
+   <link href="https://jibenfa.github.io/openwrt/2016/08/11/openwrt-e588a9e794a8squide8bf9be8a18ce4b88ae7bd91e8a18ce4b8bae68ea7e588b6efbc8ce8bf87e6bba4e59ca8e7babfe8a786e9a291e5928ce8a786e9a291/"/>
    <updated>2016-08-11T08:30:42+00:00</updated>
-   <id>https://jibenfa.github.io/2016/08/11/openwrt-e588a9e794a8squide8bf9be8a18ce4b88ae7bd91e8a18ce4b8bae68ea7e588b6efbc8ce8bf87e6bba4e59ca8e7babfe8a786e9a291e5928ce8a786e9a291</id>
+   <id>https://jibenfa.github.io/openwrt/2016/08/11/openwrt-e588a9e794a8squide8bf9be8a18ce4b88ae7bd91e8a18ce4b8bae68ea7e588b6efbc8ce8bf87e6bba4e59ca8e7babfe8a786e9a291e5928ce8a786e9a291</id>
    <content type="html">&lt;p&gt;某些情况下，需要过滤在线视频和视频下载，按照IP或者网址过滤当然是可以的，不过要找到那么多视频网址很麻烦，现在大多数视频网站都开启了CDN，即便拿到ip池也是不全的。找了半天，终于看到了一个办法。&lt;br /&gt;
 首先当然是安装squid了：&lt;/p&gt;
 
