@@ -4,10 +4,12 @@ title: Openwrt X86中安装Shadowsocks服务端的另类办法
 date: 2016-03-13 23:03:30+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
 - 科学上网
-tags: *id001
+tags:
+- openwrt
+- 科学上网
 ---
 之前在Openwrt x86中安装了Shadowsocks客户端（废话么），并通过openwrt下的debootstap+debian虚拟机安装了adbyby广告过滤。  
 虽然在openwrt x86下原生有ss服务器端（编译时需修改makefile参数），但是据说由于架构原因，性能不行，速度最多几百K,所以同样考虑在openwrt下的debootstap+debian虚拟机实现SS服务端功能，并且与openwrt x86原生的ss客户端不冲突。。。  

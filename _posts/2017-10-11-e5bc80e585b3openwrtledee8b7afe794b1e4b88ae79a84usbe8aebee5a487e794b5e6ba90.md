@@ -4,9 +4,10 @@ title: 开关openwrt/lede路由上的usb设备电源
 date: 2017-10-11 22:25:43+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 最近搞了个华为的usb无线网卡E8372插在lede路由上，但是想实现程序控制其供电，查阅资料后发现可以这样实现：  
 首先：

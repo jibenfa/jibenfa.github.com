@@ -4,10 +4,12 @@ title: openwrt下v2ray透明代理配置从iptables向nftables迁移
 date: 2025-07-30 03:22:13+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
 - 科学上网
-tags: *id001
+tags:
+- openwrt
+- 科学上网
 ---
 
 由于openwrt的防火墙逐步从iptables向nftables升级，官方24.10.2的dnsmasq包默认不将ipset纳入编译选项，只支持nftset，

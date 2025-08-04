@@ -4,9 +4,10 @@ title: 解决Openwrt Readonly file system文件系统只读的问题
 date: 2015-11-30 21:29:59+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 由于Openwrt关闭不好的问题，重启进入openwrt，发现luci 配置无法写入，进入ssh发现remounting file system is read only&#8230;但是又不想重装。。。由于这是根文件系统已挂载，所以e2fs无法在该系统里面修复文件系统错误。  
 于是机智的我在esxi里面又开了个openwrt虚拟机，其实用linux发行版也行啦，挂载上述出问题的openwrt的盘，但不要mount，进入系统后，因为出问题的盘是sdb的sdb2,运行：

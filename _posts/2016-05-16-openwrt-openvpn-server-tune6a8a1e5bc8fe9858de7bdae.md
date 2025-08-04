@@ -4,10 +4,12 @@ title: Openwrt路由上的Openvpn Server Tun模式配置和firewall配置
 date: 2016-05-16 22:03:34+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
 - 科学上网
-tags: *id001
+tags:
+- openwrt
+- 科学上网
 ---
 之前折腾tun模式好久，总是连上以后要么上不了网，要么根本不走vpn。。。这次抽空总算搞定了。。。  
 由于安卓机上的openvpn客户端不支持tap，所以必须要设置tun模式：  

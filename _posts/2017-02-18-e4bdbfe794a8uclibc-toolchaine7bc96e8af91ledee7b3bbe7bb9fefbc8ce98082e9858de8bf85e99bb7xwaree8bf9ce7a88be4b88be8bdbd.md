@@ -4,9 +4,10 @@ title: 使用uClibc Toolchain编译LEDE系统，适配迅雷xware远程下载
 date: 2017-02-18 21:44:38+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 最近买了MT7621路由，还带sata口，就想适配一个系统，由于：  
 1.Openwrt官方trunk里面kmod-mt76驱动居然还停留在2016年6月，实测2.4G比较弱，所以不予考虑了，再看LEDE的snapshot，更新到2017年2月了，当然要选择LEDE了。  

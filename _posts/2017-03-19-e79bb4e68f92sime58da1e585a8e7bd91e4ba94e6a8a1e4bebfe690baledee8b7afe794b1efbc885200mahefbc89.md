@@ -4,9 +4,10 @@ title: 直插SIM卡全网五模便携LEDE路由（5200mAh）
 date: 2017-03-19 11:42:02+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 之前买了个ZTE Q7便携路由，也可以刷op，但是不能直接插sim卡，携带不是很方便，最近在网上逛了逛，发现了一个神器，配置为 mt7620a ROM 16M/RAM 128M 5200mAh，花了一周时间，适配了LEDE 17.07.0 正式版本系统，目前实现了几个功能：  
 1.直插sim卡上网，目前测试了移动3g和联通3g，使用的是上海移远EC20-C 4g mini pcie模块（注意经研究该模块有很多个批次，需要芯片为高通MDM9215才行，pid 05c6 vid 9215），参数为：  

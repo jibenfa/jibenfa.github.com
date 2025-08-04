@@ -4,10 +4,12 @@ title: 批量下载Openwrt官网packages脚本，搭建自己的软件源
 date: 2015-04-29 23:34:09+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
 - 编程
-tags: *id001
+tags:
+- openwrt
+- 编程
 ---
 由于Openwrt官网的Chaos Calmer的trunk每天更新一次，如果装了某天的包，第二天要装kernel dependent的软件就比较麻烦了，所以一般都要全部下载下来，自己搭个软件源，以下脚本就是提供了批量下载的（需要在linux环境下运行）：
 

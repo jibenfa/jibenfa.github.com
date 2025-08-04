@@ -4,9 +4,10 @@ title: v2ray+LetsEncrypt+cdn部署
 date: 2019-06-14 14:46:57+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - 科学上网
-tags: *id001
+tags:
+- 科学上网
 ---
 为了拯救被墙的ip，参考了一些资料，最终实现了v2ray+LetsEncrypt+cdn部署。
 首先是申请一个域名，example.com

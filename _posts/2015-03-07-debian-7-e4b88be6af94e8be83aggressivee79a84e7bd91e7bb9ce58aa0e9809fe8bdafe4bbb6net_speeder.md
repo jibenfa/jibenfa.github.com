@@ -4,9 +4,10 @@ title: Debian 7 下比较aggressive的网络加速软件net_speeder
 date: 2015-03-07 20:13:07+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - linux
-tags: *id001
+tags:
+- linux
 ---
 https://github.com/snooda/net-speeder 的开源项目。  
 在高延迟不稳定链路上优化单线程下载速度

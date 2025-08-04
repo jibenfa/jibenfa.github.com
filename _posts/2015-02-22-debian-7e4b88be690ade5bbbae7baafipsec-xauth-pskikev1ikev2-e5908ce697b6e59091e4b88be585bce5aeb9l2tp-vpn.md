@@ -4,10 +4,12 @@ title: Debian 7 下搭建纯IPSEC XAUTH PSK/IKEv1/IKEv2 同时向下兼容L2TP V
 date: 2015-02-22 22:58:59+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - linux
 - 科学上网
-tags: *id001
+tags:
+- linux
+- 科学上网
 ---
 由于debian上最终版本的openswan对iOS系统自带的VPN兼容性不好，另外openswan已经被strongswan所替代且debian也宣布不再支持它，加之openswan不支持IKEv2这种高级货，因此打算用strongswan 5.2.2搭一个ipsec服务，搞一个纯IPSEC的VPN，本来想彻底抛弃L2TP的，无奈现有的openwrt/ddwrt路由器均不支持IKEv2（只有少数企业级的路由器例如思科和华为的才支持IKEv2），所以还是保留一下l2tp。  
 先说说StrongSwan和IKEv2的优点吧：  

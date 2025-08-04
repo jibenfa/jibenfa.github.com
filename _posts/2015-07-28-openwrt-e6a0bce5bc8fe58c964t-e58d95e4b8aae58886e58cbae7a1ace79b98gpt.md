@@ -4,9 +4,10 @@ title: Openwrt 格式化4T 单个分区硬盘(GPT)
 date: 2015-07-28 18:13:54+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 首先保证硬盘所有分区已经删除，即整个硬盘处于初始化状态。  
 ssh进入openwrt：

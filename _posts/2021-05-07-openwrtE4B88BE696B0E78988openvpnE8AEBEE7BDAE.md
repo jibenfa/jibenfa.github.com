@@ -4,10 +4,12 @@ title: openwrt下新版openvpn设置
 date: 2021-05-07 22:39:31+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
 - 科学上网
-tags: *id001
+tags:
+- openwrt
+- 科学上网
 ---
 最近更新了openvpn版本，一些命令和设置跟以前不一样了。现记录一下：
 

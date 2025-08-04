@@ -4,9 +4,10 @@ title: LEDE/Openwrt 挂载USB无线网卡当AP
 date: 2017-08-20 12:42:57+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 由于mt7621方案中mt7603e的2.4G lede驱动非常不稳定，导致我买的newifi d1、zbt wg3526、极路由4（HC5962）刷机后的2.4G基本都成了摆设。没办法只能通过挂载USB无线网卡当AP。  
 测试的USB网卡有：  

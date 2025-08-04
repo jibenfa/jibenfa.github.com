@@ -4,9 +4,10 @@ title: openwrt路由部署wireguard实现两地组网
 date: 2024-12-19 06:12:12+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 很久没升级路由了，最近openwrt和openvpn又更新版本了，导致之前的openwrt路由下opevpn互联配置出了些问题，连同Windows下tap模式访问局域网也失效了，配了半天都未成功，只能使用tun模式。
 

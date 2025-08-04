@@ -4,9 +4,10 @@ title: PC端和Openwrt端的i-Shanghai自动登录研究
 date: 2016-03-17 19:06:56+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 上海有免费的i-Shanghai，速度还不错，唯一麻烦的是每次登录都要通过手机号和用户名密码进行验证。作为组装级的程序猿，如不能做到自动登录是十分痛苦的事情。。。于是，加班之余展开了为期一周的研究。。。最终实现了PC端和Openwrt端的i-Shanghai自动登录。。。。
 

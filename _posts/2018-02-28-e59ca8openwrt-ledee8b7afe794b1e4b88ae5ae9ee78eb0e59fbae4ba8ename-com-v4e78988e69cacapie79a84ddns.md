@@ -4,9 +4,10 @@ title: 在Openwrt/Lede路由上实现基于Name.com V4版本API的快速更新�
 date: 2018-02-28 22:21:35+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 之前一直用花生壳的免费DDNS，但是最近一周不知道为啥，服务老是抽风，dns更新速度明显下降，甚至达到1-2天。于是研究了一下，发现name.com最近发布了v4版本的api，看了文档以后，果断写了个脚本，一旦ip变更，新dns可以马上更新，消耗时间无限接近0。。。于是ddns更新时间只基于计划任务的间隔时间了。。。  
 使用此脚本的前提：  

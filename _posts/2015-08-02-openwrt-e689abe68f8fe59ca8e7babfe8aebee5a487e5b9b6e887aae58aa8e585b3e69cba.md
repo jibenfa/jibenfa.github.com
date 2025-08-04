@@ -4,9 +4,10 @@ title: Openwrt 扫描在线设备并自动关机
 date: 2015-08-02 08:32:27+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 由于懒得在关闭PC或者手机后去关路由器，我写了2个关机脚本：
 

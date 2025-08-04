@@ -4,9 +4,10 @@ title: 中兴 ZTE Q7 便携路由刷Openwrt + 通过vlan设置转换lan口为wan
 date: 2015-05-12 20:52:54+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
-tags: *id001
+tags:
+- openwrt
 ---
 买了不少便携路由，都觉得性能不够或者细节不能忍，逛op官网的时候偶尔发现这个神器，于是买了回来，果然好，强烈推荐这个便携出差路由：中兴ZTE Q7，理由：  
 1.免拆机免ttl刷openwrt，op官方支持，3g无线中继，lan口可改wan，  

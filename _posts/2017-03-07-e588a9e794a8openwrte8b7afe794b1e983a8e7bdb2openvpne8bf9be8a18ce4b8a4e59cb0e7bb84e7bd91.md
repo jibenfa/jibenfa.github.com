@@ -4,10 +4,12 @@ title: 利用Openwrt路由部署Openvpn进行两地组网
 date: 2017-03-07 08:42:43+00:00
 author: coffeecat
 layout: post
-categories: &id001
+categories:
 - openwrt
 - 科学上网
-tags: *id001
+tags:
+- openwrt
+- 科学上网
 ---
 最近实践了一下利用Openwrt路由部署Openvpn进行两地组网，目标是实现两个局域网互相访问。  
 配置：  
