@@ -4,8 +4,8 @@ title: 今天注册了一个顶级域名，也就是现在这个coffeecat.info
 date: 2015-02-08T13:08:02+00:00
 author: coffeecat
 layout: post
-categories:其他
-tags:里程碑
+categories: 其他
+tags: 里程碑
 ---
 <div id='gallery-1' class='gallery galleryid-1 gallery-columns-3 gallery-size-thumbnail'>
   <figure class='gallery-item'> 
