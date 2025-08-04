@@ -98,87 +98,6 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/08/11/openwrt-e588a9e794a8squide8bf9be8a18ce4b88ae7bd91e8a18ce4b8bae68ea7e588b6efbc8ce8bf87e6bba4e59ca8e7babfe8a786e9a291e5928ce8a786e9a291/" title="Openwrt 利用squid进行上网行为控制，过滤在线视频和视频下载" itemprop="url">Openwrt 利用squid进行上网行为控制，过滤在线视频和视频下载</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
-		
-  <p class="article-time">
-    <time datetime="2016-08-11 08:30:42 +0000" itemprop="datePublished">  2016-08-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>某些情况下，需要过滤在线视频和视频下载，按照IP或者网址过滤当然是可以的，不过要找到那么多视频网址很麻烦，现在大多数视频网站都开启了CDN，即便拿到ip池也是不全的。找了半天，终于看到了一个办法。<br />
-首先当然是安装squid了：</p>
-
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2016/08/11/openwrt-e588a9e794a8squide8bf9be8a18ce4b88ae7bd91e8a18ce4b8bae68ea7e588b6efbc8ce8bf87e6bba4e59ca8e7babfe8a786e9a291e5928ce8a786e9a291/#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <!--
-  <%- list_categories(item.categories, {
-      show_count: false,
-      class: 'article-category',
-      style: 'none',
-      separator: '►'
-  }) %>
-  -->
-  
-</div>
-
-
-  <div class="article-tags">
-  <!--
-  <% var tags = [];
-    item.tags.forEach(function(tag){
-      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
-    }); %>-->
-  <span></span> <!--<%- tags.join('') %>-->
-  
-  
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-    </article>
-
-
-
-
-
-
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
       <a href="/2016/07/27/openwrt-e8b7afe794b1e599a8e9809ae8bf87e585a8e5b180httpe4bba3e79086e4b88ae7bd91e79a84e680aae5bc82e8a7a3e586b3e696b9e6a188/" title="Openwrt 路由器通过全局HTTP代理上网的怪异解决方案" itemprop="url">Openwrt 路由器通过全局HTTP代理上网的怪异解决方案</a>
   </h1>
   <p class="article-author">By
@@ -1704,6 +1623,87 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
 
 
 
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/24/wrt1900ac-e7bd91e58fa3e7bb93e69e84e59bbe/" title="Linksys WRT1900AC 路由器双线（Dual Wan）/多线（Multi Wan）设置教程" itemprop="url">Linksys WRT1900AC 路由器双线（Dual Wan）/多线（Multi Wan）设置教程</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-24 22:19:51 +0000" itemprop="datePublished">  2015-06-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>WRT1900AC 刷了openwrt以后，修改vlan配置就可以实现多wan了，下图是刚琢磨出来的网口结构（Layer）图，刷完openwrt以后默认就是这个样子了。。。<br />
+vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相连的是lan，与eth1相连的是wan，port0..3分别对应路由器外壳印刷的4..1，port4对应路由器外壳印刷的Internet。</p>
+
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/06/24/wrt1900ac-e7bd91e58fa3e7bb93e69e84e59bbe/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
 
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
@@ -1747,6 +1747,10 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
 	<p class="asidetitle">分类</p>
 		<ul>
 		
+		  
+			<li><a href="/categories/#其他" title="其他">其他<sup>1</sup></a></li>
+		  
+		
 		</ul>
 </div>
 
@@ -1755,6 +1759,10 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
 <div class="tagslist">
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/#里程碑" title="里程碑">里程碑<sup>1</sup></a></li>
+			
 		
 		</ul>
 </div>
@@ -1897,6 +1905,8 @@ $(document).ready(function(){
 <script>
 $(document).ready(function() {
   var tags = [
+    
+    { "name": "里程碑", "path": "/tags/#里程碑", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));

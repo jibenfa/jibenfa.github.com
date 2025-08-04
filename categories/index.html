@@ -122,6 +122,11 @@ if (page.archive){
   <ul class="archive-list">
   <div class="archiveslist archive-float clearfix">
     
+    <li class="archive-list-item">
+    <a class="archive-list-link" href="#其他">其他</a>
+    <span class="archive-list-count">1</span>
+    </li>
+    
  </div>
  </ul>
  
@@ -131,24 +136,6 @@ if (page.archive){
 </div>
 <div id="main" class="archive-part clearfix">
   <div id="archive-page">
-  
-  
-  
-  
-<section class="post " itemscope itemprop="blogPost">
-
-
-  
-    <a href="/2025/08/04/2015-02-08-hello-world/" title="" itemprop="url">
-  
-
-    <time datetime="2025-08-04 07:47:25 +0000" itemprop="datePublished">2025 年 08 月</time>
-
-
-    <h1 itemprop="name">&nbsp;</h1>
-
-  </a>
-</section>
   
   
   
@@ -1284,6 +1271,24 @@ if (page.archive){
   </a>
 </section>
   
+  
+  
+  
+<section class="post 其他 " itemscope itemprop="blogPost">
+
+
+  
+    <a href="/%E5%85%B6%E4%BB%96/2015/02/08/hello-world/" title="今天注册了一个顶级域名，也就是现在这个coffeecat.info" itemprop="url">
+  
+
+    <time datetime="2015-02-08 13:08:02 +0000" itemprop="datePublished">2015 年 02 月</time>
+
+
+    <h1 itemprop="name">今天注册了一个顶级域名，也就是现在这个coffeecat.info</h1>
+
+  </a>
+</section>
+  
 <!--
 <% if (page.total > 1){ %>
   <nav id="page-nav" class="clearfix archive-nav">
@@ -1406,6 +1411,8 @@ $(document).ready(function(){
 <script>
 $(document).ready(function() {
   var tags = [
+    
+    { "name": "里程碑", "path": "/tags/#里程碑", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));

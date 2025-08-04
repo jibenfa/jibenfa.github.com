@@ -8,6 +8,14 @@
     
     
       {
+        "title": "今天注册了一个顶级域名，也就是现在这个coffeecat.info",
+        "date": "2015 年 02 月",
+        "excerpt": "\n   \n  \n  \n    \n  \n\n\n",
+        
+        "url": "/%E5%85%B6%E4%BB%96/2015/02/08/hello-world/"
+      },
+    
+      {
         "title": "Debian 7 配置L2TP IPSEC 科学上网一键安装脚本",
         "date": "2015 年 02 月",
         "excerpt": "随着功夫墙的不断升级，连code.google.com都上不去了，做开发的愁啊。而且vpn供应商也封得差不多了，还不如自己搭一个，顺便学习一下。\n这时无意在网上看到Linode VPS降到$10了，立马入了一个，真是好用。。。\nLinode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每月2TB流量，125Mbit outbound的带宽，真是太划算了。\n\n",
@@ -509,14 +517,6 @@
         "excerpt": "由于openwrt的防火墙逐步从iptables向nftables升级，官方24.10.2的dnsmasq包默认不将ipset纳入编译选项，只支持nftset，\n由此带来v2ray透明代理的配置必须进行升级，此次主要是调整了v2ray的配置和dnsmasq-full的配置。\n\n",
         
         "url": "/2025/07/30/openwrtE4B88Bv2rayE9808FE6988EE4BBA3E79086vE9858DE7BDAEE4BB8EiptablesE59091nftablesE8BF81E7A7BB/"
-      },
-    
-      {
-        "title": null,
-        "date": "2025 年 08 月",
-        "excerpt": "\n",
-        
-        "url": "/2025/08/04/2015-02-08-hello-world/"
       },
     
   

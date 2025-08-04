@@ -261,6 +261,10 @@ wget -q -O /tmp/orayddnsResult -q ${URL}
 	<p class="asidetitle">分类</p>
 		<ul>
 		
+		  
+			<li><a href="/categories/#其他" title="其他">其他<sup>1</sup></a></li>
+		  
+		
 		</ul>
 </div>
 
@@ -269,6 +273,10 @@ wget -q -O /tmp/orayddnsResult -q ${URL}
 <div class="tagslist">
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/#里程碑" title="里程碑">里程碑<sup>1</sup></a></li>
+			
 		
 		</ul>
 </div>
@@ -413,6 +421,8 @@ $(document).ready(function(){
 <script>
 $(document).ready(function() {
   var tags = [
+    
+    { "name": "里程碑", "path": "/tags/#里程碑", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));
