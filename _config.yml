@@ -1,53 +1,169 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-#
-# If you need help with YAML syntax, here are some quick references for you:
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
+#### Exclude
+exclude: [".rvmrc", ".rbenv-version", "README.md", "README_en.md", "Rakefile", "changelog.md"]
 
-title: Welcome to wallsee.org
-email: 
-description: >- # this means to ignore newlines until "baseurl:"
-  Powered by github.io since 2019.06
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://jibenfa.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+#### Code Highlighter
+# 'pygments' is unsupported on GitHub Pages now.
+highlighter: rouge
 
-# Build settings
-theme: minima
-plugins:
-  - jekyll-feed
+#### Permalink
+# For more see: http://jekyllrb.com/docs/permalinks/
+permalink: pretty
 
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+#### Markdown Processors
+# 'redcarpet' is unsupported on GitHub Pages now.
+markdown: kramdown
+kramdown:
+    input: GFM
+
+#### Default Attributes
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+#### Pagination
+paginate: 20
+
+#### Site
+title : Welcome to Coffeecat‘s Blog
+tagline: 一个不务正业的CISSP
+assets: /assets
+url:
+baseurl:
+
+#### Language
+language: zh-CN    ## blog site languages: en, zh-CN, zh-TW, de
+
+#### Menu
+menu:
+  Home: /
+  Archives: /archives
+  About: /about
+## you can create `tags` and `categories` folders (I had created them already).
+## And create a `index.md` file in each of them.
+## set `front-matter`as
+## layout: tags (or categories)
+## title: tags (or categories)
+## ---
+
+#### Widgets
+widgets:
+- category
+- tag
+- tagcloud
+- links
+- douban
+- github-card
+- rss
+## provide seven widgets:github-card,category,tag,rss,archive,tagcloud,links,weibo,douban
+
+
+#### RSS
+rss: /atom.xml ## RSS address.
+
+#### Image
+imglogo:
+  enable: true             ## display image logo true/false.
+  src: img/logo.png        ## `.svg` and `.png` are recommended,please put image into the theme folder `/jacman/source/img`.
+favicon: img/favicon.ico   ## size:32px*32px,`.ico` is recommended,please put image into the theme folder `/jacman/source/img`.
+apple_icon: img/jacman.jpg ## size:114px*114px,please put image into the theme folder `/jacman/source/img`.
+author_img: img/author.jpg ## size:220px*220px.display author avatar picture.if don't want to display,please don't set this.
+banner_img: #img/banner.jpg ## size:1920px*200px+. Banner Picture
+
+#### index post is expanding or not
+index:
+  expand: true           ## default is unexpanding,so you can only see the short description of each post.
+  excerpt_link: Read More
+
+close_aside: false  #close sidebar in post page if true
+mathjax: true      #enable mathjax if true
+share_to: true #enable share-to buttons if true
+
+#### Author information
+author:
+  name: Coffeecat      ## 
+  intro_line1:  "Hello ,I'm Coffeecat."    ## your introduction on the bottom of the page
+  intro_line2:  "This is my blog."  ## the 2nd line
+  weibo:      ## 
+  weibo_verifier:  ## 
+  tsina:      ## 
+  douban:     ## 
+  zhihu:      ## 
+  email:      ## 
+  twitter:    ## 
+  github:     ## 
+  facebook:   ## 
+  linkedin:   ## 
+  google_plus:    ## 
+  stackoverflow:  ## 
+## if you set them, the corresponding  share button will show on the footer
+
+#### Toc
+toc:
+  article: true   ## show contents in article.
+  aside: true     ## show contents in aside.
+## you can set both of the value to true of neither of them.
+## if you don't want display contents in a specified post,you can modify `front-matter` and add `toc: false`.
+
+#### Links
+links:
+
+
+#### Comment
+duoshuo_shortname:    ## 
+disqus_shortname:     ## 
+hypercomments_id:     ## 
+yungentie_productkey: ## 
+## set only one of them
+## duoshuo will be shutting down on June 1, 2017
+
+#### Share button
+jiathis:
+  enable: false ## if you use jiathis as your share tool,the built-in share tool won't be display.
+  id:    ## e.g. 
+  tsina: ## e.g. 
+
+#### Analytics
+google_analytics:
+  enable: false
+  id:        ## 
+  site:      ## 
+## You MUST upgrade to Universal Analytics first!
+## https://developers.google.com/analytics/devguides/collection/upgrade/?hl=zh_CN
+baidu_tongji:
+  enable: false
+  sitecode:  ## 
+cnzz_tongji:
+  enable: false
+  siteid:    ## 
+
+#### Miscellaneous
+fancybox: true        ## if you use gallery post or want use fancybox please set the value to true.
+totop: true           ## if you want to scroll to top in every post set the value to true
+
+#### Custom Search
+google_cse:
+  enable: false
+  cx:
+## https://www.google.com/cse/
+## To enable the custom search You must create a "search" folder in '/source' and a "index.md" file
+## set the 'front-matter' as
+## layout: search
+## title: search
+## ---
+baidu_search:     ## http://zn.baidu.com/
+  enable: false
+  id:   ## 
+  site: http://zhannei.baidu.com/cse/search  ## your can change to your site instead of the default site
+tinysou_search:     ## http://tinysou.com/
+  enable: false
+  id:  ## 
+simple_jekyll_search:
+  enable: true
+  fulltext: false
+
+gems:
+ - jemoji
