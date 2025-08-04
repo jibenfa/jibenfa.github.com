@@ -14,6 +14,7 @@
 /page3/
 /page4/
 
+https://jibenfa.github.io/2025/08/04/2015-02-08-hello-world/
 https://jibenfa.github.io/2025/07/30/openwrtE4B88Bv2rayE9808FE6988EE4BBA3E79086vE9858DE7BDAEE4BB8EiptablesE59091nftablesE8BF81E7A7BB/
 https://jibenfa.github.io/2024/12/19/openwrtE8B7AFE794B1E9A3A8E7BDB2wireguardE5AE9EE78EE7B8AEE4B8A4E59C84E7BB84E7BD91/
 https://jibenfa.github.io/2024/12/18/openwrtE4B88BE8A7A3E586B3dnsmasq20cannot20access20directory20E79A84E997AEE9A298/
@@ -77,4 +78,3 @@ https://jibenfa.github.io/2015/02/11/e5bcbae78388e68ea8e88d90crayon-syntax-highl
 https://jibenfa.github.io/2015/02/10/debian-7-e4b88bshadowsockse5ae89e8a385e4b88ee9858de7bdaeefbc8ce7a791e5ada6e4b88ae7bd91/
 https://jibenfa.github.io/2015/02/10/win7-l2tpe7ad89vpne58aa8e68081e8b7afe794b1e98089e68ba9perle8849ae69cac/
 https://jibenfa.github.io/2015/02/09/debian-7-e9858de7bdael2tp-ipsec-e7a791e5ada6e4b88ae7bd91e4b880e994aee5ae89e8a385e8849ae69cac/
-https://jibenfa.github.io/2015/02/08/hello-world/
