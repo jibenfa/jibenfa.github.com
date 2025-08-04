@@ -8,8 +8,8 @@ layout: post
 
 
 
-categories:
-
+categories:其他
+tag:里程碑
 ---
 <div id='gallery-1' class='gallery galleryid-1 gallery-columns-3 gallery-size-thumbnail'>
   <figure class='gallery-item'> 
