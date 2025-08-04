@@ -32,7 +32,10 @@ title : Welcome to Coffeecat‘s Blog
 tagline: 一个不务正业的CISSP
 assets: /assets
 url: "http://jibenfa.github.io"
-baseurl:
+github_username:  jibenfa
+baseurl: "wallsee.org"
+plugins:
+  - jekyll-feed
 
 #### Language
 language: zh-CN    ## blog site languages: en, zh-CN, zh-TW, de
