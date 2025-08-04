@@ -1,0 +1,731 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>中兴 ZTE Q7 便携路由刷Openwrt + 通过vlan设置转换lan口为wan口 + 配置vsftpd ftp服务器攻略 | Welcome to Coffeecat‘s Blog</title>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Coffeecat">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="中兴 ZTE Q7 便携路由刷Openwrt + 通过vlan设置转换lan口为wan口 + 配置vsftpd ftp服务器攻略">
+    <meta property="og:url" content="/2015/05/12/e4b8ade585b4-zte-q7-e4bebfe690bae8b7afe794b1e588b7openwrt-e9809ae8bf87vlane8aebee7bdaee8bdace68da2lane58fa3e4b8bawane58fa3-e9858de7bdaevsftp-f/">
+    <meta property="og:site_name" content="Welcome to Coffeecat‘s Blog">
+    <meta property="og:description" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="中兴 ZTE Q7 便携路由刷Openwrt + 通过vlan设置转换lan口为wan口 + 配置vsftpd ftp服务器攻略">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Welcome to Coffeecat‘s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    
+    
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/"><img src="/assets/img/logo.png" alt="Welcome to Coffeecat‘s Blog" title="Welcome to Coffeecat‘s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Welcome to Coffeecat‘s Blog">Welcome to Coffeecat‘s Blog</a></h1>
+				<h2 class="blog-motto">一个不务正业的CISSP</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="/search" method="get" accept-charset="utf-8">
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+			</nav>
+</div>
+
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/12/e4b8ade585b4-zte-q7-e4bebfe690bae8b7afe794b1e588b7openwrt-e9809ae8bf87vlane8aebee7bdaee8bdace68da2lane58fa3e4b8bawane58fa3-e9858de7bdaevsftp-f/" title="中兴 ZTE Q7 便携路由刷Openwrt + 通过vlan设置转换lan口为wan口 + 配置vsftpd ftp服务器攻略" itemprop="url">中兴 ZTE Q7 便携路由刷Openwrt + 通过vlan设置转换lan口为wan口 + 配置vsftpd ftp服务器攻略</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-12 20:52:54 +0000" itemprop="datePublished"> 发表于 2015-05-12</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<p>买了不少便携路由，都觉得性能不够或者细节不能忍，逛op官网的时候偶尔发现这个神器，于是买了回来，果然好，强烈推荐这个便携出差路由：中兴ZTE Q7，理由：<br />
+1.免拆机免ttl刷openwrt，op官方支持，3g无线中继，lan口可改wan，<br />
+2.强大的mt7620a处理器搭配8m flash，64m ddr2内存，秒杀市面绝大多数的便携路由，<br />
+3.内置锂聚合物电池，可以当充电宝，也可独立为3g网卡供电，充电时亦可带3g网卡上网，<br />
+4.支持sd卡扩展，可架设ftp服务器，swap内存扩展，迅雷离线等等。<br />
+5.便宜！之前x东 69活动没赶上，现在89也是便宜到家的，小米路由mini虽flash和内存比它大，但是无电池，不便携，价格要139。</p>
+
+<p>刷了SS +chinadns+ adbyby+ vsftp以后很爽。。<br />
+<!--more--></p>
+
+<p>1)免拆机免ttl刷openwrt的攻略可以参考<a href="http://www.right.com.cn/forum/forum.php?mod=viewthread&amp;tid=162767">恩山上的文章</a><br />
+简单来说是<br />
+1.telnet登陆q7，默认ip是192.168.1.254，用户名和密码是admin和opendoor（瀑布汗的密码）<br />
+2.刷入<a href="http://www.right.com.cn/forum/thread-161906-1-1.html">恩山H大的breed</a>：把u盘用fat32分区以后拷贝 插入usb口，在q7的telnet命令行下运行mount，就可以看到u盘mount路径例如/media/sdp1/，然后运行：</p>
+
+<pre class="lang:sh decode:true ">mtd_write -r -e mtd1 write /media/sdp1/breed-mt7620-zte-q7.bin mtd1</pre>
+
+<p>然后等几分钟。。这个breed是H大搞出来的替代不死uboot的东东，非常之好用！</p>
+
+<p>3.到openwrt官网<a href="https://downloads.openwrt.org/snapshots/trunk/ramips/mt7620/openwrt-ramips-mt7620-zte-q7-squashfs-sysupgrade.bin">下载q7固件</a>，然后把q7关机，用牙签戳reset键开机，待红灯快速闪几下后断开，然后用浏览器访问192.168.1.1，找到固件更新，刷入该固件。</p>
+
+<p>2)刷完以后就不用多说了，telnet 192.168.1.1，然后装上luci以后<a href="https://routeragency.com/?p=175">装科学上网套件</a>，并<a href="https://routeragency.com/?p=236">安装和配置zte mf190 3g上网卡</a></p>
+
+<p>3)然后安装SD读卡器驱动，以便识别SD卡：</p>
+
+<pre class="lang:sh decode:true ">opkg install kmod-sdhci-mt7620</pre>
+
+<p>装的同时会安装几个dependent的软件，例如kmod-sdhci和kmod-mmc<br />
+装完以后插入sd卡或者带套的tf卡，我是把tf卡分2个区，ext4的2.6G，swap的1.2G<br />
+重启完q7路由后就会发现在/dev下多了几个mmc开头的东东，其中mmcblk0p1就是我的2.6G的ext4分区，mmcblk0p5是1.2G的swap分区，然后运行</p>
+
+<pre class="lang:sh decode:true ">block detect &gt; /etc/config/fstab
+mkdir /mnt/anonymous
+vi /etc/config/fstab</pre>
+
+<p>修改为（uuid每个人的不一样，不改）：</p>
+
+<pre class="lang:vim decode:true ">config global
+	option anon_swap '0'
+	option anon_mount '0'
+	option auto_swap '1'
+	option auto_mount '1'
+	option delay_root '5'
+	option check_fs '0'
+
+config mount
+	option uuid '0c033b6b-9d12-4fa9-8b0f-9c68988a9f1c'
+	option enabled '1'
+	option target '/mnt/anonymous'
+
+config swap
+	option device '/dev/mmcblk0p5'
+	option enabled '1'</pre>
+
+<p>4）安装vsftpd</p>
+
+<pre class="lang:sh decode:true ">opkg install vsftpd
+vi /etc/vsftpd.conf
+</pre>
+
+<p>修改为：</p>
+
+<pre class="lang:tsql decode:true ">background=YES
+listen=YES
+
+#允许匿名用户
+ftp_username=nobody
+#允许匿名访问
+anonymous_enable=YES
+#允许匿名用户上传、下载和新建文件夹
+anon_upload_enable=YES
+anon_world_readable_only=NO
+anon_mkdir_write_enable=YES
+#不允许修改所属
+chown_https://jibenfa.github.io/uploads=NO
+#chown_username=nobody
+#设置匿名用户根目录
+anon_root=/mnt/anonymous
+#限制匿名用户上传、下载速度
+anon_max_rate=512000
+#允许本地用户登录
+local_enable=YES
+#允许上传
+write_enable=YES
+local_umask=022
+check_shell=NO
+#设置本地用户主目录
+local_root=/mnt
+#限制用户只能访问主目录
+chroot_local_user=yes
+accept_timeout=60
+idle_session_timeout=300
+max_clients=600
+max_per_ip=5
+#dirmessage_enable=YES
+ftpd_banner=Welcome to Coffeecat FTP service.
+session_support=NO
+#不记录日志，注释掉
+#syslog_enable=YES
+#xferlog_enable=YES
+#xferlog_file=/var/log/vsftpd.log
+#xferlog_std_format=YES</pre>
+
+<pre class="lang:sh decode:true ">chmod -R 557 /mnt/anonymous 
+chmod a-w /mnt/anonymous/
+</pre>
+
+<p>5）修改lan口为wan口（注意，这一步操作前必须开启wifi，否则将无法再访问路由器设置界面！！！！！！！！！只能再次刷机！！！！慎重！！！！）,这里参考了<a href="http://www.right.com.cn/Forum/thread-164504-1-1.html">恩山论坛文章</a></p>
+
+<pre class="lang:sh decode:true ">vi /etc/config/network</pre>
+
+<p>修改为（注意我改了默认网关IP为：172.24.0.1）：</p>
+
+<pre class="lang:vim decode:true ">config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fd37:04f5:111b::/48'
+
+config interface 'lan'
+	option ifname 'eth0.1'
+	option force_link '1'
+	option macaddr '08:12:62:62:ad:24'
+	option type 'bridge'
+	option proto 'static'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+	option ipaddr '172.24.0.1'
+
+config interface 'wan'
+        option ifname 'eth0.2'
+        option proto 'dhcp'
+
+config switch
+        option name 'switch0'
+        option reset '1'
+        option enable_vlan '1'
+
+config switch_vlan
+        option device 'switch0'
+        option vlan '1'
+        option ports '0 1 2 3 5 6t'
+        option vid '1'
+
+config switch_vlan
+        option device 'switch0'
+        option vlan '2'
+        option ports '6t 4'
+        option vid '2'
+
+config interface '3g'
+	option proto '3g'
+	option device '/dev/ttyUSB2'
+	option service 'umts'
+	option apn '3gnet'
+	option dialnumber '*99#'
+
+
+</pre>
+
+<p>重启路由生效，lan口变为wan口</p>
+  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://jibenfa.github.io/2015/05/12/e4b8ade585b4-zte-q7-e4bebfe690bae8b7afe794b1e588b7openwrt-e9809ae8bf87vlane8aebee7bdaee8bdace68da2lane58fa3e4b8bawane58fa3-e9858de7bdaevsftp-f/" data-title="中兴 ZTE Q7 便携路由刷Openwrt + 通过vlan设置转换lan口为wan口 + 配置vsftpd ftp服务器攻略 | Welcome to Coffeecat‘s Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/04/30/linksys-wrt1900ac-e5b9bfe5918ae8bf87e6bba4e696b9e6b395/" title="Linksys WRT1900ac 刷openwrt使用privoxy广告过滤方法（非完美）">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Linksys WRT1900ac 刷openwrt使用privoxy广告过滤方法（非完美）</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/06/24/wrt1900ac-e7bd91e58fa3e7bb93e69e84e59bbe/"  title="Linksys WRT1900AC 路由器双线（Dual Wan）/多线（Multi Wan）设置教程">
+ <strong>下一篇：</strong><br/> 
+ <span>Linksys WRT1900AC 路由器双线（Dual Wan）/多线（Multi Wan）设置教程
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div id="tagcloud" class="tagcloudlist clearfix">
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+  
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm Coffeecat. <br/>
+			This is my blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Powered by <a href="http://jekyllrb.com" target="_blank" title="jekyll">jekyll</a> and Theme by <a href="https://github.com/simpleyyt/jekyll-jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="about" target="_blank" title="Coffeecat">Coffeecat</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/assets/js/gallery.js"></script>
+<script src="/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+
+  
+
+  $(window).resize(function(){
+    getSize();
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script src="/assets/js/tagcloud.js"></script>
+<script>
+$(document).ready(function() {
+  var tags = [
+    
+  ];
+  $("#tagcloud").html(tagcloudHelper(tags));
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});
+</script>
+
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+});
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/assets/js/totop.js"></script>
+
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
+

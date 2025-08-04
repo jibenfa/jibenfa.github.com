@@ -1,0 +1,686 @@
+
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+    
+    
+    
+    
+    <title>Openwrt 设置中兴 ZTE MF190 联通 3G拨号上网攻略 | Welcome to Coffeecat‘s Blog</title>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Coffeecat">
+    
+
+    
+    <!--<%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>-->
+
+    <meta name="description" content="page.description">
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:title" content="Openwrt 设置中兴 ZTE MF190 联通 3G拨号上网攻略">
+    <meta property="og:url" content="/2015/03/20/openwrt-e8aebee7bdaee4b8ade585b4-zte-mf190-e88194e9809a-3ge68ba8e58fb7e4b88ae7bd91e694bbe795a5/">
+    <meta property="og:site_name" content="Welcome to Coffeecat‘s Blog">
+    <meta property="og:description" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Openwrt 设置中兴 ZTE MF190 联通 3G拨号上网攻略">
+    <meta name="twitter:description" content="page.description">
+    <meta name="twitter:creator" content="@">
+    <link rel="publisher" href="">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Welcome to Coffeecat‘s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/assets/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/assets/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/assets/img/jacman.jpg">
+    
+
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    
+    
+</head>
+
+  <body>
+    <header>
+        <div>
+		    
+			<div id="imglogo">
+				<a href="/"><img src="/assets/img/logo.png" alt="Welcome to Coffeecat‘s Blog" title="Welcome to Coffeecat‘s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Welcome to Coffeecat‘s Blog">Welcome to Coffeecat‘s Blog</a></h1>
+				<h2 class="blog-motto">一个不务正业的CISSP</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="/search" method="get" accept-charset="utf-8">
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+			</nav>
+</div>
+
+    </header>
+    <div id="container">
+      
+
+
+
+<div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+	<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/20/openwrt-e8aebee7bdaee4b8ade585b4-zte-mf190-e88194e9809a-3ge68ba8e58fb7e4b88ae7bd91e694bbe795a5/" title="Openwrt 设置中兴 ZTE MF190 联通 3G拨号上网攻略" itemprop="url">Openwrt 设置中兴 ZTE MF190 联通 3G拨号上网攻略</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-20 15:27:52 +0000" itemprop="datePublished"> 发表于 2015-03-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article toc-content" style="display: none;">
+		
+			<!--<%- toc(item.content) %>-->
+		
+		</div>
+		
+		<p>首先沉痛哀悼我的tplink wr720n，因为我换ram的时候，弄断了3根电路板上的焊盘引脚，导致挂了。。。<br />
+后来买了gl-inet 16M版本的小路由，直接ssh登陆mtd -r write刷了720n的op，完全好用。折腾成功在其上的3G上网，记录一下：</p>
+
+<p>1.安装必要的软件：</p>
+
+<pre class="lang:sh decode:true ">opkg update
+opkg install ppp chat comgt luci-proto-3g kmod-usb-serial kmod-usb-serial-option kmod-usb-serial-wwan usb-modeswitch kmod-usb-serial-wwan kmod-usb-acm kmod-usb2 kmod-usb-ohci kmod-usb-uhci sdparm</pre>
+
+<p>注：usb-modeswitch-data 已经在14.07版本中与usb-modeswitch合并了，所以不需要了，后面设置也与前几个版本不太相同。<br />
+<!--more--></p>
+
+<p>2.查看中兴 ZTE MF190 上网卡的vid和pid<br />
+就算都是叫MF190，其pid也有可能不同，如何查看呢，其实很简单，把它插到windows电脑的usb口，安装完驱动以后，在‘控制面板’-‘设备管理器’里面找到该设备，‘属性’-‘硬件ID’里面就有，记录下来，我的vendor=0x19d2 product=0x0117。</p>
+
+<p>3.将上网卡插到路由器usb口，并重启路由器，重启完成后，进行如下操作：</p>
+
+<pre class="lang:sh decode:true ">cd /dev
+ls</pre>
+
+<p>如果有ttlUSB0，ttlUSB1，ttlUSB2设备说明识别了，否则说明上网卡有问题。</p>
+
+<p>但是光识别没用，因为：</p>
+
+<pre class="lang:sh decode:true ">vi /etc/usb-mode.json</pre>
+
+<p>发现压根木有‘19d2:0117’这个硬件，这也是为啥我之前拨号都失败的原因，解决办法为：<br />
+由于看到别的网友的mf190是1224的，所以我就复制：</p>
+
+<pre class="lang:vim decode:true ">"19d2:1224": {
+			"*": {
+				"t_vendor": 6610,
+				"t_product": [ 130 ],
+				"mode": "StandardEject",
+				"msg": [  ]
+			}
+		},</pre>
+
+<p>修改为：</p>
+
+<pre class="lang:vim decode:true ">"19d2:0117": {
+			"*": {
+				"t_vendor": 6610,
+				"t_product": [ 130 ],
+				"mode": "StandardEject",
+				"msg": [  ]
+			}
+		},</pre>
+
+<p>贴入/etc/usb-mode.json，保存退出。</p>
+
+<p>3.按照<a href="http://wiki.openwrt.org/doc/recipes/3gdongle"><strong>官网攻略</strong></a>将vid和pid写入new_id并自启动写入：</p>
+
+<pre class="lang:sh decode:true ">vi /etc/rc.local</pre>
+
+<p>在exit 0前加入</p>
+
+<pre class="lang:vim decode:true ">echo '19d2 0117 ff' &gt; /sys/bus/usb-serial/drivers/option1/new_id</pre>
+
+<p>保存退出，重启路由。</p>
+
+<p>4.打开192.168.1.1，找到接口，添加一个接口叫‘3g’，内容为：</p>
+
+<p><a href="https://jibenfa.github.io/uploads/2015/03/QQ20150320151246.png"><img src="https://jibenfa.github.io/uploads/2015/03/QQ20150320151246.png" alt="QQ图片20150320151246" width="464" height="571" class="alignnone size-full wp-image-238" srcset="https://jibenfa.github.io/uploads/2015/03/QQ图片20150320151246.png 464w, https://jibenfa.github.io/uploads/2015/03/QQ20150320151246-244x300.png 244w" sizes="(max-width: 464px) 100vw, 464px" /></a></p>
+
+<p>保存并应用后查看系统日志。</p>
+
+<pre class="lang:vim decode:true ">Fri Mar 20 12:45:06 2015 daemon.notice pppd[7400]: pppd 2.4.7 started by root, uid 0
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: abort on (BUSY)
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: abort on (NO CARRIER)
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: abort on (ERROR)
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: report (CONNECT)
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: timeout set to 30 seconds
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: send (AT&amp;F^M)
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: expect (OK)
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: AT&amp;F^M^M
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: OK
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]:  -- got it
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: send (ATE1^M)
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: expect (OK)
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: ^M
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: ATE1^M^M
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: OK
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]:  -- got it
+Fri Mar 20 12:45:07 2015 local2.info chat[7402]: send (AT+CGDCONT=1,"IP","3gnet"^M)
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: timeout set to 30 seconds
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: expect (OK)
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: ^M
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: AT+CGDCONT=1,"IP","3gnet"^M^M
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: OK
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]:  -- got it
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: send (ATD*99#^M)
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: expect (CONNECT)
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: ^M
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: ATD*99#^M^M
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: CONNECT
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]:  -- got it
+Fri Mar 20 12:45:08 2015 local2.info chat[7402]: send (^M)
+Fri Mar 20 12:45:08 2015 daemon.info pppd[7400]: Serial connection established.
+Fri Mar 20 12:45:08 2015 daemon.info pppd[7400]: Using interface 3g-3g
+Fri Mar 20 12:45:08 2015 daemon.notice pppd[7400]: Connect: 3g-3g &lt;--&gt; /dev/ttyUSB2</pre>
+
+<p>注意，这里的拨号脚本为/etc/chatscripts/3g.chat，因为我是联通，所以拨号脚本如下：</p>
+
+<pre class="lang:vim decode:true ">ABORT   BUSY
+ABORT   'NO CARRIER'
+ABORT   ERROR
+REPORT  CONNECT
+TIMEOUT 30
+""      "AT&amp;F"
+OK      "ATE1"
+OK      'AT+CGDCONT=1,"IP","$USE_APN"'
+SAY     "Calling UMTS/GPRS"
+TIMEOUT 30
+OK      "ATD*99#"
+CONNECT ''</pre>
+
+<p><br />
+<img src="https://jibenfa.github.io/uploads/2015/03/IMG_20150320_153346.jpg" width="1000" height="618" alt="AltText" />
+<br /></p>
+  
+	</div>
+	<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <!--
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+  -->
+  
+</div>
+
+
+  <div class="article-tags">
+  <!--
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>-->
+  <span></span> <!--<%- tags.join('') %>-->
+  
+  
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://jibenfa.github.io/2015/03/20/openwrt-e8aebee7bdaee4b8ade585b4-zte-mf190-e88194e9809a-3ge68ba8e58fb7e4b88ae7bd91e694bbe795a5/" data-title="Openwrt 设置中兴 ZTE MF190 联通 3G拨号上网攻略 | Welcome to Coffeecat‘s Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+   
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/03/15/tp-link-wr720n-e7a1ace694b9e58d87e7baa716m-flashe694bbe795a5/" title="TP-Link wr720n 硬改升级16M flash攻略">
+  <strong>上一篇：</strong><br/>
+  <span>
+  TP-Link wr720n 硬改升级16M flash攻略</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/03/21/openwrt-e8b7afe794b1e599a8e4bdbfe794a8adbybye68f92e4bbb6e58ebbe5b9bfe5918a/"  title="Openwrt 路由器使用adbyby插件去除网页和视频网站广告">
+ <strong>下一篇：</strong><br/> 
+ <span>Openwrt 路由器使用adbyby插件去除网页和视频网站广告
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+
+      
+      
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside toc-content">
+ 
+ <!--<%- toc(item.content) %>-->
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div id="tagcloud" class="tagcloudlist clearfix">
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+    </ul>
+</div>
+
+  
+
+
+  
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I'm Coffeecat. <br/>
+			This is my blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+	<!--
+			<%  Array.prototype.S=String.fromCharCode(2);
+			  Array.prototype.in_array=function(e){
+    			var r=new RegExp(this.S+e+this.S);
+    			return (r.test(this.S+this.join(this.S)+this.S));
+				};
+				var cc = new Array('by','by-nc','by-nc-nd','by-nc-sa','by-nd','by-sa','zero'); %>
+		<% if (cc.in_array(theme.creative_commons) ) { %>
+				<div class="cc-license">
+          <a href="http://creativecommons.org/licenses/<%= theme.creative_commons %>/4.0" class="cc-opacity" target="_blank">
+            <img src="<%- config.root %>img/cc-<%= theme.creative_commons %>.svg" alt="Creative Commons" />
+          </a>
+        </div>
+    <% } %>
+				-->
+
+		<p class="copyright">
+		Powered by <a href="http://jekyllrb.com" target="_blank" title="jekyll">jekyll</a> and Theme by <a href="https://github.com/simpleyyt/jekyll-jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="about" target="_blank" title="Coffeecat">Coffeecat</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+<script src="/assets/js/jquery.imagesloaded.min.js"></script>
+<script src="/assets/js/gallery.js"></script>
+<script src="/assets/js/jquery.qrcode-0.12.0.min.js"></script>
+<script src="/assets/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+
+  
+
+  $(window).resize(function(){
+    getSize();
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+      
+    }
+  });
+});
+</script>
+
+
+<script src="/assets/js/tagcloud.js"></script>
+<script>
+$(document).ready(function() {
+  var tags = [
+    
+  ];
+  $("#tagcloud").html(tagcloudHelper(tags));
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#toc.toc-aside').toc({
+    title: "文章目录",
+    showEffect: "none"
+  });
+  $('#toc.toc-article').toc({
+    title: "文章目录",
+    showEffect: "show",
+    showSpeed: 0
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+/*
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      //$('.hoverqrcode').hide();
+  });
+  */
+});
+</script>
+
+
+
+
+
+
+<!--
+
+-->
+
+
+
+
+<link rel="stylesheet" href="/assets/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/assets/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      if ($(this).hasClass('emoji')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+});
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/assets/img/scrollup.png"/></a>
+	</div>
+	<script src="/assets/js/totop.js"></script>
+
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
+
