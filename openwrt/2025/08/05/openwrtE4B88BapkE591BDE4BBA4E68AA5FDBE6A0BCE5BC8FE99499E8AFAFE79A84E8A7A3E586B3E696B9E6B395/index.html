@@ -8,7 +8,7 @@
     
     
     
-    <title>今天注册了一个顶级域名，也就是现在这个coffeecat.info | Welcome to Coffeecat‘s Blog</title>
+    <title>openwrt下apk命令报FDB格式错误的解决方法 | Welcome to Coffeecat‘s Blog</title>
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="今天注册了一个顶级域名，也就是现在这个coffeecat.info">
-    <meta property="og:url" content="/%E5%85%B6%E4%BB%96/2015/02/08/hello-world/">
+    <meta property="og:title" content="openwrt下apk命令报FDB格式错误的解决方法">
+    <meta property="og:url" content="/openwrt/2025/08/05/openwrtE4B88BapkE591BDE4BBA4E68AA5FDBE6A0BCE5BC8FE99499E8AFAFE79A84E8A7A3E586B3E696B9E6B395/">
     <meta property="og:site_name" content="Welcome to Coffeecat‘s Blog">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="今天注册了一个顶级域名，也就是现在这个coffeecat.info">
+    <meta name="twitter:title" content="openwrt下apk命令报FDB格式错误的解决方法">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -97,14 +97,14 @@
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/%E5%85%B6%E4%BB%96/2015/02/08/hello-world/" title="今天注册了一个顶级域名，也就是现在这个coffeecat.info" itemprop="url">今天注册了一个顶级域名，也就是现在这个coffeecat.info</a>
+      <a href="/openwrt/2025/08/05/openwrtE4B88BapkE591BDE4BBA4E68AA5FDBE6A0BCE5BC8FE99499E8AFAFE79A84E8A7A3E586B3E696B9E6B395/" title="openwrt下apk命令报FDB格式错误的解决方法" itemprop="url">openwrt下apk命令报FDB格式错误的解决方法</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
 		
   <p class="article-time">
-    <time datetime="2015-02-08 13:08:02 +0000" itemprop="datePublished"> 发表于 2015-02-08</time>
+    <time datetime="2025-08-05 04:23:13 +0000" itemprop="datePublished"> 发表于 2025-08-05</time>
     
   </p>
 </header>
@@ -116,15 +116,23 @@
 		
 		</div>
 		
-		<div id="gallery-1" class="gallery galleryid-1 gallery-columns-3 gallery-size-thumbnail">
-  <figure class="gallery-item"> 
-  
-  <div class="gallery-icon landscape">
-    <a href="https://routeragency.com/?attachment_id=6"><img width="1728" height="1080" src="https://jibenfa.github.io/uploads/2015/02/img200706111625248125.jpg" class="attachment-thumbnail size-thumbnail" alt="" /></a>
-  </div></figure>
-</div>
+		<p>话说openwrt正式版安装命令是opkg，现在snapshot里面变成了apk。前几天尝试了一下，居然得到一个报错：</p>
 
-<p>博客开张。。。。</p>
+<pre lang="bash" line="0" colla="+">
+  
+root@OpenWrt:~# apk update
+ERROR: FDB format error (line 7002, entry 'Z')
+ERROR: Unable to read database: v2 database format error
+ERROR: Failed to open apk database: v2 database format error
+
+</pre>
+
+<p>研究了一下，其实这个报错，跟以前opkg被lock的情况有点相似，只不过是apk采用了数据库，更新的时候异常关闭导致的。
+解决方案是：</p>
+
+<p>打开/lib/apk/db 里面有个installed 的数据库，然后找到报错的行，进行修改。当然也可以简单删除这个库，只不过会导致重新安装一遍所有软件，不建议直接删。</p>
+
+<p>话说迁移到apk要慎重，以前现成的<em>.ipk的安装包统统不能用了，要重新编译打包成</em>.apk包。</p>
   
 	</div>
 	<footer class="article-footer clearfix">
@@ -134,7 +142,7 @@
       <span></span>
       
         
-        <a class="article-category-link" href="/categories/其他/">其他</a>
+        <a class="article-category-link" href="/categories/openwrt/">openwrt</a>
       
     </div>
   
@@ -144,7 +152,10 @@
       <span></span>
       
         
-        <a href="/tags/里程碑/">里程碑</a>
+        <a href="/tags/openwrt/">openwrt</a>
+      
+        
+        <a href="/tags/apk/">apk</a>
       
     </div>
   
@@ -154,7 +165,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://jibenfa.github.io/%E5%85%B6%E4%BB%96/2015/02/08/hello-world/" data-title="今天注册了一个顶级域名，也就是现在这个coffeecat.info | Welcome to Coffeecat‘s Blog" data-tsina="" class="share clearfix">
+	  <div data-url="https://jibenfa.github.io/openwrt/2025/08/05/openwrtE4B88BapkE591BDE4BBA4E68AA5FDBE6A0BCE5BC8FE99499E8AFAFE79A84E8A7A3E586B3E696B9E6B395/" data-title="openwrt下apk命令报FDB格式错误的解决方法 | Welcome to Coffeecat‘s Blog" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -166,14 +177,14 @@
 	
 <nav class="article-nav clearfix">
  
-
-<div class="next">
-<a href="/linux/%E7%BC%96%E7%A8%8B/2015/02/09/debian-7-e9858de7bdael2tp-ipsec-e7a791e5ada6e4b88ae7bd91e4b880e994aee5ae89e8a385e8849ae69cac/"  title="Debian 7 配置L2TP IPSEC 科学上网一键安装脚本">
- <strong>下一篇：</strong><br/> 
- <span>Debian 7 配置L2TP IPSEC 科学上网一键安装脚本
-</span>
+ <div class="prev" >
+ <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/07/30/openwrtE4B88Bv2rayE9808FE6988EE4BBA3E79086vE9858DE7BDAEE4BB8EiptablesE59091nftablesE8BF81E7A7BB/" title="openwrt下v2ray透明代理配置从iptables向nftables迁移">
+  <strong>上一篇：</strong><br/>
+  <span>
+  openwrt下v2ray透明代理配置从iptables向nftables迁移</span>
 </a>
 </div>
+
 
 </nav>
 

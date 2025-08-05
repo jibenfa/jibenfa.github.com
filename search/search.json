@@ -519,6 +519,14 @@
         "url": "/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/07/30/openwrtE4B88Bv2rayE9808FE6988EE4BBA3E79086vE9858DE7BDAEE4BB8EiptablesE59091nftablesE8BF81E7A7BB/"
       },
     
+      {
+        "title": "openwrt下apk命令报FDB格式错误的解决方法",
+        "date": "2025 年 08 月",
+        "excerpt": "话说openwrt正式版安装命令是opkg，现在snapshot里面变成了apk。前几天尝试了一下，居然得到一个报错：\n",
+        
+        "url": "/openwrt/2025/08/05/openwrtE4B88BapkE591BDE4BBA4E68AA5FDBE6A0BCE5BC8FE99499E8AFAFE79A84E8A7A3E586B3E696B9E6B395/"
+      },
+    
   
   
   
@@ -656,6 +664,14 @@
     "excerpt": "\n",
     
     "url": "/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"
+  },
+  
+  {
+    "title": "标签：apk",
+    "date": " ",
+    "excerpt": "\n",
+    
+    "url": "/tags/apk/"
   }
   
 ]
