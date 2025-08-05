@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+{% assign lang = site.data.languages[site.language] %}
+<div id="main" class="archive-nav clearfix">
+  <div id="archive-page">
+      <h1 itemprop="name">标签：{{ page.tag }}</h1>
+    {% assign posts = site.tags[page.tag] %}
+    {% if posts and posts.size > 0 %}
+      {% for post in posts %}
+        <section class="post" itemscope itemprop="blogPost">
+          {% if post.link %}
+            <a href="{{ post.link }}" target="_blank">
+          {% else %}
+            <a href="{{ site.baseurl }}{{ post.url }}" title="{{ post.title }}" itemprop="url">
+          {% endif %}
+            <h1 itemprop="name">
+              {{ post.date | date: "%Y-%m-%d" }} {% if post.title %}{{ post.title }}{% else %}&nbsp;{% endif %}
+            </h1>
+          </a>
+        </section>
+      {% endfor %}
+    {% else %}
+      <p>该标签下暂无文章。</p>
+    {% endif %}
+  </div>
+</div>
+

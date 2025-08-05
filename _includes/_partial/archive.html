@@ -58,33 +58,33 @@ if (page.archive){
     </ul>
  </div>
   {% endif %}
-  {% if page.layout == 'categories' %}
-  
+{% if page.layout == 'categories' %}
   <ul class="archive-list">
-  <div class="archiveslist archive-float clearfix">
-    {% for category in site.categories  %}
-    <li class="archive-list-item">
-    <a class="archive-list-link" href="#{{ category[0] }}">{{ category[0] }}</a>
-    <span class="archive-list-count">{{ category[1] | size }}</span>
-    </li>
-    {% endfor %}
- </div>
- </ul>
- {% endif %}
- 
-  {% if page.layout == 'tags' %}
-  
+    <div class="archiveslist archive-float clearfix">
+      {% for category in site.categories %}
+        {% assign slug = category[0] | slugify %}
+        <li class="archive-list-item">
+          <a class="archive-list-link" href="/categories/{{ slug }}/">{{ category[0] }}</a>
+          <span class="archive-list-count">{{ category[1] | size }}</span>
+        </li>
+      {% endfor %}
+    </div>
+  </ul>
+{% endif %}
+
+{% if page.layout == 'tags' %}
   <ul class="archive-list">
-  <div class="archiveslist archive-float clearfix">
-    {% for tag in site.tags  %}
-    <li class="archive-list-item">
-    <a class="archive-list-link" href="#{{ tag[0] }}">{{ tag[0] }}</a>
-    <span class="archive-list-count">{{ tag[1] | size }}</span>
-    </li>
-    {% endfor %}
- </div>
- </ul>
- {% endif %}
+    <div class="archiveslist archive-float clearfix">
+      {% for tag in site.tags %}
+        {% assign slug = tag[0] | slugify %}
+        <li class="archive-list-item">
+          <a class="archive-list-link" href="/tags/{{ slug }}/">{{ tag[0] }}</a>
+          <span class="archive-list-count">{{ tag[1] | size }}</span>
+        </li>
+      {% endfor %}
+    </div>
+  </ul>
+{% endif %}
  
 </div>
 <div id="main" class="archive-part clearfix">

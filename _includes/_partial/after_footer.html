@@ -65,7 +65,7 @@ $(document).ready(function(){
 $(document).ready(function() {
   var tags = [
     {% for item in site.tags %}
-    { "name": "{{ item[0] }}", "path": "{{ site.baseurl }}/tags/#{{ item[0] }}", "length": {{ item[1] | size }} },
+    { "name": "{{ item[0] }}", "path": "{{ site.baseurl }}/tags/{{ item[0] | slugify }}/", "length": {{ item[1] | size }} },
     {% endfor %}
   ];
   $("#tagcloud").html(tagcloudHelper(tags));
@@ -254,10 +254,9 @@ $(document).ready(function(){
     if (document.location.hash) {
         show_post(document.location.hash);
     }
-    $('a[href*=#]').click(function() {
-        if (this.hash) {
-            show_post(this.hash);
-        }
+    $('a[href^="#"]').click(function(e) {
+      e.preventDefault(); // 阻止默认行为
+      show_post(this.hash);
     });
 
 });
