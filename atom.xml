@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-05T06:51:03+00:00</updated>
+ <updated>2025-08-05T07:22:15+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -3062,8 +3062,7 @@ Connecting to 127.0.0.1:9000 (127.0.0.1:9000)
 
 THE ACTIVE CODE IS: &lt;/pre&gt;
 
-&lt;p&gt;常用软件例如chinadns可使用imagebuilder编译。&lt;br /&gt;
-**&amp;lt;/p&amp;gt;&lt;/p&gt;
+&lt;p&gt;常用软件例如chinadns可使用imagebuilder编译。&lt;/p&gt;
 
 &lt;p&gt;参考文档：&lt;br /&gt;
 1.http://lists.infradead.org/pipermail/lede-dev/2016-June/001145.html&lt;br /&gt;
