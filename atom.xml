@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-05T07:39:35+00:00</updated>
+ <updated>2025-08-05T07:41:12+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -28,12 +28,13 @@ ERROR: Failed to open apk database: v2 database format error
 
 &lt;/pre&gt;
 
-&lt;p&gt;研究了一下，其实这个报错，跟以前opkg被lock的情况有点相似，只不过是apk采用了数据库，更新的时候异常关闭导致的。
-解决方案是：&lt;/p&gt;
+&lt;p&gt;研究了一下，其实这个报错，跟以前opkg被lock的情况有点相似，只不过是apk采用了数据库，更新的时候异常关闭导致的。&lt;/p&gt;
+
+&lt;p&gt;解决方案是：&lt;/p&gt;
 
 &lt;p&gt;打开/lib/apk/db 里面有个installed 的数据库，然后找到报错的行，进行修改。当然也可以简单删除这个库，只不过会导致重新安装一遍所有软件，不建议直接删。&lt;/p&gt;
 
-&lt;p&gt;话说迁移到apk要慎重，以前现成的&lt;em&gt;.ipk的安装包统统不能用了，要重新编译打包成&lt;/em&gt;.apk包。&lt;/p&gt;
+&lt;p&gt;话说使用snapshot要慎重，用apk的话以前现成的&lt;em&gt;.ipk的安装包统统不能用了，要重新编译打包成&lt;/em&gt;.apk包。另外snapshot下缺失不少软件，例如mtk的bind-dig就没有，还有就是稳定性的问题。&lt;/p&gt;
 </content>
  </entry>
  
