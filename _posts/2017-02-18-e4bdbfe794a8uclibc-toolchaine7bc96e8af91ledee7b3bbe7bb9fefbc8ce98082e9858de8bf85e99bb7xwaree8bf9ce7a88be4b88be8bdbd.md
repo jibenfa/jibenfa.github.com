@@ -122,7 +122,7 @@ Connecting to 127.0.0.1:9000 (127.0.0.1:9000)
 THE ACTIVE CODE IS: </pre>
 
 常用软件例如chinadns可使用imagebuilder编译。  
-**</p> 
+
 
 参考文档：  
 1.http://lists.infradead.org/pipermail/lede-dev/2016-June/001145.html  
