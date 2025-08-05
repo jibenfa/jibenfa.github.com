@@ -88,7 +88,8 @@
       </header>
       <div id="container">
         
-<!--
+
+ <!--
 <%
 var title = '';
 var icon = '';
@@ -117,46 +118,51 @@ if (page.archive){
 <div class="archive-title" >
   <h2 class="category-icon"><span class='archive-folder'>分类</span></h2>
   
-  
-  
+
   <ul class="archive-list">
-  <div class="archiveslist archive-float clearfix">
-    
-    <li class="archive-list-item">
-    <a class="archive-list-link" href="#其他">其他</a>
-    <span class="archive-list-count">5</span>
-    </li>
-    
-    <li class="archive-list-item">
-    <a class="archive-list-link" href="#linux">linux</a>
-    <span class="archive-list-count">9</span>
-    </li>
-    
-    <li class="archive-list-item">
-    <a class="archive-list-link" href="#编程">编程</a>
-    <span class="archive-list-count">5</span>
-    </li>
-    
-    <li class="archive-list-item">
-    <a class="archive-list-link" href="#科学上网">科学上网</a>
-    <span class="archive-list-count">15</span>
-    </li>
-    
-    <li class="archive-list-item">
-    <a class="archive-list-link" href="#openwrt">openwrt</a>
-    <span class="archive-list-count">44</span>
-    </li>
-    
-    <li class="archive-list-item">
-    <a class="archive-list-link" href="#虚拟化">虚拟化</a>
-    <span class="archive-list-count">2</span>
-    </li>
-    
- </div>
- </ul>
- 
- 
-  
+    <div class="archiveslist archive-float clearfix">
+      
+        
+        <li class="archive-list-item">
+          <a class="archive-list-link" href="/categories/其他/">其他</a>
+          <span class="archive-list-count">5</span>
+        </li>
+      
+        
+        <li class="archive-list-item">
+          <a class="archive-list-link" href="/categories/linux/">linux</a>
+          <span class="archive-list-count">9</span>
+        </li>
+      
+        
+        <li class="archive-list-item">
+          <a class="archive-list-link" href="/categories/编程/">编程</a>
+          <span class="archive-list-count">5</span>
+        </li>
+      
+        
+        <li class="archive-list-item">
+          <a class="archive-list-link" href="/categories/科学上网/">科学上网</a>
+          <span class="archive-list-count">15</span>
+        </li>
+      
+        
+        <li class="archive-list-item">
+          <a class="archive-list-link" href="/categories/openwrt/">openwrt</a>
+          <span class="archive-list-count">44</span>
+        </li>
+      
+        
+        <li class="archive-list-item">
+          <a class="archive-list-link" href="/categories/虚拟化/">虚拟化</a>
+          <span class="archive-list-count">2</span>
+        </li>
+      
+    </div>
+  </ul>
+
+
+
  
 </div>
 <div id="main" class="archive-part clearfix">
@@ -1327,6 +1333,7 @@ if (page.archive){
   </div>
 </div>
 
+
       </div>
       <footer><div id="footer" >
 	
@@ -1437,25 +1444,25 @@ $(document).ready(function(){
 $(document).ready(function() {
   var tags = [
     
-    { "name": "里程碑", "path": "/tags/#里程碑", "length": 1 },
+    { "name": "里程碑", "path": "/tags/里程碑/", "length": 1 },
     
-    { "name": "linux", "path": "/tags/#linux", "length": 9 },
+    { "name": "linux", "path": "/tags/linux/", "length": 9 },
     
-    { "name": "编程", "path": "/tags/#编程", "length": 5 },
+    { "name": "编程", "path": "/tags/编程/", "length": 5 },
     
-    { "name": "科学上网", "path": "/tags/#科学上网", "length": 14 },
+    { "name": "科学上网", "path": "/tags/科学上网/", "length": 14 },
     
-    { "name": "插件", "path": "/tags/#插件", "length": 1 },
+    { "name": "插件", "path": "/tags/插件/", "length": 1 },
     
-    { "name": "openwrt", "path": "/tags/#openwrt", "length": 44 },
+    { "name": "openwrt", "path": "/tags/openwrt/", "length": 44 },
     
-    { "name": "Microsoft", "path": "/tags/#Microsoft", "length": 1 },
+    { "name": "Microsoft", "path": "/tags/microsoft/", "length": 1 },
     
-    { "name": "锐速", "path": "/tags/#锐速", "length": 1 },
+    { "name": "锐速", "path": "/tags/锐速/", "length": 1 },
     
-    { "name": "debian", "path": "/tags/#debian", "length": 1 },
+    { "name": "debian", "path": "/tags/debian/", "length": 1 },
     
-    { "name": "虚拟化", "path": "/tags/#虚拟化", "length": 2 },
+    { "name": "虚拟化", "path": "/tags/虚拟化/", "length": 2 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));
@@ -1507,10 +1514,9 @@ $(document).ready(function(){
     if (document.location.hash) {
         show_post(document.location.hash);
     }
-    $('a[href*=#]').click(function() {
-        if (this.hash) {
-            show_post(this.hash);
-        }
+    $('a[href^="#"]').click(function(e) {
+      e.preventDefault(); // 阻止默认行为
+      show_post(this.hash);
     });
 
 });
