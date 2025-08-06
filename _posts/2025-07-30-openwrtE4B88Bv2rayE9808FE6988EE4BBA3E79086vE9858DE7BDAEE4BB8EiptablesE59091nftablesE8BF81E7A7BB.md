@@ -17,7 +17,7 @@ tags:
 
 1）修改/etc/init.d/v2ray
 
-<figure class="highlight"><pre><code class="language-r" data-lang="r">
+<pre lang="bash" line="0"  colla="+">
   
 #!/bin/sh /etc/rc.common
 #
@@ -287,7 +287,7 @@ service_triggers() {
     procd_add_reload_trigger "advancedconfig"
 }
       
-</code></pre></figure>
+</pre>
 
 2)修改/etc/dnsmasq.d/下的conf文件：
 
