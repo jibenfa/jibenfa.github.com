@@ -681,8 +681,34 @@ $(document).ready(function(){
 });
 </script>
 <script type="module">
-    import hljs from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+  import hljs from '/assets/js/highlight.js';
+
+  // 获取页面中所有使用了语言的 <code class="language-xxx"> 块
+  const codeBlocks = document.querySelectorAll('pre code[class^="language-"]');
+
+  // 提取所有需要的语言类型（去重）
+  const languageSet = new Set();
+  codeBlocks.forEach((block) => {
+    const lang = block.className.match(/language-([\w\d]+)/);
+    if (lang && lang[1]) {
+      languageSet.add(lang[1]);
+    }
+  });
+
+  // 动态导入本地语言模块
+  const languagePromises = Array.from(languageSet).map(async (lang) => {
+    try {
+      const module = await import(`/assets/js/languages/${lang}.min.js`);
+      hljs.registerLanguage(lang, module.default);
+    } catch (err) {
+      console.warn(`Language module for "${lang}" not found.`);
+    }
+  });
+
+  // 等全部语言模块注册后再高亮
+  Promise.all(languagePromises).then(() => {
     hljs.highlightAll();
+  });
 </script>
 
 
