@@ -2,8 +2,9 @@
 exclude: [".rvmrc", ".rbenv-version", "README.md", "README_en.md", "Rakefile", "changelog.md"]
 
 #### Code Style
-# From https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/
-codestyle: base16/dirtysea.css
+# Downloaded From https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/
+# Put it in assets/css/
+codestyle: dirtysea.css
 
 #### Permalink
 # For more see: http://jekyllrb.com/docs/permalinks/
