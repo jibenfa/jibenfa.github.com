@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-06T01:13:32+00:00</updated>
+ <updated>2025-08-06T01:13:42+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -19,14 +19,14 @@
    <id>https://jibenfa.github.io/openwrt/2025/08/05/openwrtE4B88BapkE591BDE4BBA4E68AA5FDBE6A0BCE5BC8FE99499E8AFAFE79A84E8A7A3E586B3E696B9E6B395</id>
    <content type="html">&lt;p&gt;话说openwrt正式版安装命令是opkg，现在snapshot里面变成了apk。前几天尝试了一下，居然得到一个报错：&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;
+&lt;pre lang=&quot;bash&quot; line=&quot;0&quot; colla=&quot;+&quot;&gt;
   
 root@OpenWrt:~# apk update
 ERROR: FDB format error (line 7002, entry &apos;Z&apos;)
 ERROR: Unable to read database: v2 database format error
 ERROR: Failed to open apk database: v2 database format error
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;/pre&gt;
 
 &lt;p&gt;研究了一下，其实这个报错，跟以前opkg被lock的情况有点相似，只不过是apk采用了数据库，更新的时候异常关闭导致的。&lt;/p&gt;
 
