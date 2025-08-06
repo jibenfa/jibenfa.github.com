@@ -17,13 +17,13 @@ Let&#8217;s Encrypt 是一个将于2015年末推出的数字证书认证机构�
 
 假如你是example.com 的所有者，只要在server端登录，并执行：
 
-<pre class="lang:sh decode:true " >wget https://dl.eff.org/certbot-auto
+<pre><code class="language-sh">wget https://dl.eff.org/certbot-auto
 chmod a+x certbot-auto
-./certbot-auto certonly --webroot -w /var/www/example -d example.com -d www.example.com</pre>
+./certbot-auto certonly --webroot -w /var/www/example -d example.com -d www.example.com</code></pre>
 
 如果之前域名解析正常可以访问的话，会有如下提示：
 
-<pre class="lang:vim decode:true " >IMPORTANT NOTES:
+<pre><code class="language-vim">IMPORTANT NOTES:
  - Congratulations! Your certificate and chain have been saved at
    /etc/letsencrypt/live/example.com/fullchain.pem. Your cert will
    expire on 2016-08-29. To obtain a new or tweaked version of this
@@ -33,13 +33,13 @@ chmod a+x certbot-auto
  - If you like Certbot, please consider supporting our work by:
 
    Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
-   Donating to EFF:                    https://eff.org/donate-le</pre>
+   Donating to EFF:                    https://eff.org/donate-le</code></pre>
 
 说明证书链和私钥、证书已经产生了。。。
 
 如果失败，则会有类似提示：
 
-<pre class="lang:vim decode:true " >Failed authorization procedure. www.example.com (http-01): urn:acme:error:unauthorized :: The client lacks sufficient authorization :: Invalid response from http://www.example.com/.well-known/acme-challenge/OJvVsXKC4odxeV4darP05x4T7-ymOykX0UT6jqh0rees: "&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
+<pre><code class="language-vim">Failed authorization procedure. www.example.com (http-01): urn:acme:error:unauthorized :: The client lacks sufficient authorization :: Invalid response from http://www.example.com/.well-known/acme-challenge/OJvVsXKC4odxeV4darP05x4T7-ymOykX0UT6jqh0rees: "&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
 &lt;html&gt;&lt;head&gt;
 &lt;title&gt;403 Forbidden&lt;/title&gt;
 &lt;/head&gt;&lt;body&gt;
@@ -48,13 +48,13 @@ chmod a+x certbot-auto
 
 IMPORTANT NOTES:
  - The following errors were reported by the server:
-……</pre>
+……</code></pre>
 
 这就需要另外改配置了。。。
 
 然后修改一下apache的配置文件：
 
-<pre class="lang:vim decode:true " ># domain: example.com
+<pre><code class="language-vim"># domain: example.com
 # public: /var/www/example.com/public_html/
 
 NameVirtualHost *:443  
@@ -99,21 +99,21 @@ Deny from all
   DocumentRoot /var/www/example.com/public_html/
   ServerName routeragency.com
   ServerAlias www.example.com www.routeragency.com example.com
-&lt;/VirtualHost&gt;</pre>
+&lt;/VirtualHost&gt;</code></pre>
 
 然后重启apache服务：
 
-<pre class="lang:sh decode:true " >service apache2 restart
-</pre>
+<pre><code class="language-sh">service apache2 restart
+</code></pre>
 
 最后在crotab中设置2个月更新一次证书（因为这个机构的证书只有3个月有效期）：
 
-<pre class="lang:sh decode:true " >crontab -e
-</pre>
+<pre><code class="language-sh">crontab -e
+</code></pre>
 
 添加定时任务
 
-<pre class="lang:sh decode:true " >0 0 1 */2 * xxx/certbot/certbot-auto renew && /etc/init.d/apache2 restart</pre>
+<pre><code class="language-sh">0 0 1 */2 * xxx/certbot/certbot-auto renew && /etc/init.d/apache2 restart</code></pre>
 
 搞定，简单吧。。。  
 可以到www.ssllabs.com测试一下评级，满足一下虚荣心。。。 

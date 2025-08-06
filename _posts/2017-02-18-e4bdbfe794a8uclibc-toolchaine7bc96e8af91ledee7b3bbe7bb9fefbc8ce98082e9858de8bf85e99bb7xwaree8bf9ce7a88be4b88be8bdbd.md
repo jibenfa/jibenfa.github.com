@@ -17,15 +17,15 @@ tags:
 **1.下载LEDE源码，这个很简单：**  
 <!--more-->
 
-<pre class="lang:sh decode:true " >git clone https://git.lede-project.org/source.git
+<pre><code class="language-sh">git clone https://git.lede-project.org/source.git
 cd source
 ./scripts/feeds update -a
-./scripts/feeds install -a</pre>
+./scripts/feeds install -a</code></pre>
 
 **2.修改Toolchain，以便使用uClibc：**  
 (1).修改/toolchain/Config.in
 
-<pre class="lang:vim decode:true " >--- a/toolchain/Config.in
+<pre><code class="language-vim">--- a/toolchain/Config.in
 +++ b/toolchain/Config.in
  
  	config LIBC_USE_UCLIBC
@@ -33,11 +33,11 @@ cd source
 -		bool "Use uClibc"
 +		bool "Use uClibc-ng"
  		depends on !(aarch64 || aarch64_be)
--		depends on BROKEN || !(arm || armeb || i386 || x86_64 || mips || mipsel || mips64 || mips64el || powerpc)</pre>
+-		depends on BROKEN || !(arm || armeb || i386 || x86_64 || mips || mipsel || mips64 || mips64el || powerpc)</code></pre>
 
 (2).修改/toolchain/uClibc/Makefile 
 
-<pre class="lang:vim decode:true " >--- a/toolchain/uClibc/Makefile
+<pre><code class="language-vim">--- a/toolchain/uClibc/Makefile
 +++ b/toolchain/uClibc/Makefile
 
  define Host/SetToolchainInfo
@@ -46,11 +46,11 @@ cd source
 +	$(SED) 's,^\(LIBC_URL\)=.*,\1=http://www.uclibc-ng.org/,' $(TOOLCHAIN_DIR)/info.mk
  	$(SED) 's,^\(LIBC_VERSION\)=.*,\1=$(PKG_VERSION),' $(TOOLCHAIN_DIR)/info.mk
  	$(SED) 's,^\(LIBC_SO_VERSION\)=.*,\1=$(LIBC_SO_VERSION),' $(TOOLCHAIN_DIR)/info.mk
- endef</pre>
+ endef</code></pre>
 
 (3).修改toolchain/uClibc/headers/Makefile
 
-<pre class="lang:vim decode:true " >--- a/toolchain/uClibc/headers/Makefile
+<pre><code class="language-vim">--- a/toolchain/uClibc/headers/Makefile
 +++ b/toolchain/uClibc/headers/Makefile
  
  		CC="$(TARGET_CC)" \
@@ -58,7 +58,7 @@ cd source
  		ARCH="$(CONFIG_ARCH)" \
 -		pregen \
  		install_headers
- endef</pre>
+ endef</code></pre>
 
 (4).如果要修改使用的uclibc-ng版本，需要修改toolchain/uClibc/common.mk里面的版本号和对应sha值，默认1.0.22不用修改了。
 
@@ -66,16 +66,16 @@ cd source
 
 **3.编译系统**
 
-<pre class="lang:sh decode:true " >make menuconfig</pre>
+<pre><code class="language-sh">make menuconfig</code></pre>
 
 通过advanced configuration options (for developers) > Toolchain Options > c library > uclibc-ng  
 其他自己选择。保存.config后，输入：
 
-<pre class="lang:sh decode:true " >nohup ./autocompile.sh &</pre>
+<pre><code class="language-sh">nohup ./autocompile.sh &</code></pre>
 
 自动编译脚本autocompile.sh 内容为：
 
-<pre class="lang:vim decode:true " >if [ "$1" != "-f" ] ; then
+<pre><code class="language-vim">if [ "$1" != "-f" ] ; then
         IGNORE_ERRORS=1 make 2&gt;&1| tee errors.txt
 
         rm build_*.txt
@@ -87,7 +87,7 @@ for i in $(grep "failed to build" errors.txt | sed 's/^.*ERROR:[[:space:]]*\([^[
                 make ${i}-compile V=99 &gt; build_${i##*/}.txt 2&gt;&1 || echo ${i} : Build failed, see build_${i##*/}.txt
         fi
 done
-</pre>
+</code></pre>
 
 等几个小时以后就可以在source/bin目录下找到编译完成的系统了，编译过程中另外一个ssh登录，通过errors.txt和nohup.out查看编译进度，原ssh窗口可以关闭。
 
@@ -95,13 +95,13 @@ done
 可以通过命令行sysupgrade -v xxxx.bin或者通过luci网页升级系统。  
 升级完成后，由于uclibc-ng 1.0.18及之后版本将libpthread, libcrypt, libdl, libm, libutil等库合并到了libuClibc中，需要link一些libuClibc，以便迅雷xware可以使用：
 
-<pre class="lang:sh decode:true " >cd /lib
+<pre><code class="language-sh">cd /lib
 ln -s libuClibc-1.0.22.so libdl.so.0
-ln -s libuClibc-1.0.22.so  libpthread.so.0 </pre>
+ln -s libuClibc-1.0.22.so  libpthread.so.0 </code></pre>
 
 然后将Xware1.0.31\_mipsel\_32_uclibc上传路由，运行:
 
-<pre class="lang:sh decode:true " >root@LEDE:~/xunlei# ./portal
+<pre><code class="language-sh">root@LEDE:~/xunlei# ./portal
 initing...
 try stopping xunlei service first...
 killall: ETMDaemon: no process killed
@@ -119,7 +119,7 @@ execv: /root/xunlei/lib/ETMDaemon.
 getting xunlei service info...
 Connecting to 127.0.0.1:9000 (127.0.0.1:9000)
 
-THE ACTIVE CODE IS: </pre>
+THE ACTIVE CODE IS: </code></pre>
 
 常用软件例如chinadns可使用imagebuilder编译。  
 

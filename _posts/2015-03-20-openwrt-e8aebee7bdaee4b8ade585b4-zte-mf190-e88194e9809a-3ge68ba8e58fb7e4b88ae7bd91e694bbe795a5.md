@@ -14,8 +14,8 @@ tags:
 
 1.安装必要的软件：
 
-<pre class="lang:sh decode:true " >opkg update
-opkg install ppp chat comgt luci-proto-3g kmod-usb-serial kmod-usb-serial-option kmod-usb-serial-wwan usb-modeswitch kmod-usb-serial-wwan kmod-usb-acm kmod-usb2 kmod-usb-ohci kmod-usb-uhci sdparm</pre>
+<pre><code class="language-sh">opkg update
+opkg install ppp chat comgt luci-proto-3g kmod-usb-serial kmod-usb-serial-option kmod-usb-serial-wwan usb-modeswitch kmod-usb-serial-wwan kmod-usb-acm kmod-usb2 kmod-usb-ohci kmod-usb-uhci sdparm</code></pre>
 
 注：usb-modeswitch-data 已经在14.07版本中与usb-modeswitch合并了，所以不需要了，后面设置也与前几个版本不太相同。  
 <!--more-->
@@ -25,47 +25,47 @@ opkg install ppp chat comgt luci-proto-3g kmod-usb-serial kmod-usb-serial-option
 
 3.将上网卡插到路由器usb口，并重启路由器，重启完成后，进行如下操作：
 
-<pre class="lang:sh decode:true " >cd /dev
-ls</pre>
+<pre><code class="language-sh">cd /dev
+ls</code></pre>
 
 如果有ttlUSB0，ttlUSB1，ttlUSB2设备说明识别了，否则说明上网卡有问题。
 
 但是光识别没用，因为：
 
-<pre class="lang:sh decode:true " >vi /etc/usb-mode.json</pre>
+<pre><code class="language-sh">vi /etc/usb-mode.json</code></pre>
 
 发现压根木有‘19d2:0117’这个硬件，这也是为啥我之前拨号都失败的原因，解决办法为：  
 由于看到别的网友的mf190是1224的，所以我就复制：
 
-<pre class="lang:vim decode:true " >"19d2:1224": {
+<pre><code class="language-vim">"19d2:1224": {
 			"*": {
 				"t_vendor": 6610,
 				"t_product": [ 130 ],
 				"mode": "StandardEject",
 				"msg": [  ]
 			}
-		},</pre>
+		},</code></pre>
 
 修改为：
 
-<pre class="lang:vim decode:true " >"19d2:0117": {
+<pre><code class="language-vim">"19d2:0117": {
 			"*": {
 				"t_vendor": 6610,
 				"t_product": [ 130 ],
 				"mode": "StandardEject",
 				"msg": [  ]
 			}
-		},</pre>
+		},</code></pre>
 
 贴入/etc/usb-mode.json，保存退出。
 
 3.按照[**官网攻略**](http://wiki.openwrt.org/doc/recipes/3gdongle)将vid和pid写入new_id并自启动写入：
 
-<pre class="lang:sh decode:true " >vi /etc/rc.local</pre>
+<pre><code class="language-sh">vi /etc/rc.local</code></pre>
 
 在exit 0前加入
 
-<pre class="lang:vim decode:true " >echo '19d2 0117 ff' &gt; /sys/bus/usb-serial/drivers/option1/new_id</pre>
+<pre><code class="language-vim">echo '19d2 0117 ff' &gt; /sys/bus/usb-serial/drivers/option1/new_id</code></pre>
 
 保存退出，重启路由。
 
@@ -75,7 +75,7 @@ ls</pre>
 
 保存并应用后查看系统日志。
 
-<pre class="lang:vim decode:true " >Fri Mar 20 12:45:06 2015 daemon.notice pppd[7400]: pppd 2.4.7 started by root, uid 0
+<pre><code class="language-vim">Fri Mar 20 12:45:06 2015 daemon.notice pppd[7400]: pppd 2.4.7 started by root, uid 0
 Fri Mar 20 12:45:07 2015 local2.info chat[7402]: abort on (BUSY)
 Fri Mar 20 12:45:07 2015 local2.info chat[7402]: abort on (NO CARRIER)
 Fri Mar 20 12:45:07 2015 local2.info chat[7402]: abort on (ERROR)
@@ -108,11 +108,11 @@ Fri Mar 20 12:45:08 2015 local2.info chat[7402]:  -- got it
 Fri Mar 20 12:45:08 2015 local2.info chat[7402]: send (^M)
 Fri Mar 20 12:45:08 2015 daemon.info pppd[7400]: Serial connection established.
 Fri Mar 20 12:45:08 2015 daemon.info pppd[7400]: Using interface 3g-3g
-Fri Mar 20 12:45:08 2015 daemon.notice pppd[7400]: Connect: 3g-3g &lt;--&gt; /dev/ttyUSB2</pre>
+Fri Mar 20 12:45:08 2015 daemon.notice pppd[7400]: Connect: 3g-3g &lt;--&gt; /dev/ttyUSB2</code></pre>
 
 注意，这里的拨号脚本为/etc/chatscripts/3g.chat，因为我是联通，所以拨号脚本如下：
 
-<pre class="lang:vim decode:true " >ABORT   BUSY
+<pre><code class="language-vim">ABORT   BUSY
 ABORT   'NO CARRIER'
 ABORT   ERROR
 REPORT  CONNECT
@@ -123,7 +123,7 @@ OK      'AT+CGDCONT=1,"IP","$USE_APN"'
 SAY     "Calling UMTS/GPRS"
 TIMEOUT 30
 OK      "ATD*99#"
-CONNECT ''</pre>
+CONNECT ''</code></pre>
 
 <br>
 <img src="https://jibenfa.github.io/uploads/2015/03/IMG_20150320_153346.jpg" width="1000" height="618" alt="AltText" />

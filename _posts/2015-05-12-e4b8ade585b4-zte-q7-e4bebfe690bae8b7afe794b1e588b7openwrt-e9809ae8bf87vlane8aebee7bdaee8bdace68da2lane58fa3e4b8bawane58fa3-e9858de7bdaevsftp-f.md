@@ -24,7 +24,7 @@ tags:
 1.telnet登陆q7，默认ip是192.168.1.254，用户名和密码是admin和opendoor（瀑布汗的密码）  
 2.刷入[恩山H大的breed](http://www.right.com.cn/forum/thread-161906-1-1.html)：把u盘用fat32分区以后拷贝 插入usb口，在q7的telnet命令行下运行mount，就可以看到u盘mount路径例如/media/sdp1/，然后运行：
 
-<pre class="lang:sh decode:true " >mtd_write -r -e mtd1 write /media/sdp1/breed-mt7620-zte-q7.bin mtd1</pre>
+<pre><code class="language-sh">mtd_write -r -e mtd1 write /media/sdp1/breed-mt7620-zte-q7.bin mtd1</code></pre>
 
 然后等几分钟。。这个breed是H大搞出来的替代不死uboot的东东，非常之好用！
 
@@ -34,19 +34,19 @@ tags:
 
 3)然后安装SD读卡器驱动，以便识别SD卡：
 
-<pre class="lang:sh decode:true " >opkg install kmod-sdhci-mt7620</pre>
+<pre><code class="language-sh">opkg install kmod-sdhci-mt7620</code></pre>
 
 装的同时会安装几个dependent的软件，例如kmod-sdhci和kmod-mmc  
 装完以后插入sd卡或者带套的tf卡，我是把tf卡分2个区，ext4的2.6G，swap的1.2G  
 重启完q7路由后就会发现在/dev下多了几个mmc开头的东东，其中mmcblk0p1就是我的2.6G的ext4分区，mmcblk0p5是1.2G的swap分区，然后运行
 
-<pre class="lang:sh decode:true " >block detect &gt; /etc/config/fstab
+<pre><code class="language-sh">block detect &gt; /etc/config/fstab
 mkdir /mnt/anonymous
-vi /etc/config/fstab</pre>
+vi /etc/config/fstab</code></pre>
 
 修改为（uuid每个人的不一样，不改）：
 
-<pre class="lang:vim decode:true " >config global
+<pre><code class="language-vim">config global
 	option anon_swap '0'
 	option anon_mount '0'
 	option auto_swap '1'
@@ -61,17 +61,17 @@ config mount
 
 config swap
 	option device '/dev/mmcblk0p5'
-	option enabled '1'</pre>
+	option enabled '1'</code></pre>
 
 4）安装vsftpd
 
-<pre class="lang:sh decode:true " >opkg install vsftpd
+<pre><code class="language-sh">opkg install vsftpd
 vi /etc/vsftpd.conf
-</pre>
+</code></pre>
 
 修改为：
 
-<pre class="lang:tsql decode:true " >background=YES
+<pre><code class="language-tsql">background=YES
 listen=YES
 
 #允许匿名用户
@@ -110,19 +110,19 @@ session_support=NO
 #syslog_enable=YES
 #xferlog_enable=YES
 #xferlog_file=/var/log/vsftpd.log
-#xferlog_std_format=YES</pre>
+#xferlog_std_format=YES</code></pre>
 
-<pre class="lang:sh decode:true " >chmod -R 557 /mnt/anonymous 
+<pre><code class="language-sh">chmod -R 557 /mnt/anonymous 
 chmod a-w /mnt/anonymous/
-</pre>
+</code></pre>
 
 5）修改lan口为wan口（注意，这一步操作前必须开启wifi，否则将无法再访问路由器设置界面！！！！！！！！！只能再次刷机！！！！慎重！！！！）,这里参考了[恩山论坛文章](http://www.right.com.cn/Forum/thread-164504-1-1.html)
 
-<pre class="lang:sh decode:true " >vi /etc/config/network</pre>
+<pre><code class="language-sh">vi /etc/config/network</code></pre>
 
 修改为（注意我改了默认网关IP为：172.24.0.1）：
 
-<pre class="lang:vim decode:true " >config interface 'loopback'
+<pre><code class="language-vim">config interface 'loopback'
 	option ifname 'lo'
 	option proto 'static'
 	option ipaddr '127.0.0.1'
@@ -170,6 +170,6 @@ config interface '3g'
 	option dialnumber '*99#'
 
 
-</pre>
+</code></pre>
 
 重启路由生效，lan口变为wan口

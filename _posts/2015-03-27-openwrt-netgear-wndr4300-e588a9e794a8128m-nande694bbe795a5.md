@@ -15,32 +15,32 @@ tags:
 
 1.安装软件，准备格式化分区
 
-<pre class="lang:sh decode:true " >#支持mkfs.ext2、mkfs.ext3、mkfs.ext4等命令
+<pre><code class="language-sh">#支持mkfs.ext2、mkfs.ext3、mkfs.ext4等命令
 opkg install e2fsprogs
 #支持ext2、ext3、ext4等分区
 opkg install kmod-fs-ext4
 mkfs.ext4 /dev/mtdblock11
 mkdir /local
-mount -t ext4 /dev/mtdblock11  /local -o rw,sync</pre>
+mount -t ext4 /dev/mtdblock11  /local -o rw,sync</code></pre>
 
 2.编辑/etc/rc.local，使得挂载自启动（但是rc.local优先级较低，如果将重要的软件安装在里面可能导致无法启动加载，所以执行后续步骤前现在rootfs 12M空间里面装好需要优先启动的软件，例如block-mount等）
 
-<pre class="lang:sh decode:true " >mount -t ext4 /dev/mtdblock11  /local -o rw,sync</pre>
+<pre><code class="language-sh">mount -t ext4 /dev/mtdblock11  /local -o rw,sync</code></pre>
 
 3.编辑/etc/opkg.conf
 
-<pre class="lang:sh decode:true " >dest local /local</pre>
+<pre><code class="language-sh">dest local /local</code></pre>
 
 4.编辑/etc/profile
 
-<pre class="lang:sh decode:true " >export PATH=/usr/bin:/usr/sbin:/bin:/sbin:/local/bin:/local/usr/bin:/local/sbin:/local/usr/sbin
+<pre><code class="language-sh">export PATH=/usr/bin:/usr/sbin:/bin:/sbin:/local/bin:/local/usr/bin:/local/sbin:/local/usr/sbin
 export LD_LIBRARY_PATH=/local/lib:/local/usr/lib
 
-alias opkg='opkg -d local'</pre>
+alias opkg='opkg -d local'</code></pre>
 
 5.使得修改立即生效
 
-<pre class="lang:sh decode:true " >source /etc/profile
+<pre><code class="language-sh">source /etc/profile
 mkdir /local/usr/share
 # /local/usr目录下建立链接：
 ln -s /usr/share /local/usr/share
@@ -48,10 +48,10 @@ ln -s /usr/share /local/usr/share
 mkdir /local/etc
 ln -s /etc /local/etc
 mkdir /local/www
-ln -s /www /local/www</pre>
+ln -s /www /local/www</code></pre>
 
 6.接着装个软件试试，应该都装到了local目录了
 
-<pre class="lang:sh decode:true " >opkg install kmod-nls-iso8859-1 kmod-nls-utf8  # 安装语言组件iso-8859-1和utf8
+<pre><code class="language-sh">opkg install kmod-nls-iso8859-1 kmod-nls-utf8  # 安装语言组件iso-8859-1和utf8
 opkg install libncurses
-/bin/opkg -d root install luci-app-commands #安装luci界面的shell执行工具，luci相关的内容必须在/目录下安装，然后重启路由器才能生效</pre>
+/bin/opkg -d root install luci-app-commands #安装luci界面的shell执行工具，luci相关的内容必须在/目录下安装，然后重启路由器才能生效</code></pre>

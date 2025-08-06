@@ -12,15 +12,15 @@ tags:
 某些情况下，需要过滤在线视频和视频下载，按照IP或者网址过滤当然是可以的，不过要找到那么多视频网址很麻烦，现在大多数视频网站都开启了CDN，即便拿到ip池也是不全的。找了半天，终于看到了一个办法。  
 首先当然是安装squid了：
 
-<pre class="lang:sh decode:true " >opkg update
+<pre><code class="language-sh">opkg update
 opkg install squid
-vi /etc/squid/squid.conf</pre>
+vi /etc/squid/squid.conf</code></pre>
 
 内容为：
 
 <!--more-->
 
-<pre class="lang:vim decode:true " >######General Settings##############
+<pre><code class="language-vim">######General Settings##############
 
 http_port 3128 transparent
 
@@ -92,20 +92,20 @@ cache_log /dev/null
 cache_store_log /dev/null
 logfile_rotate 0
 
-logfile_daemon /dev/null</pre>
+logfile_daemon /dev/null</code></pre>
 
 然后在防火墙打开重定向：
 
-<pre class="lang:sh decode:true " >iptables -t nat -A PREROUTING -p tcp -s 192.168.1.0/24 --dport 80 -j REDIRECT --to-ports 3128
+<pre><code class="language-sh">iptables -t nat -A PREROUTING -p tcp -s 192.168.1.0/24 --dport 80 -j REDIRECT --to-ports 3128
 #iptables -t nat -A PREROUTING -p tcp -s 192.168.1.0/24 --dport 443 -j REDIRECT --to-ports 3128
 iptables -t nat -A PREROUTING -p tcp -s 192.168.1.0/24 --dport 1024:65535 -j REDIRECT --to-ports 3128
-</pre>
+</code></pre>
 
 注意443端口重定向可能会造成网页无法访问。
 
 最后启动squid:
 
-<pre class="lang:sh decode:true " >/etc/init.d/squid start</pre>
+<pre><code class="language-sh">/etc/init.d/squid start</code></pre>
 
 参考：  
 1.https://rbgeek.wordpress.com/2012/09/12/how-to-block-video-streaming-with-squid/

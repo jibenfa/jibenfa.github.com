@@ -13,26 +13,26 @@ tags:
 
 ssh登陆gl-inet路由器(基于OPENWRT-AR71XX(AR913X)，adbyby官网上下载对应插件)，输入：
 
-<pre class="lang:sh decode:true " >mkdir adbyby
+<pre><code class="language-sh">mkdir adbyby
 cd adbyby
 wget http://info.adbyby.com/download/openwrt.tar.gz
 tar -xzvf openwrt.tar.gz
 cd bin
 chmod +x adbyby
-vi /etc/rc.local</pre>
+vi /etc/rc.local</code></pre>
 
 在exit 0 前加入
 
-<pre class="lang:vim decode:true " >/root/adbyby/bin/adbyby&
-iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8118</pre>
+<pre><code class="language-vim">/root/adbyby/bin/adbyby&
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8118</code></pre>
 
 另外更新adhook.ini中的exrule：  
 vi /root/adbyby/bin/adhook.ini  
 找到[exrule]，修改为：
 
-<pre class="lang:vim decode:true " >[exrule]^M
+<pre><code class="language-vim">[exrule]^M
 rule=https://easylist-downloads.adblockplus.org/easylistchina.txt^M
-rule=https://easylist-downloads.adblockplus.org/easyprivacy.txt^M</pre>
+rule=https://easylist-downloads.adblockplus.org/easyprivacy.txt^M</code></pre>
 
 重启路由器，搞定。。。  
 经测试：打开网易、优酷，页面没有讨厌的广告了，也不会弹出广告，视频内嵌的前置广告也没了。。。手机浏览器也是。。。  
@@ -41,9 +41,9 @@ rule=https://easylist-downloads.adblockplus.org/easyprivacy.txt^M</pre>
 由于adbyby不是很稳定，一旦挂掉就不能上网了，所以按照  
 http://www.groad.net/bbs/thread-8832-1-1.html （有修改）创建守护进程，一旦adbyby进程挂了，就重启进程。。。
 
-<pre class="lang:sh decode:true " >vi /etc/check_ad_by_by.sh</pre>
+<pre><code class="language-sh">vi /etc/check_ad_by_by.sh</code></pre>
 
-<pre class="lang:vim decode:true " >#!/bin/sh
+<pre><code class="language-vim">#!/bin/sh
  
 mon() {
 while [ "1" ];
@@ -56,21 +56,21 @@ do
 done
 }
  
-mon &</pre>
+mon &</code></pre>
 
-<pre class="lang:sh decode:true " >chmod a+x /etc/check_ad_by_by.sh</pre>
+<pre><code class="language-sh">chmod a+x /etc/check_ad_by_by.sh</code></pre>
 
-<pre class="lang:sh decode:true " >vi /etc/rc.local</pre>
+<pre><code class="language-sh">vi /etc/rc.local</code></pre>
 
 在exit 0前加入
 
-<pre class="lang:vim decode:true " >/etc/check_ad_by_by.sh</pre>
+<pre><code class="language-vim">/etc/check_ad_by_by.sh</code></pre>
 
 另外为了防止adbyby 僵死,可以定期检查重启adbyby：
 
-<pre class="lang:sh decode:true " >vi /etc/restart_ad_by_by.sh</pre>
+<pre><code class="language-sh">vi /etc/restart_ad_by_by.sh</code></pre>
 
-<pre class="lang:sh decode:true " >#!/bin/sh
+<pre><code class="language-sh">#!/bin/sh
 
 ping -c 1 www.baidu.com &gt; /dev/null
 ret=$?
@@ -82,17 +82,17 @@ echo ' restarting adbyby! '
 killall -9 adbyby
 /root/adbyby/bin/adbyby& &gt;/dev/null
 
-fi</pre>
+fi</code></pre>
 
-<pre class="lang:sh decode:true " >chmod a+x /etc/restart_ad_by_by.sh</pre>
+<pre><code class="language-sh">chmod a+x /etc/restart_ad_by_by.sh</code></pre>
 
 在crontab里面增加
 
-<pre class="lang:sh decode:true " >0 * * * * /etc/restart_ad_by_by.sh</pre>
+<pre><code class="language-sh">0 * * * * /etc/restart_ad_by_by.sh</code></pre>
 
 每小时检查重启adbyby
 
 如果adbyby还是无法启动，可能需要安装libstdcpp
 
-<pre class="lang:sh decode:true " >opkg install libstdcpp
-</pre>
+<pre><code class="language-sh">opkg install libstdcpp
+</code></pre>

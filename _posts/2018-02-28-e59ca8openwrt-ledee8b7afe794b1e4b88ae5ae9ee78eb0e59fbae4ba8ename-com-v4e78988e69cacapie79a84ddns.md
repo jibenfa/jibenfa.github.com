@@ -17,11 +17,11 @@ tags:
 4.首次需要手动添加一次域名，以便获取ID号码，例如为www.examle.com添加第一个dns记录：  
 <!--more-->
 
-<pre class="lang:sh decode:true " >curl -u 'YOUR_USER_NAME:YOUR_API_TOKEN' 'https://api.name.com/v4/domains/example.com/records' -X POST --data '{"host":"www","type":"A","answer":"YOUR_IP","ttl":300}'</pre>
+<pre><code class="language-sh">curl -u 'YOUR_USER_NAME:YOUR_API_TOKEN' 'https://api.name.com/v4/domains/example.com/records' -X POST --data '{"host":"www","type":"A","answer":"YOUR_IP","ttl":300}'</code></pre>
 
 从返回的json里面记录下id，json格式为：
 
-<pre class="lang:sh decode:true " >{
+<pre><code class="language-sh">{
     "id": 12345,
     "domainName": "example.org",
     "host": "www",
@@ -29,14 +29,14 @@ tags:
     "type": "A",
     "answer": "10.0.0.1",
     "ttl": 300
-}</pre>
+}</code></pre>
 
 此id要写入脚本。
 
 后续就可以通过如下脚本更新dns了。  
 脚本如下：
 
-<pre class="lang:vim decode:true " >#!/bin/sh
+<pre><code class="language-vim">#!/bin/sh
 
 USER="YOUR_USER_NAME"
 TOKEN="YOUR_API_TOKEN"
@@ -59,7 +59,7 @@ echo "start ddns refresh"
 if [ x"${LIP}" != x ]; then
    curl -u ''""${USER}""':'""${TOKEN}""'' 'https://api.name.com/v4/domains/'""${DOMAIN}""'/records/'""${ID}""'' -X PUT --data '{"host":"'""${HOST}""'","type":"A","answer":"'""${LIP}""'","ttl":300}'
    echo ${LIP} &gt; /tmp/ddnsResult
-fi</pre>
+fi</code></pre>
 
 参考资料：  
 1.https://www.name.com/api-docs/

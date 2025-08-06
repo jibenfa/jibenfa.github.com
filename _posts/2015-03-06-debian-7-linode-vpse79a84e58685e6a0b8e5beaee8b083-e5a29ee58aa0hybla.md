@@ -89,20 +89,20 @@ net.ipv4.tcp\_congestion\_control = hybla
 
 另外根据http://shadowsocks.org/en/config/advanced.html 进行了优化
 
-<pre class="lang:sh decode:true " >vi /etc/security/limits.conf</pre>
+<pre><code class="language-sh">vi /etc/security/limits.conf</code></pre>
 
 增加：
 
-<pre class="lang:vim decode:true " >* soft nofile 51200
-* hard nofile 51200</pre>
+<pre><code class="language-vim">* soft nofile 51200
+* hard nofile 51200</code></pre>
 
-<pre class="lang:sh decode:true " >vi /etc/init.d/shadowsocks</pre>
+<pre><code class="language-sh">vi /etc/init.d/shadowsocks</code></pre>
 
 增加
 
-<pre class="lang:vim decode:true " >ulimit -n 51200</pre>
+<pre><code class="language-vim">ulimit -n 51200</code></pre>
 
-<pre class="lang:sh decode:true " >fs.file-max = 51200
+<pre><code class="language-sh">fs.file-max = 51200
 
 net.core.rmem_max = 67108864
 net.core.wmem_max = 67108864
@@ -123,6 +123,6 @@ net.ipv4.tcp_fastopen = 3
 net.ipv4.tcp_rmem = 4096 87380 67108864
 net.ipv4.tcp_wmem = 4096 65536 67108864
 net.ipv4.tcp_mtu_probing = 1
-net.ipv4.tcp_congestion_control = hybla</pre>
+net.ipv4.tcp_congestion_control = hybla</code></pre>
 
 **经测试，设置以后ss速度反而有所下降，但是vpn速度提升。。。不知道是不是这几天网络问题。。回头再看看**

@@ -13,7 +13,7 @@ tags:
 
 # 1.apache2启用ssl
 
-<pre class="lang:sh decode:true ">a2enmod ssl</pre>
+<pre><code class="language-sh">a2enmod ssl</code></pre>
 
 # 2.修改apache配置文件
 
@@ -23,12 +23,12 @@ tags:
 自签名证书一般不会得到认证，所以浏览器访问时会提示证书非 法，是红色的。  
 如果要显示为绿色，可以考虑向某些组织申请ssl证书，有收费和免费的。
 
-<pre class="lang:sh decode:true ">vi /etc/apache2/sites-enabled/example.com.conf</pre>
+<pre><code class="language-sh">vi /etc/apache2/sites-enabled/example.com.conf</code></pre>
 
 内容如下（这种方法感觉挺笨的，但是有效。。）：  
 <!--more-->
 
-<pre class="lang:vim decode:true "># domain: example.com
+<pre><code class="language-vim"># domain: example.com
 # public: /var/www/example.com/public_html/
 
 NameVirtualHost *:443  
@@ -109,13 +109,13 @@ Deny from all
   DirectoryIndex index.html index.php
   DocumentRoot /var/www/example.com/public_html/webmail
   ServerName webmail.example.com
-&lt;/VirtualHost&gt;</pre>
+&lt;/VirtualHost&gt;</code></pre>
 
 # 3.重启apache2服务
 
-<pre class="lang:sh decode:true">service apache2 restart</pre>
+<pre><code class="language-sh">service apache2 restart</code></pre>
 
 避免重启时apache因证书密码卡住无法ssh  
 需将加密的key文件解密。。。
 
-<pre class="lang:sh decode:true " >openssl rsa -in key.pem -out newkey.pem</pre>
+<pre><code class="language-sh">openssl rsa -in key.pem -out newkey.pem</code></pre>

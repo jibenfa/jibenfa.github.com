@@ -18,19 +18,19 @@ https://github.com/snooda/net-speeder 的开源项目。
 
 debian/ubuntu安装libnet，libpcap，libnet1-dev，libpcap-dev：
 
-<pre class="lang:sh decode:true " >apt-get install libnet1
+<pre><code class="language-sh">apt-get install libnet1
 
 apt-get install libpcap0.8 
 
 apt-get install libnet1-dev
 
-apt-get install libpcap0.8-dev </pre>
+apt-get install libpcap0.8-dev </code></pre>
 
 然后下载build.sh和net_speeder.c到/root/net-speeder，编译：
 
-<pre class="lang:sh decode:true " >chmod +x build.sh
-sh build.sh</pre>
+<pre><code class="language-sh">chmod +x build.sh
+sh build.sh</code></pre>
 
 运行：
 
-<pre class="lang:sh decode:true " >nohup /root/net-speeder/net_speeder eth0 "ip" &gt;/dev/null 2&gt;&1 & </pre>
+<pre><code class="language-sh">nohup /root/net-speeder/net_speeder eth0 "ip" &gt;/dev/null 2&gt;&1 & </code></pre>

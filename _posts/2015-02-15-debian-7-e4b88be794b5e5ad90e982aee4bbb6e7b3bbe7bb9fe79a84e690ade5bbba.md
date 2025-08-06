@@ -48,21 +48,21 @@ SMTP 认证，简单地说就是要求必须在提供了账户名和密码之后
 
 1).修改 /etc/hostname 添加一个名字，例如：holycoco。
 
-<pre class="lang:sh decode:true">echo "holycoco" &gt; /etc/hostname</pre>
+<pre><code class="language-sh">echo "holycoco" &gt; /etc/hostname</code></pre>
 
 2).使之生效。
 
-<pre class="lang:sh decode:true ">hostname -F /etc/hostname</pre>
+<pre><code class="language-sh">hostname -F /etc/hostname</code></pre>
 
 3).修改 /etc/hosts，添加一些内容，如果网站是example.com，就这样写，如果网站是别的就填别的。
 
-<pre class="lang:vim decode:true  ">127.0.0.1 localhost.localdomain localhost
-我的IP holycoco.example.com holycoco</pre>
+<pre><code class="language-vim">127.0.0.1 localhost.localdomain localhost
+我的IP holycoco.example.com holycoco</code></pre>
 
 4).检查host。
 
-<pre class="lang:sh decode:true ">hostname
-hostname -f</pre>
+<pre><code class="language-sh">hostname
+hostname -f</code></pre>
 
 前者应该显示holycoco，后者应该显示holycoco.example.com，千万别略过这步骤，否则会后悔的。。。
 
@@ -70,13 +70,13 @@ hostname -f</pre>
 
 ### a.安装
 
-<pre class="lang:sh decode:true ">apt-get install apache2
+<pre><code class="language-sh">apt-get install apache2
 cp /etc/apache2/apache2.conf /etc/apache2/apache2.backup.conf
-vi /etc/apache2/apache2.conf</pre>
+vi /etc/apache2/apache2.conf</code></pre>
 
 ### b.由于我的vps内存只有1GB所以进行优化：
 
-<pre class="lang:vim decode:true ">KeepAlive Off
+<pre><code class="language-vim">KeepAlive Off
 ...
 &lt;IfModule mpm_prefork_module&gt;
 StartServers 2
@@ -84,25 +84,25 @@ MinSpareServers 6
 MaxSpareServers 12
 MaxClients 80
 MaxRequestsPerChild 3000
-&lt;/IfModule&gt;</pre>
+&lt;/IfModule&gt;</code></pre>
 
 ### c.重启服务
 
-<pre class="lang:sh decode:true ">service apache2 restart</pre>
+<pre><code class="language-sh">service apache2 restart</code></pre>
 
 ### d.禁用apache默认设置，创建一些文件夹，做一些配置
 
-<pre class="lang:sh decode:true ">a2dissite *default
+<pre><code class="language-sh">a2dissite *default
 cd /var/www
 mkdir example.com
 mkdir -p example.com/public_html
 mkdir -p example.com/log
 mkdir -p example.com/backups
-vi /etc/apache2/sites-available/example.com.conf</pre>
+vi /etc/apache2/sites-available/example.com.conf</code></pre>
 
 ### e.为了支持多个域名，编辑内容如下，（重启apache以后可能会有warning，因为还没建后面几个文件夹）
 
-<pre class="lang:vim decode:true "># domain: example.com
+<pre><code class="language-vim"># domain: example.com
 # public: /var/www/example.com/public_html/
 &lt;VirtualHost *:80&gt;
   # Admin email, Server Name (domain name), and any aliases
@@ -138,44 +138,44 @@ vi /etc/apache2/sites-available/example.com.conf</pre>
   DirectoryIndex index.html index.php
   DocumentRoot /var/www/example.com/public_html/webmail
   ServerName webmail.example.com
-&lt;/VirtualHost&gt;</pre>
+&lt;/VirtualHost&gt;</code></pre>
 
 ### f.使配置文件生效，重启服务
 
-<pre class="lang:sh decode:true ">a2ensite example.com.conf
-service apache2 restart</pre>
+<pre><code class="language-sh">a2ensite example.com.conf
+service apache2 restart</code></pre>
 
 # 2、安装mysql
 
 ### a.安装
 
-<pre class="lang:sh decode:true ">apt-get install mysql-server
-mysql_secure_installation</pre>
+<pre><code class="language-sh">apt-get install mysql-server
+mysql_secure_installation</code></pre>
 
 设置完root的密码，一定要自己记录下来。。。  
 另外安全设置时要删除匿名用户，删除默认测试数据库，禁止root远程登录
 
 ### b.为1GB内存进行优化
 
-<pre class="lang:sh decode:true">vi /etc/mysql/my.cnf</pre>
+<pre><code class="language-sh">vi /etc/mysql/my.cnf</code></pre>
 
-<pre class="lang:vim decode:true ">max_connections = 75
+<pre><code class="language-vim">max_connections = 75
 key_buffer = 32M
 max_allowed_packet = 1M
 thread_stack = 128K
-table_cache = 32</pre>
+table_cache = 32</code></pre>
 
 ### c.创建数据库，后面要用：
 
-<pre class="lang:sh decode:true">mysql -u root -p</pre>
+<pre><code class="language-sh">mysql -u root -p</code></pre>
 
-<pre class="lang:mysql decode:true">create database mynamemailserver;
+<pre><code class="language-mysql">create database mynamemailserver;
 GRANT all privileges  ON mynamemailserver.* TO 'mymailuser'@'holycoco.example.com' IDENTIFIED BY 'mypassword';
-GRANT all privileges  ON mynamemailserver.* TO 'mymailuser'@'127.0.0.1' IDENTIFIED BY 'mypassword';</pre>
+GRANT all privileges  ON mynamemailserver.* TO 'mymailuser'@'127.0.0.1' IDENTIFIED BY 'mypassword';</code></pre>
 
 ### d.重启数据库服务
 
-<pre class="lang:sh decode:true ">service mysql restart</pre>
+<pre><code class="language-sh">service mysql restart</code></pre>
 
 这里可以不建表，因为装postadmin的时候会建的。。。
 
@@ -183,42 +183,42 @@ GRANT all privileges  ON mynamemailserver.* TO 'mymailuser'@'127.0.0.1' IDENTIFI
 
 ### a.安装
 
-<pre class="lang:sh decode:true ">apt-get install php5 libapache2-mod-auth-mysql libmysqlclient15-dev php5-mysql curl libcurl3 libcurl3-dev php5-curl php5-json php-pear</pre>
+<pre><code class="language-sh">apt-get install php5 libapache2-mod-auth-mysql libmysqlclient15-dev php5-mysql curl libcurl3 libcurl3-dev php5-curl php5-json php-pear</code></pre>
 
 ### b.为1GB内存进行优化，修改部分内容
 
-<pre class="lang:sh decode:true">vi /etc/php5/apache2/php.ini</pre>
+<pre><code class="language-sh">vi /etc/php5/apache2/php.ini</code></pre>
 
-<pre class="lang:vim decode:true ">max_execution_time = 30
+<pre><code class="language-vim">max_execution_time = 30
 memory_limit = 128M
 error_reporting = E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
 display_errors = Off
 log_errors = On
 error_log = /var/log/php/error.log
-register_globals = Off</pre>
+register_globals = Off</code></pre>
 
 ### c.记录日志，重启web服务，加载php模块
 
-<pre class="lang:sh decode:true ">mkdir -p /var/log/php
+<pre><code class="language-sh">mkdir -p /var/log/php
 chown www-data /var/log/php
-service apache2 restart</pre>
+service apache2 restart</code></pre>
 
 # 4.安装postfix和dovecot
 
 ### a.安装
 
-<pre class="lang:sh decode:true ">apt-get install postfix postfix-mysql dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd dovecot-mysql</pre>
+<pre><code class="language-sh">apt-get install postfix postfix-mysql dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd dovecot-mysql</code></pre>
 
 弹出的框里面Postfix configuration选**Internet Site**，System mail name填入**example.com**，如果网站是别的就填别的。
 
 ### b.配置postfix，限制用户邮箱大小等一系列东东，用户认证使用dovecot，而不是默认的virtual_mailbox
 
-<pre class="lang:sh decode:true ">cp /etc/postfix/main.cf /etc/postfix/main.cf.orig
-vi /etc/postfix/main.cf</pre>
+<pre><code class="language-sh">cp /etc/postfix/main.cf /etc/postfix/main.cf.orig
+vi /etc/postfix/main.cf</code></pre>
 
 /etc/postfix/main.cf 参数必须顶格写。。。。。。。。。。。。内容为：
 
-<pre class="lang:vim decode:true "># See /usr/share/postfix/main.cf.dist for a commented, more complete version
+<pre><code class="language-vim"># See /usr/share/postfix/main.cf.dist for a commented, more complete version
 # Debian specific:  Specifying a file name will cause the first
 # line of that file to be used as the name.  The Debian default
 # is /etc/mailname.
@@ -279,7 +279,7 @@ virtual_mailbox_extended = yes
 virtual_mailbox_limit_maps = mysql:/etc/postfix/mysql-virtual-mailbox-limit-maps.cf
 virtual_mailbox_limit_override = yes
 virtual_maildir_limit_message = Sorry, the user's maildir has exceeded the quota.
-virtual_overquota_bounce = yes</pre>
+virtual_overquota_bounce = yes</code></pre>
 
 virtual\_uid\_maps 和 virtual\_gid\_maps 改成postfix用户的uid和gid ,可用 id postfix 命令获取  
 注：postfix服务重启后会有warning，据说可以别理它。。。
@@ -288,55 +288,55 @@ virtual\_uid\_maps 和 virtual\_gid\_maps 改成postfix用户的uid和gid ,可�
 
 这些表现在还没建，后面装postfixadmin的时候会自动建的
 
-<pre class="lang:sh decode:true ">vi /etc/postfix/mysql-virtual-alias-maps.cf</pre>
+<pre><code class="language-sh">vi /etc/postfix/mysql-virtual-alias-maps.cf</code></pre>
 
 这个是转发表查询
 
-<pre class="lang:vim decode:true">user = mymailuser
+<pre><code class="language-vim">user = mymailuser
 password = mypassword
 hosts = 127.0.0.1
 dbname = mynamemailserver
 query = SELECT goto FROM alias WHERE address='%s' AND active = '1'
-#query = SELECT destination FROM virtual_aliases WHERE source='%s'</pre>
+#query = SELECT destination FROM virtual_aliases WHERE source='%s'</code></pre>
 
-<pre class="lang:sh decode:true ">vi /etc/postfix/mysql-virtual-mailbox-domains.cf</pre>
+<pre><code class="language-sh">vi /etc/postfix/mysql-virtual-mailbox-domains.cf</code></pre>
 
 这个是domain表查询
 
-<pre class="lang:vim decode:true">user = mymailuser
+<pre><code class="language-vim">user = mymailuser
 password = mypassword
 hosts = 127.0.0.1
 dbname = mynamemailserver
-query = SELECT domain FROM domain WHERE domain='%s' AND active = '1'</pre>
+query = SELECT domain FROM domain WHERE domain='%s' AND active = '1'</code></pre>
 
-<pre class="lang:sh decode:true ">vi /etc/postfix/mysql-virtual-mailbox-limit-maps.cf</pre>
+<pre><code class="language-sh">vi /etc/postfix/mysql-virtual-mailbox-limit-maps.cf</code></pre>
 
 这个是邮箱空间配额查询，不知道有没有用。。。
 
-<pre class="lang:vim decode:true ">user = mymailuser
+<pre><code class="language-vim">user = mymailuser
 password = mypassword
 hosts = 127.0.0.1
 dbname = mynamemailserver
-query = SELECT quota FROM mailbox WHERE username='%s' AND active = '1'</pre>
+query = SELECT quota FROM mailbox WHERE username='%s' AND active = '1'</code></pre>
 
-<pre class="lang:sh decode:true ">vi /etc/postfix/mysql-virtual-mailbox-maps.cf</pre>
+<pre><code class="language-sh">vi /etc/postfix/mysql-virtual-mailbox-maps.cf</code></pre>
 
 这个是最关键的登录查询了
 
-<pre class="lang:vim decode:true ">user = mymailuser
+<pre><code class="language-vim">user = mymailuser
 password = mypassword
 hosts = 127.0.0.1
 dbname = mynamemailserver
-query = SELECT CONCAT(domain,'/',maildir) FROM mailbox WHERE username='%s' AND active = '1'</pre>
+query = SELECT CONCAT(domain,'/',maildir) FROM mailbox WHERE username='%s' AND active = '1'</code></pre>
 
 ### d.配置开启哪些邮件服务
 
-<pre class="lang:sh decode:true ">cp /etc/postfix/master.cf /etc/postfix/master.cf.orig
-vi /etc/postfix/master.cf</pre>
+<pre><code class="language-sh">cp /etc/postfix/master.cf /etc/postfix/master.cf.orig
+vi /etc/postfix/master.cf</code></pre>
 
 允许smtp走ssl，在端口 25，另外还有587和465（这个不懂），反正就是把submission和smtps前面注释去掉。
 
-<pre class="lang:vim decode:true ">#
+<pre><code class="language-vim">#
 # Postfix master process configuration file.  For details on the format
 # of the file, see the master(5) manual page (command: "man 5 master").
 #
@@ -362,50 +362,50 @@ smtps     inet  n       -       -       -       -       smtpd
 #  -o smtpd_tls_wrappermode=yes
 #  -o smtpd_sasl_auth_enable=yes
 #  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
-#  -o milter_macro_daemon_name=ORIGINATING</pre>
+#  -o milter_macro_daemon_name=ORIGINATING</code></pre>
 
 ### e.重启postfix服务
 
-<pre class="lang:sh decode:true ">service postfix restart</pre>
+<pre><code class="language-sh">service postfix restart</code></pre>
 
 ### f.配置dovecot
 
-<pre class="lang:sh decode:true">cp /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.orig
+<pre><code class="language-sh">cp /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.orig
 cp /etc/dovecot/conf.d/10-mail.conf /etc/dovecot/conf.d/10-mail.conf.orig
 cp /etc/dovecot/conf.d/10-auth.conf /etc/dovecot/conf.d/10-auth.conf.orig
 cp /etc/dovecot/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext.orig
 cp /etc/dovecot/conf.d/10-master.conf /etc/dovecot/conf.d/10-master.conf.orig
-cp /etc/dovecot/conf.d/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf.orig</pre>
+cp /etc/dovecot/conf.d/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf.orig</code></pre>
 
-<pre class="lang:sh decode:true">vi /etc/dovecot/dovecot.conf</pre>
+<pre><code class="language-sh">vi /etc/dovecot/dovecot.conf</code></pre>
 
-<pre class="lang:vim decode:true">!include conf.d/*.conf
+<pre><code class="language-vim">!include conf.d/*.conf
 # Enable installed protocols
 !include_try /usr/share/dovecot/protocols.d/*.protocol
-protocols = imap pop3 lmtp</pre>
+protocols = imap pop3 lmtp</code></pre>
 
-<pre class="lang:sh decode:true">vi /etc/dovecot/conf.d/10-mail.conf</pre>
+<pre><code class="language-sh">vi /etc/dovecot/conf.d/10-mail.conf</code></pre>
 
-<pre class="lang:vim decode:true ">#这个配置很重要
+<pre><code class="language-vim">#这个配置很重要
 mail_location = maildir:/var/mail/vhosts/%d/%n
-mail_privileged_group = mail</pre>
+mail_privileged_group = mail</code></pre>
 
 检查权限
 
-<pre class="lang:sh decode:true ">ls -ld /var/mail</pre>
+<pre><code class="language-sh">ls -ld /var/mail</code></pre>
 
 应该是这样
 
-<pre class="lang:vim decode:true">drwxrwsr-x 2 root mail 4096 Mar  6 15:08 /var/mail</pre>
+<pre><code class="language-vim">drwxrwsr-x 2 root mail 4096 Mar  6 15:08 /var/mail</code></pre>
 
-<pre class="lang:sh decode:true">mkdir -p /var/mail/vhosts/example.com
+<pre><code class="language-sh">mkdir -p /var/mail/vhosts/example.com
 groupadd -g 5000 vmail
 useradd -g vmail -u 5000 vmail -d /var/mail
-chown -R vmail:vmail /var/mail</pre>
+chown -R vmail:vmail /var/mail</code></pre>
 
-<pre class="lang:sh decode:true">vi /etc/dovecot/conf.d/10-auth.conf</pre>
+<pre><code class="language-sh">vi /etc/dovecot/conf.d/10-auth.conf</code></pre>
 
-<pre class="lang:vim decode:true">disable_plaintext_auth = yes
+<pre><code class="language-vim">disable_plaintext_auth = yes
 auth_mechanisms = plain login
 #!include auth-system.conf.ext
 !include auth-sql.conf.ext
@@ -413,34 +413,34 @@ auth_mechanisms = plain login
 #!include auth-passwdfile.conf.ext
 #!include auth-checkpassword.conf.ext
 #!include auth-vpopmail.conf.ext
-#!include auth-static.conf.ext</pre>
+#!include auth-static.conf.ext</code></pre>
 
-<pre class="lang:sh decode:true">vi /etc/dovecot/conf.d/auth-sql.conf.ext</pre>
+<pre><code class="language-sh">vi /etc/dovecot/conf.d/auth-sql.conf.ext</code></pre>
 
-<pre class="lang:sh decode:true">passdb {
+<pre><code class="language-sh">passdb {
   driver = sql
   args = /etc/dovecot/dovecot-sql.conf.ext
 }
 userdb {
   driver = static
   args = uid=vmail gid=vmail home=/var/mail/vhosts/%d/%n
-}</pre>
+}</code></pre>
 
-<pre class="lang:sh decode:true">vi /etc/dovecot/dovecot-sql.conf.ext</pre>
+<pre><code class="language-sh">vi /etc/dovecot/dovecot-sql.conf.ext</code></pre>
 
-<pre class="lang:vim decode:true">driver = mysql
+<pre><code class="language-vim">driver = mysql
 connect = host=127.0.0.1 dbname=mailserver user=mailuser password=mailuserpass
 default_pass_scheme = SHA512-CRYPT
 #注意这2个表现在还没有，后面postfixadmin会建的
 password_query = SELECT password FROM mailbox WHERE username = '%u'
-user_query = SELECT maildir, 502 AS uid, 502 AS gid FROM mailbox WHERE username = '%u'</pre>
+user_query = SELECT maildir, 502 AS uid, 502 AS gid FROM mailbox WHERE username = '%u'</code></pre>
 
-<pre class="lang:sh decode:true">chown -R vmail:dovecot /etc/dovecot
-chmod -R o-rwx /etc/dovecot</pre>
+<pre><code class="language-sh">chown -R vmail:dovecot /etc/dovecot
+chmod -R o-rwx /etc/dovecot</code></pre>
 
-<pre class="lang:sh decode:true">vi /etc/dovecot/conf.d/10-master.conf</pre>
+<pre><code class="language-sh">vi /etc/dovecot/conf.d/10-master.conf</code></pre>
 
-<pre class="lang:vim decode:true ">#禁止不加 密登录
+<pre><code class="language-vim">#禁止不加 密登录
 service imap-login {
     inet_listener imap {
       port = 0
@@ -497,52 +497,52 @@ service auth-worker {
   # /etc/shadow. If this isn't necessary, the user should be changed to
   # $default_internal_user.
   user = vmail
-}</pre>
+}</code></pre>
 
 检查自签名证书，非常重要
 
-<pre class="lang:sh decode:true">ls /etc/dovecot/dovecot.pem
-ls /etc/dovecot/private/dovecot.pem</pre>
+<pre><code class="language-sh">ls /etc/dovecot/dovecot.pem
+ls /etc/dovecot/private/dovecot.pem</code></pre>
 
-<pre class="lang:sh decode:true ">vi /etc/dovecot/conf.d/10-ssl.conf</pre>
+<pre><code class="language-sh">vi /etc/dovecot/conf.d/10-ssl.conf</code></pre>
 
 强制ssl
 
-<pre class="lang:vim decode:true ">ssl_cert = &lt;/etc/dovecot/dovecot.pem
+<pre><code class="language-vim">ssl_cert = &lt;/etc/dovecot/dovecot.pem
 ssl_key = &lt;/etc/dovecot/private/dovecot.pem
-ssl = required</pre>
+ssl = required</code></pre>
 
 重启dovecot服务
 
-<pre class="lang:sh decode:true ">service dovecot restart</pre>
+<pre><code class="language-sh">service dovecot restart</code></pre>
 
 # 5.安装postfixadmin
 
 ### a.下载安装postfixadmin
 
-<pre class="lang:sh decode:true ">wget 'http://downloads.sourceforge.net/project/postfixadmin/postfixadmin/postfixadmin-2.92/postfixadmin-2.92.tar.gz?use_mirror=jaist'
+<pre><code class="language-sh">wget 'http://downloads.sourceforge.net/project/postfixadmin/postfixadmin/postfixadmin-2.92/postfixadmin-2.92.tar.gz?use_mirror=jaist'
 tar zxvf postfixadmin-2.92.tar.gz
-mv postfixadmin-2.92 /var/www/example.com/public_html/postfixadmin</pre>
+mv postfixadmin-2.92 /var/www/example.com/public_html/postfixadmin</code></pre>
 
 这时候/var/www/example.com/public_html/postfixadmin下应该有config.inc.php文件，否则就是再嵌了个文件夹了。。。
 
 ### b.修改配置文件
 
-<pre class="lang:sh decode:true  ">vi config.inc.php</pre>
+<pre><code class="language-sh">vi config.inc.php</code></pre>
 
-<pre class="lang:vim decode:true">$CONF['default_language'] = 'cn';
+<pre><code class="language-vim">$CONF['default_language'] = 'cn';
 $CONF['configured'] = true;
 $CONF['default_language'] = 'en';
 $CONF['database_type'] = 'mynamemailserver';
 $CONF['database_host'] = '127.0.0.1';
 $CONF['database_user'] = 'mymailuser';
-$CONF['database_password'] = 'mypassword';</pre>
+$CONF['database_password'] = 'mypassword';</code></pre>
 
 汉化不完全的可以打开language下的cn.lang手工修改。。。
 
 ### c.用浏览器访问Postfixadmin的设置页http://pfadmin.example.com/setup.php，会进行检查，各项ok后，最后自动生成数据表，shell下检查一下，如果是这些就ok了：
 
-<pre class="lang:mysql decode:true ">show tables;
+<pre><code class="language-mysql">show tables;
 ...
 | admin                         |
 | alias                         |
@@ -557,22 +557,22 @@ $CONF['database_password'] = 'mypassword';</pre>
 | quota2                        |
 | vacation                      |
 | vacation_notification         |
-...</pre>
+...</code></pre>
 
 ### d.在浏览器页面下面创建Setup password，填复杂一些，点击“Generate password hash”获取hash代码，将代码拷贝到配置文件config.inc.php中的以下配置中
 
-<pre class="lang:vim decode:true ">$CONF['setup_password'] = 'changeme';#（用hash代码替换changeme）</pre>
+<pre><code class="language-vim">$CONF['setup_password'] = 'changeme';#（用hash代码替换changeme）</code></pre>
 
 ### e.然后重启apache2服务：
 
-<pre class="lang:sh decode:true ">service apache2 restart</pre>
+<pre><code class="language-sh">service apache2 restart</code></pre>
 
 ### f.再次访问http://pfadmin.example.com/setup.php，创建管理员的账号和密码  
 （需要正确输入之前创建的Setup password（填的不是hash值）才能创建管理员账号）  
 设置完成后要做一些安全工作
 
-<pre class="lang:sh decode:true ">rm setup.php
-chown root config.inc.php</pre>
+<pre><code class="language-sh">rm setup.php
+chown root config.inc.php</code></pre>
 
 ### g.最后访问PostfixAdmin的登录页http://pfadmin.example.com/  
 使用管理员账号登录后，就可以添加domain和多用户邮箱什么的了。
@@ -583,20 +583,20 @@ chown root config.inc.php</pre>
 
 ### a.下载解压
 
-<pre class="lang:sh decode:true ">mkdir /var/www/example.com/public_html/webmail
+<pre><code class="language-sh">mkdir /var/www/example.com/public_html/webmail
 cd /var/www/example.com/public_html/webmail
 wget http://repository.rainloop.net/v2/webmail/rainloop-latest.zip
 unzip rainloop-latest.zip
-rm rainloop-*.zip</pre>
+rm rainloop-*.zip</code></pre>
 
 这时候webmail目录下应该有个index.php,还有2个文件夹data和rainloop，否则又是嵌套了一层。
 
 ### b.设置权限
 
-<pre class="lang:sh decode:true ">cd /var/www/example.com/public_html/webmail
+<pre><code class="language-sh">cd /var/www/example.com/public_html/webmail
 find . -type d -exec chmod 755 {} \;
 find . -type f -exec chmod 644 {} \;
-chown -R www-data:www-data .</pre>
+chown -R www-data:www-data .</code></pre>
 
 ### c.直接访问管理页面进行配置：
 

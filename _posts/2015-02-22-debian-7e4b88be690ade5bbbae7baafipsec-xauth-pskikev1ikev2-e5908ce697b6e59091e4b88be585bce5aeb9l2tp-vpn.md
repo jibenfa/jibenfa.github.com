@@ -23,16 +23,16 @@ StrongSwan是一个完整的在Linux的 2.6和3.x内核下实现的的IPsec，�
 
 # 1.卸载openswan，删除/etc/init.d/ipsec，卸载ipsec service
 
-<pre class="lang:sh decode:true ">apt-get remove openswan
+<pre><code class="language-sh">apt-get remove openswan
 service ipsec stop
 update-rc.d -f ipsec remove
-rm /etc/init.d/ipsec</pre>
+rm /etc/init.d/ipsec</code></pre>
 
 # 2.下载编译安装strongswan
 
 <!--more-->
 
-<pre class="lang:sh decode:true ">apt-get update
+<pre><code class="language-sh">apt-get update
 apt-get install build-essential     #编译环境
 aptitude install libgmp3-dev libssl-dev pkg-config libpcsclite-dev libpam0g-dev     #编译所需要的软件
 mkdir tmp
@@ -41,12 +41,12 @@ wget http://download.strongswan.org/strongswan.tar.gz
 tar zxvf strongswan.tar.gz
 cd strongswan-5.2.2
 ./configure --prefix=/usr --sysconfdir=/etc --enable-cisco-quirks --enable-openssl --enable-nat-transport --disable-mysql --disable-ldap --disable-static --enable-shared --enable-md4 --enable-eap-mschapv2 --enable-eap-aka --enable-eap-aka-3gpp2 --enable-eap-gtc --enable-eap-identity --enable-eap-md5 --enable-eap-peap --enable-eap-radius --enable-eap-sim --enable-eap-sim-file --enable-eap-sim-pcsc --enable-eap-simaka-pseudonym --enable-eap-simaka-reauth --enable-eap-simaka-sql --enable-eap-tls --enable-eap-tnc --enable-eap-ttls
-apt-get install sysv-rc-conf</pre>
+apt-get install sysv-rc-conf</code></pre>
 
 然后编译安装，时间会比较长。。
 
-<pre class="lang:sh decode:true ">make
-make install</pre>
+<pre><code class="language-sh">make
+make install</code></pre>
 
 # 3.编辑ipsec配置文件ipsec.conf和ipsec.secrets和strongswan.conf
 
@@ -64,9 +64,9 @@ _**ios 6 has a bad bug in udp packet fragmentation handling. Large UDP packets w
 
 注意：每个参数前面都是tab，不是空格，否则会报错，这也是开源软件的bug么。。。
 
-<pre class="lang:sh decode:true ">vi /etc/ipsec.conf</pre>
+<pre><code class="language-sh">vi /etc/ipsec.conf</code></pre>
 
-<pre class="lang:vim decode:true ">config setup
+<pre><code class="language-vim">config setup
 	uniqueids=never 
 	#上面这个表示允许一个id多个登陆
 conn iOS_cert
@@ -146,13 +146,13 @@ conn L2TP-PSK-noNAT
 	rightprotoport=17/%any
 	dpddelay=40
 	dpdtimeout=130
-	dpdaction=clear</pre>
+	dpdaction=clear</code></pre>
 
 ### c.修改ipsec.secrets
 
-<pre class="lang:sh decode:true ">vi /etc/ipsec.secrets</pre>
+<pre><code class="language-sh">vi /etc/ipsec.secrets</code></pre>
 
-<pre class="lang:vim decode:true ">#
+<pre><code class="language-vim">#
 # ipsec.secrets
 #
 # This file holds the RSA private keys or the PSK preshared secrets for
@@ -161,13 +161,13 @@ conn L2TP-PSK-noNAT
 : RSA server.pem
 : PSK "PSK password"
 用户名 : XAUTH "user password"
-用户名 : EAP "user password"</pre>
+用户名 : EAP "user password"</code></pre>
 
 ### d.修改strongswan.conf
 
-<pre class="lang:sh decode:true">vi /etc/strongswan.conf</pre>
+<pre><code class="language-sh">vi /etc/strongswan.conf</code></pre>
 
-<pre class="lang:vim decode:true "># strongswan.conf - strongSwan configuration file
+<pre><code class="language-vim"># strongswan.conf - strongSwan configuration file
 charon {
        duplicheck.enable = no
 
@@ -189,22 +189,22 @@ charon {
       
        #保留文件原来内容
        ...
-}</pre>
+}</code></pre>
 
 # 4.签发证书
 
 ### a.生成CA私钥和自签名证书，默认都是RSA 2048：
 
-<pre class="lang:sh decode:true ">ipsec pki --gen --outform pem &gt; ca.pem
-ipsec pki --self --in ca.pem --dn "C=info, O=example, CN=example.com CA" --ca --outform pem &gt;ca.cert.pem</pre>
+<pre><code class="language-sh">ipsec pki --gen --outform pem &gt; ca.pem
+ipsec pki --self --in ca.pem --dn "C=info, O=example, CN=example.com CA" --ca --outform pem &gt;ca.cert.pem</code></pre>
 
 ### b.生成服务器私钥，用CA私钥签发服务器证书:
 
-<pre class="lang:sh decode:true ">ipsec pki --gen --outform pem &gt; server.pem
+<pre><code class="language-sh">ipsec pki --gen --outform pem &gt; server.pem
 ipsec pki --pub --in server.pem | ipsec pki --issue --cacert ca.cert.pem \
 --cakey ca.pem --dn "C=info, O=example, CN=example.com" \
 --san="example.com" --flag serverAuth --flag ikeIntermediate \
---outform pem &gt; server.cert.pem</pre>
+--outform pem &gt; server.cert.pem</code></pre>
 
 &#8211;issue, &#8211;cacert 和 &#8211;cakey 就是表明要用刚才自签的 CA 证书来签这个服务器证书。
 
@@ -217,18 +217,18 @@ Android 和 iOS 都要求服务器别名（serverAltName）就是服务器的 UR
 
 ### c.生成客户端私钥,用CA私钥签发客户证书，并生成移动客户端上使用的p12证书，多个客户端可以使用多个证书，也可以共用一个。这里需要输入2遍证书提取密码，以后安装要用:
 
-<pre class="lang:sh decode:true ">ipsec pki --gen --outform pem &gt; client.pem
+<pre><code class="language-sh">ipsec pki --gen --outform pem &gt; client.pem
 ipsec pki --pub --in client.pem | ipsec pki --issue --cacert ca.cert.pem --cakey ca.pem --dn "C=info, O=example, CN=example.com Client" --outform pem &gt; client.cert.pem
 openssl pkcs12 -export -inkey client.pem -in client.cert.pem -name "client" -certfile ca.cert.pem -caname "example.com CA"  -out client.cert.p12
-</pre>
+</code></pre>
 
 ### d.写一个发证书的脚本，以后省事：
 
-<pre class="lang:sh decode:true ">mkdir CAKEY
+<pre><code class="language-sh">mkdir CAKEY
 cp ./tmp/ca* ./CAKEY/	
-vi keymake.sh</pre>
+vi keymake.sh</code></pre>
 
-<pre class="lang:vim decode:true ">#!/bin/bash
+<pre><code class="language-vim">#!/bin/bash
    read -p "Please input username:" user
    if [ "$user" = "" ]; then
 	echo "Error! - you must input an username"
@@ -242,33 +242,33 @@ ipsec pki --gen --outform pem &gt; ${user}Key.pem
 ipsec pki --pub --in ${user}Key.pem | ipsec pki --issue --cacert ./CAKEY/ca.cert.pem --cakey ./CAKEY/ca.pem --dn "C=info, O=example, CN=example.com Client" --outform pem &gt; ${user}Cert.pem
    echo "Making ${user}Cert.p12 ..."
 openssl pkcs12 -export -inkey ${user}Key.pem -in ${user}Cert.pem -name ${user} -certfile ./CAKEY/ca.cert.pem -caname "example.com CA" -out ${user}Cert.p12
-   echo "========== done =========="</pre>
+   echo "========== done =========="</code></pre>
 
 如要使得新证书生效，需将cert.pem拷贝到/etc/ipsec.d/certs，可能需要重启ipsec服务
 
-<pre class="lang:sh decode:true ">chmod 755 keymake.sh</pre>
+<pre><code class="language-sh">chmod 755 keymake.sh</code></pre>
 
 ### e.拷贝安装证书至服务器，添加防火墙规则，添加自启动服务:
 
-<pre class="lang:sh decode:true ">cp -r ca.cert.pem /etc/ipsec.d/cacerts/
+<pre><code class="language-sh">cp -r ca.cert.pem /etc/ipsec.d/cacerts/
 cp -r server.cert.pem /etc/ipsec.d/certs/
 cp -r server.pem /etc/ipsec.d/private/
 cp -r client.cert.pem /etc/ipsec.d/certs/
 cp -r client.pem  /etc/ipsec.d/private/
-</pre>
+</code></pre>
 
 CA 证书、客户证书（两个）和 .p12 证书复制出来给客户端用。有几种 Android 配置还需要服务器证书（server.cert.pem）。
 
-<pre class="lang:sh decode:true ">iptables -A INPUT -p udp --dport 500 -j ACCEPT
+<pre><code class="language-sh">iptables -A INPUT -p udp --dport 500 -j ACCEPT
 iptables -A INPUT -p udp --dport 4500 -j ACCEPT
 iptables --table nat --append POSTROUTING --jump MASQUERADE
-echo 1 &gt; /proc/sys/net/ipv4/ip_forward</pre>
+echo 1 &gt; /proc/sys/net/ipv4/ip_forward</code></pre>
 
-<pre class="lang:sh decode:true ">vi /etc/rc.local</pre>
+<pre><code class="language-sh">vi /etc/rc.local</code></pre>
 
 在exit0前面加上：
 
-<pre class="lang:sh decode:true ">ipsec start</pre>
+<pre><code class="language-sh">ipsec start</code></pre>
 
 重启服务器。
 
