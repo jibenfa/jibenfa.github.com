@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-06T01:09:23+00:00</updated>
+ <updated>2025-08-06T01:13:32+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -48,7 +48,7 @@ ERROR: Failed to open apk database: v2 database format error
 
 &lt;p&gt;1）修改/etc/init.d/v2ray&lt;/p&gt;
 
-&lt;pre lang=&quot;bash&quot; line=&quot;0&quot; colla=&quot;+&quot;&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;
   
 #!/bin/sh /etc/rc.common
 #
@@ -318,7 +318,7 @@ service_triggers() {
     procd_add_reload_trigger &quot;advancedconfig&quot;
 }
       
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;2)修改/etc/dnsmasq.d/下的conf文件：&lt;/p&gt;
 
