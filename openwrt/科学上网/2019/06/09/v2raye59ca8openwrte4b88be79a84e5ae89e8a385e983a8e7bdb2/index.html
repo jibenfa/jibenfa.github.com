@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+
     
     
 </head>
@@ -128,13 +130,13 @@
 
 <p>1).首先是找一台墙外的vps，linux就行，推荐debian和ubuntu，根据v2ray官方文档，命令行执行：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 bash &lt;(curl -L -s https://install.direct/go.sh)
-</pre>
+</code></pre>
 
 <p>2).配置服务器端配置文件/etc/v2ray/config.json (v2ray安装完成后此文件就已经存在了，保留id，编辑其他部分)：</p>
 
-<pre lang="vim" line="0" colla="+">
+<pre><code class="language-vim">
 {
 
   "inbound": {
@@ -203,18 +205,18 @@ bash &lt;(curl -L -s https://install.direct/go.sh)
       }
    }
 }
-</pre>
+</code></pre>
 
 <p>3).运行：</p>
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 service v2ray restart
-</pre>
+</code></pre>
 
 <p>ps查看进程如果出现</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 /usr/bin/v2ray -config /etc/v2ray/config.json
-</pre>
+</code></pre>
 <p>即成功了。</p>
 
 <p>2.本地路由安装</p>
@@ -223,18 +225,18 @@ service v2ray restart
 
 <p>由于v2ray dynamic port对时间要求很高，所以，首先是校准时间，可以在启动项里面添加</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 sleep 10
 ntpd -q -n -d -p 1.openwrt.pool.ntp.org
 ntpd -q -n -d -p  ntp1.aliyun.com
-</pre>
+</code></pre>
 
 <p>计划任务里面添加</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 10 * * * * ntpd -q -n -d -p 1.openwrt.pool.ntp.org
 10 * * * * ntpd -q -n -d -p  ntp1.aliyun.com
-</pre>
+</code></pre>
 
 <p>2).安装v2ray-core, kuoruan 大神的github仓库里面有release的版本，可以直接去下载合适的架构，我这里下载的是：</p>
 
@@ -248,7 +250,7 @@ ntpd -q -n -d -p  ntp1.aliyun.com
 
 <p>3)配置v2ray，可以放在/etc/config/v2ray.json</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 {
 
   "outbound": {
@@ -447,11 +449,11 @@ ntpd -q -n -d -p  ntp1.aliyun.com
     }
   }
 }
-</pre>
+</code></pre>
 
 <p>4)添加文件/etc/init.d/v2ray,填写如下内容：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 #!/bin/sh /etc/rc.common
 #
 # Copyright (C) 2017 Ian Li &lt;OpenSource@ianli.xyz&gt;
@@ -479,15 +481,15 @@ start_service() {
         procd_close_instance
 }
 
-</pre>
+</code></pre>
 
 <p>5)添加服务，开机自动运行，并运行：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 chmod +x /etc/init.d/v2ray
 /etc/init.d/v2ray enable
 service v2ray start
-</pre>
+</code></pre>
 
 <p>ps查看进程，如果存在，即正常启动。</p>
 
@@ -497,7 +499,7 @@ service v2ray start
 
 <p>添加防火墙规则(直接添加到/etc/firewall.user 或者luci界面 网络-&gt;防火墙 编辑)：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 iptables -t nat -N V2RAY
 iptables -t nat -A V2RAY -d VPS地址 -j RETURN
 iptables -t nat -A V2RAY -d 0.0.0.0/8 -j RETURN
@@ -511,18 +513,18 @@ iptables -t nat -A V2RAY -d 240.0.0.0/4 -j RETURN
 iptables -t nat -A V2RAY -s 内网ip段，例如192.168.1.0/24 -p tcp -j REDIRECT --to-ports 1060
 iptables -t nat -A PREROUTING -p tcp -j V2RAY
 iptables -t nat -A OUTPUT -p tcp -j V2RAY
-</pre>
+</code></pre>
 
 <p>b) gwflist模式，仅对gfwlist挂代理，此方法可以提升路由国内网站访问性能（建议删除v2ray配置文件中的 “routing”路由部分）还能避免p2p下载时影响路由性能</p>
 
 <p>先安装dnsmasq_full</p>
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 opkg update
 opkg install dnsmasq_full
 opkg remove dnsmasq
-</pre>
+</code></pre>
 <p>添加防火墙规则(直接添加到/etc/firewall.user 或者luci界面 网络-&gt;防火墙 编辑)：</p>
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 ipset -N gfwlist iphash
 iptables -t nat -A PREROUTING -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1060
 iptables -t nat -A OUTPUT -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1060
@@ -550,23 +552,23 @@ ipset add gfwlist 149.154.164.0/22
 ipset add gfwlist 91.108.4.0/22
 ipset add gfwlist 91.108.56.0/22
 ipset add gfwlist 91.108.8.0/22
-</pre>
+</code></pre>
 <p>编辑/etc/dnsmasq.conf，github上有很多脚本自动将gfwlist转换为dnsmasq.conf，也可以下个现成的，例如：</p>
 
 <p>https://cokebar.github.io/gfwlist2dnsmasq/dnsmasq_gfwlist_ipset.conf</p>
 
 <p>其中部分内容（规则）为：</p>
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 server=/030buy.com/127.0.0.1#5353
 ipset=/030buy.com/gfwlist
 server=/0rz.tw/127.0.0.1#5353
 ipset=/0rz.tw/gfwlist
 ……
-</pre>
+</code></pre>
 
 <p>7)配置/etc/dnsmasq.conf，防止dns查询泄露：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 server=/google.com/127.0.0.1#5353
 server=/google.com.hk/127.0.0.1#5353
 server=/google.com.tw/127.0.0.1#5353
@@ -577,13 +579,13 @@ server=/freeweibo.com/127.0.0.1#5353
 server=/twitter.com/127.0.0.1#5353
 server=/facebook.com/127.0.0.1#5353
 server=/instagram.com/127.0.0.1#5353
-</pre>
+</code></pre>
 
 <p>运行：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 /etc/init.d/dnsmasq restart
-</pre>
+</code></pre>
 
 <p>8）安装和配置chinadns</p>
 
@@ -598,10 +600,10 @@ server=/instagram.com/127.0.0.1#5353
 <p>因此还是使用chinadns。</p>
 
 <p>首先安装chinadns (直接去github下载对应安装包)：</p>
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 opkg update
 opkg install chinadns
-</pre>
+</code></pre>
 
 <p>其次登陆luci界面：</p>
 
@@ -623,12 +625,12 @@ opkg install chinadns
 
 <p>基本设置-&gt;dns转发 里面设置为</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 127.0.0.1#5454
 127.0.0.1#5454
 127.0.0.1#5454
 127.0.0.1#5454
-</pre>
+</code></pre>
 
 <p>填4个是为了保证稳定性，否则经常会出现解析失败导致网页无法打开</p>
 
@@ -643,9 +645,9 @@ opkg install chinadns
 <p>注意：如果之前配置过ss+dnsforwarder+chinadns，建议重新刷机或者删除所有配置后重新配置，否则会有冲突。
 另外建议在/etc/sysctl.conf增加：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 fs.file-max=90000
-</pre>
+</code></pre>
 
 <p>之前貌似运行时间一久，会出现 too many open files 的提示，用上述办法（包括/etc/init.d/v2ray 的参数/命令设置）后没有出现此类问题。</p>
 
@@ -1121,6 +1123,11 @@ $(document).ready(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
+</script>
+<script type="module">
+    import hljs from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+
+    hljs.highlightAll();
 </script>
 
 

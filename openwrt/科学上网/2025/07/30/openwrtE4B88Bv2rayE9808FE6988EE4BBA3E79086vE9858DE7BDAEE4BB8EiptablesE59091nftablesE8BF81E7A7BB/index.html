@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+
     
     
 </head>
@@ -121,7 +123,7 @@
 
 <p>1）修改/etc/init.d/v2ray</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
   
 #!/bin/sh /etc/rc.common
 #
@@ -391,27 +393,27 @@ service_triggers() {
     procd_add_reload_trigger "advancedconfig"
 }
       
-</pre>
+</code></pre>
 
 <p>2)修改/etc/dnsmasq.d/下的conf文件：</p>
 
 <p>将原来的所有</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 ipset=/xxxx.com/gfwlist
-</pre>
+</code></pre>
 
 <p>全部修改为：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 nftset=/xxxx.com/4#inet#v2ray#gfwlist
-</pre>
+</code></pre>
 
 <p>需要注意的是，conf文件不能有windows换行符，因为nftset对于格式非常敏感，之前windows换行符对于ipset没有问题，但是对于nftset就无法正常执行。</p>
 
 <p>3）对应的/etc/config/chinadns文件：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 config chinadns
 	option chnroute '/etc/chinadns_chnroute.txt'
 	option addr '0.0.0.0'
@@ -419,11 +421,11 @@ config chinadns
 	option port '5355'
 	option bidirectional '0'
 	option server '114.114.114.114,127.0.0.1:5354'
-</pre>
+</code></pre>
 
 <p>4）对应的/root/start_multi_chinadns.sh文件：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 #!/bin/sh
 # To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first
 domestic_dns_1="114.114.114.114"
@@ -447,11 +449,11 @@ sleep 1
 nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_3} -s ${domestic_dns_3},${localip}:${v2_dns_port_3} -c /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
 sleep 1
 nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4},${localip}:${v2_dns_port_4} -c /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
-</pre>
+</code></pre>
 
 <p>5）对应的/etc/config/v2ray配置：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 {
   "inbounds": [
     {    
@@ -553,7 +555,7 @@ nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4}
   ]
 }
 
-</pre>
+</code></pre>
 
 <p>参考：
 1.chatgpt
@@ -1025,6 +1027,11 @@ $(document).ready(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
+</script>
+<script type="module">
+    import hljs from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+
+    hljs.highlightAll();
 </script>
 
 

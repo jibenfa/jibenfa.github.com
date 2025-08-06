@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+
     
     
 </head>
@@ -118,14 +120,14 @@
 		
 		<p>话说openwrt正式版安装命令是opkg，现在snapshot里面变成了apk。前几天尝试了一下，居然得到一个报错：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
   
 root@OpenWrt:~# apk update
 ERROR: FDB format error (line 7002, entry 'Z')
 ERROR: Unable to read database: v2 database format error
 ERROR: Failed to open apk database: v2 database format error
 
-</pre>
+</code></pre>
 
 <p>研究了一下，其实这个报错，跟以前opkg被lock的情况有点相似，只不过是apk采用了数据库，更新的时候异常关闭导致的。</p>
 
@@ -590,6 +592,11 @@ $(document).ready(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
+</script>
+<script type="module">
+    import hljs from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+
+    hljs.highlightAll();
 </script>
 
 

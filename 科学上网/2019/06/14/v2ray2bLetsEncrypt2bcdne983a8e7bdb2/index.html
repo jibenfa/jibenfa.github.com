@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+
     
     
 </head>
@@ -121,7 +123,7 @@
 
 <p>一、vps部署Nginx和LetsEncrypt</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 apt update
 apt install nginx -y
 apt-get update
@@ -130,25 +132,25 @@ add-apt-repository universe
 add-apt-repository ppa：certbot/certbot
 apt-get update
 apt-get install certbot python-certbot-nginx 
-</pre>
+</code></pre>
 
 <p>自动安装Nginx证书：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 certbot --nginx
-</pre>
+</code></pre>
 
 <p>然后crontab -e增加计划任务，自动更新https证书</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 certbot renew --dry-run
-</pre>
+</code></pre>
 
 <p>二、vps配置Nginx和安装配置v2ray</p>
 
 <p>设置/etc/nginx/sites-enabled/default为：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 server {
 
         #index index.html index.htm index.nginx-debian.html;
@@ -176,16 +178,16 @@ server {
     ssl on;
 
 }
-</pre>
+</code></pre>
 
 <p>搞完以后，执行：</p>
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 service nginx restart
-</pre>
+</code></pre>
 
 <p>安装v2ray就不说了，服务端配置文件如下：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 {
   "inbounds": [
     {
@@ -215,12 +217,12 @@ service nginx restart
     }
   ]
 }
-</pre>
+</code></pre>
 
 <p>搞完以后，执行：</p>
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 service v2ray restart
-</pre>
+</code></pre>
 
 <p>三、在cloudflare上配置cdn
 不提了，说多泪，主要是:</p>
@@ -233,7 +235,7 @@ service v2ray restart
 
 <p>四、客户端配置v2ray</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 {
   #这个配置项是结合chinadns使用的
   "inbound": {
@@ -388,7 +390,7 @@ service v2ray restart
     }
   }
 }
-</pre>
+</code></pre>
 
 <p>五、openwrt上配置防火墙</p>
 
@@ -861,6 +863,11 @@ $(document).ready(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
+</script>
+<script type="module">
+    import hljs from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+
+    hljs.highlightAll();
 </script>
 
 

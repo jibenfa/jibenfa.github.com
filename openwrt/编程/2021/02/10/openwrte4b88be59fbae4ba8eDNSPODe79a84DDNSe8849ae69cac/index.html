@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+
     
     
 </head>
@@ -118,7 +120,7 @@
 		
 		<p>换dns供应商了，撸了一个openwrt下基于dnspod api的ddns脚本：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 #!/bin/sh
 
 TOKEN="xxx,xxxxxxxxxxxxxxx"
@@ -161,7 +163,7 @@ echo "start ddns refresh"
 refresh_cmd="curl -X POST https://dnsapi.cn/Record.Ddns -d 'login_token=${TOKEN}&amp;format=json&amp;domain_id=${DOMAIN_ID}&amp;record_id=${RECORD_ID}&amp;record_line_id=0&amp;value=${LIP}&amp;sub_domain=${SUB_DOMAIN}'"
 refreah_result=`eval ${refresh_cmd}`
 echo "${refreah_result}"
-</pre>
+</code></pre>
   
 	</div>
 	<footer class="article-footer clearfix">
@@ -629,6 +631,11 @@ $(document).ready(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
+</script>
+<script type="module">
+    import hljs from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+
+    hljs.highlightAll();
 </script>
 
 

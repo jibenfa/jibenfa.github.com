@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+
     
     
 </head>
@@ -120,36 +122,36 @@
 
 <p>1.下载并安装VMware-PowerCLI-6.5.0和ESXi-Customizer-PS封装工具</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 
 VMware-PowerCLI-6.5.0-4624819
 
 ESXi-Customizer-PS-v2.6.0.ps1（绿色版）
 
-</pre>
+</code></pre>
 
 <p>2.下载ESXI6.7 offline bundle</p>
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 
 ESXi670-201912001.zip 放到和ESXi-Customizer同一个文件夹下
 
-</pre>
+</code></pre>
 
 <p>3.升级powershell至3.0版本以上（win10自带的是5.1，无需升级）</p>
 
 <p>4.下载网卡驱动</p>
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 
 VMware ESXi 6.7 ixgben 1.8.7 NIC Driver for Intel Ethernet Controllers 82599, x520, x540, x550, x552 and x553 family
 
 https://my.vmware.com/web/vmware/details?productId=742&amp;downloadGroup=ESXI67U3B#drivers_tools
 
-</pre>
+</code></pre>
 <p>解压驱动到D:\vmware67u3b\vib\</p>
 
 <p>5.用管理员权限打开powershell，切换至ESXi-Customizer所在文件夹，执行以下命令：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 
 1).Powershell中默认禁止执行脚本，所以先修改策略允许执行
 
@@ -161,7 +163,7 @@ $DeployNoSignatureCheck=$true
 
  .\ESXi-Customizer-PS-v2.6.0.ps1 -izip .\ESXi670-201912001.zip -pkgDir D:\vmware67u3b\vib\ -nsc
  
-</pre>
+</code></pre>
 
 <p>如果出现了all done,就表示成功了，可以在上述文件夹下找到ESXi-6.7.0-20191204001-standard-customized.iso</p>
   
@@ -625,6 +627,11 @@ $(document).ready(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
+</script>
+<script type="module">
+    import hljs from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+
+    hljs.highlightAll();
 </script>
 
 

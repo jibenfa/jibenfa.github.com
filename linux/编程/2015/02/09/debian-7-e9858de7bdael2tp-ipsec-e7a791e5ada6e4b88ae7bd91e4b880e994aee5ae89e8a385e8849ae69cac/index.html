@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+
     
     
 </head>
@@ -146,7 +148,7 @@ IPSEC使用openswan，<br />
 <p>里面填以下内容，前20行内容按照实际修改<br />
 <!--more--></p>
 
-<pre lang="bash" line="0" file="download.txt" colla="+">#!/bin/sh
+<pre><code class="language-bash">#!/bin/sh
  
  
 #VPN 账号
@@ -370,7 +372,7 @@ apt-get install lsof
 update-rc.d ipsec defaults
 
 
-</pre>
+</code></pre>
 
 <p>开始运行<br />
 root@xxx:sh ./xxxx.sh</p>
@@ -865,6 +867,11 @@ $(document).ready(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
+</script>
+<script type="module">
+    import hljs from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+
+    hljs.highlightAll();
 </script>
 
 

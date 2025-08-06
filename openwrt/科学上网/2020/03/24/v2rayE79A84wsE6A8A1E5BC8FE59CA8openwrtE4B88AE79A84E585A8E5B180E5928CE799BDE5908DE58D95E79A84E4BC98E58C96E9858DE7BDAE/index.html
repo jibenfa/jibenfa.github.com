@@ -46,6 +46,8 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+
     
     
 </head>
@@ -158,7 +160,7 @@
 
 <p>2.chinadns在openwrt的配置参考：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 config chinadns
 	option chnroute '/etc/chinadns_chnroute.txt'
 	option addr '0.0.0.0'
@@ -166,11 +168,11 @@ config chinadns
 	option port '5454'
 	option server '114.114.114.114,127.0.0.1:5354'
 	option bidirectional '0'
-</pre>
+</code></pre>
 
 <p>3.v2ray在openwrt客户端的配置为：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 {
     "inbounds": [
       {    
@@ -275,24 +277,24 @@ config chinadns
   
   
   
-</pre>
+</code></pre>
 
 <p>4.新建luci菜单配置v2ray：</p>
 
 <p>(1).新建/etc/config/advancedconfig，内容为：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 
 config arguments
 
 config rules
 	option v2raymode 'gfwlist'
 
-</pre>
+</code></pre>
 
 <p>(2)新建/usr/lib/lua/luci/controller/advancedconfig.lua，内容为：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 
 --/usr/lib/lua/luci/controller/advancedconfig.lua
 module("luci.controller.advancedconfig", package.seeall)
@@ -307,11 +309,11 @@ function index()
 	page.acl_depends = { "luci-app-firewall" }
 end
 
-</pre>
+</code></pre>
 
 <p>(3).新建/usr/lib/lua/luci/model/cbi/advancedconfig.lua，内容为：</p>
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 --/usr/lib/lua/luci/model/cbi/advancedconfig.lua
 local fs = require "nixio.fs"
 
@@ -399,7 +401,7 @@ end
 return m
 
 
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 
 重头戏来了~~~~
@@ -407,7 +409,7 @@ return m
 5.在openwrt上修改/etc/init.d/v2ray，（注意要提前安装好：chinadns,v2ray,dnsmasq-full,coreutils-nohup），内容为：
 
 
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 #!/bin/sh /etc/rc.common
 #
 # This is free software, licensed under the GNU General Public License v3.
@@ -630,13 +632,13 @@ service_triggers() {
 	procd_add_reload_trigger "advancedconfig"
 }
 
-</pre>
+</code></pre>
 
 
 两种模式都可以使用同一个v2ray的openwrt客户端配置，其中境外全局模式的防火墙配置非常简洁，看起来很舒服。。。
 
 6.最后设置一个多进程的chinadns启动脚本，start_multi_chinadns.sh，内容为：
-<pre lang="bash" line="0" colla="+">
+<pre><code class="language-bash">
 #!/bin/sh
 # To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first
 domestic_dns_1="114.114.114.114"
@@ -659,13 +661,13 @@ nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_3} -s ${domestic_dns_3}
 sleep 1
 nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4},${localip}:${v2_dns_port_4} -c /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
 
-</pre>
+</code></pre>
 设置在rc.local中作为启动项，即可在openwrt启动的时候带起4个进程的chinadns。
 
 附：luci的效果图如下：
 
 <img src="https://jibenfa.github.io/uploads/2020/03/screencapture-2020-03-29-20_27_10.png" width="900" height="1100" alt="AltText" />
-</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></pre>
+</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></code></pre>
   
 	</div>
 	<footer class="article-footer clearfix">
@@ -1133,6 +1135,11 @@ $(document).ready(function(){
     ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
+</script>
+<script type="module">
+    import hljs from 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/+esm';
+
+    hljs.highlightAll();
 </script>
 
 
