@@ -14,7 +14,7 @@ tags:
 
 一、vps部署Nginx和LetsEncrypt
 
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 apt update
 apt install nginx -y
 apt-get update
@@ -23,25 +23,25 @@ add-apt-repository universe
 add-apt-repository ppa：certbot/certbot
 apt-get update
 apt-get install certbot python-certbot-nginx 
-</pre>
+</code></pre>
 
 自动安装Nginx证书：
 
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 certbot --nginx
-</pre>
+</code></pre>
 
 然后crontab -e增加计划任务，自动更新https证书
 
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 certbot renew --dry-run
-</pre>
+</code></pre>
 
 二、vps配置Nginx和安装配置v2ray
 
 设置/etc/nginx/sites-enabled/default为：
 
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 server {
 
         #index index.html index.htm index.nginx-debian.html;
@@ -69,17 +69,17 @@ server {
     ssl on;
 
 }
-</pre>
+</code></pre>
 
 搞完以后，执行：
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 service nginx restart
-</pre>
+</code></pre>
 
 
 安装v2ray就不说了，服务端配置文件如下：
 
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 {
   "inbounds": [
     {
@@ -109,12 +109,12 @@ service nginx restart
     }
   ]
 }
-</pre>
+</code></pre>
 
 搞完以后，执行：
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 service v2ray restart
-</pre>
+</code></pre>
 
 
 三、在cloudflare上配置cdn
@@ -128,7 +128,7 @@ service v2ray restart
 
 四、客户端配置v2ray
 
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 {
   #这个配置项是结合chinadns使用的
   "inbound": {
@@ -283,7 +283,7 @@ service v2ray restart
     }
   }
 }
-</pre>
+</code></pre>
 
 五、openwrt上配置防火墙
 

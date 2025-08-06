@@ -41,7 +41,7 @@ root@xxx:vi xxxx.sh
 里面填以下内容，前20行内容按照实际修改  
 <!--more-->
 
-<pre lang="bash" line="0" file="download.txt" colla="+">#!/bin/sh
+<pre><code class="language-bash">#!/bin/sh
  
  
 #VPN 账号
@@ -265,7 +265,7 @@ apt-get install lsof
 update-rc.d ipsec defaults
 
 
-</pre>
+</code></pre>
 
 开始运行  
 root@xxx:sh ./xxxx.sh

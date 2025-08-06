@@ -24,18 +24,18 @@ tags:
 1.两台路由均执行以下操作：
 
 1）安装wireguard，这里使用的是openwrt 23.05.5版本
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 opkg update
 opkg install luci-app-wireguard kmod-wireguard wireguard-tools
-</pre>
+</code></pre>
 
 2）生成公私钥对
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 wg genkey | tee privatekey | wg pubkey > publickey
-</pre>
+</code></pre>
 
 3）调整防火墙（/etc/config/firewall），在末尾增加：
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 config zone
         option name 'wg'
         option input 'ACCEPT'
@@ -64,10 +64,10 @@ config rule
         option dest_port '51820'
         option target 'ACCEPT'
 
-</pre>
+</code></pre>
 
 2.在路由A上设置网络接口（/etc/config/network），在最后增加：
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 config interface 'wg0'
         option proto 'wireguard'
         option private_key '路由A私钥'
@@ -86,10 +86,10 @@ config route
         option target '172.24.8.0/24'
         option gateway '10.168.10.1'
         option metric '1'
-</pre>
+</code></pre>
 
 3.在路由B上设置网络接口（/etc/config/network），在最后增加：
-<pre lang="bash" line="0"  colla="+">
+<pre><code class="language-bash">
 config interface 'wg0'
         option proto 'wireguard'
         option private_key '路由B私钥'
@@ -110,7 +110,7 @@ config route
         option target '172.24.1.0/24'
         option gateway '10.168.10.3'
         option metric '1'
-</pre>
+</code></pre>
 
 4.最后重启路由A和路由B，两个路由间的局域网就可以互相访问了
 

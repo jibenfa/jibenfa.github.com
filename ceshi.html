@@ -1,23 +1,29 @@
----
-id: 821
-title: openwrt下v2ray透明代理配置从iptables向nftables迁移
-date: 2025-07-30 03:22:13+00:00
-author: coffeecat
-layout: post
-categories:
-- openwrt
-- 科学上网
-tags:
-- openwrt
-- 科学上网
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Highlight.js ESM 代码高亮示例</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/vs2015.min.css" />
+  <style>
+    body {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      font-family: Consolas, monospace;
+      padding: 2rem;
+    }
+    pre {
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      background: #252526;
+    }
+  </style>
+</head>
+<body>
 
-由于openwrt的防火墙逐步从iptables向nftables升级，官方24.10.2的dnsmasq包默认不将ipset纳入编译选项，只支持nftset，
-由此带来v2ray透明代理的配置必须进行升级，此次主要是调整了v2ray的配置和dnsmasq-full的配置。
+  <h1>ES Module 版 Highlight.js 高亮示例</h1>
 
-1）修改/etc/init.d/v2ray
-
- <pre><code class="language-bash">
+  <pre><code class="language-bash">
   
 #!/bin/sh /etc/rc.common
 #
@@ -287,173 +293,30 @@ service_triggers() {
     procd_add_reload_trigger "advancedconfig"
 }
       
-</code></pre>
+  </code></pre>
 
-2)修改/etc/dnsmasq.d/下的conf文件：
+  <pre><code class="language-javascript">
+// JavaScript 示例
+console.log("Hello, ESM world!");
+  </code></pre>
 
-将原来的所有
+<script type="module">
+  import hljs from '{{ "/assets/highlightjs/core.js" | relative_url }}';
 
-<pre><code class="language-bash">
-ipset=/xxxx.com/gfwlist
-</code></pre>
+  const languages = ['javascript', 'bash', 'python', 'json', 'html', 'css']; // ← 你用到的语言都可以写在这里
 
-全部修改为：
+  const base = '{{ "/assets/highlightjs/languages/" | relative_url }}';
 
-<pre><code class="language-bash">
-nftset=/xxxx.com/4#inet#v2ray#gfwlist
-</code></pre>
+  Promise.all(
+    languages.map(lang =>
+      import(`${base}${lang}.js`).then(mod => {
+        hljs.registerLanguage(lang, mod.default);
+      })
+    )
+  ).then(() => {
+    document.querySelectorAll('pre code').forEach(hljs.highlightElement);
+  });
+</script>
 
-需要注意的是，conf文件不能有windows换行符，因为nftset对于格式非常敏感，之前windows换行符对于ipset没有问题，但是对于nftset就无法正常执行。
-
-3）对应的/etc/config/chinadns文件：
-
-<pre><code class="language-bash">
-config chinadns
-	option chnroute '/etc/chinadns_chnroute.txt'
-	option addr '0.0.0.0'
-	option enable '1'
-	option port '5355'
-	option bidirectional '0'
-	option server '114.114.114.114,127.0.0.1:5354'
-</code></pre>
-
-4）对应的/root/start_multi_chinadns.sh文件：
-
-<pre><code class="language-bash">
-#!/bin/sh
-# To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first
-domestic_dns_1="114.114.114.114"
-domestic_dns_2="119.29.29.29"
-domestic_dns_3="223.5.5.5"
-domestic_dns_4="180.76.76.76"
-localip="127.0.0.1"
-#chinadns_port_1="5354"
-chinadns_port_2="5357"
-chinadns_port_3="5359"
-chinadns_port_4="5361"
-#v2_dns_port_1="5355"
-v2_dns_port_2="5356"
-v2_dns_port_3="5358"
-v2_dns_port_4="5360"
-killall chinadns
-/etc/init.d/chinadns restart
-sleep 1
-nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_2} -s ${domestic_dns_2},${localip}:${v2_dns_port_2} -c /etc/chinadns_chnroute.txt 1>/dev/null 2>&1 &
-sleep 1
-nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_3} -s ${domestic_dns_3},${localip}:${v2_dns_port_3} -c /etc/chinadns_chnroute.txt 1>/dev/null 2>&1 &
-sleep 1
-nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4},${localip}:${v2_dns_port_4} -c /etc/chinadns_chnroute.txt 1>/dev/null 2>&1 &
-</code></pre>
-
-5）对应的/etc/config/v2ray配置：
-
-<pre><code class="language-bash">
-{
-  "inbounds": [
-    {    
-      "protocol": "dokodemo-door",
-      "port": 1060,
-      "listen":"0.0.0.0",
-      "sniffing": {
-        "enabled": false,
-        "destOverride": ["http", "tls"]
-      },
-       "settings": {
-         "network": "tcp,udp",
-         "followRedirect": true 
-       },
-       "streamSettings": {
-            "sockopt": {
-            "tproxy": "redirect" 
-           }
-       }
-    },
-    {
-      "protocol": "dokodemo-door",
-      "listen":"0.0.0.0",
-      "port": 5354,
-      "settings": {
-        "address": "8.8.8.8",
-        "port": 53,
-        "network": "udp",
-        "timeout": 0,
-        "followRedirect": false
-      }
-    },
-    {
-      "protocol": "dokodemo-door",
-      "listen":"0.0.0.0",
-      "port": 5356,
-      "settings": {
-        "address": "8.8.8.8",
-        "port": 53,
-        "network": "udp",
-        "timeout": 0,
-        "followRedirect": false
-      }
-    },
-    {
-      "protocol": "dokodemo-door",
-      "listen":"0.0.0.0",
-      "port": 5358,
-      "settings": {
-        "address": "1.1.1.1",
-        "port": 53,
-        "network": "udp",
-        "timeout": 0,
-        "followRedirect": false
-      }
-    },
-    {
-      "protocol": "dokodemo-door",
-      "listen":"0.0.0.0",
-      "port": 5360,
-      "settings": {
-        "address": "8.8.4.4",
-        "port": 53,
-        "network": "udp",
-        "timeout": 0,
-        "followRedirect": false
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "vless",
-      "tag": "proxy",
-      "settings": {
-        "vnext": [
-          {
-            "address": "xxx.com", #需改为实际网址
-            "port": 443,
-            "users": [
-              {
-                "id": "UUID", #需改为实际UUID
-                "encryption": "none"
-              }
-            ]
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "tls",
-        "wsSettings": {
-          "path": "/path"  #需改为实际路径
-        },
-        "tcpSettings": {
-          "allowInsecureCiphers": false
-        }
-      }
-    }
-  ]
-}
-
-</code></pre>
-
-
-
-
-参考：
-1.chatgpt
-2.https://www.abcde.im/archives/112.html
+</body>
+</html>
