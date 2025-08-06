@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -122,26 +122,26 @@
 
 <p>ssh登陆gl-inet路由器(基于OPENWRT-AR71XX(AR913X)，adbyby官网上下载对应插件)，输入：</p>
 
-<pre class="lang:sh decode:true ">mkdir adbyby
+<pre><code class="language-sh">mkdir adbyby
 cd adbyby
 wget http://info.adbyby.com/download/openwrt.tar.gz
 tar -xzvf openwrt.tar.gz
 cd bin
 chmod +x adbyby
-vi /etc/rc.local</pre>
+vi /etc/rc.local</code></pre>
 
 <p>在exit 0 前加入</p>
 
-<pre class="lang:vim decode:true ">/root/adbyby/bin/adbyby&amp;
-iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8118</pre>
+<pre><code class="language-vim">/root/adbyby/bin/adbyby&amp;
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8118</code></pre>
 
 <p>另外更新adhook.ini中的exrule：<br />
 vi /root/adbyby/bin/adhook.ini<br />
 找到[exrule]，修改为：</p>
 
-<pre class="lang:vim decode:true ">[exrule]^M
+<pre><code class="language-vim">[exrule]^M
 rule=https://easylist-downloads.adblockplus.org/easylistchina.txt^M
-rule=https://easylist-downloads.adblockplus.org/easyprivacy.txt^M</pre>
+rule=https://easylist-downloads.adblockplus.org/easyprivacy.txt^M</code></pre>
 
 <p>重启路由器，搞定。。。<br />
 经测试：打开网易、优酷，页面没有讨厌的广告了，也不会弹出广告，视频内嵌的前置广告也没了。。。手机浏览器也是。。。<br />
@@ -150,9 +150,9 @@ rule=https://easylist-downloads.adblockplus.org/easyprivacy.txt^M</pre>
 <p>由于adbyby不是很稳定，一旦挂掉就不能上网了，所以按照<br />
 http://www.groad.net/bbs/thread-8832-1-1.html （有修改）创建守护进程，一旦adbyby进程挂了，就重启进程。。。</p>
 
-<pre class="lang:sh decode:true ">vi /etc/check_ad_by_by.sh</pre>
+<pre><code class="language-sh">vi /etc/check_ad_by_by.sh</code></pre>
 
-<pre class="lang:vim decode:true ">#!/bin/sh
+<pre><code class="language-vim">#!/bin/sh
  
 mon() {
 while [ "1" ];
@@ -165,21 +165,21 @@ do
 done
 }
  
-mon &amp;</pre>
+mon &amp;</code></pre>
 
-<pre class="lang:sh decode:true ">chmod a+x /etc/check_ad_by_by.sh</pre>
+<pre><code class="language-sh">chmod a+x /etc/check_ad_by_by.sh</code></pre>
 
-<pre class="lang:sh decode:true ">vi /etc/rc.local</pre>
+<pre><code class="language-sh">vi /etc/rc.local</code></pre>
 
 <p>在exit 0前加入</p>
 
-<pre class="lang:vim decode:true ">/etc/check_ad_by_by.sh</pre>
+<pre><code class="language-vim">/etc/check_ad_by_by.sh</code></pre>
 
 <p>另外为了防止adbyby 僵死,可以定期检查重启adbyby：</p>
 
-<pre class="lang:sh decode:true ">vi /etc/restart_ad_by_by.sh</pre>
+<pre><code class="language-sh">vi /etc/restart_ad_by_by.sh</code></pre>
 
-<pre class="lang:sh decode:true ">#!/bin/sh
+<pre><code class="language-sh">#!/bin/sh
 
 ping -c 1 www.baidu.com &gt; /dev/null
 ret=$?
@@ -191,20 +191,20 @@ echo ' restarting adbyby! '
 killall -9 adbyby
 /root/adbyby/bin/adbyby&amp; &gt;/dev/null
 
-fi</pre>
+fi</code></pre>
 
-<pre class="lang:sh decode:true ">chmod a+x /etc/restart_ad_by_by.sh</pre>
+<pre><code class="language-sh">chmod a+x /etc/restart_ad_by_by.sh</code></pre>
 
 <p>在crontab里面增加</p>
 
-<pre class="lang:sh decode:true ">0 * * * * /etc/restart_ad_by_by.sh</pre>
+<pre><code class="language-sh">0 * * * * /etc/restart_ad_by_by.sh</code></pre>
 
 <p>每小时检查重启adbyby</p>
 
 <p>如果adbyby还是无法启动，可能需要安装libstdcpp</p>
 
-<pre class="lang:sh decode:true ">opkg install libstdcpp
-</pre>
+<pre><code class="language-sh">opkg install libstdcpp
+</code></pre>
   
 	</div>
 	<footer class="article-footer clearfix">

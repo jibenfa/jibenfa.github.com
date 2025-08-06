@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -126,11 +126,11 @@
 4.首次需要手动添加一次域名，以便获取ID号码，例如为www.examle.com添加第一个dns记录：<br />
 <!--more--></p>
 
-<pre class="lang:sh decode:true ">curl -u 'YOUR_USER_NAME:YOUR_API_TOKEN' 'https://api.name.com/v4/domains/example.com/records' -X POST --data '{"host":"www","type":"A","answer":"YOUR_IP","ttl":300}'</pre>
+<pre><code class="language-sh">curl -u 'YOUR_USER_NAME:YOUR_API_TOKEN' 'https://api.name.com/v4/domains/example.com/records' -X POST --data '{"host":"www","type":"A","answer":"YOUR_IP","ttl":300}'</code></pre>
 
 <p>从返回的json里面记录下id，json格式为：</p>
 
-<pre class="lang:sh decode:true ">{
+<pre><code class="language-sh">{
     "id": 12345,
     "domainName": "example.org",
     "host": "www",
@@ -138,14 +138,14 @@
     "type": "A",
     "answer": "10.0.0.1",
     "ttl": 300
-}</pre>
+}</code></pre>
 
 <p>此id要写入脚本。</p>
 
 <p>后续就可以通过如下脚本更新dns了。<br />
 脚本如下：</p>
 
-<pre class="lang:vim decode:true ">#!/bin/sh
+<pre><code class="language-vim">#!/bin/sh
 
 USER="YOUR_USER_NAME"
 TOKEN="YOUR_API_TOKEN"
@@ -168,7 +168,7 @@ echo "start ddns refresh"
 if [ x"${LIP}" != x ]; then
    curl -u ''""${USER}""':'""${TOKEN}""'' 'https://api.name.com/v4/domains/'""${DOMAIN}""'/records/'""${ID}""'' -X PUT --data '{"host":"'""${HOST}""'","type":"A","answer":"'""${LIP}""'","ttl":300}'
    echo ${LIP} &gt; /tmp/ddnsResult
-fi</pre>
+fi</code></pre>
 
 <p>参考资料：<br />
 1.https://www.name.com/api-docs/</p>

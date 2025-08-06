@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -145,7 +145,7 @@
  <br />
  flash在中间，周围小元件也不多，一把烙铁就拆下了，拆下后用编程器读取flash，备份官方flash 8M编程器固件：uboot，firmware和art。然后用winhex提取art.bin，到<a href="http://http://www.right.com.cn/FORUM/thread-136444-1-1.html">恩山论坛</a>上下载H大大的wdr7500 uboot:u-boot-qca9558-ar8327n.bin，然后计算uboot，firmware，art的大小之和，用16M减去这个值后，得到8454144，填入我的perl脚本，生成填充文件16M_FF.bin：</p>
 
-<pre class="lang:perl decode:true ">#!/usr/bin/perl 
+<pre><code class="language-perl">#!/usr/bin/perl 
 use strict;
 my $i = 8454144;
 open(FH,'&gt;','16M_FF.bin');
@@ -158,11 +158,11 @@ while($i&gt;0)
 }
 
 close FH;
-</pre>
+</code></pre>
 
 <p>最后运行：</p>
 
-<pre class="lang:sh decode:true ">cat u-boot-qca9558-ar8327n.bin openwrt-ar71xx-generic-archer-c7-v1-squashfs-factory.bin 16M_FF.bin art.bin &gt; wdr7500v2fullflash16M.bin</pre>
+<pre><code class="language-sh">cat u-boot-qca9558-ar8327n.bin openwrt-ar71xx-generic-archer-c7-v1-squashfs-factory.bin 16M_FF.bin art.bin &gt; wdr7500v2fullflash16M.bin</code></pre>
 
 <p>然后用编程器烧录到winbond W25Q128FVSG，焊接到电路板上。</p>
 

@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-06T04:05:39+00:00</updated>
+ <updated>2025-08-06T06:27:01+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -650,7 +650,7 @@ config dnsmasq
 
 &lt;p&gt;1）编辑/etc/easy-rsa/vars，修改部分内容&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;# Choose a size in bits for your keypairs. The recommended value is 2048.  Using
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;# Choose a size in bits for your keypairs. The recommended value is 2048.  Using
 # 2048-bit keys is considered more than sufficient for many years into the
 # future. Larger keysizes will slow down TLS negotiation and make key/DH param
 # generation take much longer. Values up to 4096 should be accepted by most
@@ -675,39 +675,39 @@ export KEY_CITY=&quot;xxxx&quot;
 export KEY_ORG=&quot;XXxxxx&quot;
 export KEY_EMAIL=&quot;xxxxxx@gmail.com&quot;
 export KEY_OU=&quot;XXxxxxxx&quot;
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;2）接着生成证书和diffie-hellman key：&lt;br /&gt;
 手工清空/etc/easy-rsa/下的key目录或者运行：&lt;/p&gt;
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 easyrsa clean-all  
 easyrsa init-pki
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;生成ca证书&lt;/p&gt;
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 easyrsa build-ca nopass 
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;生成dh密钥&lt;/p&gt;
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 easyrsa gen-dh  
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;服务器证书&lt;/p&gt;
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 easyrsa build-server-full server nopass
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;客户端证书给coffeecat&lt;/p&gt;
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 easyrsa build-client-full coffeecat nopass
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;生成ta.key&lt;/p&gt;
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 openvpn --genkey --secret ta.key
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;3）拷贝到服务器目录下：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;cd /etc/easy-rsa/keys/
-cp ca.crt ca.key dh4096.pem server.key server.crt ta.key /etc/openvpn/&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;cd /etc/easy-rsa/keys/
+cp ca.crt ca.key dh4096.pem server.key server.crt ta.key /etc/openvpn/&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;4）将以下文件拷贝到客户端或者将文件的内容贴在客户端配置文件中（移动设备）：&lt;br /&gt;
 ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key&lt;/p&gt;
@@ -718,7 +718,7 @@ ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;注意：172.24.1.1为路由器的lan ip，10.1.1.0/24是为vpn客户端分配的ip段，一定要和路由器为lan dhcp的ip段错开。&lt;/em&gt;&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 
 config openvpn &apos;tun_cert&apos;
 	option port &apos;3366&apos;
@@ -746,22 +746,22 @@ config openvpn &apos;tun_cert&apos;
 	list push &apos;dhcp-option DNS 172.24.1.1&apos;
 	list push &apos;redirect-gateway def1 local&apos;
 	option enabled &apos;1&apos;
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;在/etc/openvpn/tunstatic文件夹下创建名为coffeecat的文件，内容为：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 ifconfig-push 10.1.1.7 255.255.255.0
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;然后在luci或者命令行启动openvpn：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;/etc/init.d/openvpn restart&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;/etc/init.d/openvpn restart&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;ps一下有进程就对了&lt;/p&gt;
 
 &lt;p&gt;openvpn客户端配置client.ovpn,此处设置为单文件模式：&lt;/p&gt;
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 client
 dev tun
 proto tcp4
@@ -809,14 +809,14 @@ key-direction 1
 -----END PRIVATE KEY-----
 &amp;lt;/key&amp;gt;
 
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;特别要注意的是，server配置文件中的：&lt;/p&gt;
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 option tls_auth &apos;/etc/openvpn/ta.key 0&apos;
 
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;要和client配置文件中的：&lt;/p&gt;
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 key-direction 1
 &amp;lt;tls-auth&amp;gt;
 #
@@ -827,7 +827,7 @@ key-direction 1
 -----END OpenVPN Static key V1-----
 &amp;lt;/tls-auth&amp;gt;
 
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;对应，否则无法连通。&lt;/p&gt;
 
 &lt;p&gt;参考：&lt;/p&gt;
@@ -2408,11 +2408,11 @@ fs.file-max=90000
 4.首次需要手动添加一次域名，以便获取ID号码，例如为www.examle.com添加第一个dns记录：&lt;br /&gt;
 &lt;!--more--&gt;&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;curl -u &apos;YOUR_USER_NAME:YOUR_API_TOKEN&apos; &apos;https://api.name.com/v4/domains/example.com/records&apos; -X POST --data &apos;{&quot;host&quot;:&quot;www&quot;,&quot;type&quot;:&quot;A&quot;,&quot;answer&quot;:&quot;YOUR_IP&quot;,&quot;ttl&quot;:300}&apos;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;curl -u &apos;YOUR_USER_NAME:YOUR_API_TOKEN&apos; &apos;https://api.name.com/v4/domains/example.com/records&apos; -X POST --data &apos;{&quot;host&quot;:&quot;www&quot;,&quot;type&quot;:&quot;A&quot;,&quot;answer&quot;:&quot;YOUR_IP&quot;,&quot;ttl&quot;:300}&apos;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;从返回的json里面记录下id，json格式为：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;{
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;{
     &quot;id&quot;: 12345,
     &quot;domainName&quot;: &quot;example.org&quot;,
     &quot;host&quot;: &quot;www&quot;,
@@ -2420,14 +2420,14 @@ fs.file-max=90000
     &quot;type&quot;: &quot;A&quot;,
     &quot;answer&quot;: &quot;10.0.0.1&quot;,
     &quot;ttl&quot;: 300
-}&lt;/pre&gt;
+}&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;此id要写入脚本。&lt;/p&gt;
 
 &lt;p&gt;后续就可以通过如下脚本更新dns了。&lt;br /&gt;
 脚本如下：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;#!/bin/sh
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;#!/bin/sh
 
 USER=&quot;YOUR_USER_NAME&quot;
 TOKEN=&quot;YOUR_API_TOKEN&quot;
@@ -2450,7 +2450,7 @@ echo &quot;start ddns refresh&quot;
 if [ x&quot;${LIP}&quot; != x ]; then
    curl -u &apos;&apos;&quot;&quot;${USER}&quot;&quot;&apos;:&apos;&quot;&quot;${TOKEN}&quot;&quot;&apos;&apos; &apos;https://api.name.com/v4/domains/&apos;&quot;&quot;${DOMAIN}&quot;&quot;&apos;/records/&apos;&quot;&quot;${ID}&quot;&quot;&apos;&apos; -X PUT --data &apos;{&quot;host&quot;:&quot;&apos;&quot;&quot;${HOST}&quot;&quot;&apos;&quot;,&quot;type&quot;:&quot;A&quot;,&quot;answer&quot;:&quot;&apos;&quot;&quot;${LIP}&quot;&quot;&apos;&quot;,&quot;ttl&quot;:300}&apos;
    echo ${LIP} &amp;gt; /tmp/ddnsResult
-fi&lt;/pre&gt;
+fi&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;参考资料：&lt;br /&gt;
 1.https://www.name.com/api-docs/&lt;/p&gt;
@@ -2465,18 +2465,18 @@ fi&lt;/pre&gt;
    <content type="html">&lt;p&gt;今天研究实现了手动或者定时自动通过LEDE/openwrt路由对外发送邮件的功能。&lt;br /&gt;
 1.安装软件包。&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;opkg update
-opkg install mutt ssmtp ca-certificates ca-bundle&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;opkg update
+opkg install mutt ssmtp ca-certificates ca-bundle&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;2.配置ssmtp&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;vi /etc/ssmtp/ssmtp.conf
-&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;vi /etc/ssmtp/ssmtp.conf
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;内容为：&lt;br /&gt;
 &lt;!--more--&gt;&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;#
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;#
 # /etc/ssmtp.conf -- a config file for sSMTP sendmail.
 #
 
@@ -2520,30 +2520,30 @@ UseTLS=YES
 # If you want to have debugging of the config file parsing, move this option
 # to the top of the config file and uncomment
 #Debug=YES
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;然后：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;vi /etc/ssmtp/revaliases&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;vi /etc/ssmtp/revaliases&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;内容为：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;# sSMTP aliases
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;# sSMTP aliases
 #
 # Format:       local_account:outgoing_address:mailhub
 #
 # Example: root:your_login@your.domain:mailhub.your.domain[:port]
 # where [:port] is an optional port number that defaults to 25.
 root:MY@TEST.com:smtp.TEST.com:465
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;3.配置mutt&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;vi ~/.muttrc&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;vi ~/.muttrc&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;内容为：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;mailboxes /tmp/mail
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;mailboxes /tmp/mail
 set sendmail=&quot;ssmtp -v -auMY@TEST.com -apMYPASSWORD&quot;
 set from=&quot;MY@TEST.com&quot;
 # Mail folder setup.
@@ -2552,23 +2552,23 @@ set mbox_type=mbox
 set spoolfile=+inbox
 set mbox=+received
 set postponed=+postponed
-set record=+sent&lt;/pre&gt;
+set record=+sent&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;4.编写脚本sendmail.sh&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;vi ./sendmail.sh
-chmod +x ./sendmail.sh&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;vi ./sendmail.sh
+chmod +x ./sendmail.sh&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;内容为：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;mkdir /tmp/mail
-cat /tmp/sysinfo/model | mutt  -s &quot;Mail from Router of Coffeecat&quot;  receiver@TEST.com -a &apos;attachment.txt&apos;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;mkdir /tmp/mail
+cat /tmp/sysinfo/model | mutt  -s &quot;Mail from Router of Coffeecat&quot;  receiver@TEST.com -a &apos;attachment.txt&apos;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;然后运行：&lt;br /&gt;
 ./sendmail.sh&lt;br /&gt;
 就可以看到结果了（如果是从vip.qq.com发送的话）：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;[&amp;lt;-] 220 smtp.qq.com Esmtp QQ Mail Server
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;[&amp;lt;-] 220 smtp.qq.com Esmtp QQ Mail Server
 [-&amp;gt;] EHLO vip.qq.com
 [&amp;lt;-] 250 8BITMIME
 [-&amp;gt;] AUTH LOGIN
@@ -2609,7 +2609,7 @@ cat /tmp/sysinfo/model | mutt  -s &quot;Mail from Router of Coffeecat&quot;  rec
 [-&amp;gt;] .
 [&amp;lt;-] 250 Ok: queued as
 [-&amp;gt;] QUIT
-[&amp;lt;-] 221 Bye&lt;/pre&gt;
+[&amp;lt;-] 221 Bye&lt;/code&gt;&lt;/pre&gt;
 </content>
  </entry>
  
@@ -2621,10 +2621,10 @@ cat /tmp/sysinfo/model | mutt  -s &quot;Mail from Router of Coffeecat&quot;  rec
    <content type="html">&lt;p&gt;最近搞了个华为的usb无线网卡E8372插在lede路由上，但是想实现程序控制其供电，查阅资料后发现可以这样实现：&lt;br /&gt;
 首先：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;ls /sys/class/gpio/&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;ls /sys/class/gpio/&lt;/code&gt;&lt;/pre&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;export      gpiochip32  unexport    usb3power
-gpiochip0   gpiochip64  usb2power&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;export      gpiochip32  unexport    usb3power
+gpiochip0   gpiochip64  usb2power&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;由于网卡是插在usb3的口上。&lt;br /&gt;
 于是：&lt;br /&gt;
@@ -2663,11 +2663,11 @@ X东购买磊科（netcore）NW362，rtl8192cu，安装驱动后完美ap模式�
 1.直插sim卡上网，目前测试了移动3g和联通3g，使用的是上海移远EC20-C 4g mini pcie模块（注意经研究该模块有很多个批次，需要芯片为高通MDM9215才行，pid 05c6 vid 9215），参数为：&lt;br /&gt;
 EC20-C&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;FDD LTE: B1/B3/B8
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;FDD LTE: B1/B3/B8
 TDD LTE: B38/B39/B40/B41
 TDSCDMA: B34/B39
 UMTS: B1/B8
-GSM: 900/1800MHz&lt;/pre&gt;
+GSM: 900/1800MHz&lt;/code&gt;&lt;/pre&gt;
 
 &lt;!--more--&gt;
 
@@ -2679,12 +2679,12 @@ GSM: 900/1800MHz&lt;/pre&gt;
 原厂OP可以支持EC20-CE（高通MDM9215，pid 05c6 vid 9215，注意此CE支持电信3g）但不支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125）&lt;br /&gt;
 EC20-CE&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;FDD LTE: B1/B3 
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;FDD LTE: B1/B3 
 TDD LTE: B38/B39/B40/B41 
 TDSCDMA: B34/B39 
 WCDMA: B1 
 CDMA2000 1x/EVDO: BC0 
-GSM: 900/1800MHz &lt;/pre&gt;
+GSM: 900/1800MHz &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;目前LEDE 17.07是4.4的kernel，开源驱动仅支持EC20-C 4g模块（芯片为高通MDM9215，pid 05c6 vid 9215），查阅linux kernel qmi_wwan.c源代码，4.10可以支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125），但目前LEDE还不行。&lt;br /&gt;
 2.直插SD卡，但是根据原厂说明，usb仅限对外充电，不支持外挂U盘&lt;br /&gt;
@@ -2693,19 +2693,19 @@ GSM: 900/1800MHz &lt;/pre&gt;
 &lt;p&gt;适配采用修改ZTE-Q7代码来实现（led在系统启动的时候是不亮的，启动成功后显示蓝色，囧）：&lt;br /&gt;
 1.修改target/linux/ramips/base-files/etc/board.d/01_leds&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;zte-q7)
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;zte-q7)
 	ucidef_set_led_default &quot;power&quot; &quot;power&quot; &quot;$board:green:sys&quot; &quot;0&quot;
-	;;&lt;/pre&gt;
+	;;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;2.修改target/linux/ramips/base-files/etc/diag.sh&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;zte-q7)
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;zte-q7)
 		status_led=&quot;$board:green:wifi&quot;
-		;;&lt;/pre&gt;
+		;;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;3.修改target/linux/ramips/dts/ZTE-Q7.dts&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;/dts-v1/;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;/dts-v1/;
 
 #include &quot;mt7620a.dtsi&quot;
 
@@ -2849,14 +2849,14 @@ GSM: 900/1800MHz &lt;/pre&gt;
 };
 
 
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;最后编译的时候，选择&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;git clone https://git.lede-project.org/source.git
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;git clone https://git.lede-project.org/source.git
 git fetch --tags
 git tag -l
-git checkout v17.01.0&lt;/pre&gt;
+git checkout v17.01.0&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;参考：&lt;br /&gt;
 1.http://lists.infradead.org/pipermail/lede-commits/2016-September/000876.html&lt;br /&gt;
@@ -2875,14 +2875,14 @@ git checkout v17.01.0&lt;/pre&gt;
 1.Openvpn服务端（内部局域网段172.24.1.0/24）：&lt;br /&gt;
 首先/etc/config/network配置加一个interface：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;config interface &apos;vpn1&apos;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;config interface &apos;vpn1&apos;
     option proto &apos;none&apos;
-    option ifname &apos;tun1&apos;&lt;/pre&gt;
+    option ifname &apos;tun1&apos;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;/etc/config/openvpn文件增加内容：&lt;br /&gt;
 &lt;!--more--&gt;&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt; 
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt; 
 config openvpn &apos;tun_router&apos;
         option port &apos;3377&apos;
         option proto &apos;tcp&apos;
@@ -2907,32 +2907,32 @@ config openvpn &apos;tun_router&apos;
         list push &apos;route 172.24.1.0 255.255.255.0&apos;
         list route &apos;172.24.8.0 255.255.255.0&apos;
 
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;/etc/openvpn/ccd文件夹内增加一个文件，文件名为客户端证书的common name，例如tbjj，内容为：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;ifconfig-push &quot;10.0.1.6 255.255.255.0&quot;
-iroute 172.24.8.0 255.255.255.0&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;ifconfig-push &quot;10.0.1.6 255.255.255.0&quot;
+iroute 172.24.8.0 255.255.255.0&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;然后在防火墙自定义规则里面添加：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;iptables -I INPUT 1 -p tcp --dport 3377 -j ACCEPT
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;iptables -I INPUT 1 -p tcp --dport 3377 -j ACCEPT
 iptables -I INPUT 1 -p udp --dport 3377 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 10.0.1.0/24 -d 172.24.1.0/24 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 172.24.8.0/24 -d 172.24.1.0/24 -j ACCEPT
 iptables -I INPUT -i tun1 -s 172.24.8.0/24 -j ACCEPT
-iptables -A FORWARD -o tun1 -s 172.24.1.0/24 -j ACCEPT&lt;/pre&gt;
+iptables -A FORWARD -o tun1 -s 172.24.1.0/24 -j ACCEPT&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;2.Openvpn客户端（内部局域网段172.24.8.0/24）：&lt;br /&gt;
 首先/etc/config/network配置加一个interface：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;config interface &apos;vpn1&apos;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;config interface &apos;vpn1&apos;
     option proto &apos;none&apos;
-    option ifname &apos;tun1&apos;&lt;/pre&gt;
+    option ifname &apos;tun1&apos;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;/etc/config/openvpn文件增加内容：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;
 config openvpn &apos;vpn_client&apos;
         option client &apos;1&apos;
         option dev &apos;tun1&apos;
@@ -2952,17 +2952,17 @@ config openvpn &apos;vpn_client&apos;
         option nobind &apos;1&apos;
         option auth_nocache &apos;1&apos;
 
-        &lt;/pre&gt;
+        &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;然后防火墙自定义规则添加：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;iptables -I INPUT 1 -p tcp --dport 1195 -j ACCEPT
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;iptables -I INPUT 1 -p tcp --dport 1195 -j ACCEPT
 iptables -I INPUT 1 -p udp --dport 1195 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 172.24.1.0/24 -d 172.24.8.0/24 -j ACCEPT
 iptables -I INPUT -i tun1 -s 172.24.1.0/24 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 10.0.1.0/24 -d 172.24.8.0/24 -j ACCEPT
 iptables -A FORWARD -o tun1 -s 172.24.8.0/24 -j ACCEPT
- &lt;/pre&gt;
+ &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;3.最后重启两个路由，2个局域网就可以互相访问了。&lt;/p&gt;
 
@@ -2984,15 +2984,15 @@ iptables -A FORWARD -o tun1 -s 172.24.8.0/24 -j ACCEPT
 &lt;strong&gt;1.下载LEDE源码，这个很简单：&lt;/strong&gt;&lt;br /&gt;
 &lt;!--more--&gt;&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;git clone https://git.lede-project.org/source.git
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;git clone https://git.lede-project.org/source.git
 cd source
 ./scripts/feeds update -a
-./scripts/feeds install -a&lt;/pre&gt;
+./scripts/feeds install -a&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;strong&gt;2.修改Toolchain，以便使用uClibc：&lt;/strong&gt;&lt;br /&gt;
 (1).修改/toolchain/Config.in&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;--- a/toolchain/Config.in
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;--- a/toolchain/Config.in
 +++ b/toolchain/Config.in
  
  	config LIBC_USE_UCLIBC
@@ -3000,11 +3000,11 @@ cd source
 -		bool &quot;Use uClibc&quot;
 +		bool &quot;Use uClibc-ng&quot;
  		depends on !(aarch64 || aarch64_be)
--		depends on BROKEN || !(arm || armeb || i386 || x86_64 || mips || mipsel || mips64 || mips64el || powerpc)&lt;/pre&gt;
+-		depends on BROKEN || !(arm || armeb || i386 || x86_64 || mips || mipsel || mips64 || mips64el || powerpc)&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;(2).修改/toolchain/uClibc/Makefile&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;--- a/toolchain/uClibc/Makefile
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;--- a/toolchain/uClibc/Makefile
 +++ b/toolchain/uClibc/Makefile
 
  define Host/SetToolchainInfo
@@ -3013,11 +3013,11 @@ cd source
 +	$(SED) &apos;s,^\(LIBC_URL\)=.*,\1=http://www.uclibc-ng.org/,&apos; $(TOOLCHAIN_DIR)/info.mk
  	$(SED) &apos;s,^\(LIBC_VERSION\)=.*,\1=$(PKG_VERSION),&apos; $(TOOLCHAIN_DIR)/info.mk
  	$(SED) &apos;s,^\(LIBC_SO_VERSION\)=.*,\1=$(LIBC_SO_VERSION),&apos; $(TOOLCHAIN_DIR)/info.mk
- endef&lt;/pre&gt;
+ endef&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;(3).修改toolchain/uClibc/headers/Makefile&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;--- a/toolchain/uClibc/headers/Makefile
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;--- a/toolchain/uClibc/headers/Makefile
 +++ b/toolchain/uClibc/headers/Makefile
  
  		CC=&quot;$(TARGET_CC)&quot; \
@@ -3025,7 +3025,7 @@ cd source
  		ARCH=&quot;$(CONFIG_ARCH)&quot; \
 -		pregen \
  		install_headers
- endef&lt;/pre&gt;
+ endef&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;(4).如果要修改使用的uclibc-ng版本，需要修改toolchain/uClibc/common.mk里面的版本号和对应sha值，默认1.0.22不用修改了。&lt;/p&gt;
 
@@ -3033,16 +3033,16 @@ cd source
 
 &lt;p&gt;&lt;strong&gt;3.编译系统&lt;/strong&gt;&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;make menuconfig&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;make menuconfig&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;通过advanced configuration options (for developers) &amp;gt; Toolchain Options &amp;gt; c library &amp;gt; uclibc-ng&lt;br /&gt;
 其他自己选择。保存.config后，输入：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;nohup ./autocompile.sh &amp;amp;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;nohup ./autocompile.sh &amp;amp;&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;自动编译脚本autocompile.sh 内容为：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:vim decode:true &quot;&gt;if [ &quot;$1&quot; != &quot;-f&quot; ] ; then
+&lt;pre&gt;&lt;code class=&quot;language-vim&quot;&gt;if [ &quot;$1&quot; != &quot;-f&quot; ] ; then
         IGNORE_ERRORS=1 make 2&amp;gt;&amp;amp;1| tee errors.txt
 
         rm build_*.txt
@@ -3054,7 +3054,7 @@ for i in $(grep &quot;failed to build&quot; errors.txt | sed &apos;s/^.*ERROR:[[
                 make ${i}-compile V=99 &amp;gt; build_${i##*/}.txt 2&amp;gt;&amp;amp;1 || echo ${i} : Build failed, see build_${i##*/}.txt
         fi
 done
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;等几个小时以后就可以在source/bin目录下找到编译完成的系统了，编译过程中另外一个ssh登录，通过errors.txt和nohup.out查看编译进度，原ssh窗口可以关闭。&lt;/p&gt;
 
@@ -3062,13 +3062,13 @@ done
 可以通过命令行sysupgrade -v xxxx.bin或者通过luci网页升级系统。&lt;br /&gt;
 升级完成后，由于uclibc-ng 1.0.18及之后版本将libpthread, libcrypt, libdl, libm, libutil等库合并到了libuClibc中，需要link一些libuClibc，以便迅雷xware可以使用：&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;cd /lib
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;cd /lib
 ln -s libuClibc-1.0.22.so libdl.so.0
-ln -s libuClibc-1.0.22.so  libpthread.so.0 &lt;/pre&gt;
+ln -s libuClibc-1.0.22.so  libpthread.so.0 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;然后将Xware1.0.31_mipsel_32_uclibc上传路由，运行:&lt;/p&gt;
 
-&lt;pre class=&quot;lang:sh decode:true &quot;&gt;root@LEDE:~/xunlei# ./portal
+&lt;pre&gt;&lt;code class=&quot;language-sh&quot;&gt;root@LEDE:~/xunlei# ./portal
 initing...
 try stopping xunlei service first...
 killall: ETMDaemon: no process killed
@@ -3086,7 +3086,7 @@ execv: /root/xunlei/lib/ETMDaemon.
 getting xunlei service info...
 Connecting to 127.0.0.1:9000 (127.0.0.1:9000)
 
-THE ACTIVE CODE IS: &lt;/pre&gt;
+THE ACTIVE CODE IS: &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;常用软件例如chinadns可使用imagebuilder编译。&lt;/p&gt;
 

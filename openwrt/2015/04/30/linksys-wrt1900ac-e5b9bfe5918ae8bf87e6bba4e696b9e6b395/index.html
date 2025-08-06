@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -129,18 +129,18 @@
 直接ssh上路由器，然后输入<br />
 <!--more--></p>
 
-<pre class="lang:sh decode:true ">vi /etc/config/privoxy</pre>
+<pre><code class="language-sh">vi /etc/config/privoxy</code></pre>
 
 <p>这样会把涉及的软件都装上了包括privoxy</p>
 
 <p>2.配置privoxy<br />
 最新版本的privoxy的配置文件已经挪到了/etc/config/privoxy了，所以：</p>
 
-<pre class="lang:sh decode:true ">vi /etc/config/privoxy</pre>
+<pre><code class="language-sh">vi /etc/config/privoxy</code></pre>
 
 <p>增加如下内容：</p>
 
-<pre class="lang:vim decode:true ">option accept_intercepted_requests '1'
+<pre><code class="language-vim">option accept_intercepted_requests '1'
  list actionsfile 'match-all.action'
  list actionsfile 'default.action'
  list actionsfile 'user.action'
@@ -152,7 +152,7 @@
  list filterfile 'ab2p.filter'
  list filterfile 'ab2p.system.filter'
  list filterfile 'my.filter'
- list filterfile 'css.filter'</pre>
+ list filterfile 'css.filter'</code></pre>
 
 <p>其中第一句如果不加的话，打开所有网页会提示有‘invalid header received from client’</p>
 
@@ -162,8 +162,8 @@
 打开windows命令行<br />
 执行：</p>
 
-<pre class="lang:sh decode:true ">adblock2privoxy -p out -w www  -d www.163.com https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt
-</pre>
+<pre><code class="language-sh">adblock2privoxy -p out -w www  -d www.163.com https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt
+</code></pre>
 
 <p>如果嫌慢先把后面的txt下载以后再开个http服务器来弄。<br />
 最后会在out文件夹下面生成所需要的ad2p开头的5个文件。剩下的文件我是直接下载卡饭论坛上别人的<a href="http://att.kafan.cn/forum.php?mod=attachment&amp;aid=MjQ0NDY4NnwxNmQ1Y2M1MXwxNDMwNDAyMzI4fDB8MTczNjc3Ng%3D%3D">privoxyR20140517.7z</a><br />
@@ -177,7 +177,7 @@
 
 <p>5.添加iptables规则，类似adbyby</p>
 
-<pre class="lang:sh decode:true ">iptables -t nat -A PREROUTING -p tcp -s 192.168.1.128/25 --dport 80 -j REDIRECT --to-ports 8118</pre>
+<pre><code class="language-sh">iptables -t nat -A PREROUTING -p tcp -s 192.168.1.128/25 --dport 80 -j REDIRECT --to-ports 8118</code></pre>
 
 <p>6.重启路由，打开网页就会发现广告被过滤了，但是网页打开速度慢于安装了adbyby的路由，且视频内嵌广告不能过滤，所以我最后还是用浏览器+adblock plus来解决这个问题。</p>
   

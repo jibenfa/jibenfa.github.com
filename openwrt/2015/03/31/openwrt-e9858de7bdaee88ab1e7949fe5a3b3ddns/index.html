@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -121,12 +121,12 @@
 		<p>两种办法：<br />
 1.通过luci配置</p>
 
-<pre class="lang:sh decode:true ">opkg update
-opkg install luci-app-ddns ddns-scripts</pre>
+<pre><code class="language-sh">opkg update
+opkg install luci-app-ddns ddns-scripts</code></pre>
 
 <p>然后在luci界面中‘更新的url’填入：</p>
 
-<pre class="lang:vim decode:true ">http://[username]:[password]@ddns.oray.com:80/ph/update?hostname=[domain]&amp;myip=[ip]</pre>
+<pre><code class="language-vim">http://[username]:[password]@ddns.oray.com:80/ph/update?hostname=[domain]&amp;myip=[ip]</code></pre>
 
 <p>其他按照要求填写，注意：‘ip地址来源’选‘接口’，‘接口’ 选‘pppoe-wan’</p>
 
@@ -137,11 +137,11 @@ opkg install luci-app-ddns ddns-scripts</pre>
 
 <p>先写一个sh脚本：(路径)</p>
 
-<pre class="lang:sh decode:true ">vi /etc/hotplug.d/iface/25-Oray</pre>
+<pre><code class="language-sh">vi /etc/hotplug.d/iface/25-Oray</code></pre>
 
 <p>内容如下：</p>
 
-<pre class="lang:vim decode:true ">#!/bin/sh
+<pre><code class="language-vim">#!/bin/sh
 
 USER="***********"
 PASS="******"
@@ -160,18 +160,18 @@ fi
 echo "start ddns refresh"
 URL="http://${USER}:${PASS}@ddns.oray.com:80/ph/update?hostname=${DOMAIN}&amp;myip=${LIP}"
 wget -q -O /tmp/orayddnsResult -q ${URL}
-</pre>
+</code></pre>
 
 <p><del datetime="2017-07-28T14:47:43+00:00">大概意思就是当路由器的ip和上一次保存在临时文件里的ip不一样的时候就访问花生壳网站更新ip</del><br />
 2017-07-28更新了代码，采用ping的方式，如果返回的ip与get发送的ip不一致时，重新发送。</p>
 
 <p>给文件增加执行权限</p>
 
-<pre class="lang:sh decode:true ">chmod a+x /etc/hotplug.d/iface/25-Oray</pre>
+<pre><code class="language-sh">chmod a+x /etc/hotplug.d/iface/25-Oray</code></pre>
 
 <p>给路由增加一个定时任务，每隔一分钟执行一次上面的脚本</p>
 
-<pre class="lang:sh decode:true ">echo */1 * * * * /etc/hotplug.d/iface/25-Oray start&gt;&gt; /etc/crontabs/root</pre>
+<pre><code class="language-sh">echo */1 * * * * /etc/hotplug.d/iface/25-Oray start&gt;&gt; /etc/crontabs/root</code></pre>
   
 	</div>
 	<footer class="article-footer clearfix">

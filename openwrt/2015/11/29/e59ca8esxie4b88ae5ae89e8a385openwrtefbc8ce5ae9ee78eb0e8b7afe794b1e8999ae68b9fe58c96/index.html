@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -174,12 +174,12 @@
 <strong>如果无需迅雷远程，可以编译x64版本的镜像，性能远超x86</strong><br />
 下面有个性能对比，都是我跑出来的第一手资料，cc略强于bb，但是cc下的openvpn我编译出来运行不了，老缺个libc.so，所以最后就放弃了：</p>
 
-<pre class="lang:vim decode:true ">MD5 	SHA-1 	DES 	3DES 	AES-128 	RSA Sign 	RSA Verify 	DSA Sign 	DSA Verify 	OS 	SoC 	CPU 	OpenSSL Version 
+<pre><code class="language-vim">MD5 	SHA-1 	DES 	3DES 	AES-128 	RSA Sign 	RSA Verify 	DSA Sign 	DSA Verify 	OS 	SoC 	CPU 	OpenSSL Version 
 422333440	157073750	52919910	19314850	66379090	61.8	2260.6	222.3	182.2	bbr46287	i3 540	x86	1.0.2d 
 506805250	480641710	62921390	24199510	100739070	522	16821.8	1664.6	1364.2	ccrc3r46163	i3 540	x8664	1.0.2d
 513278290	196502530	67375790	24792060	108380840	107.7	3959.3	386.6	311.7	ccr46705	vmware e3  1230v2	x86vmware	1.0.2d
 512455340	193744550	66202970	24312830	105958400	105.6	3872.5	379.4	309.3	bbr46287	vmware e3  1230v2	x86vmware	1.0.2d
-</pre>
+</code></pre>
 
 <p>我编译出来的镜像叫：openwrt-x86-generic-combined-ext4.img，是bb 14.07的版本。</p>
 
@@ -187,13 +187,13 @@
 其实本来可以在esxi下对于现有的vmdk进行扩容，我也试过，但是每次扩容完成后，都无法启动openwrt，提示找不到盘，故采用其他方法：<br />
 首先制作一个全0x00的二进制文件，例如6g_00.bin，然后在linux下执行：</p>
 
-<pre class="lang:sh decode:true ">cat openwrt-x86-generic-combined-ext4.img 6g_00.bin &gt; openwrt-x86-generic-combined-ext4-bb6g.img </pre>
+<pre><code class="language-sh">cat openwrt-x86-generic-combined-ext4.img 6g_00.bin &gt; openwrt-x86-generic-combined-ext4-bb6g.img </code></pre>
 
 <p>这样就得到一个6G的镜像了。<br />
 接下来就是要把img转换成vmdk，<a href="https://wiki.openwrt.org/doc/howto/vmware">openwrt官网有如何把img转换成vmdk的攻略</a>，由于我用的是debian，故略有不同：</p>
 
-<pre class="lang:sh decode:true ">apt-get install qemu-utils
-  qemu-img convert -f raw -O vmdk openwrt-x86-generic-combined-ext4-bb6g.img openwrt-x86-generic-combined-ext4-bb6g.vmdk</pre>
+<pre><code class="language-sh">apt-get install qemu-utils
+  qemu-img convert -f raw -O vmdk openwrt-x86-generic-combined-ext4-bb6g.img openwrt-x86-generic-combined-ext4-bb6g.vmdk</code></pre>
 
 <p>转换完成后的vmdk只有48MB多一些，但是加载到esxi上后就可以看到置备空间是6G多，达到了我们目的。</p>
 
@@ -218,7 +218,7 @@
 
 <p>启动openwrt，最后会看见如下图：</p>
 
-<pre class="lang:vim decode:true ">[    5.176918] vmxnet3 0000:03:00.0 eth0: intr type 3, mode 0, 5 vectors allocated
+<pre><code class="language-vim">[    5.176918] vmxnet3 0000:03:00.0 eth0: intr type 3, mode 0, 5 vectors allocated
 [    5.177585] vmxnet3 0000:03:00.0 eth0: NIC Link is Up 10000 Mbps
 [    5.177744] 8021q: adding VLAN 0 to HW filter on device eth0
 [    5.177824] device eth0 entered promiscuous mode
@@ -227,7 +227,7 @@
 [    5.178954] vmxnet3 0000:0b:00.0 eth1: intr type 3, mode 0, 5 vectors allocated
 [    5.179815] vmxnet3 0000:0b:00.0 eth1: NIC Link is Up 10000 Mbps
 [    5.180439] 8021q: adding VLAN 0 to HW filter on device eth1
-[    5.277329] device tap0 entered promiscuous mode</pre>
+[    5.277329] device tap0 entered promiscuous mode</code></pre>
 
 <p>妥妥的万兆卡（实测双机拷贝最多达到总共1900Mpbs）</p>
 
@@ -244,23 +244,23 @@
 一开始搞完上述以后，我测试了一下网络，传输读写拷贝文件居然只有~100Mbps（10-15MB/s）,这不科学啊。。。于是我采用排除法，把I350网卡直通，发现还是这么慢，在乱改一同参数后，发现，不是esxi 5.5的网络慢，原来是坑爹的磁盘慢，读写只有这么点，后来查阅了大量资料，最终在<a href="http://www.chiphell.com/thread-1330699-1-1.html">chiphell网友</a>和某台湾网友的帖子里面发现是板载raid卡b120i的驱动问题：Mware-ESXi-5.5.0-Update3-3116895-HP-550.9.4.26-Nov2015.iso带的scsi-hpvsa 5.5.0.100-1OEM.550.0.0.1331820 Hewlett-Packard 这个是罪魁祸首，更换为<a href="http://vibsdepot.hp.com/hpq/sep2014/esxi-550-drv-vibs/hpvsa/scsi-hpvsa-5.5.0-88OEM.550.0.0.1331820.x86_64.vib">scsi-hpvsa-5.5.0-88OEM.550.0.0.1331820.x86_64.vib</a>问题解决，更换办法可以参考<a href="http://www.chiphell.com/thread-1330699-1-1.html">chiphell网友sym的攻略</a>,但是我最后还是使用了scsi-hpvsa-5.5.0-84OEM.550.0.0.1198611.x86_64.vib这个版本的驱动，<a href="http://wolfriya.blogspot.jp/2015/03/hp-proliant-microserver-gen8-exsi.html">原因是一位台湾网友的帖子，88版本有heartbeat问题，会造成虚拟机卡顿</a>：<br />
 先把驱动上传esxi的存储，拷贝到/var/log/vmware/,我的上传路径是vmfs/volumes/datastorage1/drviers：</p>
 
-<pre class="lang:sh decode:true ">cp vmfs/volumes/datastorage1/drviers/scsi-hpvsa-5.5.0-84OEM.550.0.0.1198611.x86_64.vib /var/log/vmware/</pre>
+<pre><code class="language-sh">cp vmfs/volumes/datastorage1/drviers/scsi-hpvsa-5.5.0-84OEM.550.0.0.1198611.x86_64.vib /var/log/vmware/</code></pre>
 
 <p>然后运行：</p>
 
-<pre class="lang:sh decode:true ">esxcli system maintenanceMode set --enable true</pre>
+<pre><code class="language-sh">esxcli system maintenanceMode set --enable true</code></pre>
 
 <p>进入维护模式，然后卸载原来的驱动，大约需要几十秒：</p>
 
-<pre class="lang:sh decode:true ">esxcli software vib remove -n scsi-hpvsa -f</pre>
+<pre><code class="language-sh">esxcli software vib remove -n scsi-hpvsa -f</code></pre>
 
 <p>接着安装驱动：</p>
 
-<pre class="lang:sh decode:true ">esxcli software vib install -v file:scsi-hpvsa-5.5.0-84OEM.550.0.0.1198611.x86_64.vib --force --no-sig-check --maintenance-mode</pre>
+<pre><code class="language-sh">esxcli software vib install -v file:scsi-hpvsa-5.5.0-84OEM.550.0.0.1198611.x86_64.vib --force --no-sig-check --maintenance-mode</code></pre>
 
 <p>几十秒安装完成后，重启后退出维护模式</p>
 
-<pre class="lang:sh decode:true ">esxcli system maintenanceMode set --enable no</pre>
+<pre><code class="language-sh">esxcli system maintenanceMode set --enable no</code></pre>
 
 <p>然后再测试拷贝，大约就有800-900Mbps（90-100+MB/s）的速度啦。</p>
 

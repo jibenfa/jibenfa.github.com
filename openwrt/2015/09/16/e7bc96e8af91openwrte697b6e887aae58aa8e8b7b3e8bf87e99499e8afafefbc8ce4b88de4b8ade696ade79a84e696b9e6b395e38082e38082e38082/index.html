@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -122,7 +122,7 @@
 转载自：<br />
 https://lists.openwrt.org/pipermail/openwrt-devel/2009-June/004411.html</p>
 
-<pre class="lang:vim decode:true ">//.ichael
+<pre><code class="language-vim">//.ichael
 
 ------------8&lt;---------------
 if [ "$1" != "-f" ] ; then
@@ -136,7 +136,7 @@ for i in $(grep "failed to build" errors.txt | sed 's/^.*ERROR:[[:space:]]*\([^[
                 echo Compiling: ${i}
                 make ${i}-compile V=99 &gt; build_${i##*/}.txt 2&gt;&amp;1 || echo ${i} : Build failed, see build_${i##*/}.txt
         fi
-done</pre>
+done</code></pre>
   
 	</div>
 	<footer class="article-footer clearfix">

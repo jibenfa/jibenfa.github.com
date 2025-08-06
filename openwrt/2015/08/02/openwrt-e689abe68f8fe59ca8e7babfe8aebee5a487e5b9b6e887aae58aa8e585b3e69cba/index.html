@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -122,9 +122,9 @@
 
 <p>1.该脚本在局域网没有在线设备时关闭路由器</p>
 
-<pre class="lang:sh decode:true ">vi autoShutDownNoDevs.sh </pre>
+<pre><code class="language-sh">vi autoShutDownNoDevs.sh </code></pre>
 
-<pre class="lang:vim decode:true ">#!/bin/sh
+<pre><code class="language-vim">#!/bin/sh
 
 mon() {
 while [ "1" ];
@@ -142,15 +142,15 @@ do
 done
 }
 
-mon &amp;</pre>
+mon &amp;</code></pre>
 
-<pre class="lang:sh decode:true ">chmod +x autoShutDownNoDevs.sh</pre>
+<pre><code class="language-sh">chmod +x autoShutDownNoDevs.sh</code></pre>
 
 <p>2.该脚本在局域网某两台固定IP的PC离线时关闭路由器（防止未关手机wifi时路由器无法关闭）</p>
 
-<pre class="lang:sh decode:true ">vi autoShutDownNoPCs.sh</pre>
+<pre><code class="language-sh">vi autoShutDownNoPCs.sh</code></pre>
 
-<pre class="lang:vim decode:true ">#!/bin/sh
+<pre><code class="language-vim">#!/bin/sh
 sleep 300
 ping -c 1 172.24.1.150 &gt; /dev/null
 ret=$?
@@ -172,13 +172,13 @@ kill -USR1 1
 fi
 fi
 fi
-</pre>
+</code></pre>
 
-<pre class="lang:sh decode:true ">chmod +x autoShutDownNoPCs.sh</pre>
+<pre><code class="language-sh">chmod +x autoShutDownNoPCs.sh</code></pre>
 
 <p>定时任务</p>
 
-<pre class="lang:vim decode:true ">*/5 22-4 * * * /root/autoShutDownNoPCs.sh</pre>
+<pre><code class="language-vim">*/5 22-4 * * * /root/autoShutDownNoPCs.sh</code></pre>
 
 <p>参考资料：</p>
 <ol>

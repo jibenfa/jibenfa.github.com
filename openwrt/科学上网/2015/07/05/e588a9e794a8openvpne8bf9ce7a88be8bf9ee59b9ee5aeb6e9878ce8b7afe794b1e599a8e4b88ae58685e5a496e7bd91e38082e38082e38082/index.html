@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -122,12 +122,12 @@
 
 <p>首先在刷了openwrt的wrt1900ac路由器上安装软件：</p>
 
-<pre class="lang:sh decode:true ">opkg update
-opkg install openvpn-openssl openvpn-easy-rsa luci-app-openvpn</pre>
+<pre><code class="language-sh">opkg update
+opkg install openvpn-openssl openvpn-easy-rsa luci-app-openvpn</code></pre>
 
 <p>然后编辑/etc/easy-rsa/vars，修改部分内容</p>
 
-<pre class="lang:vim decode:true "># Increase this to 2048 if you
+<pre><code class="language-vim"># Increase this to 2048 if you
 # are paranoid.  This will slow
 # down TLS negotiation performance
 # as well as the one-time DH parms
@@ -151,7 +151,7 @@ export KEY_EMAIL="xxxxxx@gmail.com"
 export KEY_OU="XXxxxxxx"
 
 # X509 Subject Field
-export KEY_NAME="EasyRSA"</pre>
+export KEY_NAME="EasyRSA"</code></pre>
 
 <p>接着生成证书和diffie-hellman key：<br />
 手工清空/etc/easy-rsa/下的key目录或者运行clean-all<br />
@@ -167,8 +167,8 @@ build-key coffeecat<br />
 
 <p>拷贝到服务器目录下：</p>
 
-<pre class="lang:sh decode:true ">cd /etc/easy-rsa/keys/
-cp ca.crt ca.key dh1024.pem server.key server.crt /etc/openvpn/</pre>
+<pre><code class="language-sh">cd /etc/easy-rsa/keys/
+cp ca.crt ca.key dh1024.pem server.key server.crt /etc/openvpn/</code></pre>
 
 <p>拷贝到客户端：<br />
 ca.crt dh1024.pem coffeecat.key coffeecat.crt</p>
@@ -179,7 +179,7 @@ ca.crt dh1024.pem coffeecat.key coffeecat.crt</p>
 
 <p><em>注意：172.24.1.1为路由器的lan ip，172.24.1.100-172.24.1.105是为vpn客户端分配的ip端，一定要和路由器为lan dhcp的ip段错开。</em></p>
 
-<pre class="lang:vim decode:true ">config openvpn 'cert_verify'
+<pre><code class="language-vim">config openvpn 'cert_verify'
 	option port '1194'
 	option proto 'tcp'
 	option dev 'tap0'
@@ -196,18 +196,18 @@ ca.crt dh1024.pem coffeecat.key coffeecat.crt</p>
 	option status '/tmp/openvpn-status.log'
 	option verb '3'
 	option enabled '1'
-</pre>
+</code></pre>
 
 <p>然后在luci或者命令行启动openvpn：</p>
 
-<pre class="lang:sh decode:true ">/etc/init.d/openvpn start</pre>
+<pre><code class="language-sh">/etc/init.d/openvpn start</code></pre>
 
 <p>ps一下有进程就对了</p>
 
 <p>windows7 openvpn客户端配置：<br />
 C:\Program Files\OpenVPN\config\client.ovpn</p>
 
-<pre class="lang:vim decode:true ">client
+<pre><code class="language-vim">client
 
 dev tap
 proto tcp
@@ -228,22 +228,22 @@ comp-lzo
 verb 4
 ##下面两行for WIN7
 route-method exe
-route-delay 2</pre>
+route-delay 2</code></pre>
 
 <p>最后在路由器上增加自定义iptables规则：<br />
 先把tap0放到lan区域中，然后在自定义规则里面加上：</p>
 
-<pre class="lang:sh decode:true ">iptables -I INPUT 1 -p tcp --dport 1194 -j ACCEPT
-iptables -I INPUT 1 -p udp --dport 1194 -j ACCEPT</pre>
+<pre><code class="language-sh">iptables -I INPUT 1 -p tcp --dport 1194 -j ACCEPT
+iptables -I INPUT 1 -p udp --dport 1194 -j ACCEPT</code></pre>
 
 <p>另外win7里面要设置一下metric，否则可能不是走的vpn这个路，设完以后，可以看到vpn的跃点最小：</p>
 
-<pre class="lang:vim decode:true ">IPv4 路由表
+<pre><code class="language-vim">IPv4 路由表
 ===========================================================================
 活动路由:
 网络目标        网络掩码          网关       接口   跃点数
           0.0.0.0          0.0.0.0       172.24.1.1     172.24.1.100     50
-          0.0.0.0          0.0.0.0       172.24.0.1     172.24.0.150    281</pre>
+          0.0.0.0          0.0.0.0       172.24.0.1     172.24.0.150    281</code></pre>
 
 <p>参考：</p>
 

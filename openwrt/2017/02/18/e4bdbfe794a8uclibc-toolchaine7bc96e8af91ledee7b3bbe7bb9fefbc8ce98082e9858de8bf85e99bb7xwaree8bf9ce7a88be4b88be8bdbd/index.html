@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -126,15 +126,15 @@
 <strong>1.下载LEDE源码，这个很简单：</strong><br />
 <!--more--></p>
 
-<pre class="lang:sh decode:true ">git clone https://git.lede-project.org/source.git
+<pre><code class="language-sh">git clone https://git.lede-project.org/source.git
 cd source
 ./scripts/feeds update -a
-./scripts/feeds install -a</pre>
+./scripts/feeds install -a</code></pre>
 
 <p><strong>2.修改Toolchain，以便使用uClibc：</strong><br />
 (1).修改/toolchain/Config.in</p>
 
-<pre class="lang:vim decode:true ">--- a/toolchain/Config.in
+<pre><code class="language-vim">--- a/toolchain/Config.in
 +++ b/toolchain/Config.in
  
  	config LIBC_USE_UCLIBC
@@ -142,11 +142,11 @@ cd source
 -		bool "Use uClibc"
 +		bool "Use uClibc-ng"
  		depends on !(aarch64 || aarch64_be)
--		depends on BROKEN || !(arm || armeb || i386 || x86_64 || mips || mipsel || mips64 || mips64el || powerpc)</pre>
+-		depends on BROKEN || !(arm || armeb || i386 || x86_64 || mips || mipsel || mips64 || mips64el || powerpc)</code></pre>
 
 <p>(2).修改/toolchain/uClibc/Makefile</p>
 
-<pre class="lang:vim decode:true ">--- a/toolchain/uClibc/Makefile
+<pre><code class="language-vim">--- a/toolchain/uClibc/Makefile
 +++ b/toolchain/uClibc/Makefile
 
  define Host/SetToolchainInfo
@@ -155,11 +155,11 @@ cd source
 +	$(SED) 's,^\(LIBC_URL\)=.*,\1=http://www.uclibc-ng.org/,' $(TOOLCHAIN_DIR)/info.mk
  	$(SED) 's,^\(LIBC_VERSION\)=.*,\1=$(PKG_VERSION),' $(TOOLCHAIN_DIR)/info.mk
  	$(SED) 's,^\(LIBC_SO_VERSION\)=.*,\1=$(LIBC_SO_VERSION),' $(TOOLCHAIN_DIR)/info.mk
- endef</pre>
+ endef</code></pre>
 
 <p>(3).修改toolchain/uClibc/headers/Makefile</p>
 
-<pre class="lang:vim decode:true ">--- a/toolchain/uClibc/headers/Makefile
+<pre><code class="language-vim">--- a/toolchain/uClibc/headers/Makefile
 +++ b/toolchain/uClibc/headers/Makefile
  
  		CC="$(TARGET_CC)" \
@@ -167,7 +167,7 @@ cd source
  		ARCH="$(CONFIG_ARCH)" \
 -		pregen \
  		install_headers
- endef</pre>
+ endef</code></pre>
 
 <p>(4).如果要修改使用的uclibc-ng版本，需要修改toolchain/uClibc/common.mk里面的版本号和对应sha值，默认1.0.22不用修改了。</p>
 
@@ -175,16 +175,16 @@ cd source
 
 <p><strong>3.编译系统</strong></p>
 
-<pre class="lang:sh decode:true ">make menuconfig</pre>
+<pre><code class="language-sh">make menuconfig</code></pre>
 
 <p>通过advanced configuration options (for developers) &gt; Toolchain Options &gt; c library &gt; uclibc-ng<br />
 其他自己选择。保存.config后，输入：</p>
 
-<pre class="lang:sh decode:true ">nohup ./autocompile.sh &amp;</pre>
+<pre><code class="language-sh">nohup ./autocompile.sh &amp;</code></pre>
 
 <p>自动编译脚本autocompile.sh 内容为：</p>
 
-<pre class="lang:vim decode:true ">if [ "$1" != "-f" ] ; then
+<pre><code class="language-vim">if [ "$1" != "-f" ] ; then
         IGNORE_ERRORS=1 make 2&gt;&amp;1| tee errors.txt
 
         rm build_*.txt
@@ -196,7 +196,7 @@ for i in $(grep "failed to build" errors.txt | sed 's/^.*ERROR:[[:space:]]*\([^[
                 make ${i}-compile V=99 &gt; build_${i##*/}.txt 2&gt;&amp;1 || echo ${i} : Build failed, see build_${i##*/}.txt
         fi
 done
-</pre>
+</code></pre>
 
 <p>等几个小时以后就可以在source/bin目录下找到编译完成的系统了，编译过程中另外一个ssh登录，通过errors.txt和nohup.out查看编译进度，原ssh窗口可以关闭。</p>
 
@@ -204,13 +204,13 @@ done
 可以通过命令行sysupgrade -v xxxx.bin或者通过luci网页升级系统。<br />
 升级完成后，由于uclibc-ng 1.0.18及之后版本将libpthread, libcrypt, libdl, libm, libutil等库合并到了libuClibc中，需要link一些libuClibc，以便迅雷xware可以使用：</p>
 
-<pre class="lang:sh decode:true ">cd /lib
+<pre><code class="language-sh">cd /lib
 ln -s libuClibc-1.0.22.so libdl.so.0
-ln -s libuClibc-1.0.22.so  libpthread.so.0 </pre>
+ln -s libuClibc-1.0.22.so  libpthread.so.0 </code></pre>
 
 <p>然后将Xware1.0.31_mipsel_32_uclibc上传路由，运行:</p>
 
-<pre class="lang:sh decode:true ">root@LEDE:~/xunlei# ./portal
+<pre><code class="language-sh">root@LEDE:~/xunlei# ./portal
 initing...
 try stopping xunlei service first...
 killall: ETMDaemon: no process killed
@@ -228,7 +228,7 @@ execv: /root/xunlei/lib/ETMDaemon.
 getting xunlei service info...
 Connecting to 127.0.0.1:9000 (127.0.0.1:9000)
 
-THE ACTIVE CODE IS: </pre>
+THE ACTIVE CODE IS: </code></pre>
 
 <p>常用软件例如chinadns可使用imagebuilder编译。</p>
 

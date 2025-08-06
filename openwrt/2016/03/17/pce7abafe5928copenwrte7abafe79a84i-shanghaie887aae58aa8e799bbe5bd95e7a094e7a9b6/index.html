@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -125,30 +125,30 @@ i-Shanghai的wifi连接上以后，任意打开某网页，例如:www.baidu.com�
 
 <!--more-->
 
-<pre class="lang:vim decode:true ">'https://wlan.ct10000.com/?basetype=3&amp;nasPortId='.$nasPortId.'&amp;UserInputURL=http://www.baidu.com/&amp;nasIp='.$nasIp;</pre>
+<pre><code class="language-vim">'https://wlan.ct10000.com/?basetype=3&amp;nasPortId='.$nasPortId.'&amp;UserInputURL=http://www.baidu.com/&amp;nasIp='.$nasIp;</code></pre>
 
 <p>里面的id和ip估计就是热点的id和ip了。。。</p>
 
 <p>这个页面包含一个框架，实际的登录页面就是在框架里面的，我认为这是基于安全性的考虑，框架的地址，类似：</p>
 
-<pre class="lang:vim decode:true ">'https://wlan.ct10000.com/'.$longString</pre>
+<pre><code class="language-vim">'https://wlan.ct10000.com/'.$longString</code></pre>
 
 <p>直接打开框架地址后，出现了熟悉的登录框，通过分析元素发现，提交的要素有些是hidden的，且最后的提交按钮是调用javascript，经测试直接通过模拟点击是不行了（perl的www::mechanize似乎不支持javascript），这样的设计也是为了安全考虑吧，只有最后一条路——抓包分析了。</p>
 
 <p>最麻烦的是，为了安全考虑，这些网址都是https的，通过wireshark抓包是没有用的，只能通过Fiddler或者chrome的开发者模式抓包，通过抓包，知道了提交的要素和地址：<br />
 提交的内容是：</p>
 
-<pre class="lang:vim decode:true ">paramStr
+<pre><code class="language-vim">paramStr
 paramStrEnc
 province
 prefix
 logintype
 UserName
-PassWord</pre>
+PassWord</code></pre>
 
 <p>提交的地址是：</p>
 
-<pre class="lang:vim decode:true ">https://wlan.ct10000.com/authServlet</pre>
+<pre><code class="language-vim">https://wlan.ct10000.com/authServlet</code></pre>
 
 <p>前2个提交内容在框架页面就已经生成了，里面应该包含了热点的id等相关信息，如果提交时不带上或者带错了这些信息，就会提示此处不是热点。。。</p>
 
@@ -158,7 +158,7 @@ PassWord</pre>
 
 <p>下面附上PC端i-Shanghai自动登录perl脚本，模拟iPhone登录（python脚本不提供，免得被不法奸商利用）：</p>
 
-<pre class="lang:perl decode:true ">#/usr/bin/perl -w
+<pre><code class="language-perl">#/usr/bin/perl -w
     use strict;
     use warnings;
     use WWW::Mechanize; 
@@ -240,7 +240,7 @@ PassWord</pre>
        
    # $decontent = $response-&gt;decoded_content;       
    # print $decontent;
-                 </pre>
+                 </code></pre>
   
 	</div>
 	<footer class="article-footer clearfix">

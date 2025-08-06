@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -122,11 +122,11 @@
 1.直插sim卡上网，目前测试了移动3g和联通3g，使用的是上海移远EC20-C 4g mini pcie模块（注意经研究该模块有很多个批次，需要芯片为高通MDM9215才行，pid 05c6 vid 9215），参数为：<br />
 EC20-C</p>
 
-<pre class="lang:vim decode:true ">FDD LTE: B1/B3/B8
+<pre><code class="language-vim">FDD LTE: B1/B3/B8
 TDD LTE: B38/B39/B40/B41
 TDSCDMA: B34/B39
 UMTS: B1/B8
-GSM: 900/1800MHz</pre>
+GSM: 900/1800MHz</code></pre>
 
 <!--more-->
 
@@ -138,12 +138,12 @@ GSM: 900/1800MHz</pre>
 原厂OP可以支持EC20-CE（高通MDM9215，pid 05c6 vid 9215，注意此CE支持电信3g）但不支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125）<br />
 EC20-CE</p>
 
-<pre class="lang:vim decode:true ">FDD LTE: B1/B3 
+<pre><code class="language-vim">FDD LTE: B1/B3 
 TDD LTE: B38/B39/B40/B41 
 TDSCDMA: B34/B39 
 WCDMA: B1 
 CDMA2000 1x/EVDO: BC0 
-GSM: 900/1800MHz </pre>
+GSM: 900/1800MHz </code></pre>
 
 <p>目前LEDE 17.07是4.4的kernel，开源驱动仅支持EC20-C 4g模块（芯片为高通MDM9215，pid 05c6 vid 9215），查阅linux kernel qmi_wwan.c源代码，4.10可以支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125），但目前LEDE还不行。<br />
 2.直插SD卡，但是根据原厂说明，usb仅限对外充电，不支持外挂U盘<br />
@@ -152,19 +152,19 @@ GSM: 900/1800MHz </pre>
 <p>适配采用修改ZTE-Q7代码来实现（led在系统启动的时候是不亮的，启动成功后显示蓝色，囧）：<br />
 1.修改target/linux/ramips/base-files/etc/board.d/01_leds</p>
 
-<pre class="lang:vim decode:true ">zte-q7)
+<pre><code class="language-vim">zte-q7)
 	ucidef_set_led_default "power" "power" "$board:green:sys" "0"
-	;;</pre>
+	;;</code></pre>
 
 <p>2.修改target/linux/ramips/base-files/etc/diag.sh</p>
 
-<pre class="lang:vim decode:true ">zte-q7)
+<pre><code class="language-vim">zte-q7)
 		status_led="$board:green:wifi"
-		;;</pre>
+		;;</code></pre>
 
 <p>3.修改target/linux/ramips/dts/ZTE-Q7.dts</p>
 
-<pre class="lang:vim decode:true ">/dts-v1/;
+<pre><code class="language-vim">/dts-v1/;
 
 #include "mt7620a.dtsi"
 
@@ -308,14 +308,14 @@ GSM: 900/1800MHz </pre>
 };
 
 
-</pre>
+</code></pre>
 
 <p>最后编译的时候，选择</p>
 
-<pre class="lang:sh decode:true ">git clone https://git.lede-project.org/source.git
+<pre><code class="language-sh">git clone https://git.lede-project.org/source.git
 git fetch --tags
 git tag -l
-git checkout v17.01.0</pre>
+git checkout v17.01.0</code></pre>
 
 <p>参考：<br />
 1.http://lists.infradead.org/pipermail/lede-commits/2016-September/000876.html<br />

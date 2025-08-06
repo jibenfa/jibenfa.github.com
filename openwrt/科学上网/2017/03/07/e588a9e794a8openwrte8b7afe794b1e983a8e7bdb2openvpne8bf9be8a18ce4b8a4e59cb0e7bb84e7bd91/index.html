@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -123,14 +123,14 @@
 1.Openvpn服务端（内部局域网段172.24.1.0/24）：<br />
 首先/etc/config/network配置加一个interface：</p>
 
-<pre class="lang:vim decode:true ">config interface 'vpn1'
+<pre><code class="language-vim">config interface 'vpn1'
     option proto 'none'
-    option ifname 'tun1'</pre>
+    option ifname 'tun1'</code></pre>
 
 <p>/etc/config/openvpn文件增加内容：<br />
 <!--more--></p>
 
-<pre class="lang:vim decode:true "> 
+<pre><code class="language-vim"> 
 config openvpn 'tun_router'
         option port '3377'
         option proto 'tcp'
@@ -155,32 +155,32 @@ config openvpn 'tun_router'
         list push 'route 172.24.1.0 255.255.255.0'
         list route '172.24.8.0 255.255.255.0'
 
-</pre>
+</code></pre>
 
 <p>/etc/openvpn/ccd文件夹内增加一个文件，文件名为客户端证书的common name，例如tbjj，内容为：</p>
 
-<pre class="lang:vim decode:true ">ifconfig-push "10.0.1.6 255.255.255.0"
-iroute 172.24.8.0 255.255.255.0</pre>
+<pre><code class="language-vim">ifconfig-push "10.0.1.6 255.255.255.0"
+iroute 172.24.8.0 255.255.255.0</code></pre>
 
 <p>然后在防火墙自定义规则里面添加：</p>
 
-<pre class="lang:sh decode:true ">iptables -I INPUT 1 -p tcp --dport 3377 -j ACCEPT
+<pre><code class="language-sh">iptables -I INPUT 1 -p tcp --dport 3377 -j ACCEPT
 iptables -I INPUT 1 -p udp --dport 3377 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 10.0.1.0/24 -d 172.24.1.0/24 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 172.24.8.0/24 -d 172.24.1.0/24 -j ACCEPT
 iptables -I INPUT -i tun1 -s 172.24.8.0/24 -j ACCEPT
-iptables -A FORWARD -o tun1 -s 172.24.1.0/24 -j ACCEPT</pre>
+iptables -A FORWARD -o tun1 -s 172.24.1.0/24 -j ACCEPT</code></pre>
 
 <p>2.Openvpn客户端（内部局域网段172.24.8.0/24）：<br />
 首先/etc/config/network配置加一个interface：</p>
 
-<pre class="lang:vim decode:true ">config interface 'vpn1'
+<pre><code class="language-vim">config interface 'vpn1'
     option proto 'none'
-    option ifname 'tun1'</pre>
+    option ifname 'tun1'</code></pre>
 
 <p>/etc/config/openvpn文件增加内容：</p>
 
-<pre class="lang:vim decode:true ">
+<pre><code class="language-vim">
 config openvpn 'vpn_client'
         option client '1'
         option dev 'tun1'
@@ -200,17 +200,17 @@ config openvpn 'vpn_client'
         option nobind '1'
         option auth_nocache '1'
 
-        </pre>
+        </code></pre>
 
 <p>然后防火墙自定义规则添加：</p>
 
-<pre class="lang:vim decode:true ">iptables -I INPUT 1 -p tcp --dport 1195 -j ACCEPT
+<pre><code class="language-vim">iptables -I INPUT 1 -p tcp --dport 1195 -j ACCEPT
 iptables -I INPUT 1 -p udp --dport 1195 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 172.24.1.0/24 -d 172.24.8.0/24 -j ACCEPT
 iptables -I INPUT -i tun1 -s 172.24.1.0/24 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 10.0.1.0/24 -d 172.24.8.0/24 -j ACCEPT
 iptables -A FORWARD -o tun1 -s 172.24.8.0/24 -j ACCEPT
- </pre>
+ </code></pre>
 
 <p>3.最后重启两个路由，2个局域网就可以互相访问了。</p>
 

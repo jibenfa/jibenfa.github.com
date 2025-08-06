@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -132,7 +132,7 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
 
 <!--more-->
 
-<pre class="lang:vim decode:true ">config interface 'loopback'
+<pre><code class="language-vim">config interface 'loopback'
 	option ifname 'lo'
 	option proto 'static'
 	option ipaddr '127.0.0.1'
@@ -187,7 +187,7 @@ config switch_vlan
 config interface 'wan2'
 	option ifname 'eth1.3'
 	option proto 'dhcp'
-	option metric '2'</pre>
+	option metric '2'</code></pre>
 
 <p>之前就是少了个t也就是tag，所以导致失败。</p>
 
@@ -217,7 +217,7 @@ IPv4: 192.168.8.138/24</p>
 
 <p>/etc/config/mwan3修改为：</p>
 
-<pre class="lang:vim decode:true ">config rule 'default_rule'
+<pre><code class="language-vim">config rule 'default_rule'
 	option dest_ip '我的VPS'
 	option sticky '0'
 	option dest_port '1:65535'
@@ -284,7 +284,7 @@ config member 'wan2_m1_w2'
 config policy 'wan1_first'
 	list use_member 'wan_m1_w3'
 	list use_member 'wan2_m1_w2'
-	option last_resort 'unreachable'</pre>
+	option last_resort 'unreachable'</code></pre>
   
 	</div>
 	<footer class="article-footer clearfix">

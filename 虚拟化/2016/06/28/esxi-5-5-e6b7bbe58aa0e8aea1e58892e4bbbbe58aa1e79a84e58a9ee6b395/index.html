@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -122,11 +122,11 @@
 首先ssh登录esxi。<br />
 1.创建计划任务脚本：</p>
 
-<pre class="lang:sh decode:true ">vi /vmfs/volumes/datastore1/drivers/ups.sh </pre>
+<pre><code class="language-sh">vi /vmfs/volumes/datastore1/drivers/ups.sh </code></pre>
 
 <p>注：之所以要在volume上创建脚本是因为如果直接在/etc等目录创建后重启就没了。</p>
 
-<pre class="lang:sh decode:true ">#!/bin/sh
+<pre><code class="language-sh">#!/bin/sh
 sleep 600
 ping -c 1 交换机的ip地址 &gt; /dev/null
 ret=$?
@@ -135,15 +135,15 @@ then
 echo ' AC Power is OK, Shut Down aborted! '
 else
 poweroff
-fi</pre>
+fi</code></pre>
 
 <p>2.修改/etc/rc.local.d/local.sh实现重启也能自动添加计划任务：</p>
 
-<pre class="lang:vim decode:true ">chmod +w /var/spool/cron/crontabs/root
+<pre><code class="language-vim">chmod +w /var/spool/cron/crontabs/root
 /bin/kill $(cat /var/run/crond.pid)
 /bin/echo '*/10 * * * * /vmfs/volumes/datastore1/drivers/ups.sh' &gt;&gt; /var/spool/cron/crontabs/root
 crond
-exit 0</pre>
+exit 0</code></pre>
 
 <p>3.重启esxi查看效果</p>
   

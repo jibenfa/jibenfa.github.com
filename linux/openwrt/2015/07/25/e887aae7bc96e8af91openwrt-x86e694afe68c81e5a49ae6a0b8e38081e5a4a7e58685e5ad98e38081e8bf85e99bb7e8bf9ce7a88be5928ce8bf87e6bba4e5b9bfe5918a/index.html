@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -124,27 +124,27 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
 1.编译OP X86 32位版本：<br />
 <!--more--></p>
 
-<pre class="lang:sh decode:true ">svn co svn://svn.openwrt.org/openwrt/branches/barrier_breaker
+<pre><code class="language-sh">svn co svn://svn.openwrt.org/openwrt/branches/barrier_breaker
 ./scripts/feeds update -a
 ./scripts/feeds install -a
 make menuconfig
-make kernel_menuconfig</pre>
+make kernel_menuconfig</code></pre>
 
 <p>注意：<br />
 a)debootstrap版本已经改变1.60已经无法找到了，编译时会报错，需要修改对应的makefile里面的版本和对应的md5值，我使用的是：debootstrap-udeb_1.0.64~bpo70+1_all.udeb<br />
 b)另外还要修改config/config-image.in里面的inode数，因为我用的256G SSD，怕不给力：</p>
 
-<pre class="lang:vim decode:true ">config TARGET_ROOTFS_MAXINODE
+<pre><code class="language-vim">config TARGET_ROOTFS_MAXINODE
 ……
 	 default 6000
 ……
-	 Allows you to change the maximum number of inodes in the root filesystem</pre>
+	 Allows you to change the maximum number of inodes in the root filesystem</code></pre>
 
 <p>把6000改个6000000就差不多了。。。<br />
 要选的东西很多，大家可以参考：<br />
 menuconfig里面的东东为（处理过的.config文件，比较直观安装了哪些package）：</p>
 
-<pre class="lang:vim decode:true ">#
+<pre><code class="language-vim">#
 # Automatically generated file; DO NOT EDIT.
 # OpenWrt Configuration
 #
@@ -1628,7 +1628,7 @@ CONFIG_PACKAGE_usb-modeswitch=y
 #
 # libraries
 #
-</pre>
+</code></pre>
 
 <p>另外barrier_breaker/target/linux/x86/config-3.10里面有kernel_menuconfig的配置,由于不是很直观，还是贴图方便：</p>
 
@@ -1653,22 +1653,22 @@ luci-app-shadowsocks-spec_1.3.3-1_all.ipk</p>
 <p>启动op以后，通过block-mount或者luci的挂载点将/dev/sda3自动挂载上去。<br />
 并在计划任务里面加上：</p>
 
-<pre class="lang:sh decode:true ">ntfs-3g /dev/sdb2 /mnt/nasdisk0/</pre>
+<pre><code class="language-sh">ntfs-3g /dev/sdb2 /mnt/nasdisk0/</code></pre>
 
 <p>4.安装迅雷<br />
 防火墙打开9000端口</p>
 
-<pre class="lang:sh decode:true ">mkdir xunlei
-chmod 0755 -R xunlei/</pre>
+<pre><code class="language-sh">mkdir xunlei
+chmod 0755 -R xunlei/</code></pre>
 
 <p>把Xware1.0.31_x86_32_uclibc.zip解压到xunlei文件夹，然后：</p>
 
-<pre class="lang:sh decode:true ">chmod +x portal
-./portal</pre>
+<pre><code class="language-sh">chmod +x portal
+./portal</code></pre>
 
 <p>第一次运行会出现：</p>
 
-<pre class="lang:sh decode:true ">initing...
+<pre><code class="language-sh">initing...
 try stopping xunlei service first...
 killall: ETMDaemon: no process killed
 killall: EmbedThunderManager: no process killed
@@ -1693,45 +1693,45 @@ Connecting to 127.0.0.1:9000 (127.0.0.1:9000)
 THE ACTIVE CODE IS: xxxx
 
 go to http://yuancheng.xunlei.com, bind your device with the active code.
-finished.</pre>
+finished.</code></pre>
 
 <p>5.安装debian</p>
 
-<pre class="lang:sh decode:true ">opkg install debootstrap binutils objdump
-debootstrap  --arch=i386  wheezy    /mnt/sda3 http://ftp.jp.debian.org/debian/</pre>
+<pre><code class="language-sh">opkg install debootstrap binutils objdump
+debootstrap  --arch=i386  wheezy    /mnt/sda3 http://ftp.jp.debian.org/debian/</code></pre>
 
 <p>安装成功后会有提示，这时候</p>
 
-<pre class="lang:sh decode:true ">cd /mnt/sda3
-ls</pre>
+<pre><code class="language-sh">cd /mnt/sda3
+ls</code></pre>
 
 <p>会看到debian系统基本文件结构。</p>
 
 <p>6.安装adbyby</p>
 
-<pre class="lang:sh decode:true ">cd /mnt/sda3/root
+<pre><code class="language-sh">cd /mnt/sda3/root
 mkdir ad
 cd ad
 wget http://update.adbyby.com/download/linux.86.tar.gz
 tar xzvf linux.86.tar.gz
-chmod +x adbyby</pre>
+chmod +x adbyby</code></pre>
 
 <p>7.使用脚本启动adbyby<br />
 如果直接</p>
 
-<pre class="lang:sh decode:true ">chroot /mnt/sda3 /bin/bash</pre>
+<pre><code class="language-sh">chroot /mnt/sda3 /bin/bash</code></pre>
 
 <p>然后运行adbyby会报一个：</p>
 
-<pre class="lang:vim decode:true ">the path is too long</pre>
+<pre><code class="language-vim">the path is too long</code></pre>
 
 <p>的错误，原因未知，所以要用一个脚本来跑，而且该脚本会定时查看adbyby的情况：</p>
 
-<pre class="lang:sh decode:true ">cd /mnt/sda3/root
+<pre><code class="language-sh">cd /mnt/sda3/root
 
-vi ad.sh</pre>
+vi ad.sh</code></pre>
 
-<pre class="lang:vim decode:true ">#!/bin/sh
+<pre><code class="language-vim">#!/bin/sh
 mount -t proc proc /proc
 mon() {
 while [ "1" ];
@@ -1745,26 +1745,26 @@ fi
 done
 }
  
-mon &amp;</pre>
+mon &amp;</code></pre>
 
 <p>注意：mount -t proc proc /proc 必须加上，否则debian下无法共享openwrt的进程显示</p>
 
-<pre class="lang:sh decode:true ">chmod +x ad.sh</pre>
+<pre><code class="language-sh">chmod +x ad.sh</code></pre>
 
 <p>然后：</p>
 
-<pre class="lang:sh decode:true ">cd /root
+<pre><code class="language-sh">cd /root
 vi startAdbyby.sh
- </pre>
+ </code></pre>
 
-<pre class="lang:vim decode:true ">#!/bin/sh
+<pre><code class="language-vim">#!/bin/sh
 iptables -t nat -A PREROUTING -p tcp -s 192.168.1.128/25 --dport 80 -j REDIRECT --to-ports 8118
 chroot /mnt/sda3 /bin/bash -c "/root/ad.sh"
 
-exit</pre>
+exit</code></pre>
 
-<pre class="lang:sh decode:true ">chmod +x startAdbyby.sh
-</pre>
+<pre><code class="language-sh">chmod +x startAdbyby.sh
+</code></pre>
 
 <p>然后把这个加到crontab启动任务里面</p>
 

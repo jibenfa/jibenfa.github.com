@@ -46,7 +46,7 @@
 
     <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="/assets/css/highlight.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/vs2015.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/dirtysea.css">
 
     
     
@@ -127,27 +127,27 @@
 
 <p>2.安装deb包</p>
 
-<pre class="lang:perl decode:true ">dpkg -i libssl0.9.8_0.9.8o-4squeeze14_amd64.deb</pre>
+<pre><code class="language-perl">dpkg -i libssl0.9.8_0.9.8o-4squeeze14_amd64.deb</code></pre>
 
 <p>3.追加软件源<br />
 <!--more--></p>
 
-<pre class="lang:perl decode:true ">vi /etc/apt/sources.list</pre>
+<pre><code class="language-perl">vi /etc/apt/sources.list</code></pre>
 
 <p>在后面添加如下源</p>
 
-<pre class="lang:sh decode:true ">deb http://shadowsocks.org/debian squeeze main</pre>
+<pre><code class="language-sh">deb http://shadowsocks.org/debian squeeze main</code></pre>
 
 <p>然后更新源并安装</p>
 
-<pre class="lang:sh decode:true ">apt-get update
+<pre><code class="language-sh">apt-get update
 apt-get install shadowsocks
 
-</pre>
+</code></pre>
 
 <p>4.配置shadowsocks</p>
 
-<pre class="lang:sh decode:true ">vi /etc/shadowsocks/config.json
+<pre><code class="language-sh">vi /etc/shadowsocks/config.json
 {
           "server":"vps的ip",
           "server_port":8388,
@@ -155,18 +155,18 @@ apt-get install shadowsocks
           "password":"ccc", 
           "timeout":60,
           "method":"aes-256-cfb" #加密方式，默认table，推荐aes-256-cfb
-}</pre>
+}</code></pre>
 
 <p>如果想用除table以外的加密方式，需要额外安装M2Crypto</p>
 
-<pre class="lang:sh decode:true ">apt-get install python-m2crypto</pre>
+<pre><code class="language-sh">apt-get install python-m2crypto</code></pre>
 
 <p>5、重启shadowsocks服务。</p>
 
-<pre class="lang:sh decode:true ">/etc/init.d/shadowsocks stop
+<pre><code class="language-sh">/etc/init.d/shadowsocks stop
 /etc/init.d/shadowsocks start
 
-update-rc.d shadowsocks defaults</pre>
+update-rc.d shadowsocks defaults</code></pre>
 
 <p>使用shadowsocks<br />
 windows环境下需要下载客户端：http://sourceforge.net/projects/shadowsocksgui/files/dist/ 填入之前配置的参数，保存运行即可。 新建浏览器代理为如下：</p>
@@ -181,35 +181,35 @@ windows环境下需要下载客户端：http://sourceforge.net/projects/shadowso
 新建一个低权限用户shadowsocksuser，（无密码，无法登陆，无home dir）</li>
 </ol>
 
-<pre class="lang:sh decode:true ">adduser --system --disabled-password --disabled-login --no-create-home shadowsocksuser</pre>
+<pre><code class="language-sh">adduser --system --disabled-password --disabled-login --no-create-home shadowsocksuser</code></pre>
 
 <p>修改 /etc/default/shadowsocks</p>
 
-<pre class="lang:vim decode:true ">USER=shadowsocksuser
-GROUP=nogroup</pre>
+<pre><code class="language-vim">USER=shadowsocksuser
+GROUP=nogroup</code></pre>
 
 <p>让非root用户的shadowsocks运行在1024以下端口，适用于debian 7</p>
 
-<pre class="lang:sh decode:true ">apt-get install libcap2-bin
+<pre><code class="language-sh">apt-get install libcap2-bin
 setcap 'cap_net_bind_service=+ep' /usr/bin/ss-server
-</pre>
+</code></pre>
 
 <p>修改 /etc/init.d/shadowsocks</p>
 
-<pre class="lang:sh decode:true ">vi /etc/init.d/shadowsocks</pre>
+<pre><code class="language-sh">vi /etc/init.d/shadowsocks</code></pre>
 
 <p>在 ulimit -n ${MAXFD} 下直接加入</p>
 
-<pre class="lang:vim decode:true ">ulimit -n 51200
-</pre>
+<pre><code class="language-vim">ulimit -n 51200
+</code></pre>
 
 <p>把 -c “$CONFFILE” -a “$USER” -u -f $PIDFILE $DAEMON_ARGS \ 修改为</p>
 
-<pre class="lang:vim decode:true ">-c "$CONFFILE" -a "$USER" -u -f $PIDFILE $DAEMON_ARGS --forbidden-ip 127.0.0.1,::1 \</pre>
+<pre><code class="language-vim">-c "$CONFFILE" -a "$USER" -u -f $PIDFILE $DAEMON_ARGS --forbidden-ip 127.0.0.1,::1 \</code></pre>
 
 <p>7.多用户支持，拷贝多份/etc/shadowsocks/config.json就是多个</p>
 
-<pre escaped="true" lang="bash" line="0">multiuserSS_sh="/etc/init.d/multiuserShadowssocks.sh"
+<pre><code class="language-bash">multiuserSS_sh="/etc/init.d/multiuserShadowssocks.sh"
 if [ -f $multiuserSS_sh ]; then
 cp $multiuserSS_sh $multiuserSS_sh.bak
 fi
@@ -229,26 +229,26 @@ echo "
 /usr/bin/ss-server -c /etc/shadowsocks/config1.json -a shadowsocksuser -u -f /var/run/shadowsocks/shadowsocks1.pid --forbidden-ip 127.0.0.1,::1
 
 /usr/bin/ss-server -c /etc/shadowsocks/config2.json -a shadowsocksuser -u -f /var/run/shadowsocks/shadowsocks2.pid --forbidden-ip 127.0.0.1,::1
-" &gt; $multiuserSS_sh</pre>
+" &gt; $multiuserSS_sh</code></pre>
 
 <p>7.最后</p>
 
-<pre class="lang:sh decode:true ">update-rc.d multiuserShadowssocks.sh defaults</pre>
+<pre><code class="language-sh">update-rc.d multiuserShadowssocks.sh defaults</code></pre>
 
 <p>8.补充python版的shadowsock安装：<br />
 查看版本：</p>
 
-<pre class="lang:sh decode:true ">python --version</pre>
+<pre><code class="language-sh">python --version</code></pre>
 
 <p>官网说2.6或2.7</p>
 
 <p>安装：</p>
 
-<pre class="lang:sh decode:true ">pip install shadowsocks</pre>
+<pre><code class="language-sh">pip install shadowsocks</code></pre>
 
 <p>编辑：</p>
 
-<pre escaped="true" lang="bash" line="0">multiuserSS_sh="/etc/init.d/multiuserShadowssocks.sh"
+<pre><code class="language-bash">multiuserSS_sh="/etc/init.d/multiuserShadowssocks.sh"
 if [ -f $multiuserSS_sh ]; then
 cp $multiuserSS_sh $multiuserSS_sh.bak
 fi
@@ -268,7 +268,7 @@ echo "
 /usr/local/bin/ssserver --user shadowsocksuser -c /etc/shadowsocks/config1.json --forbidden-ip 127.0.0.1,::1 -d start
 
 /usr/local/bin/ssserver --user shadowsocksuser -c /etc/shadowsocks/config2.json --forbidden-ip 127.0.0.1,::1 -d start
-" &gt; $multiuserSS_sh</pre>
+" &gt; $multiuserSS_sh</code></pre>
   
 	</div>
 	<footer class="article-footer clearfix">
