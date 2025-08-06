@@ -5,6 +5,7 @@ exclude: [".rvmrc", ".rbenv-version", "README.md", "README_en.md", "Rakefile", "
 # Downloaded From https://www.jsdelivr.com/package/gh/highlightjs/cdn-release?tab=files&path=build%2Fstyles%2Fbase16
 # Put it in assets/css/
 # use it with highlight.js and language folder, from https://www.jsdelivr.com/package/gh/highlightjs/cdn-release?tab=files&path=build%2Fes
+# preview style at https://highlightjs.org/demo
 codestyle: dirtysea.css
 
 
