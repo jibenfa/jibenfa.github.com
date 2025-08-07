@@ -126,49 +126,52 @@
 4.首次需要手动添加一次域名，以便获取ID号码，例如为www.examle.com添加第一个dns记录：<br />
 <!--more--></p>
 
-<pre><code class="language-sh">curl -u 'YOUR_USER_NAME:YOUR_API_TOKEN' 'https://api.name.com/v4/domains/example.com/records' -X POST --data '{"host":"www","type":"A","answer":"YOUR_IP","ttl":300}'</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-u</span> <span class="s1">'YOUR_USER_NAME:YOUR_API_TOKEN'</span> <span class="s1">'https://api.name.com/v4/domains/example.com/records'</span> <span class="nt">-X</span> POST <span class="nt">--data</span> <span class="s1">'{"host":"www","type":"A","answer":"YOUR_IP","ttl":300}'</span>
+</code></pre></div></div>
 
 <p>从返回的json里面记录下id，json格式为：</p>
 
-<pre><code class="language-sh">{
-    "id": 12345,
-    "domainName": "example.org",
-    "host": "www",
-    "fqdn": "www.example.org",
-    "type": "A",
-    "answer": "10.0.0.1",
-    "ttl": 300
-}</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>
+    <span class="s2">"id"</span>: 12345,
+    <span class="s2">"domainName"</span>: <span class="s2">"example.org"</span>,
+    <span class="s2">"host"</span>: <span class="s2">"www"</span>,
+    <span class="s2">"fqdn"</span>: <span class="s2">"www.example.org"</span>,
+    <span class="s2">"type"</span>: <span class="s2">"A"</span>,
+    <span class="s2">"answer"</span>: <span class="s2">"10.0.0.1"</span>,
+    <span class="s2">"ttl"</span>: 300
+<span class="o">}</span>
+</code></pre></div></div>
 
 <p>此id要写入脚本。</p>
 
 <p>后续就可以通过如下脚本更新dns了。<br />
 脚本如下：</p>
 
-<pre><code class="language-vim">#!/bin/sh
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
 
-USER="YOUR_USER_NAME"
-TOKEN="YOUR_API_TOKEN"
-ID="YOUR_URL_ID"
-HOST="www"
-DOMAIN="example.com"
-URL=${HOST}.${DOMAIN}
-IP=`ping ${URL} -c 1 |awk 'NR==2 {print $4}' |awk -F ':' '{print $1}'`
+USER<span class="p">=</span><span class="s2">"YOUR_USER_NAME"</span>
+TOKEN<span class="p">=</span><span class="s2">"YOUR_API_TOKEN"</span>
+ID<span class="p">=</span><span class="s2">"YOUR_URL_ID"</span>
+HOST<span class="p">=</span><span class="s2">"www"</span>
+DOMAIN<span class="p">=</span><span class="s2">"example.com"</span>
+URL<span class="p">=</span>$<span class="p">{</span>HOST<span class="p">}.</span>$<span class="p">{</span>DOMAIN<span class="p">}</span>
+IP<span class="p">=</span>`ping $<span class="p">{</span>URL<span class="p">}</span> <span class="p">-</span><span class="k">c</span> <span class="m">1</span> <span class="p">|</span>awk <span class="s1">'NR==2 {print $4}'</span> <span class="p">|</span>awk <span class="p">-</span>F <span class="s1">':'</span> <span class="s1">'{print $1}'</span>`
 #如果安装了dig也可以这样
-#IP=`dig ${DOMAIN} @114.114.114.114 | awk -F "[ ]+" '/IN/{print $1}' | awk 'NR==2 {print $5}'`
-echo "Ip of ${URL} is ${IP}"
-LIP=`ifconfig pppoe-wan|awk -F "[: ]+" '/inet addr/{print $4}'`
-echo "Local Ip is ---${LIP}---"
+#IP<span class="p">=</span>`<span class="k">dig</span> $<span class="p">{</span>DOMAIN<span class="p">}</span> @<span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span> <span class="p">|</span> awk <span class="p">-</span>F <span class="s2">"[ ]+"</span> <span class="s1">'/IN/{print $1}'</span> <span class="p">|</span> awk <span class="s1">'NR==2 {print $5}'</span>`
+echo <span class="s2">"Ip of ${URL} is ${IP}"</span>
+LIP<span class="p">=</span>`ifconfig pppoe<span class="p">-</span>wan<span class="p">|</span>awk <span class="p">-</span>F <span class="s2">"[: ]+"</span> <span class="s1">'/inet addr/{print $4}'</span>`
+echo <span class="s2">"Local Ip is ---${LIP}---"</span>
 
-if [ "${LIP}" = "${IP}" ]; then
-   exit
+<span class="k">if</span> <span class="p">[</span> <span class="s2">"${LIP}"</span> <span class="p">=</span> <span class="s2">"${IP}"</span> <span class="p">]</span>; then
+   <span class="k">exit</span>
 fi
 
-echo "start ddns refresh"
-if [ x"${LIP}" != x ]; then
-   curl -u ''""${USER}""':'""${TOKEN}""'' 'https://api.name.com/v4/domains/'""${DOMAIN}""'/records/'""${ID}""'' -X PUT --data '{"host":"'""${HOST}""'","type":"A","answer":"'""${LIP}""'","ttl":300}'
-   echo ${LIP} &gt; /tmp/ddnsResult
-fi</code></pre>
+echo <span class="s2">"start ddns refresh"</span>
+<span class="k">if</span> <span class="p">[</span> <span class="k">x</span><span class="s2">"${LIP}"</span> <span class="p">!=</span> <span class="k">x</span> <span class="p">]</span>; then
+   curl <span class="p">-</span><span class="k">u</span> <span class="s1">''</span><span class="s2">""</span>$<span class="p">{</span>USER<span class="p">}</span><span class="s2">""</span><span class="s1">':'</span><span class="s2">""</span>$<span class="p">{</span>TOKEN<span class="p">}</span><span class="s2">""</span><span class="s1">''</span> <span class="s1">'https://api.name.com/v4/domains/'</span><span class="s2">""</span>$<span class="p">{</span>DOMAIN<span class="p">}</span><span class="s2">""</span><span class="s1">'/records/'</span><span class="s2">""</span>$<span class="p">{</span>ID<span class="p">}</span><span class="s2">""</span><span class="s1">''</span> <span class="p">-</span>X PUT <span class="p">--</span>data <span class="s1">'{"host":"'</span><span class="s2">""</span>$<span class="p">{</span>HOST<span class="p">}</span><span class="s2">""</span><span class="s1">'","type":"A","answer":"'</span><span class="s2">""</span>$<span class="p">{</span>LIP<span class="p">}</span><span class="s2">""</span><span class="s1">'","ttl":300}'</span>
+   echo $<span class="p">{</span>LIP<span class="p">}</span> <span class="p">&gt;</span> <span class="sr">/tmp/</span>ddnsResult
+fi
+</code></pre></div></div>
 
 <p>参考资料：<br />
 1.https://www.name.com/api-docs/</p>

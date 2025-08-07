@@ -121,26 +121,28 @@
 		<p>由于Openwrt关闭不好的问题，重启进入openwrt，发现luci 配置无法写入，进入ssh发现remounting file system is read only…但是又不想重装。。。由于这是根文件系统已挂载，所以e2fs无法在该系统里面修复文件系统错误。<br />
 于是机智的我在esxi里面又开了个openwrt虚拟机，其实用linux发行版也行啦，挂载上述出问题的openwrt的盘，但不要mount，进入系统后，因为出问题的盘是sdb的sdb2,运行：</p>
 
-<pre><code class="language-sh">e2fsck /dev/sdb2</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e2fsck /dev/sdb2
+</code></pre></div></div>
 
-<pre><code class="language-vim">e2fsck 1.42.12 (29-Aug-2014)
-/dev/sdb2 was not cleanly unmounted, check forced.
-Pass 1: Checking inodes, blocks, and sizes
-Pass 2: Checking directory structure
-Pass 3: Checking directory connectivity
-Pass 4: Checking reference counts
-Pass 5: Checking group summary information
-Block bitmap differences:  +(368--376)
-Fix&lt;y&gt;? yes
-Free blocks count wrong for group #0 (2660, counted=2651).
-Fix&lt;y&gt;? yes
-Free blocks count wrong for group #1 (1807, counted=1803).
-Fix&lt;y&gt;? yes
-Free blocks count wrong (764951, counted=764938).
-Fix&lt;y&gt;? yes
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e2fsck <span class="m">1</span><span class="p">.</span><span class="m">42</span><span class="p">.</span><span class="m">12</span> <span class="p">(</span><span class="m">29</span><span class="p">-</span>Aug<span class="m">-2014</span><span class="p">)</span>
+<span class="sr">/dev/</span>sdb2 was not cleanly unmounted<span class="p">,</span> check forced<span class="p">.</span>
+Pass <span class="m">1</span><span class="p">:</span> Checking inodes<span class="p">,</span> blocks<span class="p">,</span> <span class="nb">and</span> sizes
+Pass <span class="m">2</span><span class="p">:</span> Checking <span class="nb">directory</span> structure
+Pass <span class="m">3</span><span class="p">:</span> Checking <span class="nb">directory</span> connectivity
+Pass <span class="m">4</span><span class="p">:</span> Checking reference counts
+Pass <span class="m">5</span><span class="p">:</span> Checking group summary information
+Block bitmap differences<span class="p">:</span>  <span class="p">+(</span><span class="m">368</span><span class="p">-</span><span class="m">-376</span><span class="p">)</span>
+Fix<span class="p">&lt;</span><span class="k">y</span><span class="p">&gt;</span>? yes
+Free blocks <span class="nb">count</span> wrong <span class="k">for</span> group #<span class="m">0</span> <span class="p">(</span><span class="m">2660</span><span class="p">,</span> counted<span class="p">=</span><span class="m">2651</span><span class="p">).</span>
+Fix<span class="p">&lt;</span><span class="k">y</span><span class="p">&gt;</span>? yes
+Free blocks <span class="nb">count</span> wrong <span class="k">for</span> group #<span class="m">1</span> <span class="p">(</span><span class="m">1807</span><span class="p">,</span> counted<span class="p">=</span><span class="m">1803</span><span class="p">).</span>
+Fix<span class="p">&lt;</span><span class="k">y</span><span class="p">&gt;</span>? yes
+Free blocks <span class="nb">count</span> wrong <span class="p">(</span><span class="m">764951</span><span class="p">,</span> counted<span class="p">=</span><span class="m">764938</span><span class="p">).</span>
+Fix<span class="p">&lt;</span><span class="k">y</span><span class="p">&gt;</span>? yes
 yyy
-/dev/sdb2: ***** FILE SYSTEM WAS MODIFIED *****
-/dev/sdb2: 2061/385024 files (0.0% non-contiguous), 21494/786432 blocks</code></pre>
+<span class="sr">/dev/</span>sdb2<span class="p">:</span> ***** FILE SYSTEM WAS MODIFIED *****
+<span class="sr">/dev/</span>sdb2<span class="p">:</span> <span class="m">2061</span><span class="sr">/385024 files (0.0% non-contiguous), 21494/</span><span class="m">786432</span> blocks
+</code></pre></div></div>
 
 <p>修复成功后，关闭该虚拟机，然后移除盘，重启原来坏掉的openwrt虚拟机，当当当，成功了~~</p>
   

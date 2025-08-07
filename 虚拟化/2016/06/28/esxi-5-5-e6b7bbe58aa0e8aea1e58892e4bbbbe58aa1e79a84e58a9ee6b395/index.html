@@ -122,28 +122,31 @@
 首先ssh登录esxi。<br />
 1.创建计划任务脚本：</p>
 
-<pre><code class="language-sh">vi /vmfs/volumes/datastore1/drivers/ups.sh </code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /vmfs/volumes/datastore1/drivers/ups.sh 
+</code></pre></div></div>
 
 <p>注：之所以要在volume上创建脚本是因为如果直接在/etc等目录创建后重启就没了。</p>
 
-<pre><code class="language-sh">#!/bin/sh
-sleep 600
-ping -c 1 交换机的ip地址 &gt; /dev/null
-ret=$?
-if [ $ret -eq 0 ]
-then
-echo ' AC Power is OK, Shut Down aborted! '
-else
-poweroff
-fi</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nb">sleep </span>600
+ping <span class="nt">-c</span> 1 交换机的ip地址 <span class="o">&gt;</span> /dev/null
+<span class="nv">ret</span><span class="o">=</span><span class="nv">$?</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$ret</span> <span class="nt">-eq</span> 0 <span class="o">]</span>
+<span class="k">then
+</span><span class="nb">echo</span> <span class="s1">' AC Power is OK, Shut Down aborted! '</span>
+<span class="k">else
+</span>poweroff
+<span class="k">fi</span>
+</code></pre></div></div>
 
 <p>2.修改/etc/rc.local.d/local.sh实现重启也能自动添加计划任务：</p>
 
-<pre><code class="language-vim">chmod +w /var/spool/cron/crontabs/root
-/bin/kill $(cat /var/run/crond.pid)
-/bin/echo '*/10 * * * * /vmfs/volumes/datastore1/drivers/ups.sh' &gt;&gt; /var/spool/cron/crontabs/root
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod <span class="p">+</span><span class="k">w</span> <span class="sr">/var/</span>spool<span class="sr">/cron/</span>crontabs/root
+<span class="sr">/bin/</span>kill $<span class="p">(</span><span class="k">cat</span> <span class="sr">/var/</span>run/crond<span class="p">.</span>pid<span class="p">)</span>
+<span class="sr">/bin/</span>echo <span class="s1">'*/10 * * * * /vmfs/volumes/datastore1/drivers/ups.sh'</span> <span class="p">&gt;&gt;</span> <span class="sr">/var/</span>spool<span class="sr">/cron/</span>crontabs/root
 crond
-exit 0</code></pre>
+<span class="k">exit</span> <span class="m">0</span>
+</code></pre></div></div>
 
 <p>3.重启esxi查看效果</p>
   

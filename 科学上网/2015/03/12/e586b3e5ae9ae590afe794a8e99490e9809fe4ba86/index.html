@@ -121,55 +121,56 @@
 		<p>最近出门在外，发现ss和vpn速度都不行，net_speeder效果也不是很明显，决定还是试试大家推荐的锐速，一试果然ok，免费版20MB效果杠杠的。。。启用前用ss看u2b的360p都卡，启用后ss可以看720p hd。。。因为只能对tcp加速，所以ikev2的vpn应该没有效果的。<br />
 配置文件/serverSpeeder/etc/config 部分内容如下：</p>
 
-<pre><code class="language-vim">############################################################
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>############################################################
 #                                                          #
 #             ServerSpeeder Configuration File             #
 #                                                          #
 ############################################################
 
-# Format: config="value"
-# Note that spaces are not allowed before and after the equal sign
+# Format<span class="p">:</span> config<span class="p">=</span><span class="s2">"value"</span>
+# Note that spaces are not allowed before <span class="nb">and</span> after the equal <span class="k">sign</span>
 
-accif="eth0"
-acc="1"
-advacc="1"
-advinacc="0"
-wankbps="1000000"
-waninkbps="1000000"
-csvmode="0"
-highcsv="0"
-subnetAcc="0"
-maxmode="1"
-maxTxMinSsThresh="1048575"
-maxTxEffectiveMS="0"
-maxAccFlowTxKbps="0"
-pcapEnable="0"
-bypassOverFlows="1"
-initialCwndWan="22"
-l2wQLimit="256 2048"
-w2lQLimit="256 2048"
-shrinkPacket="0"
-retranWaitListMS="32"
-halfCwndMinSRtt="500"
-halfCwndLossRateShift="3"
-shaperEnable="1"
-tcpOnly="1"
-smBurstMS="16"
-smBurstMin="16000"
-smBurstTolerance="32768"
-rsc="1"
-gso="0"
-ultraBoostWin="0"
-minSsThresh="8 24"
-dbcRttThreshMS=""
-smMinKbps=""
-lanSegment=""
-txCongestObey="1"
-taskSchedDelay=""
-configTimeout="30"
-tcpFlags="0x0"
-udptun=""
-</code></pre>
+accif<span class="p">=</span><span class="s2">"eth0"</span>
+acc<span class="p">=</span><span class="s2">"1"</span>
+advacc<span class="p">=</span><span class="s2">"1"</span>
+advinacc<span class="p">=</span><span class="s2">"0"</span>
+wankbps<span class="p">=</span><span class="s2">"1000000"</span>
+waninkbps<span class="p">=</span><span class="s2">"1000000"</span>
+csvmode<span class="p">=</span><span class="s2">"0"</span>
+highcsv<span class="p">=</span><span class="s2">"0"</span>
+subnetAcc<span class="p">=</span><span class="s2">"0"</span>
+maxmode<span class="p">=</span><span class="s2">"1"</span>
+maxTxMinSsThresh<span class="p">=</span><span class="s2">"1048575"</span>
+maxTxEffectiveMS<span class="p">=</span><span class="s2">"0"</span>
+maxAccFlowTxKbps<span class="p">=</span><span class="s2">"0"</span>
+pcapEnable<span class="p">=</span><span class="s2">"0"</span>
+bypassOverFlows<span class="p">=</span><span class="s2">"1"</span>
+initialCwndWan<span class="p">=</span><span class="s2">"22"</span>
+l2wQLimit<span class="p">=</span><span class="s2">"256 2048"</span>
+w2lQLimit<span class="p">=</span><span class="s2">"256 2048"</span>
+shrinkPacket<span class="p">=</span><span class="s2">"0"</span>
+retranWaitListMS<span class="p">=</span><span class="s2">"32"</span>
+halfCwndMinSRtt<span class="p">=</span><span class="s2">"500"</span>
+halfCwndLossRateShift<span class="p">=</span><span class="s2">"3"</span>
+shaperEnable<span class="p">=</span><span class="s2">"1"</span>
+tcpOnly<span class="p">=</span><span class="s2">"1"</span>
+smBurstMS<span class="p">=</span><span class="s2">"16"</span>
+smBurstMin<span class="p">=</span><span class="s2">"16000"</span>
+smBurstTolerance<span class="p">=</span><span class="s2">"32768"</span>
+rsc<span class="p">=</span><span class="s2">"1"</span>
+gso<span class="p">=</span><span class="s2">"0"</span>
+ultraBoostWin<span class="p">=</span><span class="s2">"0"</span>
+minSsThresh<span class="p">=</span><span class="s2">"8 24"</span>
+dbcRttThreshMS<span class="p">=</span><span class="s2">""</span>
+smMinKbps<span class="p">=</span><span class="s2">""</span>
+lanSegment<span class="p">=</span><span class="s2">""</span>
+txCongestObey<span class="p">=</span><span class="s2">"1"</span>
+taskSchedDelay<span class="p">=</span><span class="s2">""</span>
+configTimeout<span class="p">=</span><span class="s2">"30"</span>
+tcpFlags<span class="p">=</span><span class="s2">"0x0"</span>
+udptun<span class="p">=</span><span class="s2">""</span>
+
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

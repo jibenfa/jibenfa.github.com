@@ -124,59 +124,70 @@
 
 <p>首先ssh登陆openwrt x86，然后：</p>
 
-<pre><code class="language-sh">chroot /mnt/sda3 /bin/bash</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chroot</span> /mnt/sda3 /bin/bash
+</code></pre></div></div>
 
 <p>这样便进入了debian虚拟机shell，然后运行：</p>
 
-<pre><code class="language-sh">apt-get update
-apt-get install python-pip
-pip install shadowsocks
-adduser --system --disabled-password --disabled-login --no-create-home shadowsocksuser
-cd /root
-vi ss.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get update
+apt-get <span class="nb">install </span>python-pip
+pip <span class="nb">install </span>shadowsocks
+adduser <span class="nt">--system</span> <span class="nt">--disabled-password</span> <span class="nt">--disabled-login</span> <span class="nt">--no-create-home</span> shadowsocksuser
+<span class="nb">cd</span> /root
+vi ss.sh
+</code></pre></div></div>
 
 <p>ss.sh内容为：</p>
 
-<pre><code class="language-vim">#!/bin/sh
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
 
-/usr/local/bin/ssserver --user shadowsocksuser -c /etc/shadowsocks.json --forbidden-ip 127.0.0.1,::1 -d start</code></pre>
+<span class="sr">/usr/</span>local<span class="sr">/bin/</span>ssserver <span class="p">--</span>user shadowsocksuser <span class="p">-</span><span class="k">c</span> <span class="sr">/etc/</span>shadowsocks<span class="p">.</span>json <span class="p">--</span>forbidden<span class="p">-</span>ip <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span><span class="p">,::</span><span class="m">1</span> <span class="p">-</span><span class="k">d</span> start
+</code></pre></div></div>
 
-<pre><code class="language-sh">chmod +x ss.sh
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ss.sh
 
-vi /etc/shadowsocks.json</code></pre>
+vi /etc/shadowsocks.json
+</code></pre></div></div>
 
 <p>内容为：</p>
 
-<pre><code class="language-vim">{
-          "server":"0.0.0.0",
-          "server_port":8388,
-          "local_port":1080,
-          "password":"ccc", 
-          "timeout":60,
-          "method":"aes-256-cfb"  
-}
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+          <span class="c">"server":"0.0.0.0",</span>
+          <span class="c">"server_port":8388,</span>
+          <span class="c">"local_port":1080,</span>
+          <span class="c">"password":"ccc", </span>
+          <span class="c">"timeout":60,</span>
+          <span class="c">"method":"aes-256-cfb"  </span>
+<span class="p">}</span>
+
+</code></pre></div></div>
 
 <p>退出虚拟机，返回原生的openwrt x86 shell下</p>
 
-<pre><code class="language-sh">exit</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">exit</span>
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /root/startss.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /root/startss.sh
+</code></pre></div></div>
 
-<pre><code class="language-vim">#!/bin/sh
-chroot /mnt/sda3 /bin/bash -c "/root/ss.sh"</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
+chroot <span class="sr">/mnt/</span>sda3 <span class="sr">/bin/</span>bash <span class="p">-</span><span class="k">c</span> <span class="s2">"/root/ss.sh"</span>
+</code></pre></div></div>
 
-<pre><code class="language-sh">chmod +x /root/startss.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x /root/startss.sh
+</code></pre></div></div>
 
 <p>最后注意在防火墙打开端口，以下语句可以写入防火墙启动项：</p>
 
-<pre><code class="language-vim">iptables -I INPUT 1 -p tcp --dport 8388 -j ACCEPT
-iptables -I INPUT 1 -p udp --dport 8388 -j ACCEPT
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables <span class="p">-</span>I INPUT <span class="m">1</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">--</span>dport <span class="m">8388</span> <span class="p">-</span><span class="k">j</span> ACCEPT
+iptables <span class="p">-</span>I INPUT <span class="m">1</span> <span class="p">-</span><span class="k">p</span> udp <span class="p">--</span>dport <span class="m">8388</span> <span class="p">-</span><span class="k">j</span> ACCEPT
+
+</code></pre></div></div>
 
 <p>然后在/etc/rc.local中加入：</p>
 
-<pre><code class="language-sh">/root/startss.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/root/startss.sh
+</code></pre></div></div>
 
 <p>重启路由，正常情况下就可以看到ssserver进程了。。</p>
   

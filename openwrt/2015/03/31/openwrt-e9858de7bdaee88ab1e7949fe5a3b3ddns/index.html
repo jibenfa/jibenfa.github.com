@@ -121,12 +121,14 @@
 		<p>两种办法：<br />
 1.通过luci配置</p>
 
-<pre><code class="language-sh">opkg update
-opkg install luci-app-ddns ddns-scripts</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg <span class="nb">install </span>luci-app-ddns ddns-scripts
+</code></pre></div></div>
 
 <p>然后在luci界面中‘更新的url’填入：</p>
 
-<pre><code class="language-vim">http://[username]:[password]@ddns.oray.com:80/ph/update?hostname=[domain]&amp;myip=[ip]</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http<span class="p">:</span><span class="sr">//</span><span class="p">[</span>username<span class="p">]:[</span>password<span class="p">]</span>@ddns<span class="p">.</span>oray<span class="p">.</span><span class="k">com</span><span class="p">:</span><span class="m">80</span><span class="sr">/ph/</span><span class="k">update</span>?<span class="nb">hostname</span><span class="p">=[</span>domain<span class="p">]</span>&amp;myip<span class="p">=[</span>ip<span class="p">]</span>
+</code></pre></div></div>
 
 <p>其他按照要求填写，注意：‘ip地址来源’选‘接口’，‘接口’ 选‘pppoe-wan’</p>
 
@@ -137,41 +139,45 @@ opkg install luci-app-ddns ddns-scripts</code></pre>
 
 <p>先写一个sh脚本：(路径)</p>
 
-<pre><code class="language-sh">vi /etc/hotplug.d/iface/25-Oray</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/hotplug.d/iface/25-Oray
+</code></pre></div></div>
 
 <p>内容如下：</p>
 
-<pre><code class="language-vim">#!/bin/sh
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
 
-USER="***********"
-PASS="******"
-DOMAIN="*******.net"
-IP=`ping ${DOMAIN} -c 1 |awk 'NR==2 {print $4}' |awk -F ':' '{print $1}'`
+USER<span class="p">=</span><span class="s2">"***********"</span>
+PASS<span class="p">=</span><span class="s2">"******"</span>
+DOMAIN<span class="p">=</span><span class="s2">"*******.net"</span>
+IP<span class="p">=</span>`ping $<span class="p">{</span>DOMAIN<span class="p">}</span> <span class="p">-</span><span class="k">c</span> <span class="m">1</span> <span class="p">|</span>awk <span class="s1">'NR==2 {print $4}'</span> <span class="p">|</span>awk <span class="p">-</span>F <span class="s1">':'</span> <span class="s1">'{print $1}'</span>`
 #如果安装了dig也可以这样
-#IP=`dig ${DOMAIN} @114.114.114.114 | awk -F "[ ]+" '/IN/{print $1}' | awk 'NR==2 {print $5}'`
-echo "Ip of ${DOMAIN} is ${IP}"
-LIP=`ifconfig pppoe-wan|awk -F "[: ]+" '/inet addr/{print $4}'`
-echo "Local Ip is ---${LIP}---"
+#IP<span class="p">=</span>`<span class="k">dig</span> $<span class="p">{</span>DOMAIN<span class="p">}</span> @<span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span> <span class="p">|</span> awk <span class="p">-</span>F <span class="s2">"[ ]+"</span> <span class="s1">'/IN/{print $1}'</span> <span class="p">|</span> awk <span class="s1">'NR==2 {print $5}'</span>`
+echo <span class="s2">"Ip of ${DOMAIN} is ${IP}"</span>
+LIP<span class="p">=</span>`ifconfig pppoe<span class="p">-</span>wan<span class="p">|</span>awk <span class="p">-</span>F <span class="s2">"[: ]+"</span> <span class="s1">'/inet addr/{print $4}'</span>`
+echo <span class="s2">"Local Ip is ---${LIP}---"</span>
 
-if [ "${LIP}" = "${IP}" ]; then
-   exit
+<span class="k">if</span> <span class="p">[</span> <span class="s2">"${LIP}"</span> <span class="p">=</span> <span class="s2">"${IP}"</span> <span class="p">]</span>; then
+   <span class="k">exit</span>
 fi
 
-echo "start ddns refresh"
-URL="http://${USER}:${PASS}@ddns.oray.com:80/ph/update?hostname=${DOMAIN}&amp;myip=${LIP}"
-wget -q -O /tmp/orayddnsResult -q ${URL}
-</code></pre>
+echo <span class="s2">"start ddns refresh"</span>
+URL<span class="p">=</span><span class="s2">"http://${USER}:${PASS}@ddns.oray.com:80/ph/update?hostname=${DOMAIN}&amp;myip=${LIP}"</span>
+wget <span class="p">-</span><span class="k">q</span> <span class="p">-</span>O <span class="sr">/tmp/</span>orayddnsResult <span class="p">-</span><span class="k">q</span> $<span class="p">{</span>URL<span class="p">}</span>
+
+</code></pre></div></div>
 
 <p><del datetime="2017-07-28T14:47:43+00:00">大概意思就是当路由器的ip和上一次保存在临时文件里的ip不一样的时候就访问花生壳网站更新ip</del><br />
 2017-07-28更新了代码，采用ping的方式，如果返回的ip与get发送的ip不一致时，重新发送。</p>
 
 <p>给文件增加执行权限</p>
 
-<pre><code class="language-sh">chmod a+x /etc/hotplug.d/iface/25-Oray</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>a+x /etc/hotplug.d/iface/25-Oray
+</code></pre></div></div>
 
 <p>给路由增加一个定时任务，每隔一分钟执行一次上面的脚本</p>
 
-<pre><code class="language-sh">echo */1 * * * * /etc/hotplug.d/iface/25-Oray start&gt;&gt; /etc/crontabs/root</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="k">*</span>/1 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> /etc/hotplug.d/iface/25-Oray start&gt;&gt; /etc/crontabs/root
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

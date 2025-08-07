@@ -120,49 +120,50 @@
 		
 		<p>好久不用perl脚本写东西了，今天突发奇想，需要自动发送带附件的邮件，网上找了很多资料，修改了一下，就是这样了，先用ppm安装MIME::Lite和Authen::SASL包</p>
 
-<pre><code class="language-bash">
-#!/usr/bin/perl -w
-use strict;
-use warnings;
-use MIME::Lite;
-use MIME::Base64;
-use Authen::SASL;
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c">#!/usr/bin/perl -w</span>
+use strict<span class="p">;</span>
+use warnings<span class="p">;</span>
+use MIME::Lite<span class="p">;</span>
+use MIME::Base64<span class="p">;</span>
+use Authen::SASL<span class="p">;</span>
  
-  my $from = '发件人邮箱';
-  my $passwd = '发件人邮箱密码';
-  my $to = '收件人邮箱';
-  my $subject = "标题"
-  my $content = "正文内容";
-  my $fileone = 'z:\\123.png';
-  my $filetwo = 'z:\\456.png';
-  my $msg = MIME::Lite-&gt;new(
-      From     =&gt;  $from,
-      To       =&gt;  $to,
-      Subject  =&gt;  $subject,
-      Type     =&gt;  'TEXT',
-      Data     =&gt;  $content,
-  );
-  $msg-&gt;attach (
-   Type        =&gt; 'AUTO',
-   Path        =&gt; $fileone,
-   Filename    =&gt; "1111.png",
-   Disposition =&gt; 'attachment'
-   ) or die "Error adding $fileone: $!\n";
-   $msg-&gt;attach (
-   Type        =&gt; 'AUTO',
-   Path        =&gt; $filetwo,
-   Filename    =&gt; "2222.png",
-   Disposition =&gt; 'attachment'
-   ) or die "Error adding $filetwo: $!\n";
+  my <span class="nv">$from</span> <span class="o">=</span> <span class="s1">'发件人邮箱'</span><span class="p">;</span>
+  my <span class="nv">$passwd</span> <span class="o">=</span> <span class="s1">'发件人邮箱密码'</span><span class="p">;</span>
+  my <span class="nv">$to</span> <span class="o">=</span> <span class="s1">'收件人邮箱'</span><span class="p">;</span>
+  my <span class="nv">$subject</span> <span class="o">=</span> <span class="s2">"标题"</span>
+  my <span class="nv">$content</span> <span class="o">=</span> <span class="s2">"正文内容"</span><span class="p">;</span>
+  my <span class="nv">$fileone</span> <span class="o">=</span> <span class="s1">'z:\\123.png'</span><span class="p">;</span>
+  my <span class="nv">$filetwo</span> <span class="o">=</span> <span class="s1">'z:\\456.png'</span><span class="p">;</span>
+  my <span class="nv">$msg</span> <span class="o">=</span> MIME::Lite-&gt;new<span class="o">(</span>
+      From     <span class="o">=&gt;</span>  <span class="nv">$from</span>,
+      To       <span class="o">=&gt;</span>  <span class="nv">$to</span>,
+      Subject  <span class="o">=&gt;</span>  <span class="nv">$subject</span>,
+      Type     <span class="o">=&gt;</span>  <span class="s1">'TEXT'</span>,
+      Data     <span class="o">=&gt;</span>  <span class="nv">$content</span>,
+  <span class="o">)</span><span class="p">;</span>
+  <span class="nv">$msg</span>-&gt;attach <span class="o">(</span>
+   Type        <span class="o">=&gt;</span> <span class="s1">'AUTO'</span>,
+   Path        <span class="o">=&gt;</span> <span class="nv">$fileone</span>,
+   Filename    <span class="o">=&gt;</span> <span class="s2">"1111.png"</span>,
+   Disposition <span class="o">=&gt;</span> <span class="s1">'attachment'</span>
+   <span class="o">)</span> or die <span class="s2">"Error adding </span><span class="nv">$fileone</span><span class="s2">: </span><span class="nv">$!</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+   <span class="nv">$msg</span>-&gt;attach <span class="o">(</span>
+   Type        <span class="o">=&gt;</span> <span class="s1">'AUTO'</span>,
+   Path        <span class="o">=&gt;</span> <span class="nv">$filetwo</span>,
+   Filename    <span class="o">=&gt;</span> <span class="s2">"2222.png"</span>,
+   Disposition <span class="o">=&gt;</span> <span class="s1">'attachment'</span>
+   <span class="o">)</span> or die <span class="s2">"Error adding </span><span class="nv">$filetwo</span><span class="s2">: </span><span class="nv">$!</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
   
   
-  MIME::Lite-&gt;send('smtp','smtp邮箱服务器',
-      Debug   =&gt;'0',
-      AuthUser=&gt;$from,
-      AuthPass=&gt;$passwd,
-  );
-  $msg-&gt;send;
-  </code></pre>
+  MIME::Lite-&gt;send<span class="o">(</span><span class="s1">'smtp'</span>,<span class="s1">'smtp邮箱服务器'</span>,
+      Debug   <span class="o">=&gt;</span><span class="s1">'0'</span>,
+      <span class="nv">AuthUser</span><span class="o">=&gt;</span><span class="nv">$from</span>,
+      <span class="nv">AuthPass</span><span class="o">=&gt;</span><span class="nv">$passwd</span>,
+  <span class="o">)</span><span class="p">;</span>
+  <span class="nv">$msg</span>-&gt;send<span class="p">;</span>
+  
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

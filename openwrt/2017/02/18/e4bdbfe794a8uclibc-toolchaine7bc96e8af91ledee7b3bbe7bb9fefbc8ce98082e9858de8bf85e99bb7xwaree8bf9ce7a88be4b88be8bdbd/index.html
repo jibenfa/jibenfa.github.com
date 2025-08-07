@@ -126,48 +126,52 @@
 <strong>1.下载LEDE源码，这个很简单：</strong><br />
 <!--more--></p>
 
-<pre><code class="language-sh">git clone https://git.lede-project.org/source.git
-cd source
-./scripts/feeds update -a
-./scripts/feeds install -a</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://git.lede-project.org/source.git
+<span class="nb">cd source</span>
+./scripts/feeds update <span class="nt">-a</span>
+./scripts/feeds <span class="nb">install</span> <span class="nt">-a</span>
+</code></pre></div></div>
 
 <p><strong>2.修改Toolchain，以便使用uClibc：</strong><br />
 (1).修改/toolchain/Config.in</p>
 
-<pre><code class="language-vim">--- a/toolchain/Config.in
-+++ b/toolchain/Config.in
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">---</span> <span class="k">a</span><span class="sr">/toolchain/</span>Config<span class="p">.</span><span class="k">in</span>
+<span class="p">+++</span> <span class="k">b</span><span class="sr">/toolchain/</span>Config<span class="p">.</span><span class="k">in</span>
  
  	config LIBC_USE_UCLIBC
  		select USE_UCLIBC
--		bool "Use uClibc"
-+		bool "Use uClibc-ng"
- 		depends on !(aarch64 || aarch64_be)
--		depends on BROKEN || !(arm || armeb || i386 || x86_64 || mips || mipsel || mips64 || mips64el || powerpc)</code></pre>
+<span class="p">-</span>		bool <span class="s2">"Use uClibc"</span>
+<span class="p">+</span>		bool <span class="s2">"Use uClibc-ng"</span>
+ 		depends <span class="k">on</span> <span class="p">!(</span>aarch64 <span class="p">||</span> aarch64_be<span class="p">)</span>
+<span class="p">-</span>		depends <span class="k">on</span> BROKEN <span class="p">||</span> <span class="p">!(</span>arm <span class="p">||</span> armeb <span class="p">||</span> i386 <span class="p">||</span> x86_64 <span class="p">||</span> mips <span class="p">||</span> mipsel <span class="p">||</span> mips64 <span class="p">||</span> mips64el <span class="p">||</span> powerpc<span class="p">)</span>
+</code></pre></div></div>
 
 <p>(2).修改/toolchain/uClibc/Makefile</p>
 
-<pre><code class="language-vim">--- a/toolchain/uClibc/Makefile
-+++ b/toolchain/uClibc/Makefile
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">---</span> <span class="k">a</span><span class="sr">/toolchain/</span>uClibc/Makefile
+<span class="p">+++</span> <span class="k">b</span><span class="sr">/toolchain/</span>uClibc/Makefile
 
- define Host/SetToolchainInfo
- 	$(SED) 's,^\(LIBC_TYPE\)=.*,\1=$(PKG_NAME),' $(TOOLCHAIN_DIR)/info.mk
--	$(SED) 's,^\(LIBC_URL\)=.*,\1=http://www.uclibc.org/,' $(TOOLCHAIN_DIR)/info.mk
-+	$(SED) 's,^\(LIBC_URL\)=.*,\1=http://www.uclibc-ng.org/,' $(TOOLCHAIN_DIR)/info.mk
- 	$(SED) 's,^\(LIBC_VERSION\)=.*,\1=$(PKG_VERSION),' $(TOOLCHAIN_DIR)/info.mk
- 	$(SED) 's,^\(LIBC_SO_VERSION\)=.*,\1=$(LIBC_SO_VERSION),' $(TOOLCHAIN_DIR)/info.mk
- endef</code></pre>
+ <span class="nb">define</span> Host/SetToolchainInfo
+ 	$<span class="p">(</span>SED<span class="p">)</span> <span class="s1">'s,^\(LIBC_TYPE\)=.*,\1=$(PKG_NAME),'</span> $<span class="p">(</span>TOOLCHAIN_DIR<span class="p">)</span>/info<span class="p">.</span><span class="k">mk</span>
+<span class="p">-</span>	$<span class="p">(</span>SED<span class="p">)</span> <span class="s1">'s,^\(LIBC_URL\)=.*,\1=http://www.uclibc.org/,'</span> $<span class="p">(</span>TOOLCHAIN_DIR<span class="p">)</span>/info<span class="p">.</span><span class="k">mk</span>
+<span class="p">+</span>	$<span class="p">(</span>SED<span class="p">)</span> <span class="s1">'s,^\(LIBC_URL\)=.*,\1=http://www.uclibc-ng.org/,'</span> $<span class="p">(</span>TOOLCHAIN_DIR<span class="p">)</span>/info<span class="p">.</span><span class="k">mk</span>
+ 	$<span class="p">(</span>SED<span class="p">)</span> <span class="s1">'s,^\(LIBC_VERSION\)=.*,\1=$(PKG_VERSION),'</span> $<span class="p">(</span>TOOLCHAIN_DIR<span class="p">)</span>/info<span class="p">.</span><span class="k">mk</span>
+ 	$<span class="p">(</span>SED<span class="p">)</span> <span class="s1">'s,^\(LIBC_SO_VERSION\)=.*,\1=$(LIBC_SO_VERSION),'</span> $<span class="p">(</span>TOOLCHAIN_DIR<span class="p">)</span>/info<span class="p">.</span><span class="k">mk</span>
+ endef
+</code></pre></div></div>
 
 <p>(3).修改toolchain/uClibc/headers/Makefile</p>
 
-<pre><code class="language-vim">--- a/toolchain/uClibc/headers/Makefile
-+++ b/toolchain/uClibc/headers/Makefile
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">---</span> <span class="k">a</span><span class="sr">/toolchain/</span>uClibc<span class="sr">/headers/</span>Makefile
+<span class="p">+++</span> <span class="k">b</span><span class="sr">/toolchain/</span>uClibc<span class="sr">/headers/</span>Makefile
  
- 		CC="$(TARGET_CC)" \
- 		CPU_CFLAGS="$(TARGET_CFLAGS)" \
- 		ARCH="$(CONFIG_ARCH)" \
--		pregen \
+ 		CC<span class="p">=</span><span class="s2">"$(TARGET_CC)"</span> \
+ 		CPU_CFLAGS<span class="p">=</span><span class="s2">"$(TARGET_CFLAGS)"</span> \
+ 		ARCH<span class="p">=</span><span class="s2">"$(CONFIG_ARCH)"</span> \
+<span class="p">-</span>		pregen \
  		install_headers
- endef</code></pre>
+ endef
+</code></pre></div></div>
 
 <p>(4).如果要修改使用的uclibc-ng版本，需要修改toolchain/uClibc/common.mk里面的版本号和对应sha值，默认1.0.22不用修改了。</p>
 
@@ -175,28 +179,31 @@ cd source
 
 <p><strong>3.编译系统</strong></p>
 
-<pre><code class="language-sh">make menuconfig</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make menuconfig
+</code></pre></div></div>
 
 <p>通过advanced configuration options (for developers) &gt; Toolchain Options &gt; c library &gt; uclibc-ng<br />
 其他自己选择。保存.config后，输入：</p>
 
-<pre><code class="language-sh">nohup ./autocompile.sh &amp;</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">nohup</span> ./autocompile.sh &amp;
+</code></pre></div></div>
 
 <p>自动编译脚本autocompile.sh 内容为：</p>
 
-<pre><code class="language-vim">if [ "$1" != "-f" ] ; then
-        IGNORE_ERRORS=1 make 2&gt;&amp;1| tee errors.txt
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">[</span> <span class="s2">"$1"</span> <span class="p">!=</span> <span class="s2">"-f"</span> <span class="p">]</span> ; then
+        IGNORE_ERRORS<span class="p">=</span><span class="m">1</span> <span class="k">make</span> <span class="m">2</span><span class="p">&gt;</span>&amp;<span class="m">1</span><span class="p">|</span> tee errors<span class="p">.</span>txt
 
-        rm build_*.txt
+        rm build_*<span class="p">.</span>txt
 fi
 
-for i in $(grep "failed to build" errors.txt | sed 's/^.*ERROR:[[:space:]]*\([^[:space:]].*\) failed to build.*$/\1/' ) ; do
-        if [ "$i" != "" ] ; then
-                echo Compiling: ${i}
-                make ${i}-compile V=99 &gt; build_${i##*/}.txt 2&gt;&amp;1 || echo ${i} : Build failed, see build_${i##*/}.txt
+<span class="k">for</span> <span class="k">i</span> <span class="k">in</span> $<span class="p">(</span><span class="k">grep</span> <span class="s2">"failed to build"</span> errors<span class="p">.</span>txt <span class="p">|</span> sed <span class="s1">'s/^.*ERROR:[[:space:]]*\([^[:space:]].*\) failed to build.*$/\1/'</span> <span class="p">)</span> ; <span class="k">do</span>
+        <span class="k">if</span> <span class="p">[</span> <span class="s2">"$i"</span> <span class="p">!=</span> <span class="s2">""</span> <span class="p">]</span> ; then
+                echo Compiling<span class="p">:</span> $<span class="p">{</span><span class="k">i</span><span class="p">}</span>
+                <span class="k">make</span> $<span class="p">{</span><span class="k">i</span><span class="p">}-</span>compile V<span class="p">=</span><span class="m">99</span> <span class="p">&gt;</span> build_$<span class="p">{</span><span class="k">i</span>##*<span class="sr">/}.txt 2&gt;&amp;1 || echo ${i} : Build failed, see build_${i##*/</span><span class="p">}.</span>txt
         fi
 done
-</code></pre>
+
+</code></pre></div></div>
 
 <p>等几个小时以后就可以在source/bin目录下找到编译完成的系统了，编译过程中另外一个ssh登录，通过errors.txt和nohup.out查看编译进度，原ssh窗口可以关闭。</p>
 
@@ -204,13 +211,14 @@ done
 可以通过命令行sysupgrade -v xxxx.bin或者通过luci网页升级系统。<br />
 升级完成后，由于uclibc-ng 1.0.18及之后版本将libpthread, libcrypt, libdl, libm, libutil等库合并到了libuClibc中，需要link一些libuClibc，以便迅雷xware可以使用：</p>
 
-<pre><code class="language-sh">cd /lib
-ln -s libuClibc-1.0.22.so libdl.so.0
-ln -s libuClibc-1.0.22.so  libpthread.so.0 </code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /lib
+<span class="nb">ln</span> <span class="nt">-s</span> libuClibc-1.0.22.so libdl.so.0
+<span class="nb">ln</span> <span class="nt">-s</span> libuClibc-1.0.22.so  libpthread.so.0 
+</code></pre></div></div>
 
 <p>然后将Xware1.0.31_mipsel_32_uclibc上传路由，运行:</p>
 
-<pre><code class="language-sh">root@LEDE:~/xunlei# ./portal
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@LEDE:~/xunlei# ./portal
 initing...
 try stopping xunlei service first...
 killall: ETMDaemon: no process killed
@@ -226,9 +234,10 @@ etm path: /root/xunlei
 execv: /root/xunlei/lib/ETMDaemon.
 
 getting xunlei service info...
-Connecting to 127.0.0.1:9000 (127.0.0.1:9000)
+Connecting to 127.0.0.1:9000 <span class="o">(</span>127.0.0.1:9000<span class="o">)</span>
 
-THE ACTIVE CODE IS: </code></pre>
+THE ACTIVE CODE IS: 
+</code></pre></div></div>
 
 <p>常用软件例如chinadns可使用imagebuilder编译。</p>
 

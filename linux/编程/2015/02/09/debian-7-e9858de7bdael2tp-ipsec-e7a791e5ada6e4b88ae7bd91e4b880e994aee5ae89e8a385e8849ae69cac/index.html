@@ -148,39 +148,39 @@ IPSEC使用openswan，<br />
 <p>里面填以下内容，前20行内容按照实际修改<br />
 <!--more--></p>
 
-<pre><code class="language-bash">#!/bin/sh
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
  
  
-#VPN 账号
-vpn_name="username"
+<span class="c">#VPN 账号</span>
+<span class="nv">vpn_name</span><span class="o">=</span><span class="s2">"username"</span>
  
-#VPN 密码
-vpn_password="password"
+<span class="c">#VPN 密码</span>
+<span class="nv">vpn_password</span><span class="o">=</span><span class="s2">"password"</span>
  
-#设置 PSK 预共享密钥
-psk_password="123456"
+<span class="c">#设置 PSK 预共享密钥</span>
+<span class="nv">psk_password</span><span class="o">=</span><span class="s2">"123456"</span>
  
-#公网IP
-ip="yourip"
+<span class="c">#公网IP</span>
+<span class="nv">ip</span><span class="o">=</span><span class="s2">"yourip"</span>
  
  
-#安装 openswan、xl2tpd(有弹对话框的话直接按回车就行)
-apt-get install -y xl2tpd screen
+<span class="c">#安装 openswan、xl2tpd(有弹对话框的话直接按回车就行)</span>
+apt-get <span class="nb">install</span> <span class="nt">-y</span> xl2tpd screen
 
-#apt-get的默认版本的openswan对于ios支持有问题，为了支持ios，只好降版本，
-#这个版本的Opportunistic Encryption Support不要打开，否则会有安全漏洞
-#debian已经不再对openswan支持了，以后都是strongswan了。。。
-apt-get install openswan=1:2.6.37-3 
-#apt-get install -y openswan xl2tpd screen
+<span class="c">#apt-get的默认版本的openswan对于ios支持有问题，为了支持ios，只好降版本，</span>
+<span class="c">#这个版本的Opportunistic Encryption Support不要打开，否则会有安全漏洞</span>
+<span class="c">#debian已经不再对openswan支持了，以后都是strongswan了。。。</span>
+apt-get <span class="nb">install </span><span class="nv">openswan</span><span class="o">=</span>1:2.6.37-3 
+<span class="c">#apt-get install -y openswan xl2tpd screen</span>
 
 
  
-#备份 /etc/ipsec.conf 文件,注意参数前面都是tab不是空格,拍空格会出错
-ipsec_conf="/etc/ipsec.conf"
-if [ -f $ipsec_conf ]; then
-cp $ipsec_conf $ipsec_conf.bak
-fi
-echo "
+<span class="c">#备份 /etc/ipsec.conf 文件,注意参数前面都是tab不是空格,拍空格会出错</span>
+<span class="nv">ipsec_conf</span><span class="o">=</span><span class="s2">"/etc/ipsec.conf"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$ipsec_conf</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+</span><span class="nb">cp</span> <span class="nv">$ipsec_conf</span> <span class="nv">$ipsec_conf</span>.bak
+<span class="k">fi
+</span><span class="nb">echo</span> <span class="s2">"
 version 2.0
 config setup
 	nat_traversal=yes
@@ -201,55 +201,55 @@ conn L2TP-PSK-noNAT
 	ikelifetime=8h
 	keylife=1h
 	type=transport
-	left=$ip
+	left=</span><span class="nv">$ip</span><span class="s2">
 	leftprotoport=17/1701
 	right=%any
 	rightprotoport=17/%any
 	dpddelay=40
 	dpdtimeout=130
 	dpdaction=clear
-" &gt; $ipsec_conf
+"</span> <span class="o">&gt;</span> <span class="nv">$ipsec_conf</span>
  
  
  
-#备份 /etc/ipsec.secrets 文件
-ipsec_secrets="/etc/ipsec.secrets"
-if [ -f $ipsec_secrets ]; then
-cp $ipsec_secrets $ipsec_secrets.bak
-fi
-echo "
-$ip   %any:  PSK \"$psk_password\"
-" &gt;&gt; $ipsec_secrets
+<span class="c">#备份 /etc/ipsec.secrets 文件</span>
+<span class="nv">ipsec_secrets</span><span class="o">=</span><span class="s2">"/etc/ipsec.secrets"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$ipsec_secrets</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+</span><span class="nb">cp</span> <span class="nv">$ipsec_secrets</span> <span class="nv">$ipsec_secrets</span>.bak
+<span class="k">fi
+</span><span class="nb">echo</span> <span class="s2">"
+</span><span class="nv">$ip</span><span class="s2">   %any:  PSK </span><span class="se">\"</span><span class="nv">$psk_password</span><span class="se">\"</span><span class="s2">
+"</span> <span class="o">&gt;&gt;</span> <span class="nv">$ipsec_secrets</span>
  
  
  
-#备份 /etc/sysctl.conf 文件
-sysctl_conf="/etc/sysctl.conf"
-if [ -f $sysctl_conf ]; then
-cp $sysctl_conf $sysctl_conf.bak
-fi
-echo "
+<span class="c">#备份 /etc/sysctl.conf 文件</span>
+<span class="nv">sysctl_conf</span><span class="o">=</span><span class="s2">"/etc/sysctl.conf"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$sysctl_conf</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+</span><span class="nb">cp</span> <span class="nv">$sysctl_conf</span> <span class="nv">$sysctl_conf</span>.bak
+<span class="k">fi
+</span><span class="nb">echo</span> <span class="s2">"
 net.ipv4.ip_forward = 1
 net.ipv4.conf.all.send_redirects = 0
 net.ipv4.conf.default.send_redirects = 0
 net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.default.accept_redirects = 0
-" &gt;&gt; $sysctl_conf
-sysctl -p
+"</span> <span class="o">&gt;&gt;</span> <span class="nv">$sysctl_conf</span>
+sysctl <span class="nt">-p</span>
  
-for each in /proc/sys/net/ipv4/conf/*
-do
-echo 0 &gt; $each/accept_redirects
-echo 0 &gt; $each/send_redirects
-done
+<span class="k">for </span>each <span class="k">in</span> /proc/sys/net/ipv4/conf/<span class="k">*</span>
+<span class="k">do
+</span><span class="nb">echo </span>0 <span class="o">&gt;</span> <span class="nv">$each</span>/accept_redirects
+<span class="nb">echo </span>0 <span class="o">&gt;</span> <span class="nv">$each</span>/send_redirects
+<span class="k">done</span>
  
  
-#设置 l2tp
-xl2tpd="/etc/xl2tpd/xl2tpd.conf"
-if [ -f $xl2tpd ]; then
-cp $xl2tpd $xl2tpd.bak
-fi
-echo "
+<span class="c">#设置 l2tp</span>
+<span class="nv">xl2tpd</span><span class="o">=</span><span class="s2">"/etc/xl2tpd/xl2tpd.conf"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$xl2tpd</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+</span><span class="nb">cp</span> <span class="nv">$xl2tpd</span> <span class="nv">$xl2tpd</span>.bak
+<span class="k">fi
+</span><span class="nb">echo</span> <span class="s2">"
 [global]
 ipsec saref = no
  
@@ -262,18 +262,18 @@ require authentication = yes
 ppp debug = yes
 pppoptfile = /etc/ppp/options.xl2tpd
 length bit = yes
-" &gt; $xl2tpd
+"</span> <span class="o">&gt;</span> <span class="nv">$xl2tpd</span>
  
  
-#设置 ppp,最后三项是为了兼容ios
-#mtu 1400 #解决ios打不开网页的问题
-#noccp #解决ios连接问题
-#connect-delay 5000 #解决ios连接超时问题
-options_xl2tpd="/etc/ppp/options.xl2tpd"
-if [ -f $options_xl2tpd ]; then
-cp $options_xl2tpd $options_xl2tpd.bak
-fi
-echo "
+<span class="c">#设置 ppp,最后三项是为了兼容ios</span>
+<span class="c">#mtu 1400 #解决ios打不开网页的问题</span>
+<span class="c">#noccp #解决ios连接问题</span>
+<span class="c">#connect-delay 5000 #解决ios连接超时问题</span>
+<span class="nv">options_xl2tpd</span><span class="o">=</span><span class="s2">"/etc/ppp/options.xl2tpd"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$options_xl2tpd</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+</span><span class="nb">cp</span> <span class="nv">$options_xl2tpd</span> <span class="nv">$options_xl2tpd</span>.bak
+<span class="k">fi
+</span><span class="nb">echo</span> <span class="s2">"
 require-mschap-v2
 ms-dns 8.8.8.8
 ms-dns 8.8.4.4
@@ -291,57 +291,57 @@ lcp-echo-failure 4
 mtu 1400
 noccp
 connect-delay 5000
-" &gt; $options_xl2tpd
+"</span> <span class="o">&gt;</span> <span class="nv">$options_xl2tpd</span>
  
-#添加 VPN 账号
-chap_secrets="/etc/ppp/chap-secrets"
-if [ -f $chap_secrets ]; then
-cp $chap_secrets $chap_secrets.bak
-fi
-echo "
-$vpn_name * $vpn_password *
+<span class="c">#添加 VPN 账号</span>
+<span class="nv">chap_secrets</span><span class="o">=</span><span class="s2">"/etc/ppp/chap-secrets"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$chap_secrets</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+</span><span class="nb">cp</span> <span class="nv">$chap_secrets</span> <span class="nv">$chap_secrets</span>.bak
+<span class="k">fi
+</span><span class="nb">echo</span> <span class="s2">"
+</span><span class="nv">$vpn_name</span><span class="s2"> * </span><span class="nv">$vpn_password</span><span class="s2"> *
 
-" &gt;&gt; $chap_secrets
+"</span> <span class="o">&gt;&gt;</span> <span class="nv">$chap_secrets</span>
  
  
-#设置 iptables 的数据包转发
-iptables --table nat --append POSTROUTING --jump MASQUERADE
-echo 1 &gt; /proc/sys/net/ipv4/ip_forward
-#如果要封某个网段：
-iptables -I INPUT -s 103.41.124.0/24 -j DROP
-#处理IP碎片数量,防止攻击,允许每秒100个
-iptables -A FORWARD -f -m limit --limit 100/s --limit-burst 100 -j ACCEPT
-#设置ICMP包过滤,允许每秒1个包,限制触发条件是10个包
-iptables -A FORWARD -p icmp -m limit --limit 1/s --limit-burst 10 -j ACCEPT
+<span class="c">#设置 iptables 的数据包转发</span>
+iptables <span class="nt">--table</span> nat <span class="nt">--append</span> POSTROUTING <span class="nt">--jump</span> MASQUERADE
+<span class="nb">echo </span>1 <span class="o">&gt;</span> /proc/sys/net/ipv4/ip_forward
+<span class="c">#如果要封某个网段：</span>
+iptables <span class="nt">-I</span> INPUT <span class="nt">-s</span> 103.41.124.0/24 <span class="nt">-j</span> DROP
+<span class="c">#处理IP碎片数量,防止攻击,允许每秒100个</span>
+iptables <span class="nt">-A</span> FORWARD <span class="nt">-f</span> <span class="nt">-m</span> limit <span class="nt">--limit</span> 100/s <span class="nt">--limit-burst</span> 100 <span class="nt">-j</span> ACCEPT
+<span class="c">#设置ICMP包过滤,允许每秒1个包,限制触发条件是10个包</span>
+iptables <span class="nt">-A</span> FORWARD <span class="nt">-p</span> icmp <span class="nt">-m</span> limit <span class="nt">--limit</span> 1/s <span class="nt">--limit-burst</span> 10 <span class="nt">-j</span> ACCEPT
 
-#安装fail2ban，默认限制ssh登陆失败6次封10分钟
-#可以通过/etc/fail2ban/jail.conf来改变
-apt-get install fail2ban 
+<span class="c">#安装fail2ban，默认限制ssh登陆失败6次封10分钟</span>
+<span class="c">#可以通过/etc/fail2ban/jail.conf来改变</span>
+apt-get <span class="nb">install </span>fail2ban 
 update-rc.d fail2ban defaults
 
-#保存iptables:
-iptables-save &gt; /etc/network/iptables
+<span class="c">#保存iptables:</span>
+iptables-save <span class="o">&gt;</span> /etc/network/iptables
 
 
-iptables_sh="/etc/init.d/iptables.sh"
-if [ -f $iptables_sh ]; then
-cp $iptables_sh $iptables_sh.bak
-fi
-touch $iptables_sh
-chmod +x $iptables_sh
-echo "
+<span class="nv">iptables_sh</span><span class="o">=</span><span class="s2">"/etc/init.d/iptables.sh"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$iptables_sh</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+</span><span class="nb">cp</span> <span class="nv">$iptables_sh</span> <span class="nv">$iptables_sh</span>.bak
+<span class="k">fi
+</span><span class="nb">touch</span> <span class="nv">$iptables_sh</span>
+<span class="nb">chmod</span> +x <span class="nv">$iptables_sh</span>
+<span class="nb">echo</span> <span class="s2">"
 #!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          iptables.sh
-# Required-Start:    $local_fs $remote_fs $network $syslog
-# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Required-Start:    </span><span class="nv">$local_fs</span><span class="s2"> </span><span class="nv">$remote_fs</span><span class="s2"> </span><span class="nv">$network</span><span class="s2"> </span><span class="nv">$syslog</span><span class="s2">
+# Required-Stop:     </span><span class="nv">$local_fs</span><span class="s2"> </span><span class="nv">$remote_fs</span><span class="s2"> </span><span class="nv">$network</span><span class="s2"> </span><span class="nv">$syslog</span><span class="s2">
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: update iptables
 # Description:       update iptalbes
 ### END INIT INFO
 /sbin/iptables-restore &lt; /etc/network/iptables 
-" &gt; $iptables_sh
+"</span> <span class="o">&gt;</span> <span class="nv">$iptables_sh</span>
 update-rc.d iptables.sh defaults
  
 /etc/init.d/ipsec stop
@@ -350,52 +350,54 @@ update-rc.d iptables.sh defaults
  
 /etc/init.d/ipsec start
  
-screen -dmS xl2tpd xl2tpd -D
+screen <span class="nt">-dmS</span> xl2tpd xl2tpd <span class="nt">-D</span>
  
 ipsec verify
  
-echo "###########################################"
-echo "##L2TP VPN SETUP COMPLETE!"
-echo "##VPN IP  :   $ip"
-echo "##VPN USER:   $vpn_name"
-echo "##VPN PASSWORD:   $vpn_password"
-echo "##VPN PSK :   $psk_password"
-echo "###########################################"
+<span class="nb">echo</span> <span class="s2">"###########################################"</span>
+<span class="nb">echo</span> <span class="s2">"##L2TP VPN SETUP COMPLETE!"</span>
+<span class="nb">echo</span> <span class="s2">"##VPN IP  :   </span><span class="nv">$ip</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"##VPN USER:   </span><span class="nv">$vpn_name</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"##VPN PASSWORD:   </span><span class="nv">$vpn_password</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"##VPN PSK :   </span><span class="nv">$psk_password</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"###########################################"</span>
 
 
-##################################################
-#如果Pluto listening for IKE on udp 500 
-apt-get install lsof
-##################################################
+<span class="c">##################################################</span>
+<span class="c">#如果Pluto listening for IKE on udp 500 </span>
+apt-get <span class="nb">install </span>lsof
+<span class="c">##################################################</span>
 
-#vpn自启动
+<span class="c">#vpn自启动</span>
 update-rc.d ipsec defaults
 
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>开始运行<br />
 root@xxx:sh ./xxxx.sh</p>
 
 <p>如果结果如下，则ok：</p>
 
-<pre><code class="language-sh">Checking your system to see if IPsec got installed and started correctly:
-Version check and ipsec on-path [OK]
-Linux Openswan xxx (netkey)
-Checking for IPsec support in kernel [OK]
-SAref kernel support [N/A]
-NETKEY: Testing XFRM related proc values [OK]
-[OK]
-[OK]
-Checking that pluto is running [OK]
-Pluto listening for IKE on udp 500 [OK]
-Pluto listening for NAT-T on udp 4500 [OK]
-Two or more interfaces found, checking IP forwarding [OK]
-Checking NAT and MASQUERADEing [OK]
-Checking for 'ip' command [OK]
-Checking /bin/sh is not /bin/dash [WARNING]
-Checking for 'iptables' command [OK]
-Opportunistic Encryption Support [DISABLED]</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Checking your system to see <span class="k">if </span>IPsec got installed and started correctly:
+Version check and ipsec on-path <span class="o">[</span>OK]
+Linux Openswan xxx <span class="o">(</span>netkey<span class="o">)</span>
+Checking <span class="k">for </span>IPsec support <span class="k">in </span>kernel <span class="o">[</span>OK]
+SAref kernel support <span class="o">[</span>N/A]
+NETKEY: Testing XFRM related proc values <span class="o">[</span>OK]
+<span class="o">[</span>OK]
+<span class="o">[</span>OK]
+Checking that pluto is running <span class="o">[</span>OK]
+Pluto listening <span class="k">for </span>IKE on udp 500 <span class="o">[</span>OK]
+Pluto listening <span class="k">for </span>NAT-T on udp 4500 <span class="o">[</span>OK]
+Two or more interfaces found, checking IP forwarding <span class="o">[</span>OK]
+Checking NAT and MASQUERADEing <span class="o">[</span>OK]
+Checking <span class="k">for</span> <span class="s1">'ip'</span> <span class="nb">command</span> <span class="o">[</span>OK]
+Checking /bin/sh is not /bin/dash <span class="o">[</span>WARNING]
+Checking <span class="k">for</span> <span class="s1">'iptables'</span> <span class="nb">command</span> <span class="o">[</span>OK]
+Opportunistic Encryption Support <span class="o">[</span>DISABLED]
+</code></pre></div></div>
 
 <p>大工搞成，用PC或者手机连连试试吧~~</p>
 

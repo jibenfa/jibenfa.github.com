@@ -123,94 +123,101 @@
 1.Openvpn服务端（内部局域网段172.24.1.0/24）：<br />
 首先/etc/config/network配置加一个interface：</p>
 
-<pre><code class="language-vim">config interface 'vpn1'
-    option proto 'none'
-    option ifname 'tun1'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config interface <span class="s1">'vpn1'</span>
+    option proto <span class="s1">'none'</span>
+    option ifname <span class="s1">'tun1'</span>
+</code></pre></div></div>
 
 <p>/etc/config/openvpn文件增加内容：<br />
 <!--more--></p>
 
-<pre><code class="language-vim"> 
-config openvpn 'tun_router'
-        option port '3377'
-        option proto 'tcp'
-        option dev 'tun1'
-        option ca '/etc/openvpn/ca.crt'
-        option cert '/etc/openvpn/server.crt'
-        option key '/etc/openvpn/server.key'
-        option dh '/etc/openvpn/dh2048.pem'
-        option server '10.0.1.0 255.255.255.0'
-        option client_config_dir '/etc/openvpn/ccd'
-        option ccd_exclusive '1'
-        option ifconfig_pool_persist '/tmp/ipp3.txt'
-        option client_to_client '1'
-        option keepalive '10 120'
-        option compress 'lzo'
-        option persist_key '1'
-        option persist_tun '1'
-        option status '/tmp/openvpn-status3.log'
-        option verb '3'
-        option enabled '1'
-        option topology 'subnet'
-        list push 'route 172.24.1.0 255.255.255.0'
-        list route '172.24.8.0 255.255.255.0'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 
+config openvpn <span class="s1">'tun_router'</span>
+        option port <span class="s1">'3377'</span>
+        option proto <span class="s1">'tcp'</span>
+        option dev <span class="s1">'tun1'</span>
+        option <span class="k">ca</span> <span class="s1">'/etc/openvpn/ca.crt'</span>
+        option cert <span class="s1">'/etc/openvpn/server.crt'</span>
+        option <span class="nb">key</span> <span class="s1">'/etc/openvpn/server.key'</span>
+        option dh <span class="s1">'/etc/openvpn/dh2048.pem'</span>
+        option server <span class="s1">'10.0.1.0 255.255.255.0'</span>
+        option client_config_dir <span class="s1">'/etc/openvpn/ccd'</span>
+        option ccd_exclusive <span class="s1">'1'</span>
+        option ifconfig_pool_persist <span class="s1">'/tmp/ipp3.txt'</span>
+        option client_to_client <span class="s1">'1'</span>
+        option keepalive <span class="s1">'10 120'</span>
+        option compress <span class="s1">'lzo'</span>
+        option persist_key <span class="s1">'1'</span>
+        option persist_tun <span class="s1">'1'</span>
+        option status <span class="s1">'/tmp/openvpn-status3.log'</span>
+        option <span class="k">verb</span> <span class="s1">'3'</span>
+        option enabled <span class="s1">'1'</span>
+        option topology <span class="s1">'subnet'</span>
+        <span class="k">list</span> push <span class="s1">'route 172.24.1.0 255.255.255.0'</span>
+        <span class="k">list</span> route <span class="s1">'172.24.8.0 255.255.255.0'</span>
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>/etc/openvpn/ccd文件夹内增加一个文件，文件名为客户端证书的common name，例如tbjj，内容为：</p>
 
-<pre><code class="language-vim">ifconfig-push "10.0.1.6 255.255.255.0"
-iroute 172.24.8.0 255.255.255.0</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ifconfig<span class="p">-</span>push <span class="s2">"10.0.1.6 255.255.255.0"</span>
+iroute <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span> <span class="m">255</span><span class="p">.</span><span class="m">255</span><span class="p">.</span><span class="m">255</span><span class="p">.</span><span class="m">0</span>
+</code></pre></div></div>
 
 <p>然后在防火墙自定义规则里面添加：</p>
 
-<pre><code class="language-sh">iptables -I INPUT 1 -p tcp --dport 3377 -j ACCEPT
-iptables -I INPUT 1 -p udp --dport 3377 -j ACCEPT
-iptables -A FORWARD -i tun1 -s 10.0.1.0/24 -d 172.24.1.0/24 -j ACCEPT
-iptables -A FORWARD -i tun1 -s 172.24.8.0/24 -d 172.24.1.0/24 -j ACCEPT
-iptables -I INPUT -i tun1 -s 172.24.8.0/24 -j ACCEPT
-iptables -A FORWARD -o tun1 -s 172.24.1.0/24 -j ACCEPT</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables <span class="nt">-I</span> INPUT 1 <span class="nt">-p</span> tcp <span class="nt">--dport</span> 3377 <span class="nt">-j</span> ACCEPT
+iptables <span class="nt">-I</span> INPUT 1 <span class="nt">-p</span> udp <span class="nt">--dport</span> 3377 <span class="nt">-j</span> ACCEPT
+iptables <span class="nt">-A</span> FORWARD <span class="nt">-i</span> tun1 <span class="nt">-s</span> 10.0.1.0/24 <span class="nt">-d</span> 172.24.1.0/24 <span class="nt">-j</span> ACCEPT
+iptables <span class="nt">-A</span> FORWARD <span class="nt">-i</span> tun1 <span class="nt">-s</span> 172.24.8.0/24 <span class="nt">-d</span> 172.24.1.0/24 <span class="nt">-j</span> ACCEPT
+iptables <span class="nt">-I</span> INPUT <span class="nt">-i</span> tun1 <span class="nt">-s</span> 172.24.8.0/24 <span class="nt">-j</span> ACCEPT
+iptables <span class="nt">-A</span> FORWARD <span class="nt">-o</span> tun1 <span class="nt">-s</span> 172.24.1.0/24 <span class="nt">-j</span> ACCEPT
+</code></pre></div></div>
 
 <p>2.Openvpn客户端（内部局域网段172.24.8.0/24）：<br />
 首先/etc/config/network配置加一个interface：</p>
 
-<pre><code class="language-vim">config interface 'vpn1'
-    option proto 'none'
-    option ifname 'tun1'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config interface <span class="s1">'vpn1'</span>
+    option proto <span class="s1">'none'</span>
+    option ifname <span class="s1">'tun1'</span>
+</code></pre></div></div>
 
 <p>/etc/config/openvpn文件增加内容：</p>
 
-<pre><code class="language-vim">
-config openvpn 'vpn_client'
-        option client '1'
-        option dev 'tun1'
-        option proto 'tcp'
-        list remote '远端地址 3377'
-        option remote_cert_tls 'server'
-        option remote_random '1'
-        option resolv_retry 'infinite'
-        option persist_key '1'
-        option persist_tun '1'
-        option ca '/etc/openvpn/ca.crt'
-        option cert '/etc/openvpn/tbjj.crt'
-        option key '/etc/openvpn/tbjj.key'
-        option compress 'lzo'
-        option verb '3'
-        option enabled '1'
-        option nobind '1'
-        option auth_nocache '1'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+config openvpn <span class="s1">'vpn_client'</span>
+        option client <span class="s1">'1'</span>
+        option dev <span class="s1">'tun1'</span>
+        option proto <span class="s1">'tcp'</span>
+        <span class="k">list</span> remote <span class="s1">'远端地址 3377'</span>
+        option remote_cert_tls <span class="s1">'server'</span>
+        option remote_random <span class="s1">'1'</span>
+        option resolv_retry <span class="s1">'infinite'</span>
+        option persist_key <span class="s1">'1'</span>
+        option persist_tun <span class="s1">'1'</span>
+        option <span class="k">ca</span> <span class="s1">'/etc/openvpn/ca.crt'</span>
+        option cert <span class="s1">'/etc/openvpn/tbjj.crt'</span>
+        option <span class="nb">key</span> <span class="s1">'/etc/openvpn/tbjj.key'</span>
+        option compress <span class="s1">'lzo'</span>
+        option <span class="k">verb</span> <span class="s1">'3'</span>
+        option enabled <span class="s1">'1'</span>
+        option nobind <span class="s1">'1'</span>
+        option auth_nocache <span class="s1">'1'</span>
 
-        </code></pre>
+        
+</code></pre></div></div>
 
 <p>然后防火墙自定义规则添加：</p>
 
-<pre><code class="language-vim">iptables -I INPUT 1 -p tcp --dport 1195 -j ACCEPT
-iptables -I INPUT 1 -p udp --dport 1195 -j ACCEPT
-iptables -A FORWARD -i tun1 -s 172.24.1.0/24 -d 172.24.8.0/24 -j ACCEPT
-iptables -I INPUT -i tun1 -s 172.24.1.0/24 -j ACCEPT
-iptables -A FORWARD -i tun1 -s 10.0.1.0/24 -d 172.24.8.0/24 -j ACCEPT
-iptables -A FORWARD -o tun1 -s 172.24.8.0/24 -j ACCEPT
- </code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables <span class="p">-</span>I INPUT <span class="m">1</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">--</span>dport <span class="m">1195</span> <span class="p">-</span><span class="k">j</span> ACCEPT
+iptables <span class="p">-</span>I INPUT <span class="m">1</span> <span class="p">-</span><span class="k">p</span> udp <span class="p">--</span>dport <span class="m">1195</span> <span class="p">-</span><span class="k">j</span> ACCEPT
+iptables <span class="p">-</span>A FORWARD <span class="p">-</span><span class="k">i</span> tun1 <span class="p">-</span>s <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 172.24.8.0/</span><span class="m">24</span> <span class="p">-</span><span class="k">j</span> ACCEPT
+iptables <span class="p">-</span>I INPUT <span class="p">-</span><span class="k">i</span> tun1 <span class="p">-</span>s <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span> <span class="p">-</span><span class="k">j</span> ACCEPT
+iptables <span class="p">-</span>A FORWARD <span class="p">-</span><span class="k">i</span> tun1 <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 172.24.8.0/</span><span class="m">24</span> <span class="p">-</span><span class="k">j</span> ACCEPT
+iptables <span class="p">-</span>A FORWARD <span class="p">-</span><span class="k">o</span> tun1 <span class="p">-</span>s <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span> <span class="p">-</span><span class="k">j</span> ACCEPT
+ 
+</code></pre></div></div>
 
 <p>3.最后重启两个路由，2个局域网就可以互相访问了。</p>
 

@@ -123,9 +123,10 @@
 首先是服务器端（openwrt路由）：<br />
 /etc/config/network配置加一个interface：</p>
 
-<pre><code class="language-vim">config interface 'vpn'
-    option proto 'none'
-    option ifname 'tun0'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config interface <span class="s1">'vpn'</span>
+    option proto <span class="s1">'none'</span>
+    option ifname <span class="s1">'tun0'</span>
+</code></pre></div></div>
 
 <p>/etc/config/openvpn配置文件</p>
 
@@ -133,131 +134,133 @@
 
 <!--more-->
 
-<pre><code class="language-vim">config openvpn 'tun_test'
-        option port '3366'
-        option proto 'tcp'
-        option dev 'tun'
-        option dev 'tun0'
-        option ca '/etc/openvpn/ca.crt'
-        option cert '/etc/openvpn/server.crt'
-        option key '/etc/openvpn/server.key'
-        option dh '/etc/openvpn/dh1024.pem'
-        option server '10.8.0.0 255.255.255.0'
-        option ifconfig  '10.8.0.1 255.255.255.0'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config openvpn <span class="s1">'tun_test'</span>
+        option port <span class="s1">'3366'</span>
+        option proto <span class="s1">'tcp'</span>
+        option dev <span class="s1">'tun'</span>
+        option dev <span class="s1">'tun0'</span>
+        option <span class="k">ca</span> <span class="s1">'/etc/openvpn/ca.crt'</span>
+        option cert <span class="s1">'/etc/openvpn/server.crt'</span>
+        option <span class="nb">key</span> <span class="s1">'/etc/openvpn/server.key'</span>
+        option dh <span class="s1">'/etc/openvpn/dh1024.pem'</span>
+        option server <span class="s1">'10.8.0.0 255.255.255.0'</span>
+        option ifconfig  <span class="s1">'10.8.0.1 255.255.255.0'</span>
 
-        option cipher     'AES-256-CBC'
-        option ifconfig_pool_persist '/tmp/ipp2.txt'
-        option duplicate_cn '1'
-        option client_to_client '1'
-        option keepalive '10 120'
-        option comp_lzo 'yes'
-        option persist_key '1'
-        option persist_tun '1'
-        option status '/tmp/openvpn-status2.log'
-        option verb '3'
-        option enabled '1'
-        option topology 'subnet'
-        list push 'topology subnet'
-        list push 'dhcp-option DNS 172.24.8.1'
-        list push 'dhcp-option WINS 172.24.8.1'
-        list push 'redirect-gateway def1'
-        #list push 'route-gateway dhcp'
-        list push 'route 172.24.8.0 255.255.255.0'</code></pre>
+        option cipher     <span class="s1">'AES-256-CBC'</span>
+        option ifconfig_pool_persist <span class="s1">'/tmp/ipp2.txt'</span>
+        option duplicate_cn <span class="s1">'1'</span>
+        option client_to_client <span class="s1">'1'</span>
+        option keepalive <span class="s1">'10 120'</span>
+        option comp_lzo <span class="s1">'yes'</span>
+        option persist_key <span class="s1">'1'</span>
+        option persist_tun <span class="s1">'1'</span>
+        option status <span class="s1">'/tmp/openvpn-status2.log'</span>
+        option <span class="k">verb</span> <span class="s1">'3'</span>
+        option enabled <span class="s1">'1'</span>
+        option topology <span class="s1">'subnet'</span>
+        <span class="k">list</span> push <span class="s1">'topology subnet'</span>
+        <span class="k">list</span> push <span class="s1">'dhcp-option DNS 172.24.8.1'</span>
+        <span class="k">list</span> push <span class="s1">'dhcp-option WINS 172.24.8.1'</span>
+        <span class="k">list</span> push <span class="s1">'redirect-gateway def1'</span>
+        #<span class="k">list</span> push <span class="s1">'route-gateway dhcp'</span>
+        <span class="k">list</span> push <span class="s1">'route 172.24.8.0 255.255.255.0'</span>
+</code></pre></div></div>
 
 <p>服务器端/etc/config/firewall配置(涉及vpn的部分)</p>
 
-<pre><code class="language-vim">#这zone是在原来的lan zone上修改
-#--- Add: option masq '1' ---#
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#这zone是在原来的<span class="k">lan</span> zone上修改
+#<span class="p">---</span> Add<span class="p">:</span> option masq <span class="s1">'1'</span> <span class="p">---</span>#
 config zone
-	option name 'lan'
-	option input 'ACCEPT'
-	option output 'ACCEPT'
-	option network 'lan'
-	option forward 'DROP'
-	option masq '1'
+	option name <span class="s1">'lan'</span>
+	option <span class="nb">input</span> <span class="s1">'ACCEPT'</span>
+	option output <span class="s1">'ACCEPT'</span>
+	option network <span class="s1">'lan'</span>
+	option forward <span class="s1">'DROP'</span>
+	option masq <span class="s1">'1'</span>
 
 
 config zone
-	option name 'vpn'
-	option input 'ACCEPT'
-	option forward 'ACCEPT'
-	option output 'ACCEPT'
-	list network 'vpn'
-	list subnet '10.8.0.0/24'
-	option masq '0'
-	option mtu_fix '1'
+	option name <span class="s1">'vpn'</span>
+	option <span class="nb">input</span> <span class="s1">'ACCEPT'</span>
+	option forward <span class="s1">'ACCEPT'</span>
+	option output <span class="s1">'ACCEPT'</span>
+	<span class="k">list</span> network <span class="s1">'vpn'</span>
+	<span class="k">list</span> subnet <span class="s1">'10.8.0.0/24'</span>
+	option masq <span class="s1">'0'</span>
+	option mtu_fix <span class="s1">'1'</span>
 
 config forwarding
-	option dest 'lan'
-	option src 'vpn'
+	option dest <span class="s1">'lan'</span>
+	option <span class="k">src</span> <span class="s1">'vpn'</span>
 
 config forwarding
-	option dest 'vpn'
-	option src 'lan'
+	option dest <span class="s1">'vpn'</span>
+	option <span class="k">src</span> <span class="s1">'lan'</span>
 
 
 config rule
-	option name 'OpenVPN-Access'
-	option src 'wan'
-	option dest_port '3366'
-	option family 'ipv4'
-	option target 'ACCEPT'
-	option proto 'tcp udp'
+	option name <span class="s1">'OpenVPN-Access'</span>
+	option <span class="k">src</span> <span class="s1">'wan'</span>
+	option dest_port <span class="s1">'3366'</span>
+	option family <span class="s1">'ipv4'</span>
+	option target <span class="s1">'ACCEPT'</span>
+	option proto <span class="s1">'tcp udp'</span>
 
-#--- Once Assigned a VPN IP, Allow Inbound Traffic to LAN ---#
-# LuCI: From IP range 10.8.0.0/24 in any zone To IP range 172.24.8.0/24 
-# on this device (Accept Input)
+#<span class="p">---</span> Once Assigned <span class="k">a</span> VPN IP<span class="p">,</span> Allow Inbound Traffic <span class="k">to</span> LAN <span class="p">---</span>#
+# LuCI<span class="p">:</span> From IP <span class="nb">range</span> <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 in any zone To IP range 172.24.8.0/</span><span class="m">24</span> 
+# <span class="k">on</span> this device <span class="p">(</span>Accept Input<span class="p">)</span>
 config rule
-	option target 'ACCEPT'
-	option proto 'tcp udp'
-	option family 'ipv4'
-	option src '*'
-	option src_ip '10.8.0.0/24'
-	option dest_ip '172.24.8.0/24'
-	option name 'Allow Inbound VPN Traffic to LAN'
+	option target <span class="s1">'ACCEPT'</span>
+	option proto <span class="s1">'tcp udp'</span>
+	option family <span class="s1">'ipv4'</span>
+	option <span class="k">src</span> <span class="s1">'*'</span>
+	option src_ip <span class="s1">'10.8.0.0/24'</span>
+	option dest_ip <span class="s1">'172.24.8.0/24'</span>
+	option name <span class="s1">'Allow Inbound VPN Traffic to LAN'</span>
  
-#--- Once Assigned a VPN IP, Allow Forwarded Traffic to LAN ---#
-# LuCI: From IP range 10.8.0.0/24 in any zone To IP range 172.24.8.0/24 
-# on this device (Accept Forward)
+#<span class="p">---</span> Once Assigned <span class="k">a</span> VPN IP<span class="p">,</span> Allow Forwarded Traffic <span class="k">to</span> LAN <span class="p">---</span>#
+# LuCI<span class="p">:</span> From IP <span class="nb">range</span> <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 in any zone To IP range 172.24.8.0/</span><span class="m">24</span> 
+# <span class="k">on</span> this device <span class="p">(</span>Accept Forward<span class="p">)</span>
 config rule
-	option target 'ACCEPT'
-	option proto 'tcp udp'
-	option family 'ipv4'
-	option src '*'
-	option src_ip '10.8.0.0/24'
-	option dest '*'
-	option dest_ip '172.24.8.0/24'
-	option name 'Allow Forwarded VPN Traffic to LAN'
+	option target <span class="s1">'ACCEPT'</span>
+	option proto <span class="s1">'tcp udp'</span>
+	option family <span class="s1">'ipv4'</span>
+	option <span class="k">src</span> <span class="s1">'*'</span>
+	option src_ip <span class="s1">'10.8.0.0/24'</span>
+	option dest <span class="s1">'*'</span>
+	option dest_ip <span class="s1">'172.24.8.0/24'</span>
+	option name <span class="s1">'Allow Forwarded VPN Traffic to LAN'</span>
  
-#--- Allow Outbound ICMP Traffic from VPN ---#
-# LuCI: ICMP From IP range 10.8.0.0/24 in any zone To any host in lan 
-# (Accept Forward)
+#<span class="p">---</span> Allow Outbound ICMP Traffic from VPN <span class="p">---</span>#
+# LuCI<span class="p">:</span> ICMP From IP <span class="nb">range</span> <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span> <span class="k">in</span> any zone To any host <span class="k">in</span> <span class="k">lan</span> 
+# <span class="p">(</span>Accept Forward<span class="p">)</span>
 config rule
-	option target 'ACCEPT'
-	option proto 'icmp'
-	option src_ip '10.8.0.0/24'
-	option src '*'
-	option dest 'lan'
-	option name 'Allow Inbound ICMP Traffic from VPN to LAN'
+	option target <span class="s1">'ACCEPT'</span>
+	option proto <span class="s1">'icmp'</span>
+	option src_ip <span class="s1">'10.8.0.0/24'</span>
+	option <span class="k">src</span> <span class="s1">'*'</span>
+	option dest <span class="s1">'lan'</span>
+	option name <span class="s1">'Allow Inbound ICMP Traffic from VPN to LAN'</span>
 
-#--- Allow Outbound Ping Requests from VPN ---#
-# LuCI: ICMP with type echo-request From IP range 10.8.0.0/24 in any
-# zone To any host in wan (Accept Forward)
+#<span class="p">---</span> Allow Outbound Ping Requests from VPN <span class="p">---</span>#
+# LuCI<span class="p">:</span> ICMP with <span class="nb">type</span> echo<span class="p">-</span>request From IP <span class="nb">range</span> <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span> <span class="k">in</span> any
+# zone To any host <span class="k">in</span> wan <span class="p">(</span>Accept Forward<span class="p">)</span>
 config rule
-	option target 'ACCEPT'
-	option proto 'icmp'
-	option src '*'
-	option src_ip '10.8.0.0/24'
-	option dest 'wan'
-	option name 'Allow Outbound ICMP Echo Request (8) from VPN'
-	list icmp_type 'echo-request'
+	option target <span class="s1">'ACCEPT'</span>
+	option proto <span class="s1">'icmp'</span>
+	option <span class="k">src</span> <span class="s1">'*'</span>
+	option src_ip <span class="s1">'10.8.0.0/24'</span>
+	option dest <span class="s1">'wan'</span>
+	option name <span class="s1">'Allow Outbound ICMP Echo Request (8) from VPN'</span>
+	<span class="k">list</span> icmp_type <span class="s1">'echo-request'</span>
 
-#--- Allow forwarding from VPN to WAN ---#
+#<span class="p">---</span> Allow forwarding from VPN <span class="k">to</span> WAN <span class="p">---</span>#
 config forwarding
-	option dest 'wan'
-	option src 'vpn'
+	option dest <span class="s1">'wan'</span>
+	option <span class="k">src</span> <span class="s1">'vpn'</span>
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>自定义防火墙规则：<br />
 iptables -I INPUT 1 -p tcp –dport 1194 -j ACCEPT<br />
@@ -267,84 +270,87 @@ iptables -I INPUT 1 -p udp –dport 3366 -j ACCEPT</p>
 
 <p>安卓客户端配置文件，test.ovpn:</p>
 
-<pre><code class="language-vim">client
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>client
 dev tun
 proto tcp
-connect-retry-max 5
-connect-retry 5
+connect<span class="p">-</span>retry<span class="p">-</span><span class="nb">max</span> <span class="m">5</span>
+connect<span class="p">-</span>retry <span class="m">5</span>
 
-auth-nocache
-remote 路由的外网ip或者ddns 3366  
-resolv-retry infinite
+auth<span class="p">-</span>nocache
+remote 路由的外网ip或者ddns <span class="m">3366</span>  
+resolv<span class="p">-</span>retry infinite
 nobind
 float
-persist-key
-persist-tun
-ns-cert-type server
-comp-lzo
-verb 3
-cipher		AES-256-CBC
-mssfix		0
-tun-mtu		24000
+persist<span class="p">-</span><span class="nb">key</span>
+persist<span class="p">-</span>tun
+ns<span class="p">-</span>cert<span class="p">-</span><span class="nb">type</span> server
+<span class="k">comp</span><span class="p">-</span>lzo
+<span class="k">verb</span> <span class="m">3</span>
+cipher		AES<span class="m">-256</span><span class="p">-</span>CBC
+mssfix		<span class="m">0</span>
+tun<span class="p">-</span>mtu		<span class="m">24000</span>
 
-&lt;ca&gt;
------BEGIN CERTIFICATE-----
+<span class="p">&lt;</span><span class="k">ca</span><span class="p">&gt;</span>
+<span class="p">-----</span>BEGIN CERTIFICATE<span class="p">-----</span>
 此处省略xxx字
------END CERTIFICATE-----
-&lt;/ca&gt;
+<span class="p">-----</span>END CERTIFICATE<span class="p">-----</span>
+<span class="p">&lt;</span>/<span class="k">ca</span><span class="p">&gt;</span>
 
-&lt;cert&gt;
------BEGIN CERTIFICATE-----
+<span class="p">&lt;</span>cert<span class="p">&gt;</span>
+<span class="p">-----</span>BEGIN CERTIFICATE<span class="p">-----</span>
 此处省略xxx字
------END CERTIFICATE-----
-&lt;/cert&gt;
+<span class="p">-----</span>END CERTIFICATE<span class="p">-----</span>
+<span class="p">&lt;</span>/cert<span class="p">&gt;</span>
 
-&lt;key&gt;
------BEGIN PRIVATE KEY-----
+<span class="p">&lt;</span><span class="nb">key</span><span class="p">&gt;</span>
+<span class="p">-----</span>BEGIN PRIVATE KEY<span class="p">-----</span>
 此处省略xxx字
------END PRIVATE KEY-----
-&lt;/key&gt;
-</code></pre>
+<span class="p">-----</span>END PRIVATE KEY<span class="p">-----</span>
+<span class="p">&lt;</span>/<span class="nb">key</span><span class="p">&gt;</span>
+
+</code></pre></div></div>
 
 <p>如果openvpn服务器和chinadns、ss客户端部署在一个国内路由器上，会发现10.8.0.0/24网段虽然能够获得正确的dns，但是无法访问谷歌之类的网站，所以需要手动进行配置，编写 openvpn.firewall文件：</p>
 
-<pre><code class="language-vim">#!/bin/sh
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
 
-#Date:     2016-05-18
+#Date<span class="p">:</span>     <span class="m">2016-05-18</span>
 
-#create a new chain named SHADOWSOCKSXX
-iptables -t nat -N SHADOWSOCKSXX
+#create <span class="k">a</span> <span class="k">new</span> chain named SHADOWSOCKSXX
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>N SHADOWSOCKSXX
 
 # Ignore your shadowsocks server's addresses
-# It's very IMPORTANT, just be careful.
+# It's very IMPORTANT<span class="p">,</span> just be careful<span class="p">.</span>
 
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d vps的ip地址 -p tcp -j RETURN
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span> <span class="p">-</span><span class="k">d</span> vps的ip地址 <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
 
-# Ignore LANs IP address,redirect to adbyby
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d 0.0.0.0/8 -p tcp -j RETURN
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d 10.0.0.0/8 -p tcp -j RETURN
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d 127.0.0.0/8 -p tcp -j RETURN
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d 169.254.0.0/16 -p tcp -j RETURN
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d 172.16.0.0/12 -p tcp -j RETURN
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d 192.168.0.0/16 -p tcp -j RETURN
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d 224.0.0.0/4 -p tcp -j RETURN
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d 240.0.0.0/4 -p tcp -j RETURN
+# Ignore LANs IP address<span class="p">,</span>redirect <span class="k">to</span> adbyby
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 0.0.0.0/</span><span class="m">8</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 10.0.0.0/</span><span class="m">8</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 127.0.0.0/</span><span class="m">8</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 169.254.0.0/</span><span class="m">16</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 172.16.0.0/</span><span class="m">12</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 192.168.0.0/</span><span class="m">16</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 224.0.0.0/</span><span class="m">4</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/24 -d 240.0.0.0/</span><span class="m">4</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
  
 # Ignore China IP address
-for white_ip in `cat /etc/chinadns_chnroute.txt`;
-do
-    iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -d "${white_ip}" -p tcp -j RETURN
+<span class="k">for</span> white_ip <span class="k">in</span> `<span class="k">cat</span> <span class="sr">/etc/</span>chinadns_chnroute<span class="p">.</span>txt`;
+<span class="k">do</span>
+    iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span> <span class="p">-</span><span class="k">d</span> <span class="s2">"${white_ip}"</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> RETURN
 
 done
 
-# Anything else should be redirected to shadowsocks's local port
-iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -p tcp -j DNAT --to-destination 172.24.8.1:1180
+# Anything <span class="k">else</span> should be redirected <span class="k">to</span> shadowsocks's local port
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A SHADOWSOCKSXX <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> DNAT <span class="p">--</span><span class="k">to</span><span class="p">-</span>destination <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">1</span><span class="p">:</span><span class="m">1180</span>
 # Apply the rules
-iptables -t nat -A PREROUTING -s 10.8.0.0/24 -p tcp -j SHADOWSOCKSXX</code></pre>
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A PREROUTING <span class="p">-</span>s <span class="m">10</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span> <span class="p">-</span><span class="k">p</span> tcp <span class="p">-</span><span class="k">j</span> SHADOWSOCKSXX
+</code></pre></div></div>
 
 <p>然后：</p>
 
-<pre><code class="language-sh">chmod +x openvpn.firewall</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x openvpn.firewall
+</code></pre></div></div>
 
 <p>每次启动的时候运行就是了。。。</p>
 

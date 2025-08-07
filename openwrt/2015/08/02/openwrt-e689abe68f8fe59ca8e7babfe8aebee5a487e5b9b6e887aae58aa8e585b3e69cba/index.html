@@ -122,63 +122,70 @@
 
 <p>1.该脚本在局域网没有在线设备时关闭路由器</p>
 
-<pre><code class="language-sh">vi autoShutDownNoDevs.sh </code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi autoShutDownNoDevs.sh 
+</code></pre></div></div>
 
-<pre><code class="language-vim">#!/bin/sh
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
 
-mon() {
-while [ "1" ];
-do
- sleep 240
- cc=`cat /proc/net/arp | grep 0x2`
- if [ -z "$cc" ];then
-     if [ -f /tmp/noshut ];then
-        echo ' Shut Down aborted! '
-     else
-        kill -USR1 1
+mon<span class="p">()</span> <span class="p">{</span>
+<span class="k">while</span> <span class="p">[</span> <span class="s2">"1"</span> <span class="p">]</span>;
+<span class="k">do</span>
+ <span class="k">sleep</span> <span class="m">240</span>
+ <span class="k">cc</span><span class="p">=</span>`<span class="k">cat</span> <span class="sr">/proc/</span>net/arp <span class="p">|</span> <span class="k">grep</span> <span class="m">0</span>x2`
+ <span class="k">if</span> <span class="p">[</span> <span class="p">-</span>z <span class="s2">"$cc"</span> <span class="p">]</span>;then
+     <span class="k">if</span> <span class="p">[</span> <span class="p">-</span><span class="k">f</span> <span class="sr">/tmp/</span>noshut <span class="p">]</span>;then
+        echo <span class="s1">' Shut Down aborted! '</span>
+     <span class="k">else</span>
+        kill <span class="p">-</span>USR1 <span class="m">1</span>
      fi
  fi
- sleep 60
+ <span class="k">sleep</span> <span class="m">60</span>
 done
-}
+<span class="p">}</span>
 
-mon &amp;</code></pre>
+mon &amp;
+</code></pre></div></div>
 
-<pre><code class="language-sh">chmod +x autoShutDownNoDevs.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x autoShutDownNoDevs.sh
+</code></pre></div></div>
 
 <p>2.该脚本在局域网某两台固定IP的PC离线时关闭路由器（防止未关手机wifi时路由器无法关闭）</p>
 
-<pre><code class="language-sh">vi autoShutDownNoPCs.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi autoShutDownNoPCs.sh
+</code></pre></div></div>
 
-<pre><code class="language-vim">#!/bin/sh
-sleep 300
-ping -c 1 172.24.1.150 &gt; /dev/null
-ret=$?
-if [ $ret -eq 0 ]
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
+<span class="k">sleep</span> <span class="m">300</span>
+ping <span class="p">-</span><span class="k">c</span> <span class="m">1</span> <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">150</span> <span class="p">&gt;</span> <span class="sr">/dev/</span>null
+<span class="k">ret</span><span class="p">=</span>$?
+<span class="k">if</span> <span class="p">[</span> $<span class="k">ret</span> <span class="p">-</span>eq <span class="m">0</span> <span class="p">]</span>
 then
-echo ' Shut Down aborted! '
-else
-ping -c 1 172.24.1.155 &gt;/dev/null
-res=$?
-if [ $res -eq 0 ]
+echo <span class="s1">' Shut Down aborted! '</span>
+<span class="k">else</span>
+ping <span class="p">-</span><span class="k">c</span> <span class="m">1</span> <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">155</span> <span class="p">&gt;</span><span class="sr">/dev/</span>null
+<span class="k">res</span><span class="p">=</span>$?
+<span class="k">if</span> <span class="p">[</span> $<span class="k">res</span> <span class="p">-</span>eq <span class="m">0</span> <span class="p">]</span>
 then
-echo ' Shut Down aborted! '
-else
-if [ -f /tmp/noshut ]
+echo <span class="s1">' Shut Down aborted! '</span>
+<span class="k">else</span>
+<span class="k">if</span> <span class="p">[</span> <span class="p">-</span><span class="k">f</span> <span class="sr">/tmp/</span>noshut <span class="p">]</span>
 then
-echo ' Shut Down aborted! '
-else
-kill -USR1 1
+echo <span class="s1">' Shut Down aborted! '</span>
+<span class="k">else</span>
+kill <span class="p">-</span>USR1 <span class="m">1</span>
 fi
 fi
 fi
-</code></pre>
 
-<pre><code class="language-sh">chmod +x autoShutDownNoPCs.sh</code></pre>
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x autoShutDownNoPCs.sh
+</code></pre></div></div>
 
 <p>定时任务</p>
 
-<pre><code class="language-vim">*/5 22-4 * * * /root/autoShutDownNoPCs.sh</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*<span class="sr">/5 22-4 * * * /</span>root/autoShutDownNoPCs<span class="p">.</span><span class="k">sh</span>
+</code></pre></div></div>
 
 <p>参考资料：</p>
 <ol>

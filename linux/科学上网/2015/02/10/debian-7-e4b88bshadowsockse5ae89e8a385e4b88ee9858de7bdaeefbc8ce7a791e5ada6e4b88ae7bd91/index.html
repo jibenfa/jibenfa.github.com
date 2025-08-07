@@ -127,46 +127,53 @@
 
 <p>2.安装deb包</p>
 
-<pre><code class="language-perl">dpkg -i libssl0.9.8_0.9.8o-4squeeze14_amd64.deb</code></pre>
+<div class="language-perl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">dpkg</span> <span class="o">-</span><span class="nv">i</span> <span class="nv">libssl0</span><span class="mf">.9.8_0.9.8</span><span class="nv">o</span><span class="o">-</span><span class="mi">4</span><span class="nv">squeeze14_amd64</span><span class="o">.</span><span class="nv">deb</span>
+</code></pre></div></div>
 
 <p>3.追加软件源<br />
 <!--more--></p>
 
-<pre><code class="language-perl">vi /etc/apt/sources.list</code></pre>
+<div class="language-perl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">vi</span> <span class="sr">/etc/ap</span><span class="nv">t</span><span class="o">/</span><span class="nv">sources</span><span class="o">.</span><span class="nv">list</span>
+</code></pre></div></div>
 
 <p>在后面添加如下源</p>
 
-<pre><code class="language-sh">deb http://shadowsocks.org/debian squeeze main</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>deb http://shadowsocks.org/debian squeeze main
+</code></pre></div></div>
 
 <p>然后更新源并安装</p>
 
-<pre><code class="language-sh">apt-get update
-apt-get install shadowsocks
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get update
+apt-get <span class="nb">install </span>shadowsocks
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>4.配置shadowsocks</p>
 
-<pre><code class="language-sh">vi /etc/shadowsocks/config.json
-{
-          "server":"vps的ip",
-          "server_port":8388,
-          "local_port":1080,
-          "password":"ccc", 
-          "timeout":60,
-          "method":"aes-256-cfb" #加密方式，默认table，推荐aes-256-cfb
-}</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/shadowsocks/config.json
+<span class="o">{</span>
+          <span class="s2">"server"</span>:<span class="s2">"vps的ip"</span>,
+          <span class="s2">"server_port"</span>:8388,
+          <span class="s2">"local_port"</span>:1080,
+          <span class="s2">"password"</span>:<span class="s2">"ccc"</span>, 
+          <span class="s2">"timeout"</span>:60,
+          <span class="s2">"method"</span>:<span class="s2">"aes-256-cfb"</span> <span class="c">#加密方式，默认table，推荐aes-256-cfb</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
 <p>如果想用除table以外的加密方式，需要额外安装M2Crypto</p>
 
-<pre><code class="language-sh">apt-get install python-m2crypto</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>python-m2crypto
+</code></pre></div></div>
 
 <p>5、重启shadowsocks服务。</p>
 
-<pre><code class="language-sh">/etc/init.d/shadowsocks stop
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/init.d/shadowsocks stop
 /etc/init.d/shadowsocks start
 
-update-rc.d shadowsocks defaults</code></pre>
+update-rc.d shadowsocks defaults
+</code></pre></div></div>
 
 <p>使用shadowsocks<br />
 windows环境下需要下载客户端：http://sourceforge.net/projects/shadowsocksgui/files/dist/ 填入之前配置的参数，保存运行即可。 新建浏览器代理为如下：</p>
@@ -181,46 +188,52 @@ windows环境下需要下载客户端：http://sourceforge.net/projects/shadowso
 新建一个低权限用户shadowsocksuser，（无密码，无法登陆，无home dir）</li>
 </ol>
 
-<pre><code class="language-sh">adduser --system --disabled-password --disabled-login --no-create-home shadowsocksuser</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adduser <span class="nt">--system</span> <span class="nt">--disabled-password</span> <span class="nt">--disabled-login</span> <span class="nt">--no-create-home</span> shadowsocksuser
+</code></pre></div></div>
 
 <p>修改 /etc/default/shadowsocks</p>
 
-<pre><code class="language-vim">USER=shadowsocksuser
-GROUP=nogroup</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>USER<span class="p">=</span>shadowsocksuser
+GROUP<span class="p">=</span>nogroup
+</code></pre></div></div>
 
 <p>让非root用户的shadowsocks运行在1024以下端口，适用于debian 7</p>
 
-<pre><code class="language-sh">apt-get install libcap2-bin
-setcap 'cap_net_bind_service=+ep' /usr/bin/ss-server
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>libcap2-bin
+setcap <span class="s1">'cap_net_bind_service=+ep'</span> /usr/bin/ss-server
+
+</code></pre></div></div>
 
 <p>修改 /etc/init.d/shadowsocks</p>
 
-<pre><code class="language-sh">vi /etc/init.d/shadowsocks</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/init.d/shadowsocks
+</code></pre></div></div>
 
 <p>在 ulimit -n ${MAXFD} 下直接加入</p>
 
-<pre><code class="language-vim">ulimit -n 51200
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ulimit <span class="p">-</span><span class="k">n</span> <span class="m">51200</span>
+
+</code></pre></div></div>
 
 <p>把 -c “$CONFFILE” -a “$USER” -u -f $PIDFILE $DAEMON_ARGS \ 修改为</p>
 
-<pre><code class="language-vim">-c "$CONFFILE" -a "$USER" -u -f $PIDFILE $DAEMON_ARGS --forbidden-ip 127.0.0.1,::1 \</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">-</span><span class="k">c</span> <span class="s2">"$CONFFILE"</span> <span class="p">-</span><span class="k">a</span> <span class="s2">"$USER"</span> <span class="p">-</span><span class="k">u</span> <span class="p">-</span><span class="k">f</span> $PIDFILE $DAEMON_ARGS <span class="p">--</span>forbidden<span class="p">-</span>ip <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span><span class="p">,::</span><span class="m">1</span> \
+</code></pre></div></div>
 
 <p>7.多用户支持，拷贝多份/etc/shadowsocks/config.json就是多个</p>
 
-<pre><code class="language-bash">multiuserSS_sh="/etc/init.d/multiuserShadowssocks.sh"
-if [ -f $multiuserSS_sh ]; then
-cp $multiuserSS_sh $multiuserSS_sh.bak
-fi
-touch $multiuserSS_sh
-chmod +x $multiuserSS_sh
-echo "
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">multiuserSS_sh</span><span class="o">=</span><span class="s2">"/etc/init.d/multiuserShadowssocks.sh"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$multiuserSS_sh</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+</span><span class="nb">cp</span> <span class="nv">$multiuserSS_sh</span> <span class="nv">$multiuserSS_sh</span>.bak
+<span class="k">fi
+</span><span class="nb">touch</span> <span class="nv">$multiuserSS_sh</span>
+<span class="nb">chmod</span> +x <span class="nv">$multiuserSS_sh</span>
+<span class="nb">echo</span> <span class="s2">"
 #!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          multiuserShadowsocks.sh
-# Required-Start:    $local_fs $remote_fs $network $syslog
-# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Required-Start:    </span><span class="nv">$local_fs</span><span class="s2"> </span><span class="nv">$remote_fs</span><span class="s2"> </span><span class="nv">$network</span><span class="s2"> </span><span class="nv">$syslog</span><span class="s2">
+# Required-Stop:     </span><span class="nv">$local_fs</span><span class="s2"> </span><span class="nv">$remote_fs</span><span class="s2"> </span><span class="nv">$network</span><span class="s2"> </span><span class="nv">$syslog</span><span class="s2">
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: multiuserSS
@@ -229,37 +242,41 @@ echo "
 /usr/bin/ss-server -c /etc/shadowsocks/config1.json -a shadowsocksuser -u -f /var/run/shadowsocks/shadowsocks1.pid --forbidden-ip 127.0.0.1,::1
 
 /usr/bin/ss-server -c /etc/shadowsocks/config2.json -a shadowsocksuser -u -f /var/run/shadowsocks/shadowsocks2.pid --forbidden-ip 127.0.0.1,::1
-" &gt; $multiuserSS_sh</code></pre>
+"</span> <span class="o">&gt;</span> <span class="nv">$multiuserSS_sh</span>
+</code></pre></div></div>
 
 <p>7.最后</p>
 
-<pre><code class="language-sh">update-rc.d multiuserShadowssocks.sh defaults</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>update-rc.d multiuserShadowssocks.sh defaults
+</code></pre></div></div>
 
 <p>8.补充python版的shadowsock安装：<br />
 查看版本：</p>
 
-<pre><code class="language-sh">python --version</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">--version</span>
+</code></pre></div></div>
 
 <p>官网说2.6或2.7</p>
 
 <p>安装：</p>
 
-<pre><code class="language-sh">pip install shadowsocks</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>shadowsocks
+</code></pre></div></div>
 
 <p>编辑：</p>
 
-<pre><code class="language-bash">multiuserSS_sh="/etc/init.d/multiuserShadowssocks.sh"
-if [ -f $multiuserSS_sh ]; then
-cp $multiuserSS_sh $multiuserSS_sh.bak
-fi
-touch $multiuserSS_sh
-chmod +x $multiuserSS_sh
-echo "
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">multiuserSS_sh</span><span class="o">=</span><span class="s2">"/etc/init.d/multiuserShadowssocks.sh"</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$multiuserSS_sh</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+</span><span class="nb">cp</span> <span class="nv">$multiuserSS_sh</span> <span class="nv">$multiuserSS_sh</span>.bak
+<span class="k">fi
+</span><span class="nb">touch</span> <span class="nv">$multiuserSS_sh</span>
+<span class="nb">chmod</span> +x <span class="nv">$multiuserSS_sh</span>
+<span class="nb">echo</span> <span class="s2">"
 #!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          multiuserShadowsocks.sh
-# Required-Start:    $local_fs $remote_fs $network $syslog
-# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Required-Start:    </span><span class="nv">$local_fs</span><span class="s2"> </span><span class="nv">$remote_fs</span><span class="s2"> </span><span class="nv">$network</span><span class="s2"> </span><span class="nv">$syslog</span><span class="s2">
+# Required-Stop:     </span><span class="nv">$local_fs</span><span class="s2"> </span><span class="nv">$remote_fs</span><span class="s2"> </span><span class="nv">$network</span><span class="s2"> </span><span class="nv">$syslog</span><span class="s2">
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: multiuserSS
@@ -268,7 +285,8 @@ echo "
 /usr/local/bin/ssserver --user shadowsocksuser -c /etc/shadowsocks/config1.json --forbidden-ip 127.0.0.1,::1 -d start
 
 /usr/local/bin/ssserver --user shadowsocksuser -c /etc/shadowsocks/config2.json --forbidden-ip 127.0.0.1,::1 -d start
-" &gt; $multiuserSS_sh</code></pre>
+"</span> <span class="o">&gt;</span> <span class="nv">$multiuserSS_sh</span>
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

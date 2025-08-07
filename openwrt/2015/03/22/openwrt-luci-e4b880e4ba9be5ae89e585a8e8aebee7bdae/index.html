@@ -120,35 +120,40 @@
 		
 		<p>1.关闭wan远程的http(s)登陆uhttpd的Luci的web管理界面</p>
 
-<pre><code class="language-sh">vi /etc/config/uhttpd</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/config/uhttpd
+</code></pre></div></div>
 
 <p>修改为：</p>
 
-<pre><code class="language-vim">config uhttpd 'main'
-        list listen_http '192.168.1.1:80'
-        #list listen_http '[::]:80'
-        list listen_https '192.168.1.1:443'
-        #list listen_https '[::]:443'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config uhttpd <span class="s1">'main'</span>
+        <span class="k">list</span> listen_http <span class="s1">'192.168.1.1:80'</span>
+        #<span class="k">list</span> listen_http <span class="s1">'[::]:80'</span>
+        <span class="k">list</span> listen_https <span class="s1">'192.168.1.1:443'</span>
+        #<span class="k">list</span> listen_https <span class="s1">'[::]:443'</span>
+</code></pre></div></div>
 
 <p>2.启用lan本地的https登陆uhttpd的Luci的web管理界面</p>
 
-<pre><code class="language-sh">opkg install openssl-util luci-ssl
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg <span class="nb">install </span>openssl-util luci-ssl
 
-vi /etc/config/uhttpd</code></pre>
+vi /etc/config/uhttpd
+</code></pre></div></div>
 
 <p>默认应该是：</p>
 
-<pre><code class="language-vim">…
-option cert '/etc/uhttpd.crt'
-option key '/etc/uhttpd.key'
-…</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>…
+option cert <span class="s1">'/etc/uhttpd.crt'</span>
+option <span class="nb">key</span> <span class="s1">'/etc/uhttpd.key'</span>
+…
+</code></pre></div></div>
 
 <p>生成对应的key和证书文件，其中第二步随便填。。。10年证书。</p>
 
-<pre><code class="language-sh">cd /etc
-openssl genrsa 1024 &gt; uhttpd.key
-openssl req -new -key uhttpd.key &gt; uhttpd.csr
-openssl req -x509 -days 3650 -key uhttpd.key -in uhttpd.csr &gt; uhttpd.crt</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /etc
+openssl genrsa 1024 <span class="o">&gt;</span> uhttpd.key
+openssl req <span class="nt">-new</span> <span class="nt">-key</span> uhttpd.key <span class="o">&gt;</span> uhttpd.csr
+openssl req <span class="nt">-x509</span> <span class="nt">-days</span> 3650 <span class="nt">-key</span> uhttpd.key <span class="nt">-in</span> uhttpd.csr <span class="o">&gt;</span> uhttpd.crt
+</code></pre></div></div>
 
 <p>最后重启服务：<br />
 /etc/init.d/uhttpd restart<br />

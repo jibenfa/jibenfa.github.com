@@ -122,43 +122,46 @@
 
 <p>例如在/root/wrt1900ac/packages下：</p>
 
-<pre><code class="language-sh">vi downloadpackages.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi downloadpackages.sh
+</code></pre></div></div>
 
-<pre><code class="language-vim">#!/bin/sh
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
 
-mkdir /root/wrt1900ac/packages/base
-cd /root/wrt1900ac/packages/base
-wget  http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/base/
-wget -i index.html -F -B http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/base/
+<span class="nb">mkdir</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>base
+<span class="k">cd</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>base
+wget  http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>base/
+wget <span class="p">-</span><span class="k">i</span> <span class="nb">index</span><span class="p">.</span>html <span class="p">-</span>F <span class="p">-</span>B http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>base/
 
-mkdir /root/wrt1900ac/packages/luci
-cd /root/wrt1900ac/packages/luci
-wget  http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/luci/
-wget -i index.html -F -B http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/luci/
+<span class="nb">mkdir</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>luci
+<span class="k">cd</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>luci
+wget  http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>luci/
+wget <span class="p">-</span><span class="k">i</span> <span class="nb">index</span><span class="p">.</span>html <span class="p">-</span>F <span class="p">-</span>B http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>luci/
 
-mkdir /root/wrt1900ac/packages/management
-cd /root/wrt1900ac/packages/management
-wget  http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/management/
-wget -i index.html -F -B http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/management/
+<span class="nb">mkdir</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>management
+<span class="k">cd</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>management
+wget  http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>management/
+wget <span class="p">-</span><span class="k">i</span> <span class="nb">index</span><span class="p">.</span>html <span class="p">-</span>F <span class="p">-</span>B http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>management/
 
-mkdir /root/wrt1900ac/packages/packages
-cd /root/wrt1900ac/packages/packages
-wget  http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/packages/
-wget -i index.html -F -B http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/packages/
+<span class="nb">mkdir</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>packages
+<span class="k">cd</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>packages
+wget  http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>packages/
+wget <span class="p">-</span><span class="k">i</span> <span class="nb">index</span><span class="p">.</span>html <span class="p">-</span>F <span class="p">-</span>B http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>packages/
 
-mkdir /root/wrt1900ac/packages/routing
-cd /root/wrt1900ac/packages/routing
-wget  http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/routing/
-wget -i index.html -F -B http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/routing/
+<span class="nb">mkdir</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>routing
+<span class="k">cd</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>routing
+wget  http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>routing/
+wget <span class="p">-</span><span class="k">i</span> <span class="nb">index</span><span class="p">.</span>html <span class="p">-</span>F <span class="p">-</span>B http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>routing/
 
-mkdir /root/wrt1900ac/packages/telephony
-cd /root/wrt1900ac/packages/telephony
-wget http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/telephony/
-wget -i index.html -F -B http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/telephony/
+<span class="nb">mkdir</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>telephony
+<span class="k">cd</span> <span class="sr">/root/</span>wrt1900ac<span class="sr">/packages/</span>telephony
+wget http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>telephony/
+wget <span class="p">-</span><span class="k">i</span> <span class="nb">index</span><span class="p">.</span>html <span class="p">-</span>F <span class="p">-</span>B http<span class="p">:</span><span class="sr">//</span>downloads<span class="p">.</span>openwrt<span class="p">.</span>org<span class="sr">/snapshots/</span>trunk<span class="sr">/mvebu/</span>generic<span class="sr">/packages/</span>telephony/
 
-</code></pre>
 
-<pre><code class="language-sh">chmod +x downloadpackages.sh</code></pre>
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x downloadpackages.sh
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

@@ -130,30 +130,33 @@ StrongSwan是一个完整的在Linux的 2.6和3.x内核下实现的的IPsec，�
 
 <h1 id="1卸载openswan删除etcinitdipsec卸载ipsec-service">1.卸载openswan，删除/etc/init.d/ipsec，卸载ipsec service</h1>
 
-<pre><code class="language-sh">apt-get remove openswan
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get remove openswan
 service ipsec stop
-update-rc.d -f ipsec remove
-rm /etc/init.d/ipsec</code></pre>
+update-rc.d <span class="nt">-f</span> ipsec remove
+<span class="nb">rm</span> /etc/init.d/ipsec
+</code></pre></div></div>
 
 <h1 id="2下载编译安装strongswan">2.下载编译安装strongswan</h1>
 
 <!--more-->
 
-<pre><code class="language-sh">apt-get update
-apt-get install build-essential     #编译环境
-aptitude install libgmp3-dev libssl-dev pkg-config libpcsclite-dev libpam0g-dev     #编译所需要的软件
-mkdir tmp
-cd tmp
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get update
+apt-get <span class="nb">install </span>build-essential     <span class="c">#编译环境</span>
+aptitude <span class="nb">install </span>libgmp3-dev libssl-dev pkg-config libpcsclite-dev libpam0g-dev     <span class="c">#编译所需要的软件</span>
+<span class="nb">mkdir </span>tmp
+<span class="nb">cd </span>tmp
 wget http://download.strongswan.org/strongswan.tar.gz
-tar zxvf strongswan.tar.gz
-cd strongswan-5.2.2
-./configure --prefix=/usr --sysconfdir=/etc --enable-cisco-quirks --enable-openssl --enable-nat-transport --disable-mysql --disable-ldap --disable-static --enable-shared --enable-md4 --enable-eap-mschapv2 --enable-eap-aka --enable-eap-aka-3gpp2 --enable-eap-gtc --enable-eap-identity --enable-eap-md5 --enable-eap-peap --enable-eap-radius --enable-eap-sim --enable-eap-sim-file --enable-eap-sim-pcsc --enable-eap-simaka-pseudonym --enable-eap-simaka-reauth --enable-eap-simaka-sql --enable-eap-tls --enable-eap-tnc --enable-eap-ttls
-apt-get install sysv-rc-conf</code></pre>
+<span class="nb">tar </span>zxvf strongswan.tar.gz
+<span class="nb">cd </span>strongswan-5.2.2
+./configure <span class="nt">--prefix</span><span class="o">=</span>/usr <span class="nt">--sysconfdir</span><span class="o">=</span>/etc <span class="nt">--enable-cisco-quirks</span> <span class="nt">--enable-openssl</span> <span class="nt">--enable-nat-transport</span> <span class="nt">--disable-mysql</span> <span class="nt">--disable-ldap</span> <span class="nt">--disable-static</span> <span class="nt">--enable-shared</span> <span class="nt">--enable-md4</span> <span class="nt">--enable-eap-mschapv2</span> <span class="nt">--enable-eap-aka</span> <span class="nt">--enable-eap-aka-3gpp2</span> <span class="nt">--enable-eap-gtc</span> <span class="nt">--enable-eap-identity</span> <span class="nt">--enable-eap-md5</span> <span class="nt">--enable-eap-peap</span> <span class="nt">--enable-eap-radius</span> <span class="nt">--enable-eap-sim</span> <span class="nt">--enable-eap-sim-file</span> <span class="nt">--enable-eap-sim-pcsc</span> <span class="nt">--enable-eap-simaka-pseudonym</span> <span class="nt">--enable-eap-simaka-reauth</span> <span class="nt">--enable-eap-simaka-sql</span> <span class="nt">--enable-eap-tls</span> <span class="nt">--enable-eap-tnc</span> <span class="nt">--enable-eap-ttls</span>
+apt-get <span class="nb">install </span>sysv-rc-conf
+</code></pre></div></div>
 
 <p>然后编译安装，时间会比较长。。</p>
 
-<pre><code class="language-sh">make
-make install</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make
+make <span class="nb">install</span>
+</code></pre></div></div>
 
 <h1 id="3编辑ipsec配置文件ipsecconf和ipsecsecrets和strongswanconf">3.编辑ipsec配置文件ipsec.conf和ipsec.secrets和strongswan.conf</h1>
 
@@ -171,147 +174,155 @@ make install</code></pre>
 
 <p>注意：每个参数前面都是tab，不是空格，否则会报错，这也是开源软件的bug么。。。</p>
 
-<pre><code class="language-sh">vi /etc/ipsec.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/ipsec.conf
+</code></pre></div></div>
 
-<pre><code class="language-vim">config setup
-	uniqueids=never 
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config setup
+	uniqueids<span class="p">=</span>never 
 	#上面这个表示允许一个id多个登陆
 conn iOS_cert
-	keyexchange=ikev1
-	# strongswan version &gt;= 5.0.2, compatible with iOS 6.0,6.0.1
-	fragmentation=yes
-	left=%defaultroute
-	leftauth=pubkey
-	leftsubnet=0.0.0.0/0
-	leftcert=server.cert.pem
-	right=%any
-	rightauth=pubkey
-	rightauth2=xauth
-	rightsourceip=10.1.2.0/24
-	rightcert=client.cert.pem
-	auto=add
+	keyexchange<span class="p">=</span>ikev1
+	# strongswan <span class="k">version</span> <span class="p">&gt;=</span> <span class="m">5</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">2</span><span class="p">,</span> <span class="nb">compatible</span> with iOS <span class="m">6</span><span class="p">.</span><span class="m">0</span><span class="p">,</span><span class="m">6</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>
+	fragmentation<span class="p">=</span>yes
+	<span class="k">left</span><span class="p">=</span>%defaultroute
+	leftauth<span class="p">=</span>pubkey
+	leftsubnet<span class="p">=</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">0</span>
+	leftcert<span class="p">=</span>server<span class="p">.</span>cert<span class="p">.</span>pem
+	<span class="k">right</span><span class="p">=</span>%any
+	rightauth<span class="p">=</span>pubkey
+	rightauth2<span class="p">=</span>xauth
+	rightsourceip<span class="p">=</span><span class="m">10</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">2</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span>
+	rightcert<span class="p">=</span>client<span class="p">.</span>cert<span class="p">.</span>pem
+	auto<span class="p">=</span><span class="nb">add</span>
 
-# also supports iOS PSK and Shrew on Windows
+# also supports iOS PSK <span class="nb">and</span> Shrew <span class="k">on</span> Windows
 conn android_xauth_psk
-	keyexchange=ikev1
-	left=%defaultroute
-	leftauth=psk
-	leftsubnet=0.0.0.0/0
-	right=%any
-	rightauth=psk
-	rightauth2=xauth
-	rightsourceip=10.1.2.0/24
-	auto=add
+	keyexchange<span class="p">=</span>ikev1
+	<span class="k">left</span><span class="p">=</span>%defaultroute
+	leftauth<span class="p">=</span>psk
+	leftsubnet<span class="p">=</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">0</span>
+	<span class="k">right</span><span class="p">=</span>%any
+	rightauth<span class="p">=</span>psk
+	rightauth2<span class="p">=</span>xauth
+	rightsourceip<span class="p">=</span><span class="m">10</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">2</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span>
+	auto<span class="p">=</span><span class="nb">add</span>
 
-# compatible with "strongSwan VPN Client" for Android 4.0+
-# and Windows 7 cert mode.
-conn networkmanager-strongswan
-	keyexchange=ikev2
-	left=%defaultroute
-	leftauth=pubkey
-	leftsubnet=0.0.0.0/0
-	leftcert=server.cert.pem
-	right=%any
-	rightauth=pubkey
-	rightsourceip=10.1.2.0/24
-	rightcert=client.cert.pem
-	auto=add
+# <span class="nb">compatible</span> with <span class="s2">"strongSwan VPN Client"</span> <span class="k">for</span> Android <span class="m">4</span><span class="p">.</span><span class="m">0</span><span class="p">+</span>
+# <span class="nb">and</span> Windows <span class="m">7</span> cert <span class="k">mode</span><span class="p">.</span>
+conn networkmanager<span class="p">-</span>strongswan
+	keyexchange<span class="p">=</span>ikev2
+	<span class="k">left</span><span class="p">=</span>%defaultroute
+	leftauth<span class="p">=</span>pubkey
+	leftsubnet<span class="p">=</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">0</span>
+	leftcert<span class="p">=</span>server<span class="p">.</span>cert<span class="p">.</span>pem
+	<span class="k">right</span><span class="p">=</span>%any
+	rightauth<span class="p">=</span>pubkey
+	rightsourceip<span class="p">=</span><span class="m">10</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">2</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span>
+	rightcert<span class="p">=</span>client<span class="p">.</span>cert<span class="p">.</span>pem
+	auto<span class="p">=</span><span class="nb">add</span>
 
-#Windows 7 cert+eap-mschapv2 mode. Not Completely Safe.
+#Windows <span class="m">7</span> cert<span class="p">+</span>eap<span class="p">-</span>mschapv2 <span class="k">mode</span><span class="p">.</span> Not Completely Safe<span class="p">.</span>
 conn windows7
-	keyexchange=ikev2
-	ike=aes256-sha1-modp1024! 
-	rekey=no
-	left=%defaultroute
-	leftauth=pubkey
-	leftsubnet=0.0.0.0/0
-	leftcert=server.cert.pem   #多个证书用逗号隔开
-	right=%any
-	rightauth=eap-mschapv2
-	rightsourceip=10.1.2.0/24
-	rightsendcert=never
-	eap_identity=%any
-	auto=add
+	keyexchange<span class="p">=</span>ikev2
+	ike<span class="p">=</span>aes256<span class="p">-</span>sha1<span class="p">-</span>modp1024<span class="p">!</span> 
+	rekey<span class="p">=</span>no
+	<span class="k">left</span><span class="p">=</span>%defaultroute
+	leftauth<span class="p">=</span>pubkey
+	leftsubnet<span class="p">=</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">0</span>
+	leftcert<span class="p">=</span>server<span class="p">.</span>cert<span class="p">.</span>pem   #多个证书用逗号隔开
+	<span class="k">right</span><span class="p">=</span>%any
+	rightauth<span class="p">=</span>eap<span class="p">-</span>mschapv2
+	rightsourceip<span class="p">=</span><span class="m">10</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">2</span><span class="p">.</span><span class="m">0</span>/<span class="m">24</span>
+	rightsendcert<span class="p">=</span>never
+	eap_identity<span class="p">=</span>%any
+	auto<span class="p">=</span><span class="nb">add</span>
 
-#compatible with xl2tp	
-conn L2TP-PSK-NAT
-	rightsubnet=vhost:%priv
-	also=L2TP-PSK-noNAT
+#<span class="nb">compatible</span> with xl2tp	
+conn L2TP<span class="p">-</span>PSK<span class="p">-</span>NAT
+	rightsubnet<span class="p">=</span>vhost<span class="p">:</span>%priv
+	also<span class="p">=</span>L2TP<span class="p">-</span>PSK<span class="p">-</span>noNAT
  
-conn L2TP-PSK-noNAT
-	authby=secret
-	#pfs=no
-	auto=add
-	keyingtries=3
-	rekey=no
-	ikelifetime=8h
-	keylife=1h
-	type=transport
-	left=%defaultroute
-	leftprotoport=17/1701
-	right=%any
-	rightprotoport=17/%any
-	dpddelay=40
-	dpdtimeout=130
-	dpdaction=clear</code></pre>
+conn L2TP<span class="p">-</span>PSK<span class="p">-</span>noNAT
+	authby<span class="p">=</span>secret
+	#pfs<span class="p">=</span>no
+	auto<span class="p">=</span><span class="nb">add</span>
+	keyingtries<span class="p">=</span><span class="m">3</span>
+	rekey<span class="p">=</span>no
+	ikelifetime<span class="p">=</span><span class="m">8</span><span class="k">h</span>
+	keylife<span class="p">=</span><span class="m">1</span><span class="k">h</span>
+	<span class="nb">type</span><span class="p">=</span>transport
+	<span class="k">left</span><span class="p">=</span>%defaultroute
+	leftprotoport<span class="p">=</span><span class="m">17</span>/<span class="m">1701</span>
+	<span class="k">right</span><span class="p">=</span>%any
+	rightprotoport<span class="p">=</span><span class="m">17</span>/%any
+	dpddelay<span class="p">=</span><span class="m">40</span>
+	dpdtimeout<span class="p">=</span><span class="m">130</span>
+	dpdaction<span class="p">=</span>clear
+</code></pre></div></div>
 
 <h3 id="c修改ipsecsecrets">c.修改ipsec.secrets</h3>
 
-<pre><code class="language-sh">vi /etc/ipsec.secrets</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/ipsec.secrets
+</code></pre></div></div>
 
-<pre><code class="language-vim">#
-# ipsec.secrets
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#
+# ipsec<span class="p">.</span>secrets
 #
-# This file holds the RSA private keys or the PSK preshared secrets for
-# the IKE/IPsec authentication. See the ipsec.secrets(5) manual page.
+# This <span class="k">file</span> holds the RSA private <span class="nb">keys</span> <span class="nb">or</span> the PSK preshared secrets <span class="k">for</span>
+# the IKE/IPsec authentication<span class="p">.</span> See the ipsec<span class="p">.</span>secrets<span class="p">(</span><span class="m">5</span><span class="p">)</span> manual page<span class="p">.</span>
 #
-: RSA server.pem
-: PSK "PSK password"
-用户名 : XAUTH "user password"
-用户名 : EAP "user password"</code></pre>
+<span class="p">:</span> RSA server<span class="p">.</span>pem
+<span class="p">:</span> PSK <span class="s2">"PSK password"</span>
+用户名 <span class="p">:</span> XAUTH <span class="s2">"user password"</span>
+用户名 <span class="p">:</span> EAP <span class="s2">"user password"</span>
+</code></pre></div></div>
 
 <h3 id="d修改strongswanconf">d.修改strongswan.conf</h3>
 
-<pre><code class="language-sh">vi /etc/strongswan.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/strongswan.conf
+</code></pre></div></div>
 
-<pre><code class="language-vim"># strongswan.conf - strongSwan configuration file
-charon {
-       duplicheck.enable = no
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># strongswan<span class="p">.</span><span class="k">conf</span> <span class="p">-</span> strongSwan configuration <span class="k">file</span>
+charon <span class="p">{</span>
+       duplicheck<span class="p">.</span>enable <span class="p">=</span> no
 
-       dns1 = 8.8.8.8
-       dns2 = 208.67.220.220
+       dns1 <span class="p">=</span> <span class="m">8</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">8</span>
+       dns2 <span class="p">=</span> <span class="m">208</span><span class="p">.</span><span class="m">67</span><span class="p">.</span><span class="m">220</span><span class="p">.</span><span class="m">220</span>
 
-       # for Windows only
-       nbns1 = 8.8.8.8
-       nbns2 = 208.67.220.220
+       # <span class="k">for</span> Windows <span class="k">only</span>
+       nbns1 <span class="p">=</span> <span class="m">8</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">8</span><span class="p">.</span><span class="m">8</span>
+       nbns2 <span class="p">=</span> <span class="m">208</span><span class="p">.</span><span class="m">67</span><span class="p">.</span><span class="m">220</span><span class="p">.</span><span class="m">220</span>
 
-       filelog {
-               /var/log/strongswan.charon.log {
-                   time_format = %b %e %T
-                   default = 2
-                   append = no
-                   flush_line = yes
-               }
-       }
+       filelog <span class="p">{</span>
+               <span class="sr">/var/</span><span class="nb">log</span>/strongswan<span class="p">.</span>charon<span class="p">.</span><span class="nb">log</span> <span class="p">{</span>
+                   time_format <span class="p">=</span> %<span class="k">b</span> %<span class="k">e</span> %T
+                   default <span class="p">=</span> <span class="m">2</span>
+                   <span class="nb">append</span> <span class="p">=</span> no
+                   flush_line <span class="p">=</span> yes
+               <span class="p">}</span>
+       <span class="p">}</span>
       
        #保留文件原来内容
-       ...
-}</code></pre>
+       <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <h1 id="4签发证书">4.签发证书</h1>
 
 <h3 id="a生成ca私钥和自签名证书默认都是rsa-2048">a.生成CA私钥和自签名证书，默认都是RSA 2048：</h3>
 
-<pre><code class="language-sh">ipsec pki --gen --outform pem &gt; ca.pem
-ipsec pki --self --in ca.pem --dn "C=info, O=example, CN=example.com CA" --ca --outform pem &gt;ca.cert.pem</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ipsec pki <span class="nt">--gen</span> <span class="nt">--outform</span> pem <span class="o">&gt;</span> ca.pem
+ipsec pki <span class="nt">--self</span> <span class="nt">--in</span> ca.pem <span class="nt">--dn</span> <span class="s2">"C=info, O=example, CN=example.com CA"</span> <span class="nt">--ca</span> <span class="nt">--outform</span> pem <span class="o">&gt;</span>ca.cert.pem
+</code></pre></div></div>
 
 <h3 id="b生成服务器私钥用ca私钥签发服务器证书">b.生成服务器私钥，用CA私钥签发服务器证书:</h3>
 
-<pre><code class="language-sh">ipsec pki --gen --outform pem &gt; server.pem
-ipsec pki --pub --in server.pem | ipsec pki --issue --cacert ca.cert.pem \
---cakey ca.pem --dn "C=info, O=example, CN=example.com" \
---san="example.com" --flag serverAuth --flag ikeIntermediate \
---outform pem &gt; server.cert.pem</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ipsec pki <span class="nt">--gen</span> <span class="nt">--outform</span> pem <span class="o">&gt;</span> server.pem
+ipsec pki <span class="nt">--pub</span> <span class="nt">--in</span> server.pem | ipsec pki <span class="nt">--issue</span> <span class="nt">--cacert</span> ca.cert.pem <span class="se">\</span>
+<span class="nt">--cakey</span> ca.pem <span class="nt">--dn</span> <span class="s2">"C=info, O=example, CN=example.com"</span> <span class="se">\</span>
+<span class="nt">--san</span><span class="o">=</span><span class="s2">"example.com"</span> <span class="nt">--flag</span> serverAuth <span class="nt">--flag</span> ikeIntermediate <span class="se">\</span>
+<span class="nt">--outform</span> pem <span class="o">&gt;</span> server.cert.pem
+</code></pre></div></div>
 
 <p>–issue, –cacert 和 –cakey 就是表明要用刚才自签的 CA 证书来签这个服务器证书。</p>
 
@@ -324,58 +335,66 @@ Android 和 iOS 都要求服务器别名（serverAltName）就是服务器的 UR
 
 <h3 id="c生成客户端私钥用ca私钥签发客户证书并生成移动客户端上使用的p12证书多个客户端可以使用多个证书也可以共用一个这里需要输入2遍证书提取密码以后安装要用">c.生成客户端私钥,用CA私钥签发客户证书，并生成移动客户端上使用的p12证书，多个客户端可以使用多个证书，也可以共用一个。这里需要输入2遍证书提取密码，以后安装要用:</h3>
 
-<pre><code class="language-sh">ipsec pki --gen --outform pem &gt; client.pem
-ipsec pki --pub --in client.pem | ipsec pki --issue --cacert ca.cert.pem --cakey ca.pem --dn "C=info, O=example, CN=example.com Client" --outform pem &gt; client.cert.pem
-openssl pkcs12 -export -inkey client.pem -in client.cert.pem -name "client" -certfile ca.cert.pem -caname "example.com CA"  -out client.cert.p12
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ipsec pki <span class="nt">--gen</span> <span class="nt">--outform</span> pem <span class="o">&gt;</span> client.pem
+ipsec pki <span class="nt">--pub</span> <span class="nt">--in</span> client.pem | ipsec pki <span class="nt">--issue</span> <span class="nt">--cacert</span> ca.cert.pem <span class="nt">--cakey</span> ca.pem <span class="nt">--dn</span> <span class="s2">"C=info, O=example, CN=example.com Client"</span> <span class="nt">--outform</span> pem <span class="o">&gt;</span> client.cert.pem
+openssl pkcs12 <span class="nt">-export</span> <span class="nt">-inkey</span> client.pem <span class="nt">-in</span> client.cert.pem <span class="nt">-name</span> <span class="s2">"client"</span> <span class="nt">-certfile</span> ca.cert.pem <span class="nt">-caname</span> <span class="s2">"example.com CA"</span>  <span class="nt">-out</span> client.cert.p12
+
+</code></pre></div></div>
 
 <h3 id="d写一个发证书的脚本以后省事">d.写一个发证书的脚本，以后省事：</h3>
 
-<pre><code class="language-sh">mkdir CAKEY
-cp ./tmp/ca* ./CAKEY/	
-vi keymake.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>CAKEY
+<span class="nb">cp</span> ./tmp/ca<span class="k">*</span> ./CAKEY/	
+vi keymake.sh
+</code></pre></div></div>
 
-<pre><code class="language-vim">#!/bin/bash
-   read -p "Please input username:" user
-   if [ "$user" = "" ]; then
-	echo "Error! - you must input an username"
-	echo "Exit!"
-	exit 1
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span>bash
+   <span class="k">read</span> <span class="p">-</span><span class="k">p</span> <span class="s2">"Please input username:"</span> user
+   <span class="k">if</span> <span class="p">[</span> <span class="s2">"$user"</span> <span class="p">=</span> <span class="s2">""</span> <span class="p">]</span>; then
+	echo <span class="s2">"Error! - you must input an username"</span>
+	echo <span class="s2">"Exit!"</span>
+	<span class="k">exit</span> <span class="m">1</span>
    fi
-   echo "==========================="
-   echo "Making ${user}Key.pem ..."
-ipsec pki --gen --outform pem &gt; ${user}Key.pem
-   echo "Making ${user}Cert.pem ..."
-ipsec pki --pub --in ${user}Key.pem | ipsec pki --issue --cacert ./CAKEY/ca.cert.pem --cakey ./CAKEY/ca.pem --dn "C=info, O=example, CN=example.com Client" --outform pem &gt; ${user}Cert.pem
-   echo "Making ${user}Cert.p12 ..."
-openssl pkcs12 -export -inkey ${user}Key.pem -in ${user}Cert.pem -name ${user} -certfile ./CAKEY/ca.cert.pem -caname "example.com CA" -out ${user}Cert.p12
-   echo "========== done =========="</code></pre>
+   echo <span class="s2">"==========================="</span>
+   echo <span class="s2">"Making ${user}Key.pem ..."</span>
+ipsec pki <span class="p">--</span>gen <span class="p">--</span>outform pem <span class="p">&gt;</span> $<span class="p">{</span>user<span class="p">}</span>Key<span class="p">.</span>pem
+   echo <span class="s2">"Making ${user}Cert.pem ..."</span>
+ipsec pki <span class="p">--</span>pub <span class="p">--</span><span class="k">in</span> $<span class="p">{</span>user<span class="p">}</span>Key<span class="p">.</span>pem <span class="p">|</span> ipsec pki <span class="p">--</span>issue <span class="p">--</span>cacert <span class="p">.</span><span class="sr">/CAKEY/</span><span class="k">ca</span><span class="p">.</span>cert<span class="p">.</span>pem <span class="p">--</span>cakey <span class="p">.</span><span class="sr">/CAKEY/</span><span class="k">ca</span><span class="p">.</span>pem <span class="p">--</span>dn <span class="s2">"C=info, O=example, CN=example.com Client"</span> <span class="p">--</span>outform pem <span class="p">&gt;</span> $<span class="p">{</span>user<span class="p">}</span>Cert<span class="p">.</span>pem
+   echo <span class="s2">"Making ${user}Cert.p12 ..."</span>
+openssl pkcs12 <span class="p">-</span><span class="k">export</span> <span class="p">-</span>inkey $<span class="p">{</span>user<span class="p">}</span>Key<span class="p">.</span>pem <span class="p">-</span><span class="k">in</span> $<span class="p">{</span>user<span class="p">}</span>Cert<span class="p">.</span>pem <span class="p">-</span>name $<span class="p">{</span>user<span class="p">}</span> <span class="p">-</span>certfile <span class="p">.</span><span class="sr">/CAKEY/</span><span class="k">ca</span><span class="p">.</span>cert<span class="p">.</span>pem <span class="p">-</span>caname <span class="s2">"example.com CA"</span> <span class="p">-</span>out $<span class="p">{</span>user<span class="p">}</span>Cert<span class="p">.</span>p12
+   echo <span class="s2">"========== done =========="</span>
+</code></pre></div></div>
 
 <p>如要使得新证书生效，需将cert.pem拷贝到/etc/ipsec.d/certs，可能需要重启ipsec服务</p>
 
-<pre><code class="language-sh">chmod 755 keymake.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>755 keymake.sh
+</code></pre></div></div>
 
 <h3 id="e拷贝安装证书至服务器添加防火墙规则添加自启动服务">e.拷贝安装证书至服务器，添加防火墙规则，添加自启动服务:</h3>
 
-<pre><code class="language-sh">cp -r ca.cert.pem /etc/ipsec.d/cacerts/
-cp -r server.cert.pem /etc/ipsec.d/certs/
-cp -r server.pem /etc/ipsec.d/private/
-cp -r client.cert.pem /etc/ipsec.d/certs/
-cp -r client.pem  /etc/ipsec.d/private/
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> <span class="nt">-r</span> ca.cert.pem /etc/ipsec.d/cacerts/
+<span class="nb">cp</span> <span class="nt">-r</span> server.cert.pem /etc/ipsec.d/certs/
+<span class="nb">cp</span> <span class="nt">-r</span> server.pem /etc/ipsec.d/private/
+<span class="nb">cp</span> <span class="nt">-r</span> client.cert.pem /etc/ipsec.d/certs/
+<span class="nb">cp</span> <span class="nt">-r</span> client.pem  /etc/ipsec.d/private/
+
+</code></pre></div></div>
 
 <p>CA 证书、客户证书（两个）和 .p12 证书复制出来给客户端用。有几种 Android 配置还需要服务器证书（server.cert.pem）。</p>
 
-<pre><code class="language-sh">iptables -A INPUT -p udp --dport 500 -j ACCEPT
-iptables -A INPUT -p udp --dport 4500 -j ACCEPT
-iptables --table nat --append POSTROUTING --jump MASQUERADE
-echo 1 &gt; /proc/sys/net/ipv4/ip_forward</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables <span class="nt">-A</span> INPUT <span class="nt">-p</span> udp <span class="nt">--dport</span> 500 <span class="nt">-j</span> ACCEPT
+iptables <span class="nt">-A</span> INPUT <span class="nt">-p</span> udp <span class="nt">--dport</span> 4500 <span class="nt">-j</span> ACCEPT
+iptables <span class="nt">--table</span> nat <span class="nt">--append</span> POSTROUTING <span class="nt">--jump</span> MASQUERADE
+<span class="nb">echo </span>1 <span class="o">&gt;</span> /proc/sys/net/ipv4/ip_forward
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/rc.local</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/rc.local
+</code></pre></div></div>
 
 <p>在exit0前面加上：</p>
 
-<pre><code class="language-sh">ipsec start</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ipsec start
+</code></pre></div></div>
 
 <p>重启服务器。</p>
 

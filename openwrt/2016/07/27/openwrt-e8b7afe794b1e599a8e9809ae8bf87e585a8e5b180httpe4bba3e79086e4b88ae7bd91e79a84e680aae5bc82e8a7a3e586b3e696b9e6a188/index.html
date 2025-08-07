@@ -139,198 +139,207 @@
 <p>下面是详细配置：<br />
 <strong>1.先贴一个对端openvpn服务器（也是基于openwrt路由）的配置：</strong></p>
 
-<pre><code class="language-sh">vi /etc/config/openvpn</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/config/openvpn
+</code></pre></div></div>
 
-<pre><code class="language-vim">config openvpn 'tun_test'
-        option port '3366'
-        option proto 'tcp'
-        option dev 'tun0'
-        option ca '/etc/openvpn/ca.crt'
-        option cert '/etc/openvpn/server.crt'
-        option key '/etc/openvpn/server.key'
-        option dh '/etc/openvpn/dh1024.pem'
-        option server '10.8.0.0 255.255.255.0'
-        option ifconfig '10.8.0.1 255.255.255.0'
-        option log '/tmp/openvpn.log'
-        option cipher 'AES-256-CBC'
-        option ifconfig_pool_persist '/tmp/ipp2.txt'
-        option duplicate_cn '1'
-        option client_to_client '1'
-        option keepalive '10 120'
-        option comp_lzo 'yes'
-        option persist_key '1'
-        option persist_tun '1'
-        option status '/tmp/openvpn-status2.log'
-        option verb '3'
-        option topology 'subnet'
-        list push 'topology subnet'
-        list push 'dhcp-option DNS 172.24.8.1'
-        list push 'route 172.24.8.0 255.255.255.0'
-        list push 'redirect-gateway def1'
-        option enabled '1'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config openvpn <span class="s1">'tun_test'</span>
+        option port <span class="s1">'3366'</span>
+        option proto <span class="s1">'tcp'</span>
+        option dev <span class="s1">'tun0'</span>
+        option <span class="k">ca</span> <span class="s1">'/etc/openvpn/ca.crt'</span>
+        option cert <span class="s1">'/etc/openvpn/server.crt'</span>
+        option <span class="nb">key</span> <span class="s1">'/etc/openvpn/server.key'</span>
+        option dh <span class="s1">'/etc/openvpn/dh1024.pem'</span>
+        option server <span class="s1">'10.8.0.0 255.255.255.0'</span>
+        option ifconfig <span class="s1">'10.8.0.1 255.255.255.0'</span>
+        option <span class="nb">log</span> <span class="s1">'/tmp/openvpn.log'</span>
+        option cipher <span class="s1">'AES-256-CBC'</span>
+        option ifconfig_pool_persist <span class="s1">'/tmp/ipp2.txt'</span>
+        option duplicate_cn <span class="s1">'1'</span>
+        option client_to_client <span class="s1">'1'</span>
+        option keepalive <span class="s1">'10 120'</span>
+        option comp_lzo <span class="s1">'yes'</span>
+        option persist_key <span class="s1">'1'</span>
+        option persist_tun <span class="s1">'1'</span>
+        option status <span class="s1">'/tmp/openvpn-status2.log'</span>
+        option <span class="k">verb</span> <span class="s1">'3'</span>
+        option topology <span class="s1">'subnet'</span>
+        <span class="k">list</span> push <span class="s1">'topology subnet'</span>
+        <span class="k">list</span> push <span class="s1">'dhcp-option DNS 172.24.8.1'</span>
+        <span class="k">list</span> push <span class="s1">'route 172.24.8.0 255.255.255.0'</span>
+        <span class="k">list</span> push <span class="s1">'redirect-gateway def1'</span>
+        option enabled <span class="s1">'1'</span>
+</code></pre></div></div>
 
 <p>对端openvpn服务器上的防火墙和网络配置可以参考本站<br />
 <a href="https://routeragency.com/?p=539">《Openwrt路由上的Openvpn Server Tun模式配置和firewall配置》</a></p>
 
 <p><strong>2.openwrt的openvpn客户端配置：</strong></p>
 
-<pre><code class="language-sh">vi /etc/config/openvpn</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/config/openvpn
+</code></pre></div></div>
 
 <p>注意在里面使用了代理服务器：10.0.2.2:8000 并通过/etc/config/pw.txt 文本文件实现了认证，文本第一行是用户名，第二行是密码。</p>
 
-<pre><code class="language-vim">##############################################
-# Sample client-side OpenVPN 2.0 uci config  #
-# for connecting to multi-client server.     #
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##############################################
+# Sample client<span class="p">-</span>side OpenVPN <span class="m">2</span><span class="p">.</span><span class="m">0</span> uci config  #
+# <span class="k">for</span> connecting <span class="k">to</span> multi<span class="p">-</span>client server<span class="p">.</span>     #
 ##############################################
 
 config openvpn sample_client
 
-        # Set to 1 to enable this instance:
-        option enabled 1
+        # Set <span class="k">to</span> <span class="m">1</span> <span class="k">to</span> enable this instance<span class="p">:</span>
+        option enabled <span class="m">1</span>
 
-        # Specify that we are a client and that we
-        # will be pulling certain config file directives
-        # from the server.
-        option client 1
+        # Specify that we are <span class="k">a</span> client <span class="nb">and</span> that we
+        # will be pulling certain config <span class="k">file</span> directives
+        # from the server<span class="p">.</span>
+        option client <span class="m">1</span>
 
-        # Use the same setting as you are using on
-        # the server.
-        # On most systems, the VPN will not function
-        # unless you partially or fully disable
-        # the firewall for the TUN/TAP interface.
+        # Use the same setting <span class="k">as</span> you are using <span class="k">on</span>
+        # the server<span class="p">.</span>
+        # On most systems<span class="p">,</span> the VPN will not <span class="k">function</span>
+        # unless you partially <span class="nb">or</span> fully disable
+        # the firewall <span class="k">for</span> the TUN/TAP interface<span class="p">.</span>
 #       option dev tap
         option dev tun0
 
-        # Are we connecting to a TCP or
-        # UDP server?  Use the same setting as
-        # on the server.
+        # Are we connecting <span class="k">to</span> <span class="k">a</span> TCP <span class="nb">or</span>
+        # UDP server?  Use the same setting <span class="k">as</span>
+        # <span class="k">on</span> the server<span class="p">.</span>
         option proto tcp
 #       option proto udp
 
-        # The hostname/IP and port of the server.
+        # The <span class="nb">hostname</span>/IP <span class="nb">and</span> port of the server<span class="p">.</span>
         # You can have multiple remote entries
-        # to load balance between the servers.
-        list remote "对端openvpn服务器地址 3366"
-#       list remote "my_server_2 1194"
+        # <span class="k">to</span> load balance between the servers<span class="p">.</span>
+        <span class="k">list</span> remote <span class="s2">"对端openvpn服务器地址 3366"</span>
+#       <span class="k">list</span> remote <span class="s2">"my_server_2 1194"</span>
 
-        # Choose a random host from the remote
-        # list for load_balancing.  Otherwise
-        # try hosts in the order specified.
-#       option remote_random 1
+        # Choose <span class="k">a</span> random host from the remote
+        # <span class="k">list</span> <span class="k">for</span> load_balancing<span class="p">.</span>  Otherwise
+        # <span class="k">try</span> hosts <span class="k">in</span> the order specified<span class="p">.</span>
+#       option remote_random <span class="m">1</span>
 
-        # Keep trying indefinitely to resolve the
-        # host name of the OpenVPN server.  Very useful
-        # on machines which are not permanently connected
-        # to the internet such as laptops.
+        # Keep trying indefinitely <span class="k">to</span> <span class="nb">resolve</span> the
+        # host name of the OpenVPN server<span class="p">.</span>  Very useful
+        # <span class="k">on</span> machines which are not permanently connected
+        # <span class="k">to</span> the internet such <span class="k">as</span> laptops<span class="p">.</span>
         option resolv_retry infinite
 
-        # Most clients don't need to bind to
-        # a specific local port number.
-        option nobind 1
+        # Most clients don'<span class="k">t</span> need <span class="k">to</span> bind <span class="k">to</span>
+        # <span class="k">a</span> specific local port <span class="k">number</span><span class="p">.</span>
+        option nobind <span class="m">1</span>
 
-        # Try to preserve some state across restarts.
-        option persist_key 1
-        option persist_tun 1
+        # Try <span class="k">to</span> <span class="k">preserve</span> some <span class="nb">state</span> across restarts<span class="p">.</span>
+        option persist_key <span class="m">1</span>
+        option persist_tun <span class="m">1</span>
 
 
         # If you are connecting through an
-        # HTTP proxy to reach the actual OpenVPN
-        # server, put the proxy server/IP and
-        # port number here.  See the man page
-        # if your proxy server requires
-        # authentication.
-        # retry on connection failures:
-#       option http_proxy_retry 1
-        # specify http proxy address and port:
-        option http_proxy "10.0.2.2 8000 /etc/config/pw.txt"
+        # HTTP proxy <span class="k">to</span> reach the actual OpenVPN
+        # server<span class="p">,</span> <span class="k">put</span> the proxy server/IP <span class="nb">and</span>
+        # port <span class="k">number</span> here<span class="p">.</span>  See the man page
+        # <span class="k">if</span> your proxy server requires
+        # authentication<span class="p">.</span>
+        # retry <span class="k">on</span> connection failures<span class="p">:</span>
+#       option http_proxy_retry <span class="m">1</span>
+        # specify http proxy address <span class="nb">and</span> port<span class="p">:</span>
+        option http_proxy <span class="s2">"10.0.2.2 8000 /etc/config/pw.txt"</span>
 
-        # Wireless networks often produce a lot
-        # of duplicate packets.  Set this flag
-        # to silence duplicate packet warnings.
-#       option mute_replay_warnings 1
+        # Wireless networks often produce <span class="k">a</span> lot
+        # of duplicate packets<span class="p">.</span>  Set this flag
+        # <span class="k">to</span> silence duplicate packet warnings<span class="p">.</span>
+#       option mute_replay_warnings <span class="m">1</span>
 
-        # SSL/TLS parms.
-        # See the server config file for more
-        # description.  It's best to use
-        # a separate .crt/.key file pair
-        # for each client.  A single ca
-        # file can be used for all clients.
-        option ca /etc/openvpn/ca.crt
-        option cert /etc/openvpn/xxxx.crt
-        option key /etc/openvpn/xxxx.key
+        # SSL/TLS parms<span class="p">.</span>
+        # See the server config <span class="k">file</span> <span class="k">for</span> <span class="nb">more</span>
+        # description<span class="p">.</span>  It's best <span class="k">to</span> use
+        # <span class="k">a</span> separate <span class="p">.</span>crt/<span class="p">.</span><span class="nb">key</span> <span class="k">file</span> pair
+        # <span class="k">for</span> each client<span class="p">.</span>  A single <span class="k">ca</span>
+        # <span class="k">file</span> can be used <span class="k">for</span> <span class="k">all</span> clients<span class="p">.</span>
+        option <span class="k">ca</span> <span class="sr">/etc/</span>openvpn/<span class="k">ca</span><span class="p">.</span>crt
+        option cert <span class="sr">/etc/</span>openvpn/xxxx<span class="p">.</span>crt
+        option <span class="nb">key</span> <span class="sr">/etc/</span>openvpn/xxxx<span class="p">.</span><span class="nb">key</span>
 
         # Verify server certificate by checking
-        # that the certicate has the nsCertType
-        # field set to "server".  This is an
-        # important precaution to protect against
-        # a potential attack discussed here:
-        #  http://openvpn.net/howto.html#mitm
+        # that the certicate <span class="nb">has</span> the nsCertType
+        # field <span class="k">set</span> <span class="k">to</span> <span class="s2">"server"</span><span class="p">.</span>  This <span class="k">is</span> an
+        # important precaution <span class="k">to</span> protect against
+        # <span class="k">a</span> potential attack discussed here<span class="p">:</span>
+        #  http<span class="p">:</span><span class="sr">//</span>openvpn<span class="p">.</span>net/howto<span class="p">.</span>html#mitm
         #
-        # To use this feature, you will need to generate
+        # To use this feature<span class="p">,</span> you will need <span class="k">to</span> generate
         # your server certificates with the nsCertType
-        # field set to "server".  The build_key_server
-        # script in the easy_rsa folder will do this.
+        # field <span class="k">set</span> <span class="k">to</span> <span class="s2">"server"</span><span class="p">.</span>  The build_key_server
+        # script <span class="k">in</span> the easy_rsa folder will <span class="k">do</span> this<span class="p">.</span>
         option ns_cert_type server
 
-        # If a tls_auth key is used on the server
-        # then every client must also have the key.
-#       option tls_auth "/etc/openvpn/ta.key 1"
+        # If <span class="k">a</span> tls_auth <span class="nb">key</span> <span class="k">is</span> used <span class="k">on</span> the server
+        # then every client must also have the <span class="nb">key</span><span class="p">.</span>
+#       option tls_auth <span class="s2">"/etc/openvpn/ta.key 1"</span>
 
-        # Select a cryptographic cipher.
-        # If the cipher option is used on the server
-        # then you must also specify it here.
-        option cipher AES-256-CBC
+        # Select <span class="k">a</span> cryptographic cipher<span class="p">.</span>
+        # If the cipher option <span class="k">is</span> used <span class="k">on</span> the server
+        # then you must also specify it here<span class="p">.</span>
+        option cipher AES<span class="m">-256</span><span class="p">-</span>CBC
 
-        # Enable compression on the VPN link.
-        # Don't enable this unless it is also
-        # enabled in the server config file.
+        # Enable compression <span class="k">on</span> the VPN link<span class="p">.</span>
+        # Don'<span class="k">t</span> enable this unless it <span class="k">is</span> also
+        # enabled <span class="k">in</span> the server config <span class="k">file</span><span class="p">.</span>
         option comp_lzo yes
 
-        # Set log file verbosity.
-        option verb 3
+        # Set <span class="nb">log</span> <span class="k">file</span> verbosity<span class="p">.</span>
+        option <span class="k">verb</span> <span class="m">3</span>
 
-        # Silence repeating messages
-#       option mute 20
-</code></pre>
+        # Silence repeating <span class="k">messages</span>
+#       option mute <span class="m">20</span>
+
+</code></pre></div></div>
 
 <p>防火墙配置，涉及vpn的部分：</p>
 
-<pre><code class="language-sh">vi /etc/config/firewall</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/config/firewall
+</code></pre></div></div>
 
 <p>增加：</p>
 
-<pre><code class="language-vim">config zone
-        option name 'vpnzone'
-        option masq '1'
-        option networt 'vpn'
-        option output 'ACCEPT'
-        option network 'vpnzone vpn'
-        option input 'ACCEPT'
-        option forward 'ACCEPT'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config zone
+        option name <span class="s1">'vpnzone'</span>
+        option masq <span class="s1">'1'</span>
+        option networt <span class="s1">'vpn'</span>
+        option output <span class="s1">'ACCEPT'</span>
+        option network <span class="s1">'vpnzone vpn'</span>
+        option <span class="nb">input</span> <span class="s1">'ACCEPT'</span>
+        option forward <span class="s1">'ACCEPT'</span>
 
 
 config forwarding
-        option dest 'vpnzone'
-        option src 'lan'
+        option dest <span class="s1">'vpnzone'</span>
+        option <span class="k">src</span> <span class="s1">'lan'</span>
 
 config forwarding
-        option src 'vpnzone'
-        option dest 'lan'</code></pre>
+        option <span class="k">src</span> <span class="s1">'vpnzone'</span>
+        option dest <span class="s1">'lan'</span>
+</code></pre></div></div>
 
 <p>网络接口配置：</p>
 
-<pre><code class="language-sh">vi /etc/config/network</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/config/network
+</code></pre></div></div>
 
 <p>增加：</p>
 
-<pre><code class="language-vim">config interface 'vpn'
-        option proto 'none'
-        option ifname 'tun0'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config interface <span class="s1">'vpn'</span>
+        option proto <span class="s1">'none'</span>
+        option ifname <span class="s1">'tun0'</span>
+</code></pre></div></div>
 
 <p>原本以为代理服务器10.0.x.x网段与10.8.x.x/128.0.0.0网段会有路由冲突，后来发现居然没有问题。。。<br />
 用以下命令可以看看是否服务器端路由push到客户端了：</p>
 
-<pre><code class="language-sh">netstat -nr</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>netstat <span class="nt">-nr</span>
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

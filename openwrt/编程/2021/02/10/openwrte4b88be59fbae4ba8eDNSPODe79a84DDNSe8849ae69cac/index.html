@@ -120,50 +120,51 @@
 		
 		<p>换dns供应商了，撸了一个openwrt下基于dnspod api的ddns脚本：</p>
 
-<pre><code class="language-bash">
-#!/bin/sh
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c">#!/bin/sh</span>
 
-TOKEN="xxx,xxxxxxxxxxxxxxx"
-DOMAIN_ID="xxxxxxxxx"
-SUB_DOMAIN="xxxx"
-MAIN_DOMAIN="xxxx"
-DOMAIN=${SUB_DOMAIN}.${MAIN_DOMAIN}
-RECORD_ID="xxxxxx"
-#record_id is binding with sub_domain and main_domain, using following command to get record_id
-#curl -X POST https://dnsapi.cn/Record.List -d 'login_token=${TOKEN}&amp;format=json&amp;domain_id=${DOMAIN_ID}&amp;offset=0&amp;length=3'
+<span class="nv">TOKEN</span><span class="o">=</span><span class="s2">"xxx,xxxxxxxxxxxxxxx"</span>
+<span class="nv">DOMAIN_ID</span><span class="o">=</span><span class="s2">"xxxxxxxxx"</span>
+<span class="nv">SUB_DOMAIN</span><span class="o">=</span><span class="s2">"xxxx"</span>
+<span class="nv">MAIN_DOMAIN</span><span class="o">=</span><span class="s2">"xxxx"</span>
+<span class="nv">DOMAIN</span><span class="o">=</span><span class="k">${</span><span class="nv">SUB_DOMAIN</span><span class="k">}</span>.<span class="k">${</span><span class="nv">MAIN_DOMAIN</span><span class="k">}</span>
+<span class="nv">RECORD_ID</span><span class="o">=</span><span class="s2">"xxxxxx"</span>
+<span class="c">#record_id is binding with sub_domain and main_domain, using following command to get record_id</span>
+<span class="c">#curl -X POST https://dnsapi.cn/Record.List -d 'login_token=${TOKEN}&amp;format=json&amp;domain_id=${DOMAIN_ID}&amp;offset=0&amp;length=3'</span>
 
-#get domain ip from common dns
-IP=`dig ${DOMAIN} @114.114.114.114 | awk -F "[ ]+" '/IN/{print $1}' | awk 'NR==2 {print $5}'`
-echo "Ip of ${DOMAIN} is ---${IP}---"
+<span class="c">#get domain ip from common dns</span>
+<span class="nv">IP</span><span class="o">=</span><span class="sb">`</span>dig <span class="k">${</span><span class="nv">DOMAIN</span><span class="k">}</span> @114.114.114.114 | <span class="nb">awk</span> <span class="nt">-F</span> <span class="s2">"[ ]+"</span> <span class="s1">'/IN/{print $1}'</span> | <span class="nb">awk</span> <span class="s1">'NR==2 {print $5}'</span><span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">"Ip of </span><span class="k">${</span><span class="nv">DOMAIN</span><span class="k">}</span><span class="s2"> is ---</span><span class="k">${</span><span class="nv">IP</span><span class="k">}</span><span class="s2">---"</span>
 
-#get local ip from wan port
-LIP=`ifconfig pppoe-wan|awk -F "[: ]+" '/inet addr/{print $4}'`
-echo "Local Ip is ---${LIP}---"
+<span class="c">#get local ip from wan port</span>
+<span class="nv">LIP</span><span class="o">=</span><span class="sb">`</span>ifconfig pppoe-wan|awk <span class="nt">-F</span> <span class="s2">"[: ]+"</span> <span class="s1">'/inet addr/{print $4}'</span><span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">"Local Ip is ---</span><span class="k">${</span><span class="nv">LIP</span><span class="k">}</span><span class="s2">---"</span>
 
-#if domain ip and local ip are identical, dns is ok
-if [ "${LIP}" == "${IP}" ]; then
-   echo "Doman IP not changed."
-   exit
-fi
+<span class="c">#if domain ip and local ip are identical, dns is ok</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">LIP</span><span class="k">}</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"</span><span class="k">${</span><span class="nv">IP</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+   </span><span class="nb">echo</span> <span class="s2">"Doman IP not changed."</span>
+   <span class="nb">exit
+</span><span class="k">fi</span>
 
-#if not identical, check dns record from ddns service provider
-echo "check dnspod dns record of ${DOMAIN}"
-query_cmd="curl -X POST https://dnsapi.cn/Record.Info -d 'login_token=${TOKEN}&amp;format=json&amp;domain_id=${DOMAIN_ID}&amp;record_id=${RECORD_ID}'"
-query_result=`eval ${query_cmd}`
-query_result_sub_str=`echo "${query_result}" | grep ${LIP}`
+<span class="c">#if not identical, check dns record from ddns service provider</span>
+<span class="nb">echo</span> <span class="s2">"check dnspod dns record of </span><span class="k">${</span><span class="nv">DOMAIN</span><span class="k">}</span><span class="s2">"</span>
+<span class="nv">query_cmd</span><span class="o">=</span><span class="s2">"curl -X POST https://dnsapi.cn/Record.Info -d 'login_token=</span><span class="k">${</span><span class="nv">TOKEN</span><span class="k">}</span><span class="s2">&amp;format=json&amp;domain_id=</span><span class="k">${</span><span class="nv">DOMAIN_ID</span><span class="k">}</span><span class="s2">&amp;record_id=</span><span class="k">${</span><span class="nv">RECORD_ID</span><span class="k">}</span><span class="s2">'"</span>
+<span class="nv">query_result</span><span class="o">=</span><span class="sb">`</span><span class="nb">eval</span> <span class="k">${</span><span class="nv">query_cmd</span><span class="k">}</span><span class="sb">`</span>
+<span class="nv">query_result_sub_str</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">query_result</span><span class="k">}</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="k">${</span><span class="nv">LIP</span><span class="k">}</span><span class="sb">`</span>
 
-#if dns record is ok, there is no need to update
-if [ ${#query_result_sub_str} -gt 6 ]; then
-   echo "IP record is OK, waiting for dns spread"
-   exit
-fi
+<span class="c">#if dns record is ok, there is no need to update</span>
+<span class="k">if</span> <span class="o">[</span> <span class="k">${#</span><span class="nv">query_result_sub_str</span><span class="k">}</span> <span class="nt">-gt</span> 6 <span class="o">]</span><span class="p">;</span> <span class="k">then
+   </span><span class="nb">echo</span> <span class="s2">"IP record is OK, waiting for dns spread"</span>
+   <span class="nb">exit
+</span><span class="k">fi</span>
 
-#if dns record is not ok, start ddns refresh
-echo "start ddns refresh"
-refresh_cmd="curl -X POST https://dnsapi.cn/Record.Ddns -d 'login_token=${TOKEN}&amp;format=json&amp;domain_id=${DOMAIN_ID}&amp;record_id=${RECORD_ID}&amp;record_line_id=0&amp;value=${LIP}&amp;sub_domain=${SUB_DOMAIN}'"
-refreah_result=`eval ${refresh_cmd}`
-echo "${refreah_result}"
-</code></pre>
+<span class="c">#if dns record is not ok, start ddns refresh</span>
+<span class="nb">echo</span> <span class="s2">"start ddns refresh"</span>
+<span class="nv">refresh_cmd</span><span class="o">=</span><span class="s2">"curl -X POST https://dnsapi.cn/Record.Ddns -d 'login_token=</span><span class="k">${</span><span class="nv">TOKEN</span><span class="k">}</span><span class="s2">&amp;format=json&amp;domain_id=</span><span class="k">${</span><span class="nv">DOMAIN_ID</span><span class="k">}</span><span class="s2">&amp;record_id=</span><span class="k">${</span><span class="nv">RECORD_ID</span><span class="k">}</span><span class="s2">&amp;record_line_id=0&amp;value=</span><span class="k">${</span><span class="nv">LIP</span><span class="k">}</span><span class="s2">&amp;sub_domain=</span><span class="k">${</span><span class="nv">SUB_DOMAIN</span><span class="k">}</span><span class="s2">'"</span>
+<span class="nv">refreah_result</span><span class="o">=</span><span class="sb">`</span><span class="nb">eval</span> <span class="k">${</span><span class="nv">refresh_cmd</span><span class="k">}</span><span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">refreah_result</span><span class="k">}</span><span class="s2">"</span>
+
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

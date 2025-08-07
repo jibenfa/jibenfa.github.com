@@ -127,22 +127,25 @@
 
 <p>debian/ubuntu安装libnet，libpcap，libnet1-dev，libpcap-dev：</p>
 
-<pre><code class="language-sh">apt-get install libnet1
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>libnet1
 
-apt-get install libpcap0.8 
+apt-get <span class="nb">install </span>libpcap0.8 
 
-apt-get install libnet1-dev
+apt-get <span class="nb">install </span>libnet1-dev
 
-apt-get install libpcap0.8-dev </code></pre>
+apt-get <span class="nb">install </span>libpcap0.8-dev 
+</code></pre></div></div>
 
 <p>然后下载build.sh和net_speeder.c到/root/net-speeder，编译：</p>
 
-<pre><code class="language-sh">chmod +x build.sh
-sh build.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x build.sh
+sh build.sh
+</code></pre></div></div>
 
 <p>运行：</p>
 
-<pre><code class="language-sh">nohup /root/net-speeder/net_speeder eth0 "ip" &gt;/dev/null 2&gt;&amp;1 &amp; </code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">nohup</span> /root/net-speeder/net_speeder eth0 <span class="s2">"ip"</span> <span class="o">&gt;</span>/dev/null 2&gt;&amp;1 &amp; 
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

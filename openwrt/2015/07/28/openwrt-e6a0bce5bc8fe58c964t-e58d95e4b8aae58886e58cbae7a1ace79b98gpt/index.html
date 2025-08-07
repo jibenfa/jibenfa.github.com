@@ -121,10 +121,11 @@
 		<p>首先保证硬盘所有分区已经删除，即整个硬盘处于初始化状态。<br />
 ssh进入openwrt：</p>
 
-<pre><code class="language-sh">opkg update
-opkg install tune2fs e2fsprog  
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg <span class="nb">install </span>tune2fs e2fsprog  
 mkfs.ext4  /dev/sdb
-tune2fs -i 0 -c 0 -r 0 -m 0 /dev/sdb</code></pre>
+tune2fs <span class="nt">-i</span> 0 <span class="nt">-c</span> 0 <span class="nt">-r</span> 0 <span class="nt">-m</span> 0 /dev/sdb
+</code></pre></div></div>
 
 <p>tune2fs我编译op的时候木有编译进去，但是我从op官网下了个bb x86版本的，居然好用。。。</p>
 
@@ -132,23 +133,25 @@ tune2fs -i 0 -c 0 -r 0 -m 0 /dev/sdb</code></pre>
 (5.00%) reserved for the super user<br />
 即保留了5%给超级用户，浪费了我200GB的空间，不可忍啊。。。</p>
 
-<pre><code class="language-vim">Filesystem           1M-blocks      Used Available Use% Mounted on
-rootfs                  135474        34    135424   0% /
-/dev/root               135474        34    135424   0% /
-tmpfs                     1421         1      1420   0% /tmp
-tmpfs                        1         0         1   0% /dev
-/dev/sda3               103706       333     98083   0% /mnt/sda3
-/dev/sdb               3755449        68   3564592   0% /mnt/nasdisk0</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Filesystem           <span class="m">1</span>M<span class="p">-</span>blocks      Used Available Use% Mounted <span class="k">on</span>
+rootfs                  <span class="m">135474</span>        <span class="m">34</span>    <span class="m">135424</span>   <span class="m">0</span>% /
+<span class="sr">/dev/</span>root               <span class="m">135474</span>        <span class="m">34</span>    <span class="m">135424</span>   <span class="m">0</span>% /
+tmpfs                     <span class="m">1421</span>         <span class="m">1</span>      <span class="m">1420</span>   <span class="m">0</span>% /tmp
+tmpfs                        <span class="m">1</span>         <span class="m">0</span>         <span class="m">1</span>   <span class="m">0</span>% /dev
+<span class="sr">/dev/</span>sda3               <span class="m">103706</span>       <span class="m">333</span>     <span class="m">98083</span>   <span class="m">0</span>% <span class="sr">/mnt/</span>sda3
+<span class="sr">/dev/</span>sdb               <span class="m">3755449</span>        <span class="m">68</span>   <span class="m">3564592</span>   <span class="m">0</span>% <span class="sr">/mnt/</span>nasdisk0
+</code></pre></div></div>
 
 <p>运行了tune2fs以后，找回来了。。。。</p>
 
-<pre><code class="language-vim">Filesystem           1M-blocks      Used Available Use% Mounted on
-rootfs                  135474        34    135423   0% /
-/dev/root               135474        34    135423   0% /
-tmpfs                     1421         1      1420   0% /tmp
-tmpfs                        1         0         1   0% /dev
-/dev/sda3               103706       333     98083   0% /mnt/sda3
-/dev/sdb               3755449        68   3755365   0% /mnt/nasdisk0</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Filesystem           <span class="m">1</span>M<span class="p">-</span>blocks      Used Available Use% Mounted <span class="k">on</span>
+rootfs                  <span class="m">135474</span>        <span class="m">34</span>    <span class="m">135423</span>   <span class="m">0</span>% /
+<span class="sr">/dev/</span>root               <span class="m">135474</span>        <span class="m">34</span>    <span class="m">135423</span>   <span class="m">0</span>% /
+tmpfs                     <span class="m">1421</span>         <span class="m">1</span>      <span class="m">1420</span>   <span class="m">0</span>% /tmp
+tmpfs                        <span class="m">1</span>         <span class="m">0</span>         <span class="m">1</span>   <span class="m">0</span>% /dev
+<span class="sr">/dev/</span>sda3               <span class="m">103706</span>       <span class="m">333</span>     <span class="m">98083</span>   <span class="m">0</span>% <span class="sr">/mnt/</span>sda3
+<span class="sr">/dev/</span>sdb               <span class="m">3755449</span>        <span class="m">68</span>   <span class="m">3755365</span>   <span class="m">0</span>% <span class="sr">/mnt/</span>nasdisk0
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

@@ -122,7 +122,8 @@
 
 <h1 id="1apache2启用ssl">1.apache2启用ssl</h1>
 
-<pre><code class="language-sh">a2enmod ssl</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a2enmod ssl
+</code></pre></div></div>
 
 <h1 id="2修改apache配置文件">2.修改apache配置文件</h1>
 
@@ -132,102 +133,106 @@
 自签名证书一般不会得到认证，所以浏览器访问时会提示证书非 法，是红色的。<br />
 如果要显示为绿色，可以考虑向某些组织申请ssl证书，有收费和免费的。</p>
 
-<pre><code class="language-sh">vi /etc/apache2/sites-enabled/example.com.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/apache2/sites-enabled/example.com.conf
+</code></pre></div></div>
 
 <p>内容如下（这种方法感觉挺笨的，但是有效。。）：<br />
 <!--more--></p>
 
-<pre><code class="language-vim"># domain: example.com
-# public: /var/www/example.com/public_html/
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># domain<span class="p">:</span> example<span class="p">.</span><span class="k">com</span>
+# public<span class="p">:</span> <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/
 
-NameVirtualHost *:443  
-&lt;VirtualHost *:80&gt;
-ServerName <strong>ip地址</strong>
-&lt;Location /&gt;
-Order Allow,Deny
-Deny from all
-&lt;/Location&gt;
-&lt;/VirtualHost&gt;
+NameVirtualHost *<span class="p">:</span><span class="m">443</span>  
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">80</span><span class="p">&gt;</span>
+ServerName <span class="p">&lt;</span>strong<span class="p">&gt;</span>ip地址<span class="p">&lt;</span>/strong<span class="p">&gt;</span>
+<span class="p">&lt;</span>Location /<span class="p">&gt;</span>
+Order Allow<span class="p">,</span>Deny
+Deny from <span class="k">all</span>
+<span class="p">&lt;</span>/Location<span class="p">&gt;</span>
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
 
-&lt;VirtualHost *:80&gt;
-  # Admin email, Server Name (domain name), and any aliases
-  ServerAdmin webmaster@example.com
-  ServerName  www.example.com
-  ServerAlias example.com
-  # Index file and Document Root (where the public files are located)
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html
-  # Log file locations
-  LogLevel warn
-  ErrorLog  /var/www/example.com/log/error.log
-  CustomLog /var/www/example.com/log/access.log combined
-&lt;/VirtualHost&gt;
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">80</span><span class="p">&gt;</span>
+  # Admin email<span class="p">,</span> Server Name <span class="p">(</span>domain name<span class="p">),</span> <span class="nb">and</span> any aliases
+  ServerAdmin webmaster@example<span class="p">.</span><span class="k">com</span>
+  ServerName  www<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>
+  ServerAlias example<span class="p">.</span><span class="k">com</span>
+  # Index <span class="k">file</span> <span class="nb">and</span> Document Root <span class="p">(</span>where the public <span class="k">files</span> are located<span class="p">)</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html
+  # Log <span class="k">file</span> locations
+  LogLevel <span class="nb">warn</span>
+  ErrorLog  <span class="sr">/var/</span>www<span class="sr">/example.com/</span><span class="nb">log</span>/error<span class="p">.</span><span class="nb">log</span>
+  CustomLog <span class="sr">/var/</span>www<span class="sr">/example.com/</span><span class="nb">log</span>/access<span class="p">.</span><span class="nb">log</span> combined
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
   
-&lt;Directory /var/www/example.com/public_html/postfixadmin&gt;
-  RewriteEngine on
-  RewriteCond %{SERVER_PORT} !^443$
-  RewriteRule ^(.*)?$ https://pfadmin.example.com/$1 [L,R]
-&lt;/Directory&gt;
+<span class="p">&lt;</span>Directory <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/postfixadmin<span class="p">&gt;</span>
+  RewriteEngine <span class="k">on</span>
+  RewriteCond %<span class="p">{</span>SERVER_PORT<span class="p">}</span> <span class="p">!</span>^<span class="m">443</span>$
+  RewriteRule ^<span class="p">(.</span>*<span class="p">)</span>?$ https<span class="p">:</span><span class="sr">//</span>pfadmin<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>/$<span class="m">1</span> <span class="p">[</span>L<span class="p">,</span>R<span class="p">]</span>
+<span class="p">&lt;</span>/Directory<span class="p">&gt;</span>
 
-&lt;VirtualHost *:443&gt;
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html/postfixadmin
-  ServerName pfadmin.example.com:443
-  ServerAlias pfadmin.example.com
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">443</span><span class="p">&gt;</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/postfixadmin
+  ServerName pfadmin<span class="p">.</span>example<span class="p">.</span><span class="k">com</span><span class="p">:</span><span class="m">443</span>
+  ServerAlias pfadmin<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>
   SSLEngine On
-  SSLOptions +StrictRequire
-  SSLCertificateFile /etc/dovecot/dovecot.pem
-  SSLCertificateKeyFile /etc/dovecot/private/dovecot.pem
-&lt;/VirtualHost&gt;
+  SSLOptions <span class="p">+</span>StrictRequire
+  SSLCertificateFile <span class="sr">/etc/</span>dovecot/dovecot<span class="p">.</span>pem
+  SSLCertificateKeyFile <span class="sr">/etc/</span>dovecot<span class="sr">/private/</span>dovecot<span class="p">.</span>pem
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
 
-&lt;VirtualHost *:80&gt;
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html/postfixadmin
-  ServerName pfadmin.example.com
-&lt;/VirtualHost&gt;
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">80</span><span class="p">&gt;</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/postfixadmin
+  ServerName pfadmin<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
 
-&lt;Directory /var/www/example.com/public_html/webmail&gt;
+<span class="p">&lt;</span>Directory <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/webmail<span class="p">&gt;</span>
   Options FollowSymLinks
-  &lt;IfModule mod_php5.c&gt;
+  <span class="p">&lt;</span>IfModule mod_php5<span class="p">.</span><span class="k">c</span><span class="p">&gt;</span>
     php_flag register_globals off
-  &lt;/IfModule&gt;
-  &lt;IfModule mod_dir.c&gt;
-    DirectoryIndex index.php
-  &lt;/IfModule&gt;
-  RewriteEngine on
-  RewriteCond %{SERVER_PORT} !^443$
-  RewriteRule ^(.*)?$ https://webmail.example.com/$1 [L,R]
-&lt;/Directory&gt;
+  <span class="p">&lt;</span>/IfModule<span class="p">&gt;</span>
+  <span class="p">&lt;</span>IfModule mod_dir<span class="p">.</span><span class="k">c</span><span class="p">&gt;</span>
+    DirectoryIndex <span class="nb">index</span><span class="p">.</span>php
+  <span class="p">&lt;</span>/IfModule<span class="p">&gt;</span>
+  RewriteEngine <span class="k">on</span>
+  RewriteCond %<span class="p">{</span>SERVER_PORT<span class="p">}</span> <span class="p">!</span>^<span class="m">443</span>$
+  RewriteRule ^<span class="p">(.</span>*<span class="p">)</span>?$ https<span class="p">:</span><span class="sr">//</span>webmail<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>/$<span class="m">1</span> <span class="p">[</span>L<span class="p">,</span>R<span class="p">]</span>
+<span class="p">&lt;</span>/Directory<span class="p">&gt;</span>
 
-&lt;Directory /var/www/example.com/public_html/webmail/data&gt;
- deny from all
-&lt;/Directory&gt;
+<span class="p">&lt;</span>Directory <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html<span class="sr">/webmail/</span>data<span class="p">&gt;</span>
+ deny from <span class="k">all</span>
+<span class="p">&lt;</span>/Directory<span class="p">&gt;</span>
 
-&lt;VirtualHost *:443&gt;
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html/webmail
-  ServerName webmail.example.com:443
-  ServerAlias webmail.example.com
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">443</span><span class="p">&gt;</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/webmail
+  ServerName webmail<span class="p">.</span>example<span class="p">.</span><span class="k">com</span><span class="p">:</span><span class="m">443</span>
+  ServerAlias webmail<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>
   SSLEngine On
-  SSLOptions +StrictRequire
-  SSLCertificateFile /etc/dovecot/dovecot.pem
-  SSLCertificateKeyFile /etc/dovecot/private/dovecot.pem
-&lt;/VirtualHost&gt;
+  SSLOptions <span class="p">+</span>StrictRequire
+  SSLCertificateFile <span class="sr">/etc/</span>dovecot/dovecot<span class="p">.</span>pem
+  SSLCertificateKeyFile <span class="sr">/etc/</span>dovecot<span class="sr">/private/</span>dovecot<span class="p">.</span>pem
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
 
-&lt;VirtualHost *:80&gt;
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html/webmail
-  ServerName webmail.example.com
-&lt;/VirtualHost&gt;</code></pre>
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">80</span><span class="p">&gt;</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/webmail
+  ServerName webmail<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
+</code></pre></div></div>
 
 <h1 id="3重启apache2服务">3.重启apache2服务</h1>
 
-<pre><code class="language-sh">service apache2 restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service apache2 restart
+</code></pre></div></div>
 
 <p>避免重启时apache因证书密码卡住无法ssh<br />
 需将加密的key文件解密。。。</p>
 
-<pre><code class="language-sh">openssl rsa -in key.pem -out newkey.pem</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>openssl rsa <span class="nt">-in</span> key.pem <span class="nt">-out</span> newkey.pem
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

@@ -145,24 +145,26 @@
  <br />
  flash在中间，周围小元件也不多，一把烙铁就拆下了，拆下后用编程器读取flash，备份官方flash 8M编程器固件：uboot，firmware和art。然后用winhex提取art.bin，到<a href="http://http://www.right.com.cn/FORUM/thread-136444-1-1.html">恩山论坛</a>上下载H大大的wdr7500 uboot:u-boot-qca9558-ar8327n.bin，然后计算uboot，firmware，art的大小之和，用16M减去这个值后，得到8454144，填入我的perl脚本，生成填充文件16M_FF.bin：</p>
 
-<pre><code class="language-perl">#!/usr/bin/perl 
-use strict;
-my $i = 8454144;
-open(FH,'&gt;','16M_FF.bin');
-binmode(FH);
-my $xff =pack("H*","FF");
-while($i&gt;0)
-{
-  print FH $xff; 
-  $i--; 
-}
+<div class="language-perl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/perl </span>
+<span class="k">use</span> <span class="nv">strict</span><span class="p">;</span>
+<span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">8454144</span><span class="p">;</span>
+<span class="nb">open</span><span class="p">(</span><span class="nv">FH</span><span class="p">,'</span><span class="s1">&gt;</span><span class="p">','</span><span class="s1">16M_FF.bin</span><span class="p">');</span>
+<span class="nb">binmode</span><span class="p">(</span><span class="nv">FH</span><span class="p">);</span>
+<span class="k">my</span> <span class="nv">$xff</span> <span class="o">=</span><span class="nb">pack</span><span class="p">("</span><span class="s2">H*</span><span class="p">","</span><span class="s2">FF</span><span class="p">");</span>
+<span class="k">while</span><span class="p">(</span><span class="nv">$i</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">print</span> <span class="nv">FH</span> <span class="nv">$xff</span><span class="p">;</span> 
+  <span class="nv">$i</span><span class="o">--</span><span class="p">;</span> 
+<span class="p">}</span>
 
-close FH;
-</code></pre>
+<span class="nb">close</span> <span class="nv">FH</span><span class="p">;</span>
+
+</code></pre></div></div>
 
 <p>最后运行：</p>
 
-<pre><code class="language-sh">cat u-boot-qca9558-ar8327n.bin openwrt-ar71xx-generic-archer-c7-v1-squashfs-factory.bin 16M_FF.bin art.bin &gt; wdr7500v2fullflash16M.bin</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>u-boot-qca9558-ar8327n.bin openwrt-ar71xx-generic-archer-c7-v1-squashfs-factory.bin 16M_FF.bin art.bin <span class="o">&gt;</span> wdr7500v2fullflash16M.bin
+</code></pre></div></div>
 
 <p>然后用编程器烧录到winbond W25Q128FVSG，焊接到电路板上。</p>
 

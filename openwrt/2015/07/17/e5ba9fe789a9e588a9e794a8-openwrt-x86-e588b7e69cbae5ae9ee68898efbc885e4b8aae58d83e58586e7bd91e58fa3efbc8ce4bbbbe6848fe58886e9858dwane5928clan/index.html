@@ -144,7 +144,8 @@ gparted-live-0.20.0-2-i486.iso（下载后把iso改名为img）</p>
 a)把openwrt-x86-64-combined-ext4.img.gz 解压到跟physdiskwrite.exe相同的目录下，并将镁光M4 SSD挂载到PC的sata接口上，可以预先格式化成fat32.。。<br />
 b)win7 cmd下运行：</p>
 
-<pre><code class="language-sh">physdiskwrite.exe -u openwrt-x86-64-combined-ext4.img</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>physdiskwrite.exe <span class="nt">-u</span> openwrt-x86-64-combined-ext4.img
+</code></pre></div></div>
 
 <p>正常情况下会出现硬盘列表让你选择，千万千万不要选错，如果怕选错，可以事先把除系统盘和需要安装OP的盘外的其他所有盘数据线拔掉！！！！<br />
 选择到镁光M4 SSD后开始写入，完成后将SSD挂载到索泰主板上。</p>
@@ -159,44 +160,50 @@ c)进入图形界面后，选中M4的第二个分区，然后调整，使之使�
 <p>3.启动并设置openwrt<br />
 这里我走了一些弯路，特别是接上显示器，启动openwrt后，不插网线的话，启动信息会停留在：</p>
 
-<pre><code class="language-sh">eth0 entered promiscuous mode  
-br-lan link is not ready</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>eth0 entered promiscuous mode  
+br-lan <span class="nb">link </span>is not ready
+</code></pre></div></div>
 
 <p>其实这并不代表openwrt没有启动，而是完全正常的启动。。。我之前以为没成功，郁闷了很久。。。<br />
 出现上述字样以后：<br />
 a)可以把网线将索泰H55主板板载网口与win7电脑网口连接，把win7 电脑ip改成192.168.1.150，网关192.168.1.1<br />
 b)远程连接x86 路由，在win7电脑的cmd命令行运行</p>
 
-<pre><code class="language-sh">telnet 192.168.1.1
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>telnet 192.168.1.1
+
+</code></pre></div></div>
 
 <p>运行passwd改个密码，然后运行df -m会看见：</p>
 
-<pre><code class="language-sh">Filesystem           1M-blocks      Used Available Use% Mounted on
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Filesystem           1M-blocks      Used Available Use% Mounted on
 rootfs                  241382         9    241357   0% /
 /dev/root               241382         9    241357   0% /
 tmpfs                     1815         0      1814   0% /tmp
-tmpfs                        1         0         1   0% /dev</code></pre>
+tmpfs                        1         0         1   0% /dev
+</code></pre></div></div>
 
 <p>一个字，爽~~~</p>
 
 <p>c)这时候如果运行ifconfig会发现只有一个eth0,这是因为PCIE的网卡驱动没装。。不过这没有关系，我在win7机器上用EasyWebSvr-v1.9搭了一个op源，所以要修改更新源，并安装驱动。</p>
 
-<pre><code class="language-sh">vi /etc/opkg.config</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/opkg.config
+</code></pre></div></div>
 
-<pre><code class="language-vim">src/gz chaos_calmer_base http://192.168.1.150/packages/base
-src/gz chaos_calmer_luci http://192.168.1.150/packages/luci
-src/gz chaos_calmer_management http://192.168.1.150/packages/management
-src/gz chaos_calmer_packages http://192.168.1.150/packages/packages
-src/gz chaos_calmer_routing http://192.168.1.150/packages/routing
-src/gz chaos_calmer_telephony http://192.168.1.150/packages/telephony
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">src</span><span class="sr">/gz chaos_calmer_base http://192.168.1.150/</span>packages/base
+<span class="k">src</span><span class="sr">/gz chaos_calmer_luci http://192.168.1.150/</span>packages/luci
+<span class="k">src</span><span class="sr">/gz chaos_calmer_management http://192.168.1.150/</span>packages/management
+<span class="k">src</span><span class="sr">/gz chaos_calmer_packages http://192.168.1.150/</span>packages/packages
+<span class="k">src</span><span class="sr">/gz chaos_calmer_routing http://192.168.1.150/</span>packages/routing
+<span class="k">src</span><span class="sr">/gz chaos_calmer_telephony http://192.168.1.150/</span>packages/telephony
 
-<pre><code class="language-sh">opkg update
-opkg install kmod-igb
-opkg install kmod-rt2800-pci
-opkg install luci
-reboot</code></pre>
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg <span class="nb">install </span>kmod-igb
+opkg <span class="nb">install </span>kmod-rt2800-pci
+opkg <span class="nb">install </span>luci
+reboot
+</code></pre></div></div>
 
 <p>启动的时候需要把网线从索泰H55主板板载网口拔下来，插到pcie网卡网口最上面一个，这是因为驱动装完以后，pcie网卡最上面网口变成了eth0，依次是eth1-3，而板载网卡变成了eth4.。。<br />
 重启后就可以识别所有的网口了。。。luci下wifi也有了</p>
@@ -204,7 +211,7 @@ reboot</code></pre>
 <p>4.进入luci设置wan和lan<br />
 win7电脑打开http://192.168.1.1，我是把eth0到eth2设为lan，把eth3设为wan1，eth4设为wan。。。。由于没有了switch，也没有vlan这个东东了，划分wan和lan变得异常简单。。。</p>
 
-<pre><code class="language-sh">root@OpenWrt:~# ifconfig
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@OpenWrt:~# ifconfig
 br-lan    Link encap:Ethernet  HWaddr 00:1B:21:A6:67:B8
           inet addr:192.168.1.1  Bcast:192.168.1.255  Mask:255.255.255.0
           inet6 addr: fe80::21b:21ff:fea6:67b8/64 Scope:Link
@@ -214,14 +221,14 @@ br-lan    Link encap:Ethernet  HWaddr 00:1B:21:A6:67:B8
           RX packets:30618 errors:0 dropped:0 overruns:0 frame:0
           TX packets:32759 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0
-          RX bytes:3533404 (3.3 MiB)  TX bytes:22726141 (21.6 MiB)
+          RX bytes:3533404 <span class="o">(</span>3.3 MiB<span class="o">)</span>  TX bytes:22726141 <span class="o">(</span>21.6 MiB<span class="o">)</span>
 
 eth0      Link encap:Ethernet  HWaddr 00:1B:21:A6:67:B8
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
           RX packets:31454 errors:0 dropped:0 overruns:0 frame:0
           TX packets:35833 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000
-          RX bytes:4148515 (3.9 MiB)  TX bytes:22881189 (21.8 MiB)
+          RX bytes:4148515 <span class="o">(</span>3.9 MiB<span class="o">)</span>  TX bytes:22881189 <span class="o">(</span>21.8 MiB<span class="o">)</span>
           Memory:fbd80000-fbdfffff
 
 eth1      Link encap:Ethernet  HWaddr 00:1B:21:A6:67:B9
@@ -229,7 +236,7 @@ eth1      Link encap:Ethernet  HWaddr 00:1B:21:A6:67:B9
           RX packets:0 errors:0 dropped:0 overruns:0 frame:0
           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          RX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>  TX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>
           Memory:fbc80000-fbcfffff
 
 eth2      Link encap:Ethernet  HWaddr 00:1B:21:A6:67:BA
@@ -237,7 +244,7 @@ eth2      Link encap:Ethernet  HWaddr 00:1B:21:A6:67:BA
           RX packets:0 errors:0 dropped:0 overruns:0 frame:0
           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+          RX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>  TX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>
           Memory:fbc00000-fbc7ffff
 
 eth3      Link encap:Ethernet  HWaddr 00:1B:21:A6:67:BB
@@ -247,7 +254,7 @@ eth3      Link encap:Ethernet  HWaddr 00:1B:21:A6:67:BB
           RX packets:19422 errors:0 dropped:0 overruns:0 frame:0
           TX packets:13547 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000
-          RX bytes:15933184 (15.1 MiB)  TX bytes:1741112 (1.6 MiB)
+          RX bytes:15933184 <span class="o">(</span>15.1 MiB<span class="o">)</span>  TX bytes:1741112 <span class="o">(</span>1.6 MiB<span class="o">)</span>
           Memory:fbb80000-fbbfffff
 
 eth4      Link encap:Ethernet  HWaddr 00:01:2E:2F:17:1C
@@ -256,7 +263,7 @@ eth4      Link encap:Ethernet  HWaddr 00:01:2E:2F:17:1C
           RX packets:9462 errors:0 dropped:0 overruns:0 frame:0
           TX packets:7873 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000
-          RX bytes:4387863 (4.1 MiB)  TX bytes:1012976 (989.2 KiB)
+          RX bytes:4387863 <span class="o">(</span>4.1 MiB<span class="o">)</span>  TX bytes:1012976 <span class="o">(</span>989.2 KiB<span class="o">)</span>
           Interrupt:20 Memory:fbac0000-fbae0000
 
 lo        Link encap:Local Loopback
@@ -266,46 +273,48 @@ lo        Link encap:Local Loopback
           RX packets:332 errors:0 dropped:0 overruns:0 frame:0
           TX packets:332 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0
-          RX bytes:23183 (22.6 KiB)  TX bytes:23183 (22.6 KiB)</code></pre>
+          RX bytes:23183 <span class="o">(</span>22.6 KiB<span class="o">)</span>  TX bytes:23183 <span class="o">(</span>22.6 KiB<span class="o">)</span>
+</code></pre></div></div>
 
 <p>root@OpenWrt:~# vi /etc/config/network</p>
 
-<pre><code class="language-sh">config interface 'loopback'
-        option ifname 'lo'
-        option proto 'static'
-        option ipaddr '127.0.0.1'
-        option netmask '255.0.0.0'
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config interface <span class="s1">'loopback'</span>
+        option ifname <span class="s1">'lo'</span>
+        option proto <span class="s1">'static'</span>
+        option ipaddr <span class="s1">'127.0.0.1'</span>
+        option netmask <span class="s1">'255.0.0.0'</span>
 
-config interface 'lan'
-        option type 'bridge'
-        option proto 'static'
-        option ipaddr '192.168.1.1'
-        option netmask '255.255.255.0'
-        option ip6assign '60'
-        option _orig_ifname 'eth0'
-        option _orig_bridge 'true'
-        option ifname 'eth0 eth1 eth2'
+config interface <span class="s1">'lan'</span>
+        option <span class="nb">type</span> <span class="s1">'bridge'</span>
+        option proto <span class="s1">'static'</span>
+        option ipaddr <span class="s1">'192.168.1.1'</span>
+        option netmask <span class="s1">'255.255.255.0'</span>
+        option ip6assign <span class="s1">'60'</span>
+        option _orig_ifname <span class="s1">'eth0'</span>
+        option _orig_bridge <span class="s1">'true'</span>
+        option ifname <span class="s1">'eth0 eth1 eth2'</span>
 
-config interface 'wan'
-        option proto 'dhcp'
-        option _orig_ifname 'eth1'
-        option _orig_bridge 'false'
-        option ifname 'eth4'
+config interface <span class="s1">'wan'</span>
+        option proto <span class="s1">'dhcp'</span>
+        option _orig_ifname <span class="s1">'eth1'</span>
+        option _orig_bridge <span class="s1">'false'</span>
+        option ifname <span class="s1">'eth4'</span>
 
-config interface 'wan6'
-        option proto 'dhcpv6'
-        option _orig_ifname 'eth1'
-        option _orig_bridge 'false'
-        option ifname 'eth4'
-        option reqaddress 'try'
-        option reqprefix 'auto'
+config interface <span class="s1">'wan6'</span>
+        option proto <span class="s1">'dhcpv6'</span>
+        option _orig_ifname <span class="s1">'eth1'</span>
+        option _orig_bridge <span class="s1">'false'</span>
+        option ifname <span class="s1">'eth4'</span>
+        option reqaddress <span class="s1">'try'</span>
+        option reqprefix <span class="s1">'auto'</span>
 
-config globals 'globals'
-        option ula_prefix 'fd8f:2b2d:8305::/48'
+config globals <span class="s1">'globals'</span>
+        option ula_prefix <span class="s1">'fd8f:2b2d:8305::/48'</span>
 
-config interface 'wan1'
-        option proto 'dhcp'
-        option ifname 'eth3'</code></pre>
+config interface <span class="s1">'wan1'</span>
+        option proto <span class="s1">'dhcp'</span>
+        option ifname <span class="s1">'eth3'</span>
+</code></pre></div></div>
 
 <p>5.如果要无线支持wpa加密要另外装wpa-supplicant还有hostapd</p>
 

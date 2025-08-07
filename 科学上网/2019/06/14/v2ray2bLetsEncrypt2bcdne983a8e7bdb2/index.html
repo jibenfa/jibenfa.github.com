@@ -123,106 +123,113 @@
 
 <p>一、vps部署Nginx和LetsEncrypt</p>
 
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 apt update
-apt install nginx -y
+apt <span class="nb">install </span>nginx <span class="nt">-y</span>
 apt-get update
-apt-get install software-properties-common
+apt-get <span class="nb">install </span>software-properties-common
 add-apt-repository universe
 add-apt-repository ppa：certbot/certbot
 apt-get update
-apt-get install certbot python-certbot-nginx 
-</code></pre>
+apt-get <span class="nb">install </span>certbot python-certbot-nginx 
+
+</code></pre></div></div>
 
 <p>自动安装Nginx证书：</p>
 
-<pre><code class="language-bash">
-certbot --nginx
-</code></pre>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+certbot <span class="nt">--nginx</span>
+
+</code></pre></div></div>
 
 <p>然后crontab -e增加计划任务，自动更新https证书</p>
 
-<pre><code class="language-bash">
-certbot renew --dry-run
-</code></pre>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+certbot renew <span class="nt">--dry-run</span>
+
+</code></pre></div></div>
 
 <p>二、vps配置Nginx和安装配置v2ray</p>
 
 <p>设置/etc/nginx/sites-enabled/default为：</p>
 
-<pre><code class="language-bash">
-server {
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+server <span class="o">{</span>
 
-        #index index.html index.htm index.nginx-debian.html;
-        server_name example.com; # managed by Certbot
+        <span class="c">#index index.html index.htm index.nginx-debian.html;</span>
+        server_name example.com<span class="p">;</span> <span class="c"># managed by Certbot</span>
 
 
         location /test
-        {
-           proxy_redirect off;
-           proxy_pass http://127.0.0.1:23456;
-           proxy_http_version 1.1;
-           proxy_set_header Upgrade $http_upgrade;
-           proxy_set_header Connection "upgrade";
-           proxy_set_header Host $http_host;
-        }
+        <span class="o">{</span>
+           proxy_redirect off<span class="p">;</span>
+           proxy_pass http://127.0.0.1:23456<span class="p">;</span>
+           proxy_http_version 1.1<span class="p">;</span>
+           proxy_set_header Upgrade <span class="nv">$http_upgrade</span><span class="p">;</span>
+           proxy_set_header Connection <span class="s2">"upgrade"</span><span class="p">;</span>
+           proxy_set_header Host <span class="nv">$http_host</span><span class="p">;</span>
+        <span class="o">}</span>
 
 
 
-    listen [::]:443 ssl ipv6only=on; # managed by Certbot
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-    ssl on;
+    listen <span class="o">[</span>::]:443 ssl <span class="nv">ipv6only</span><span class="o">=</span>on<span class="p">;</span> <span class="c"># managed by Certbot</span>
+    listen 443 ssl<span class="p">;</span> <span class="c"># managed by Certbot</span>
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem<span class="p">;</span> <span class="c"># managed by Certbot</span>
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem<span class="p">;</span> <span class="c"># managed by Certbot</span>
+    include /etc/letsencrypt/options-ssl-nginx.conf<span class="p">;</span> <span class="c"># managed by Certbot</span>
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem<span class="p">;</span> <span class="c"># managed by Certbot</span>
+    ssl on<span class="p">;</span>
 
-}
-</code></pre>
+<span class="o">}</span>
+
+</code></pre></div></div>
 
 <p>搞完以后，执行：</p>
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 service nginx restart
-</code></pre>
+
+</code></pre></div></div>
 
 <p>安装v2ray就不说了，服务端配置文件如下：</p>
 
-<pre><code class="language-bash">
-{
-  "inbounds": [
-    {
-      "port": 123456,
-      "listen":"127.0.0.1",
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
-          {
-            "id": "你的id",
-            "alterId": 64
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-        "path": "/test"
-        }
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "settings": {}
-    }
-  ]
-}
-</code></pre>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">{</span>
+  <span class="s2">"inbounds"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"port"</span>: 123456,
+      <span class="s2">"listen"</span>:<span class="s2">"127.0.0.1"</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"vmess"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{</span>
+        <span class="s2">"clients"</span>: <span class="o">[</span>
+          <span class="o">{</span>
+            <span class="s2">"id"</span>: <span class="s2">"你的id"</span>,
+            <span class="s2">"alterId"</span>: 64
+          <span class="o">}</span>
+        <span class="o">]</span>
+      <span class="o">}</span>,
+      <span class="s2">"streamSettings"</span>: <span class="o">{</span>
+        <span class="s2">"network"</span>: <span class="s2">"ws"</span>,
+        <span class="s2">"wsSettings"</span>: <span class="o">{</span>
+        <span class="s2">"path"</span>: <span class="s2">"/test"</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">"outbounds"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"protocol"</span>: <span class="s2">"freedom"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{}</span>
+    <span class="o">}</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
 
 <p>搞完以后，执行：</p>
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 service v2ray restart
-</code></pre>
+
+</code></pre></div></div>
 
 <p>三、在cloudflare上配置cdn
 不提了，说多泪，主要是:</p>
@@ -235,162 +242,163 @@ service v2ray restart
 
 <p>四、客户端配置v2ray</p>
 
-<pre><code class="language-bash">
-{
-  #这个配置项是结合chinadns使用的
-  "inbound": {
-    "protocol": "dokodemo-door",
-    "listen":"0.0.0.0",
-    "port": 5353,
-    "settings": {
-      "address": "8.8.8.8",
-      "port": 53,
-      "network": "udp",
-      "timeout": 0,
-      "followRedirect": false
-    }
-  },
-  "inboundDetour": [
-    {
-       "domainOverride": [
-        "http",
-        "tls"
-      ],
-      "protocol": "dokodemo-door",
-      "port": 1080,
-      "listen":"0.0.0.0",
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">{</span>
+  <span class="c">#这个配置项是结合chinadns使用的</span>
+  <span class="s2">"inbound"</span>: <span class="o">{</span>
+    <span class="s2">"protocol"</span>: <span class="s2">"dokodemo-door"</span>,
+    <span class="s2">"listen"</span>:<span class="s2">"0.0.0.0"</span>,
+    <span class="s2">"port"</span>: 5353,
+    <span class="s2">"settings"</span>: <span class="o">{</span>
+      <span class="s2">"address"</span>: <span class="s2">"8.8.8.8"</span>,
+      <span class="s2">"port"</span>: 53,
+      <span class="s2">"network"</span>: <span class="s2">"udp"</span>,
+      <span class="s2">"timeout"</span>: 0,
+      <span class="s2">"followRedirect"</span>: <span class="nb">false</span>
+    <span class="o">}</span>
+  <span class="o">}</span>,
+  <span class="s2">"inboundDetour"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+       <span class="s2">"domainOverride"</span>: <span class="o">[</span>
+        <span class="s2">"http"</span>,
+        <span class="s2">"tls"</span>
+      <span class="o">]</span>,
+      <span class="s2">"protocol"</span>: <span class="s2">"dokodemo-door"</span>,
+      <span class="s2">"port"</span>: 1080,
+      <span class="s2">"listen"</span>:<span class="s2">"0.0.0.0"</span>,
       
-      "settings": {
-        "network": "tcp",
-        "timeout": 30,
-        "followRedirect": true
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "protocol": "vmess",
-      "tag": "proxy",
-      "settings": {
-        "vnext": [
-          {
-            "address": "你的网址",
-            "port": 443,
-            "users": [
-              {
-                "id": "你的key",
-                "alterId": 64
-              }
-            ]
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "ws",
-        "security": "tls",
-        "wsSettings": {
-          "path": "/test"
-        }
-      }
-    }
-  ],
-  "outboundDetour": [
-    {
-      "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
-    }
-  ],
+      <span class="s2">"settings"</span>: <span class="o">{</span>
+        <span class="s2">"network"</span>: <span class="s2">"tcp"</span>,
+        <span class="s2">"timeout"</span>: 30,
+        <span class="s2">"followRedirect"</span>: <span class="nb">true</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">"outbounds"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"protocol"</span>: <span class="s2">"vmess"</span>,
+      <span class="s2">"tag"</span>: <span class="s2">"proxy"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{</span>
+        <span class="s2">"vnext"</span>: <span class="o">[</span>
+          <span class="o">{</span>
+            <span class="s2">"address"</span>: <span class="s2">"你的网址"</span>,
+            <span class="s2">"port"</span>: 443,
+            <span class="s2">"users"</span>: <span class="o">[</span>
+              <span class="o">{</span>
+                <span class="s2">"id"</span>: <span class="s2">"你的key"</span>,
+                <span class="s2">"alterId"</span>: 64
+              <span class="o">}</span>
+            <span class="o">]</span>
+          <span class="o">}</span>
+        <span class="o">]</span>
+      <span class="o">}</span>,
+      <span class="s2">"streamSettings"</span>: <span class="o">{</span>
+        <span class="s2">"network"</span>: <span class="s2">"ws"</span>,
+        <span class="s2">"security"</span>: <span class="s2">"tls"</span>,
+        <span class="s2">"wsSettings"</span>: <span class="o">{</span>
+          <span class="s2">"path"</span>: <span class="s2">"/test"</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">"outboundDetour"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"protocol"</span>: <span class="s2">"freedom"</span>,
+      <span class="s2">"settings"</span>: <span class="o">{}</span>,
+      <span class="s2">"tag"</span>: <span class="s2">"direct"</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
   
-  "routing": {
-    "strategy": "rules",
-    "settings": {
-      "domainStrategy": "IPIfNonMatch",
-      "rules": [
-          {
-           "type": "field",
-           "ip": [
-             "8.8.8.8/32",
-             "8.8.4.4/32",
-             "91.108.56.0/22",
-             "91.108.4.0/22",
-             "109.239.140.0/24",
-             "149.154.164.0/22",
-             "91.108.56.0/23",
-             "67.198.55.0/24",
-             "149.154.168.0/22",
-             "149.154.172.0/22"
-           ],
-           "outboundTag": "proxy"
-         },
-         {
-          "type": "field",
-          "domain": [
-            "googleapis.cn",
-            "google.cn",
-            "googleapis",
-            "google",
-            "domain:facebook.com",
-            "domain:github.com",
-            "domain:githubusercontent.com",
-            "youtube",
-            "twitter",
-            "instagram",
-            "gmail",
-            "v2ray.com",
-            "github.io",
-            "domain:twimg.com",
-            "domain:t.co"
-          ],
-          "outboundTag": "proxy"
-        },
-        {
-           "type": "field",           
-           "domain": [
-                "ext:h2y.dat:gfw"   #这个文件可以从https://github.com/ToutyRater/V2Ray-SiteDAT/tree/master/geofiles下载
-           ],
-           "outboundTag": "proxy"
-        },
-        {
-          "type": "field",
-          "domain": [
-            "geosite:cn",
-            "domain:你的网址"
-          ],
-          "outboundTag": "direct"
-        },
-        {
-          "type": "field",
-          "ip": [
-            "0.0.0.0/8",
-            "10.0.0.0/8",
-            "100.64.0.0/10",
-            "127.0.0.0/8",
-            "169.254.0.0/16",
-            "172.16.0.0/12",
-            "192.0.0.0/24",
-            "192.0.2.0/24",
-            "192.168.0.0/16",
-            "198.18.0.0/15",
-            "198.51.100.0/24",
-            "203.0.113.0/24",
-            "::1/128",
-            "fc00::/7",
-            "fe80::/10",
-            "geoip:cn"
-          ],
-          "outboundTag": "direct"
-        }
-      ]
-    }
-  },
-   "transport": {
-    "tcpSettings": {
-      "connectionReuse": true
-    }
-  }
-}
-</code></pre>
+  <span class="s2">"routing"</span>: <span class="o">{</span>
+    <span class="s2">"strategy"</span>: <span class="s2">"rules"</span>,
+    <span class="s2">"settings"</span>: <span class="o">{</span>
+      <span class="s2">"domainStrategy"</span>: <span class="s2">"IPIfNonMatch"</span>,
+      <span class="s2">"rules"</span>: <span class="o">[</span>
+          <span class="o">{</span>
+           <span class="s2">"type"</span>: <span class="s2">"field"</span>,
+           <span class="s2">"ip"</span>: <span class="o">[</span>
+             <span class="s2">"8.8.8.8/32"</span>,
+             <span class="s2">"8.8.4.4/32"</span>,
+             <span class="s2">"91.108.56.0/22"</span>,
+             <span class="s2">"91.108.4.0/22"</span>,
+             <span class="s2">"109.239.140.0/24"</span>,
+             <span class="s2">"149.154.164.0/22"</span>,
+             <span class="s2">"91.108.56.0/23"</span>,
+             <span class="s2">"67.198.55.0/24"</span>,
+             <span class="s2">"149.154.168.0/22"</span>,
+             <span class="s2">"149.154.172.0/22"</span>
+           <span class="o">]</span>,
+           <span class="s2">"outboundTag"</span>: <span class="s2">"proxy"</span>
+         <span class="o">}</span>,
+         <span class="o">{</span>
+          <span class="s2">"type"</span>: <span class="s2">"field"</span>,
+          <span class="s2">"domain"</span>: <span class="o">[</span>
+            <span class="s2">"googleapis.cn"</span>,
+            <span class="s2">"google.cn"</span>,
+            <span class="s2">"googleapis"</span>,
+            <span class="s2">"google"</span>,
+            <span class="s2">"domain:facebook.com"</span>,
+            <span class="s2">"domain:github.com"</span>,
+            <span class="s2">"domain:githubusercontent.com"</span>,
+            <span class="s2">"youtube"</span>,
+            <span class="s2">"twitter"</span>,
+            <span class="s2">"instagram"</span>,
+            <span class="s2">"gmail"</span>,
+            <span class="s2">"v2ray.com"</span>,
+            <span class="s2">"github.io"</span>,
+            <span class="s2">"domain:twimg.com"</span>,
+            <span class="s2">"domain:t.co"</span>
+          <span class="o">]</span>,
+          <span class="s2">"outboundTag"</span>: <span class="s2">"proxy"</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+           <span class="s2">"type"</span>: <span class="s2">"field"</span>,           
+           <span class="s2">"domain"</span>: <span class="o">[</span>
+                <span class="s2">"ext:h2y.dat:gfw"</span>   <span class="c">#这个文件可以从https://github.com/ToutyRater/V2Ray-SiteDAT/tree/master/geofiles下载</span>
+           <span class="o">]</span>,
+           <span class="s2">"outboundTag"</span>: <span class="s2">"proxy"</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+          <span class="s2">"type"</span>: <span class="s2">"field"</span>,
+          <span class="s2">"domain"</span>: <span class="o">[</span>
+            <span class="s2">"geosite:cn"</span>,
+            <span class="s2">"domain:你的网址"</span>
+          <span class="o">]</span>,
+          <span class="s2">"outboundTag"</span>: <span class="s2">"direct"</span>
+        <span class="o">}</span>,
+        <span class="o">{</span>
+          <span class="s2">"type"</span>: <span class="s2">"field"</span>,
+          <span class="s2">"ip"</span>: <span class="o">[</span>
+            <span class="s2">"0.0.0.0/8"</span>,
+            <span class="s2">"10.0.0.0/8"</span>,
+            <span class="s2">"100.64.0.0/10"</span>,
+            <span class="s2">"127.0.0.0/8"</span>,
+            <span class="s2">"169.254.0.0/16"</span>,
+            <span class="s2">"172.16.0.0/12"</span>,
+            <span class="s2">"192.0.0.0/24"</span>,
+            <span class="s2">"192.0.2.0/24"</span>,
+            <span class="s2">"192.168.0.0/16"</span>,
+            <span class="s2">"198.18.0.0/15"</span>,
+            <span class="s2">"198.51.100.0/24"</span>,
+            <span class="s2">"203.0.113.0/24"</span>,
+            <span class="s2">"::1/128"</span>,
+            <span class="s2">"fc00::/7"</span>,
+            <span class="s2">"fe80::/10"</span>,
+            <span class="s2">"geoip:cn"</span>
+          <span class="o">]</span>,
+          <span class="s2">"outboundTag"</span>: <span class="s2">"direct"</span>
+        <span class="o">}</span>
+      <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>,
+   <span class="s2">"transport"</span>: <span class="o">{</span>
+    <span class="s2">"tcpSettings"</span>: <span class="o">{</span>
+      <span class="s2">"connectionReuse"</span>: <span class="nb">true</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
 
 <p>五、openwrt上配置防火墙</p>
 

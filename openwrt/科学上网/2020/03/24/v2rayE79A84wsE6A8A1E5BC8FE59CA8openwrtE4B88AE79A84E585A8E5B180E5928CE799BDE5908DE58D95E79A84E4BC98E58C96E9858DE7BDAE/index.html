@@ -160,324 +160,323 @@
 
 <p>2.chinadns在openwrt的配置参考：</p>
 
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 config chinadns
-	option chnroute '/etc/chinadns_chnroute.txt'
-	option addr '0.0.0.0'
-	option enable '1'
-	option port '5454'
-	option server '114.114.114.114,127.0.0.1:5354'
-	option bidirectional '0'
-</code></pre>
+	option chnroute <span class="s1">'/etc/chinadns_chnroute.txt'</span>
+	option addr <span class="s1">'0.0.0.0'</span>
+	option <span class="nb">enable</span> <span class="s1">'1'</span>
+	option port <span class="s1">'5454'</span>
+	option server <span class="s1">'114.114.114.114,127.0.0.1:5354'</span>
+	option bidirectional <span class="s1">'0'</span>
+
+</code></pre></div></div>
 
 <p>3.v2ray在openwrt客户端的配置为：</p>
 
-<pre><code class="language-bash">
-{
-    "inbounds": [
-      {    
-        "protocol": "dokodemo-door",
-        "port": 1060,
-        "listen":"0.0.0.0",
-        "sniffing": {
-          "enabled": false,
-          "destOverride": ["http", "tls"]
-        },
-         "settings": {
-           "network": "tcp,udp",
-           "followRedirect": true 
-         },
-         "streamSettings": {
-              "sockopt": {
-              "tproxy": "redirect" 
-             }
-         }
-      },
-      {
-        "protocol": "dokodemo-door",
-        "listen":"0.0.0.0",
-        "port": 5354,
-        "settings": {
-          "address": "8.8.8.8",
-          "port": 53,
-          "network": "udp",
-          "timeout": 0,
-          "followRedirect": false
-        }
-      },
-      {
-        "protocol": "dokodemo-door",
-        "listen":"0.0.0.0",
-        "port": 5355,
-        "settings": {
-          "address": "8.8.8.8",
-          "port": 53,
-          "network": "udp",
-          "timeout": 0,
-          "followRedirect": false
-        }
-      },
-      {
-        "protocol": "dokodemo-door",
-        "listen":"0.0.0.0",
-        "port": 5356,
-        "settings": {
-          "address": "1.1.1.1",
-          "port": 53,
-          "network": "udp",
-          "timeout": 0,
-          "followRedirect": false
-        }
-      },
-      {
-        "protocol": "dokodemo-door",
-        "listen":"0.0.0.0",
-        "port": 5357,
-        "settings": {
-          "address": "8.8.4.4",
-          "port": 53,
-          "network": "udp",
-          "timeout": 0,
-          "followRedirect": false
-        }
-      }
-    ],
-    "outbounds": [
-      {
-        "protocol": "vmess",
-        "tag": "proxy",
-        "settings": {
-          "vnext": [
-            {
-              "address": "你的vps域名",
-              "port": 443,
-              "users": [
-                {
-                  "id": "你的uuid",
-                  "alterId": 64,
-                  "testsEnabled": "VMessAEAD"
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "security": "tls",
-          "wsSettings": {
-            "path": "你的路径"
-          },
-          "tcpSettings": {
-            "allowInsecureCiphers": false
-          }
-        }
-      }
-    ]
-  }
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">{</span>
+    <span class="s2">"inbounds"</span>: <span class="o">[</span>
+      <span class="o">{</span>    
+        <span class="s2">"protocol"</span>: <span class="s2">"dokodemo-door"</span>,
+        <span class="s2">"port"</span>: 1060,
+        <span class="s2">"listen"</span>:<span class="s2">"0.0.0.0"</span>,
+        <span class="s2">"sniffing"</span>: <span class="o">{</span>
+          <span class="s2">"enabled"</span>: <span class="nb">false</span>,
+          <span class="s2">"destOverride"</span>: <span class="o">[</span><span class="s2">"http"</span>, <span class="s2">"tls"</span><span class="o">]</span>
+        <span class="o">}</span>,
+         <span class="s2">"settings"</span>: <span class="o">{</span>
+           <span class="s2">"network"</span>: <span class="s2">"tcp,udp"</span>,
+           <span class="s2">"followRedirect"</span>: <span class="nb">true</span> 
+         <span class="o">}</span>,
+         <span class="s2">"streamSettings"</span>: <span class="o">{</span>
+              <span class="s2">"sockopt"</span>: <span class="o">{</span>
+              <span class="s2">"tproxy"</span>: <span class="s2">"redirect"</span> 
+             <span class="o">}</span>
+         <span class="o">}</span>
+      <span class="o">}</span>,
+      <span class="o">{</span>
+        <span class="s2">"protocol"</span>: <span class="s2">"dokodemo-door"</span>,
+        <span class="s2">"listen"</span>:<span class="s2">"0.0.0.0"</span>,
+        <span class="s2">"port"</span>: 5354,
+        <span class="s2">"settings"</span>: <span class="o">{</span>
+          <span class="s2">"address"</span>: <span class="s2">"8.8.8.8"</span>,
+          <span class="s2">"port"</span>: 53,
+          <span class="s2">"network"</span>: <span class="s2">"udp"</span>,
+          <span class="s2">"timeout"</span>: 0,
+          <span class="s2">"followRedirect"</span>: <span class="nb">false</span>
+        <span class="o">}</span>
+      <span class="o">}</span>,
+      <span class="o">{</span>
+        <span class="s2">"protocol"</span>: <span class="s2">"dokodemo-door"</span>,
+        <span class="s2">"listen"</span>:<span class="s2">"0.0.0.0"</span>,
+        <span class="s2">"port"</span>: 5355,
+        <span class="s2">"settings"</span>: <span class="o">{</span>
+          <span class="s2">"address"</span>: <span class="s2">"8.8.8.8"</span>,
+          <span class="s2">"port"</span>: 53,
+          <span class="s2">"network"</span>: <span class="s2">"udp"</span>,
+          <span class="s2">"timeout"</span>: 0,
+          <span class="s2">"followRedirect"</span>: <span class="nb">false</span>
+        <span class="o">}</span>
+      <span class="o">}</span>,
+      <span class="o">{</span>
+        <span class="s2">"protocol"</span>: <span class="s2">"dokodemo-door"</span>,
+        <span class="s2">"listen"</span>:<span class="s2">"0.0.0.0"</span>,
+        <span class="s2">"port"</span>: 5356,
+        <span class="s2">"settings"</span>: <span class="o">{</span>
+          <span class="s2">"address"</span>: <span class="s2">"1.1.1.1"</span>,
+          <span class="s2">"port"</span>: 53,
+          <span class="s2">"network"</span>: <span class="s2">"udp"</span>,
+          <span class="s2">"timeout"</span>: 0,
+          <span class="s2">"followRedirect"</span>: <span class="nb">false</span>
+        <span class="o">}</span>
+      <span class="o">}</span>,
+      <span class="o">{</span>
+        <span class="s2">"protocol"</span>: <span class="s2">"dokodemo-door"</span>,
+        <span class="s2">"listen"</span>:<span class="s2">"0.0.0.0"</span>,
+        <span class="s2">"port"</span>: 5357,
+        <span class="s2">"settings"</span>: <span class="o">{</span>
+          <span class="s2">"address"</span>: <span class="s2">"8.8.4.4"</span>,
+          <span class="s2">"port"</span>: 53,
+          <span class="s2">"network"</span>: <span class="s2">"udp"</span>,
+          <span class="s2">"timeout"</span>: 0,
+          <span class="s2">"followRedirect"</span>: <span class="nb">false</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">"outbounds"</span>: <span class="o">[</span>
+      <span class="o">{</span>
+        <span class="s2">"protocol"</span>: <span class="s2">"vmess"</span>,
+        <span class="s2">"tag"</span>: <span class="s2">"proxy"</span>,
+        <span class="s2">"settings"</span>: <span class="o">{</span>
+          <span class="s2">"vnext"</span>: <span class="o">[</span>
+            <span class="o">{</span>
+              <span class="s2">"address"</span>: <span class="s2">"你的vps域名"</span>,
+              <span class="s2">"port"</span>: 443,
+              <span class="s2">"users"</span>: <span class="o">[</span>
+                <span class="o">{</span>
+                  <span class="s2">"id"</span>: <span class="s2">"你的uuid"</span>,
+                  <span class="s2">"alterId"</span>: 64,
+                  <span class="s2">"testsEnabled"</span>: <span class="s2">"VMessAEAD"</span>
+                <span class="o">}</span>
+              <span class="o">]</span>
+            <span class="o">}</span>
+          <span class="o">]</span>
+        <span class="o">}</span>,
+        <span class="s2">"streamSettings"</span>: <span class="o">{</span>
+          <span class="s2">"network"</span>: <span class="s2">"ws"</span>,
+          <span class="s2">"security"</span>: <span class="s2">"tls"</span>,
+          <span class="s2">"wsSettings"</span>: <span class="o">{</span>
+            <span class="s2">"path"</span>: <span class="s2">"你的路径"</span>
+          <span class="o">}</span>,
+          <span class="s2">"tcpSettings"</span>: <span class="o">{</span>
+            <span class="s2">"allowInsecureCiphers"</span>: <span class="nb">false</span>
+          <span class="o">}</span>
+        <span class="o">}</span>
+      <span class="o">}</span>
+    <span class="o">]</span>
+  <span class="o">}</span>
   
   
   
-</code></pre>
+
+</code></pre></div></div>
 
 <p>4.新建luci菜单配置v2ray：</p>
 
 <p>(1).新建/etc/config/advancedconfig，内容为：</p>
 
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 config arguments
 
 config rules
-	option v2raymode 'gfwlist'
+	option v2raymode <span class="s1">'gfwlist'</span>
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>(2)新建/usr/lib/lua/luci/controller/advancedconfig.lua，内容为：</p>
 
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
---/usr/lib/lua/luci/controller/advancedconfig.lua
-module("luci.controller.advancedconfig", package.seeall)
-function index()
-        if not nixio.fs.access("/etc/config/advancedconfig") then
+<span class="nt">--</span>/usr/lib/lua/luci/controller/advancedconfig.lua
+module<span class="o">(</span><span class="s2">"luci.controller.advancedconfig"</span>, package.seeall<span class="o">)</span>
+<span class="k">function </span>index<span class="o">()</span>
+        <span class="k">if </span>not nixio.fs.access<span class="o">(</span><span class="s2">"/etc/config/advancedconfig"</span><span class="o">)</span> <span class="k">then
                 return
-        end
-        page = entry({"admin", "services", "advancedconfig"},
-		cbi("advancedconfig"),
-		_("高级设置"), 70)
-	page.dependent = true
-	page.acl_depends = { "luci-app-firewall" }
+        </span>end
+        page <span class="o">=</span> entry<span class="o">({</span><span class="s2">"admin"</span>, <span class="s2">"services"</span>, <span class="s2">"advancedconfig"</span><span class="o">}</span>,
+		cbi<span class="o">(</span><span class="s2">"advancedconfig"</span><span class="o">)</span>,
+		_<span class="o">(</span><span class="s2">"高级设置"</span><span class="o">)</span>, 70<span class="o">)</span>
+	page.dependent <span class="o">=</span> <span class="nb">true
+	</span>page.acl_depends <span class="o">=</span> <span class="o">{</span> <span class="s2">"luci-app-firewall"</span> <span class="o">}</span>
 end
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>(3).新建/usr/lib/lua/luci/model/cbi/advancedconfig.lua，内容为：</p>
 
-<pre><code class="language-bash">
---/usr/lib/lua/luci/model/cbi/advancedconfig.lua
-local fs = require "nixio.fs"
+<div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">--/usr/lib/lua/luci/model/cbi/advancedconfig.lua</span>
+<span class="kd">local</span> <span class="n">fs</span> <span class="o">=</span> <span class="nb">require</span> <span class="s2">"nixio.fs"</span>
 
-m=Map("advancedconfig",translate("高级设置"), translate("各类服务内置脚本文档的直接编辑，要求必须提前安装v2ray，chinadns，dnsmasq-full，否则功能会不正常"))
-s=m:section(TypedSection,"arguments","")
-s.addremove=false
-s.anonymous=true
-
-
---配置1开始
-if nixio.fs.access("/etc/dnsmasq.d/custom.conf") then
-s:tab("config1", translate("编辑gfwlist自定义解析文件"),translate("<p>本页是编辑/etc/dnsmasq.d/custom.conf的内容，gfwlist中的固定网站已经添加，此文件是额外的自定义解析文件，示例：<p> 1.在gfwlist白名单模式下，如要添加xxx.com网站走代理，则增加两行：<p> server=/xxx.com/127.0.0.1#5353 <p> ipset=/xxx.com/gfwlist <p>（其中5353是chinadns上游服务器的监听端口）。<p> 2.在gfwlist白名单模式下，如果要添加333.com 直连不走代理，则增加一行：<p> server=/333.com/114.114.114.114 <p>3.在任何一种模式下如需防止bbb.com的dns查询泄露，则增加一行：<p> server=/bbb.com/127.0.0.1#5353 <p>（其中5353是chinadns上游服务器的监听端口）。<p> "))
-view_cfg1 = s:taboption("config1", TextValue, "editconf1", nil, translate("每行开头的符号（＃）被视为注释；删除（#）启用指定选项。"))
-
-view_cfg1.rmempty = false
-view_cfg1.rows = 30
-
-function view_cfg1.cfgvalue(self, section)
-    return nixio.fs.readfile("/etc/dnsmasq.d/custom.conf") or ""
-end
-
-function view_cfg1.write(self, section, value)
-    if value then
-        value = value:gsub("\r\n?", "\n")
-	      local old_value = nixio.fs.readfile("/etc/dnsmasq.d/custom.conf")
-	      if value ~= old_value then
-		       nixio.fs.writefile("/etc/dnsmasq.d/custom.conf", value)
-           luci.sys.call("/etc/init.d/dnsmasq restart &gt;/dev/null")
-        end
-    end
-end
-
-end
---配置1结束
-
---配置2开始
-if nixio.fs.access("/etc/config/v2ray.json") then
-s:tab("config2", translate("编辑v2ray配置文件"),translate("<p>本页是编辑/etc/config/v2ray.json的内容。<p>"))
-
-view_cfg2 = s:taboption("config2", TextValue, "editconf2", nil, translate("每行开头的符号（＃）被视为注释；删除（#）启用指定选项。"))
-
-view_cfg2.rmempty = false
-view_cfg2.rows = 30
+<span class="n">m</span><span class="o">=</span><span class="n">Map</span><span class="p">(</span><span class="s2">"advancedconfig"</span><span class="p">,</span><span class="n">translate</span><span class="p">(</span><span class="s2">"高级设置"</span><span class="p">),</span> <span class="n">translate</span><span class="p">(</span><span class="s2">"各类服务内置脚本文档的直接编辑，要求必须提前安装v2ray，chinadns，dnsmasq-full，否则功能会不正常"</span><span class="p">))</span>
+<span class="n">s</span><span class="o">=</span><span class="n">m</span><span class="p">:</span><span class="n">section</span><span class="p">(</span><span class="n">TypedSection</span><span class="p">,</span><span class="s2">"arguments"</span><span class="p">,</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">s</span><span class="p">.</span><span class="n">addremove</span><span class="o">=</span><span class="kc">false</span>
+<span class="n">s</span><span class="p">.</span><span class="n">anonymous</span><span class="o">=</span><span class="kc">true</span>
 
 
-function view_cfg2.cfgvalue(self, section)
-    return nixio.fs.readfile("/etc/config/v2ray.json") or ""
-end
+<span class="c1">--配置1开始</span>
+<span class="k">if</span> <span class="n">nixio</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">access</span><span class="p">(</span><span class="s2">"/etc/dnsmasq.d/custom.conf"</span><span class="p">)</span> <span class="k">then</span>
+<span class="n">s</span><span class="p">:</span><span class="n">tab</span><span class="p">(</span><span class="s2">"config1"</span><span class="p">,</span> <span class="n">translate</span><span class="p">(</span><span class="s2">"编辑gfwlist自定义解析文件"</span><span class="p">),</span><span class="n">translate</span><span class="p">(</span><span class="s2">"&lt;p&gt;本页是编辑/etc/dnsmasq.d/custom.conf的内容，gfwlist中的固定网站已经添加，此文件是额外的自定义解析文件，示例：&lt;p&gt; 1.在gfwlist白名单模式下，如要添加xxx.com网站走代理，则增加两行：&lt;p&gt; server=/xxx.com/127.0.0.1#5353 &lt;p&gt; ipset=/xxx.com/gfwlist &lt;p&gt;（其中5353是chinadns上游服务器的监听端口）。&lt;p&gt; 2.在gfwlist白名单模式下，如果要添加333.com 直连不走代理，则增加一行：&lt;p&gt; server=/333.com/114.114.114.114 &lt;p&gt;3.在任何一种模式下如需防止bbb.com的dns查询泄露，则增加一行：&lt;p&gt; server=/bbb.com/127.0.0.1#5353 &lt;p&gt;（其中5353是chinadns上游服务器的监听端口）。&lt;p&gt; "</span><span class="p">))</span>
+<span class="n">view_cfg1</span> <span class="o">=</span> <span class="n">s</span><span class="p">:</span><span class="n">taboption</span><span class="p">(</span><span class="s2">"config1"</span><span class="p">,</span> <span class="n">TextValue</span><span class="p">,</span> <span class="s2">"editconf1"</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">translate</span><span class="p">(</span><span class="s2">"每行开头的符号（＃）被视为注释；删除（#）启用指定选项。"</span><span class="p">))</span>
 
-function view_cfg2.write(self, section, value)
-    if value then
-        value = value:gsub("\r\n?", "\n")
-	      local old_value = nixio.fs.readfile("/etc/config/v2ray.json")
-	      if value ~= old_value then
-		       nixio.fs.writefile("/etc/config/v2ray.json", value)
-           luci.sys.call("/etc/init.d/v2ray restart &gt;/dev/null")
-        end
-    end
-end
+<span class="n">view_cfg1</span><span class="p">.</span><span class="n">rmempty</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="n">view_cfg1</span><span class="p">.</span><span class="n">rows</span> <span class="o">=</span> <span class="mi">30</span>
 
-end
---配置2结束
+<span class="k">function</span> <span class="nc">view_cfg1</span><span class="p">.</span><span class="nf">cfgvalue</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">nixio</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">readfile</span><span class="p">(</span><span class="s2">"/etc/dnsmasq.d/custom.conf"</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">""</span>
+<span class="k">end</span>
 
+<span class="k">function</span> <span class="nc">view_cfg1</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="k">then</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">:</span><span class="nb">gsub</span><span class="p">(</span><span class="sr">"</span><span class="se">\r\n?</span><span class="sr">"</span><span class="p">,</span> <span class="sr">"</span><span class="se">\n</span><span class="sr">"</span><span class="p">)</span>
+	      <span class="kd">local</span> <span class="n">old_value</span> <span class="o">=</span> <span class="n">nixio</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">readfile</span><span class="p">(</span><span class="s2">"/etc/dnsmasq.d/custom.conf"</span><span class="p">)</span>
+	      <span class="k">if</span> <span class="n">value</span> <span class="o">~=</span> <span class="n">old_value</span> <span class="k">then</span>
+		       <span class="n">nixio</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">writefile</span><span class="p">(</span><span class="s2">"/etc/dnsmasq.d/custom.conf"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+           <span class="n">luci</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"/etc/init.d/dnsmasq restart &gt;/dev/null"</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
 
-s2=m:section(TypedSection,"rules","")
-s2.addremove=false
-s2.anonymous=true
-s2:tab("config3", translate("选择v2ray的运行模式"),translate("<p>本模块是选择v2ray的运行模式，支持三种模式：白名单模式，境外全局代理模式，墙内上网模式。<p>"))
-c = s2:taboption("config3", ListValue, "v2raymode",nil ,translate("代理模式：白名单模式速度较快，但未添加的被墙网站打不开，境外全局代理模式速度较慢，但所有网站都能打开"))
-c:value("gfwlist", translate("白名单模式"))
-c:value("outlands", translate("境外全局模式"))
-c:value("ingfw", translate("墙内上网模式"))
-c.default = "gfwlist"
+<span class="k">end</span>
+<span class="c1">--配置1结束</span>
 
-function c.write(self, section, value)   
-    ListValue.write(self, section, value)
-    nixio.fs.writefile("/tmp/v2raymode.txt", value)
-    if value ~= "ingfw" then
-        luci.sys.call("/etc/init.d/v2ray restart &gt;/dev/null")
-    else
-        luci.sys.call("/etc/init.d/v2ray stop &gt;/dev/null")
-    end
-end
+<span class="c1">--配置2开始</span>
+<span class="k">if</span> <span class="n">nixio</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">access</span><span class="p">(</span><span class="s2">"/etc/config/v2ray.json"</span><span class="p">)</span> <span class="k">then</span>
+<span class="n">s</span><span class="p">:</span><span class="n">tab</span><span class="p">(</span><span class="s2">"config2"</span><span class="p">,</span> <span class="n">translate</span><span class="p">(</span><span class="s2">"编辑v2ray配置文件"</span><span class="p">),</span><span class="n">translate</span><span class="p">(</span><span class="s2">"&lt;p&gt;本页是编辑/etc/config/v2ray.json的内容。&lt;p&gt;"</span><span class="p">))</span>
 
-return m
+<span class="n">view_cfg2</span> <span class="o">=</span> <span class="n">s</span><span class="p">:</span><span class="n">taboption</span><span class="p">(</span><span class="s2">"config2"</span><span class="p">,</span> <span class="n">TextValue</span><span class="p">,</span> <span class="s2">"editconf2"</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">translate</span><span class="p">(</span><span class="s2">"每行开头的符号（＃）被视为注释；删除（#）启用指定选项。"</span><span class="p">))</span>
+
+<span class="n">view_cfg2</span><span class="p">.</span><span class="n">rmempty</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="n">view_cfg2</span><span class="p">.</span><span class="n">rows</span> <span class="o">=</span> <span class="mi">30</span>
 
 
-&lt;/code&gt;&lt;/pre&gt;
+<span class="k">function</span> <span class="nc">view_cfg2</span><span class="p">.</span><span class="nf">cfgvalue</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">nixio</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">readfile</span><span class="p">(</span><span class="s2">"/etc/config/v2ray.json"</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">""</span>
+<span class="k">end</span>
+
+<span class="k">function</span> <span class="nc">view_cfg2</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="k">then</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">:</span><span class="nb">gsub</span><span class="p">(</span><span class="sr">"</span><span class="se">\r\n?</span><span class="sr">"</span><span class="p">,</span> <span class="sr">"</span><span class="se">\n</span><span class="sr">"</span><span class="p">)</span>
+	      <span class="kd">local</span> <span class="n">old_value</span> <span class="o">=</span> <span class="n">nixio</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">readfile</span><span class="p">(</span><span class="s2">"/etc/config/v2ray.json"</span><span class="p">)</span>
+	      <span class="k">if</span> <span class="n">value</span> <span class="o">~=</span> <span class="n">old_value</span> <span class="k">then</span>
+		       <span class="n">nixio</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">writefile</span><span class="p">(</span><span class="s2">"/etc/config/v2ray.json"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+           <span class="n">luci</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"/etc/init.d/v2ray restart &gt;/dev/null"</span><span class="p">)</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">end</span>
+<span class="c1">--配置2结束</span>
 
 
-重头戏来了~~~~
+<span class="n">s2</span><span class="o">=</span><span class="n">m</span><span class="p">:</span><span class="n">section</span><span class="p">(</span><span class="n">TypedSection</span><span class="p">,</span><span class="s2">"rules"</span><span class="p">,</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">s2</span><span class="p">.</span><span class="n">addremove</span><span class="o">=</span><span class="kc">false</span>
+<span class="n">s2</span><span class="p">.</span><span class="n">anonymous</span><span class="o">=</span><span class="kc">true</span>
+<span class="n">s2</span><span class="p">:</span><span class="n">tab</span><span class="p">(</span><span class="s2">"config3"</span><span class="p">,</span> <span class="n">translate</span><span class="p">(</span><span class="s2">"选择v2ray的运行模式"</span><span class="p">),</span><span class="n">translate</span><span class="p">(</span><span class="s2">"&lt;p&gt;本模块是选择v2ray的运行模式，支持三种模式：白名单模式，境外全局代理模式，墙内上网模式。&lt;p&gt;"</span><span class="p">))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">s2</span><span class="p">:</span><span class="n">taboption</span><span class="p">(</span><span class="s2">"config3"</span><span class="p">,</span> <span class="n">ListValue</span><span class="p">,</span> <span class="s2">"v2raymode"</span><span class="p">,</span><span class="kc">nil</span> <span class="p">,</span><span class="n">translate</span><span class="p">(</span><span class="s2">"代理模式：白名单模式速度较快，但未添加的被墙网站打不开，境外全局代理模式速度较慢，但所有网站都能打开"</span><span class="p">))</span>
+<span class="n">c</span><span class="p">:</span><span class="n">value</span><span class="p">(</span><span class="s2">"gfwlist"</span><span class="p">,</span> <span class="n">translate</span><span class="p">(</span><span class="s2">"白名单模式"</span><span class="p">))</span>
+<span class="n">c</span><span class="p">:</span><span class="n">value</span><span class="p">(</span><span class="s2">"outlands"</span><span class="p">,</span> <span class="n">translate</span><span class="p">(</span><span class="s2">"境外全局模式"</span><span class="p">))</span>
+<span class="n">c</span><span class="p">:</span><span class="n">value</span><span class="p">(</span><span class="s2">"ingfw"</span><span class="p">,</span> <span class="n">translate</span><span class="p">(</span><span class="s2">"墙内上网模式"</span><span class="p">))</span>
+<span class="n">c</span><span class="p">.</span><span class="n">default</span> <span class="o">=</span> <span class="s2">"gfwlist"</span>
 
-5.在openwrt上修改/etc/init.d/v2ray，（注意要提前安装好：chinadns,v2ray,dnsmasq-full,coreutils-nohup），内容为：
+<span class="k">function</span> <span class="nc">c</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>   
+    <span class="n">ListValue</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="n">nixio</span><span class="p">.</span><span class="n">fs</span><span class="p">.</span><span class="n">writefile</span><span class="p">(</span><span class="s2">"/tmp/v2raymode.txt"</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">~=</span> <span class="s2">"ingfw"</span> <span class="k">then</span>
+        <span class="n">luci</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"/etc/init.d/v2ray restart &gt;/dev/null"</span><span class="p">)</span>
+    <span class="k">else</span>
+        <span class="n">luci</span><span class="p">.</span><span class="n">sys</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"/etc/init.d/v2ray stop &gt;/dev/null"</span><span class="p">)</span>
+    <span class="k">end</span>
+<span class="k">end</span>
 
+<span class="k">return</span> <span class="n">m</span>
+</code></pre></div></div>
 
-<pre><code class="language-bash">
-#!/bin/sh /etc/rc.common
-#
-# This is free software, licensed under the GNU General Public License v3.
-# See /LICENSE for more information.
-#
-# To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first
-#
-START=90
+<p>重头戏来了~~~~</p>
 
-USE_PROCD=1
-LimitNOFILE=1048576
-LimitNPROC=512
+<p>5.在openwrt上修改/etc/init.d/v2ray，（注意要提前安装好：chinadns,v2ray,dnsmasq-full,coreutils-nohup），内容为：</p>
 
-DOMAIN="v2ray的vps的ip"
-domestic_dns_1="114.114.114.114"
-domestic_dns_2="119.29.29.29"
-domestic_dns_3="223.5.5.5"
-domestic_dns_4="180.76.76.76"
-localip="127.0.0.1"
-chinadns_port_2="5555"
-chinadns_port_3="5656"
-chinadns_port_4="5757"
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c">#!/bin/sh /etc/rc.common</span>
+<span class="c">#</span>
+<span class="c"># This is free software, licensed under the GNU General Public License v3.</span>
+<span class="c"># See /LICENSE for more information.</span>
+<span class="c">#</span>
+<span class="c"># To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first</span>
+<span class="c">#</span>
+<span class="nv">START</span><span class="o">=</span>90
 
-set_multi_domestic_dns() {
-    current_dns_list=`uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null`
-    if [ x${domestic_dns_1:0:15} != x${current_dns_list:0:15} ]; then
-        echo "setting domestic dns" 
-        uci -q delete dhcp.@dnsmasq[0].server
-        uci add_list dhcp.@dnsmasq[0].server=${domestic_dns_1}
-        uci add_list dhcp.@dnsmasq[0].server=${domestic_dns_2}
-        uci add_list dhcp.@dnsmasq[0].server=${domestic_dns_3}
-        uci add_list dhcp.@dnsmasq[0].server=${domestic_dns_4}
-        uci set dhcp.@dnsmasq[0].noresolv=0
-        uci set dhcp.@dnsmasq[0].nohosts=0
+<span class="nv">USE_PROCD</span><span class="o">=</span>1
+<span class="nv">LimitNOFILE</span><span class="o">=</span>1048576
+<span class="nv">LimitNPROC</span><span class="o">=</span>512
+
+<span class="nv">DOMAIN</span><span class="o">=</span><span class="s2">"v2ray的vps的ip"</span>
+<span class="nv">domestic_dns_1</span><span class="o">=</span><span class="s2">"114.114.114.114"</span>
+<span class="nv">domestic_dns_2</span><span class="o">=</span><span class="s2">"119.29.29.29"</span>
+<span class="nv">domestic_dns_3</span><span class="o">=</span><span class="s2">"223.5.5.5"</span>
+<span class="nv">domestic_dns_4</span><span class="o">=</span><span class="s2">"180.76.76.76"</span>
+<span class="nv">localip</span><span class="o">=</span><span class="s2">"127.0.0.1"</span>
+<span class="nv">chinadns_port_2</span><span class="o">=</span><span class="s2">"5555"</span>
+<span class="nv">chinadns_port_3</span><span class="o">=</span><span class="s2">"5656"</span>
+<span class="nv">chinadns_port_4</span><span class="o">=</span><span class="s2">"5757"</span>
+
+set_multi_domestic_dns<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">current_dns_list</span><span class="o">=</span><span class="sb">`</span>uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null<span class="sb">`</span>
+    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">domestic_dns_1</span>:0:15<span class="k">}</span> <span class="o">!=</span> x<span class="k">${</span><span class="nv">current_dns_list</span>:0:15<span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"setting domestic dns"</span> 
+        uci <span class="nt">-q</span> delete dhcp.@dnsmasq[0].server
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="k">${</span><span class="nv">domestic_dns_1</span><span class="k">}</span>
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="k">${</span><span class="nv">domestic_dns_2</span><span class="k">}</span>
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="k">${</span><span class="nv">domestic_dns_3</span><span class="k">}</span>
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="k">${</span><span class="nv">domestic_dns_4</span><span class="k">}</span>
+        uci <span class="nb">set </span>dhcp.@dnsmasq[0].noresolv<span class="o">=</span>0
+        uci <span class="nb">set </span>dhcp.@dnsmasq[0].nohosts<span class="o">=</span>0
         uci commit dhcp
         /etc/init.d/dnsmasq restart 1&gt;/dev/null 2&gt;&amp;1
-        echo "done"
-    fi
-}
+        <span class="nb">echo</span> <span class="s2">"done"</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
 
-set_multi_foreign_dns() {
-    current_dns_list=`uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null`
-    if [ x${localip:0:9} != x${current_dns_list:0:9} ]; then
-        echo "setting foreign dns"
-        chinadns_port=`uci get chinadns.@chinadns[0].port 2&gt;/dev/null`
-        chinadns_listen_ipport=${localip}"#"${chinadns_port}
-        uci -q delete dhcp.@dnsmasq[0].server
-        uci add_list dhcp.@dnsmasq[0].server=${chinadns_listen_ipport}
-        uci add_list dhcp.@dnsmasq[0].server="${localip}#${chinadns_port_2}"
-        uci add_list dhcp.@dnsmasq[0].server="${localip}#${chinadns_port_3}"
-        uci add_list dhcp.@dnsmasq[0].server="${localip}#${chinadns_port_4}"
-        uci set dhcp.@dnsmasq[0].noresolv=1
-        uci set dhcp.@dnsmasq[0].nohosts=1
+set_multi_foreign_dns<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">current_dns_list</span><span class="o">=</span><span class="sb">`</span>uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null<span class="sb">`</span>
+    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">localip</span>:0:9<span class="k">}</span> <span class="o">!=</span> x<span class="k">${</span><span class="nv">current_dns_list</span>:0:9<span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"setting foreign dns"</span>
+        <span class="nv">chinadns_port</span><span class="o">=</span><span class="sb">`</span>uci get chinadns.@chinadns[0].port 2&gt;/dev/null<span class="sb">`</span>
+        <span class="nv">chinadns_listen_ipport</span><span class="o">=</span><span class="k">${</span><span class="nv">localip</span><span class="k">}</span><span class="s2">"#"</span><span class="k">${</span><span class="nv">chinadns_port</span><span class="k">}</span>
+        uci <span class="nt">-q</span> delete dhcp.@dnsmasq[0].server
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="k">${</span><span class="nv">chinadns_listen_ipport</span><span class="k">}</span>
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">localip</span><span class="k">}</span><span class="s2">#</span><span class="k">${</span><span class="nv">chinadns_port_2</span><span class="k">}</span><span class="s2">"</span>
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">localip</span><span class="k">}</span><span class="s2">#</span><span class="k">${</span><span class="nv">chinadns_port_3</span><span class="k">}</span><span class="s2">"</span>
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">localip</span><span class="k">}</span><span class="s2">#</span><span class="k">${</span><span class="nv">chinadns_port_4</span><span class="k">}</span><span class="s2">"</span>
+        uci <span class="nb">set </span>dhcp.@dnsmasq[0].noresolv<span class="o">=</span>1
+        uci <span class="nb">set </span>dhcp.@dnsmasq[0].nohosts<span class="o">=</span>1
         uci commit dhcp
         /etc/init.d/dnsmasq restart 1&gt;/dev/null 2&gt;&amp;1
-        echo "done"
-    fi
-}
+        <span class="nb">echo</span> <span class="s2">"done"</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
 
-create_bypasslist(){
-    ##########################################################################################################  
-    bypasscount=`ipset list bypasslist | wc -l`    
+create_bypasslist<span class="o">(){</span>
+    <span class="c">##########################################################################################################  </span>
+    <span class="nv">bypasscount</span><span class="o">=</span><span class="sb">`</span>ipset list bypasslist | <span class="nb">wc</span> <span class="nt">-l</span><span class="sb">`</span>    
       
-    if [ $bypasscount -le 1 ]; then
-        #create ipset list
-        ipset create bypasslist hash:net family inet hashsize 1024 maxelem 65535
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$bypasscount</span> <span class="nt">-le</span> 1 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="c">#create ipset list</span>
+        ipset create bypasslist <span class="nb">hash</span>:net family inet hashsize 1024 maxelem 65535
           
-        #add private address
+        <span class="c">#add private address</span>
         ipset add bypasslist 0.0.0.0/8
         ipset add bypasslist 10.0.0.0/8
         ipset add bypasslist 127.0.0.0/8
@@ -487,35 +486,35 @@ create_bypasslist(){
         ipset add bypasslist 224.0.0.0/4
         ipset add bypasslist 240.0.0.0/4
           
-        #add china ip list from apnic
-        for line in $(cat /etc/chinadns_chnroute.txt)
-        do
-            ipset add bypasslist $line
-        done
-    fi
+        <span class="c">#add china ip list from apnic</span>
+        <span class="k">for </span>line <span class="k">in</span> <span class="si">$(</span><span class="nb">cat</span> /etc/chinadns_chnroute.txt<span class="si">)</span>
+        <span class="k">do
+            </span>ipset add bypasslist <span class="nv">$line</span>
+        <span class="k">done
+    fi</span>
 
-    #by pass vps server ip
-    sleep 1
-    #SIP=` ping ${DOMAIN} -c 1 |awk 'NR==2 {print $4}' |awk -F ':' '{print $1}'`
-    SIP=`dig +short ${DOMAIN} @${domestic_dns_1}`
-    if [ x"${SIP}" != x ]; then
-        for eachip in ${SIP}
-        do
-            #echo "${eachip}"
-            ipset add bypasslist ${eachip}
-        done
-    fi
-    ##########################################################################################################
-}
+    <span class="c">#by pass vps server ip</span>
+    <span class="nb">sleep </span>1
+    <span class="c">#SIP=` ping ${DOMAIN} -c 1 |awk 'NR==2 {print $4}' |awk -F ':' '{print $1}'`</span>
+    <span class="nv">SIP</span><span class="o">=</span><span class="sb">`</span>dig +short <span class="k">${</span><span class="nv">DOMAIN</span><span class="k">}</span> @<span class="k">${</span><span class="nv">domestic_dns_1</span><span class="k">}</span><span class="sb">`</span>
+    <span class="k">if</span> <span class="o">[</span> x<span class="s2">"</span><span class="k">${</span><span class="nv">SIP</span><span class="k">}</span><span class="s2">"</span> <span class="o">!=</span> x <span class="o">]</span><span class="p">;</span> <span class="k">then
+        for </span>eachip <span class="k">in</span> <span class="k">${</span><span class="nv">SIP</span><span class="k">}</span>
+        <span class="k">do</span>
+            <span class="c">#echo "${eachip}"</span>
+            ipset add bypasslist <span class="k">${</span><span class="nv">eachip</span><span class="k">}</span>
+        <span class="k">done
+    fi</span>
+    <span class="c">##########################################################################################################</span>
+<span class="o">}</span>
 
-create_gfwlist(){
-    ##########################################################################################################
-    gfcount=`ipset list gfwlist | wc -l`    
+create_gfwlist<span class="o">(){</span>
+    <span class="c">##########################################################################################################</span>
+    <span class="nv">gfcount</span><span class="o">=</span><span class="sb">`</span>ipset list gfwlist | <span class="nb">wc</span> <span class="nt">-l</span><span class="sb">`</span>    
       
-    if [ $gfcount -le 1 ]; then
-        ipset -N gfwlist iphash
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$gfcount</span> <span class="nt">-le</span> 1 <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span>ipset <span class="nt">-N</span> gfwlist iphash
          
-        #add telegram server
+        <span class="c">#add telegram server</span>
         ipset add gfwlist 93.119.240.0/24
         ipset add gfwlist 93.119.241.0/24
         ipset add gfwlist 93.119.242.0/24
@@ -540,134 +539,134 @@ create_gfwlist(){
         ipset add gfwlist 91.108.56.0/22
         ipset add gfwlist 91.108.8.0/22
         
-    fi
-    ########################################################################################################
-}
+    <span class="k">fi</span>
+    <span class="c">########################################################################################################</span>
+<span class="o">}</span>
 
-enable_bypasslist_firewall_rules(){
-    ########################################################################################################
-    iptables -t nat -A PREROUTING -p tcp -m set ! --match-set bypasslist dst -j REDIRECT --to-port 1060 1&gt;/dev/null 2&gt;&amp;1
-    iptables -t nat -A OUTPUT -p tcp -m set ! --match-set bypasslist dst -j REDIRECT --to-port 1060 1&gt;/dev/null 2&gt;&amp;1
-    ########################################################################################################
-}
+enable_bypasslist_firewall_rules<span class="o">(){</span>
+    <span class="c">########################################################################################################</span>
+    iptables <span class="nt">-t</span> nat <span class="nt">-A</span> PREROUTING <span class="nt">-p</span> tcp <span class="nt">-m</span> <span class="nb">set</span> <span class="o">!</span> <span class="nt">--match-set</span> bypasslist dst <span class="nt">-j</span> REDIRECT <span class="nt">--to-port</span> 1060 1&gt;/dev/null 2&gt;&amp;1
+    iptables <span class="nt">-t</span> nat <span class="nt">-A</span> OUTPUT <span class="nt">-p</span> tcp <span class="nt">-m</span> <span class="nb">set</span> <span class="o">!</span> <span class="nt">--match-set</span> bypasslist dst <span class="nt">-j</span> REDIRECT <span class="nt">--to-port</span> 1060 1&gt;/dev/null 2&gt;&amp;1
+    <span class="c">########################################################################################################</span>
+<span class="o">}</span>
 
-disable_bypasslist_firewall_rules(){
-    ########################################################################################################
-    iptables -t nat -D PREROUTING -p tcp -m set ! --match-set bypasslist dst -j REDIRECT --to-port 1060 1&gt;/dev/null 2&gt;&amp;1
-    iptables -t nat -D OUTPUT -p tcp -m set ! --match-set bypasslist dst -j REDIRECT --to-port 1060 1&gt;/dev/null 2&gt;&amp;1
-    ########################################################################################################
-}
+disable_bypasslist_firewall_rules<span class="o">(){</span>
+    <span class="c">########################################################################################################</span>
+    iptables <span class="nt">-t</span> nat <span class="nt">-D</span> PREROUTING <span class="nt">-p</span> tcp <span class="nt">-m</span> <span class="nb">set</span> <span class="o">!</span> <span class="nt">--match-set</span> bypasslist dst <span class="nt">-j</span> REDIRECT <span class="nt">--to-port</span> 1060 1&gt;/dev/null 2&gt;&amp;1
+    iptables <span class="nt">-t</span> nat <span class="nt">-D</span> OUTPUT <span class="nt">-p</span> tcp <span class="nt">-m</span> <span class="nb">set</span> <span class="o">!</span> <span class="nt">--match-set</span> bypasslist dst <span class="nt">-j</span> REDIRECT <span class="nt">--to-port</span> 1060 1&gt;/dev/null 2&gt;&amp;1
+    <span class="c">########################################################################################################</span>
+<span class="o">}</span>
 
-enable_gfwlist_firewall_rules(){
-    ########################################################################################################
-    iptables -t nat -A PREROUTING -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1060 1&gt;/dev/null 2&gt;&amp;1
-    iptables -t nat -A OUTPUT -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1060 1&gt;/dev/null 2&gt;&amp;1
-    ########################################################################################################
-}
+enable_gfwlist_firewall_rules<span class="o">(){</span>
+    <span class="c">########################################################################################################</span>
+    iptables <span class="nt">-t</span> nat <span class="nt">-A</span> PREROUTING <span class="nt">-p</span> tcp <span class="nt">-m</span> <span class="nb">set</span> <span class="nt">--match-set</span> gfwlist dst <span class="nt">-j</span> REDIRECT <span class="nt">--to-port</span> 1060 1&gt;/dev/null 2&gt;&amp;1
+    iptables <span class="nt">-t</span> nat <span class="nt">-A</span> OUTPUT <span class="nt">-p</span> tcp <span class="nt">-m</span> <span class="nb">set</span> <span class="nt">--match-set</span> gfwlist dst <span class="nt">-j</span> REDIRECT <span class="nt">--to-port</span> 1060 1&gt;/dev/null 2&gt;&amp;1
+    <span class="c">########################################################################################################</span>
+<span class="o">}</span>
 
-disable_gfwlist_firewall_rules(){
-    ########################################################################################################
-    iptables -t nat -D PREROUTING -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1060 1&gt;/dev/null 2&gt;&amp;1
-    iptables -t nat -D OUTPUT -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1060 1&gt;/dev/null 2&gt;&amp;1
-    ########################################################################################################
-}
+disable_gfwlist_firewall_rules<span class="o">(){</span>
+    <span class="c">########################################################################################################</span>
+    iptables <span class="nt">-t</span> nat <span class="nt">-D</span> PREROUTING <span class="nt">-p</span> tcp <span class="nt">-m</span> <span class="nb">set</span> <span class="nt">--match-set</span> gfwlist dst <span class="nt">-j</span> REDIRECT <span class="nt">--to-port</span> 1060 1&gt;/dev/null 2&gt;&amp;1
+    iptables <span class="nt">-t</span> nat <span class="nt">-D</span> OUTPUT <span class="nt">-p</span> tcp <span class="nt">-m</span> <span class="nb">set</span> <span class="nt">--match-set</span> gfwlist dst <span class="nt">-j</span> REDIRECT <span class="nt">--to-port</span> 1060 1&gt;/dev/null 2&gt;&amp;1
+    <span class="c">########################################################################################################</span>
+<span class="o">}</span>
 
-disable_v2ray_rules() {
-    ########################################################################################################
-    v2_mode=`cat /tmp/v2raymode.txt 2&gt;/dev/null`
+disable_v2ray_rules<span class="o">()</span> <span class="o">{</span>
+    <span class="c">########################################################################################################</span>
+    <span class="nv">v2_mode</span><span class="o">=</span><span class="sb">`</span><span class="nb">cat</span> /tmp/v2raymode.txt 2&gt;/dev/null<span class="sb">`</span>
     disable_gfwlist_firewall_rules
     disable_bypasslist_firewall_rules
-    if [ "${v2_mode}" = "ingfw" ]; then
-        set_multi_domestic_dns
-    fi
-    ########################################################################################################
-}
+    <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"ingfw"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span>set_multi_domestic_dns
+    <span class="k">fi</span>
+    <span class="c">########################################################################################################</span>
+<span class="o">}</span>
 
-stop_service()  {
-    echo "stopping v2ray service"
+stop_service<span class="o">()</span>  <span class="o">{</span>
+    <span class="nb">echo</span> <span class="s2">"stopping v2ray service"</span>
     disable_v2ray_rules
-}
+<span class="o">}</span>
 
-enable_v2ray_rules(){
-    ########################################################################################################
-    v2ray_mode=`cat /tmp/v2raymode.txt 2&gt;/dev/null`
-    if [ x${v2ray_mode} = x ]; then
-        v2ray_mode=`uci get advancedconfig.@rules[0].v2raymode 2&gt;/dev/null`
-        echo "setting ${v2ray_mode} mode"
-        echo "${v2ray_mode}" &gt; /tmp/v2raymode.txt
-    fi
-    if [ "${v2ray_mode}" = "outlands" ]; then
-        create_bypasslist
+enable_v2ray_rules<span class="o">(){</span>
+    <span class="c">########################################################################################################</span>
+    <span class="nv">v2ray_mode</span><span class="o">=</span><span class="sb">`</span><span class="nb">cat</span> /tmp/v2raymode.txt 2&gt;/dev/null<span class="sb">`</span>
+    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span> <span class="o">=</span> x <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span><span class="nv">v2ray_mode</span><span class="o">=</span><span class="sb">`</span>uci get advancedconfig.@rules[0].v2raymode 2&gt;/dev/null<span class="sb">`</span>
+        <span class="nb">echo</span> <span class="s2">"setting </span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2"> mode"</span>
+        <span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> /tmp/v2raymode.txt
+    <span class="k">fi
+    if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"outlands"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span>create_bypasslist
         disable_gfwlist_firewall_rules
         enable_bypasslist_firewall_rules
         set_multi_foreign_dns
-    elif [ "${v2ray_mode}" = "gfwlist" ]; then
-        create_gfwlist
+    <span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"gfwlist"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span>create_gfwlist
         disable_bypasslist_firewall_rules
         enable_gfwlist_firewall_rules
         set_multi_foreign_dns
-    else
-        stop
-    fi
-    ########################################################################################################
-}
+    <span class="k">else
+        </span>stop
+    <span class="k">fi</span>
+    <span class="c">########################################################################################################</span>
+<span class="o">}</span>
 
-start_service()  {
-    echo "starting v2ray service"
-    mkdir /var/log/v2ray &gt; /dev/null 2&gt;&amp;1
-    ulimit -n 99999
+start_service<span class="o">()</span>  <span class="o">{</span>
+    <span class="nb">echo</span> <span class="s2">"starting v2ray service"</span>
+    <span class="nb">mkdir</span> /var/log/v2ray <span class="o">&gt;</span> /dev/null 2&gt;&amp;1
+    <span class="nb">ulimit</span> <span class="nt">-n</span> 99999
     procd_open_instance
     procd_set_param respawn
-#    procd_set_param command /usr/bin/v2ray -config /etc/config/v2ray.json
-    procd_set_param command /usr/bin/v2rayx64/v2ray -config /etc/config/v2ray.json
+<span class="c">#    procd_set_param command /usr/bin/v2ray -config /etc/config/v2ray.json</span>
+    procd_set_param <span class="nb">command</span> /usr/bin/v2rayx64/v2ray <span class="nt">-config</span> /etc/config/v2ray.json
     procd_set_param file /etc/config/v2ray.json
     procd_set_param stdout 1
     procd_set_param stderr 1
     procd_set_param pidfile /var/run/v2ray.pid
     enable_v2ray_rules
     procd_close_instance
-}
+<span class="o">}</span>
 
-service_triggers() {
-	procd_add_reload_trigger "advancedconfig"
-}
-
-</code></pre>
+service_triggers<span class="o">()</span> <span class="o">{</span>
+	procd_add_reload_trigger <span class="s2">"advancedconfig"</span>
+<span class="o">}</span>
 
 
-两种模式都可以使用同一个v2ray的openwrt客户端配置，其中境外全局模式的防火墙配置非常简洁，看起来很舒服。。。
+</code></pre></div></div>
 
-6.最后设置一个多进程的chinadns启动脚本，start_multi_chinadns.sh，内容为：
-<pre><code class="language-bash">
-#!/bin/sh
-# To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first
-domestic_dns_1="114.114.114.114"
-domestic_dns_2="119.29.29.29"
-domestic_dns_3="223.5.5.5"
-domestic_dns_4="180.76.76.76"
-localip="127.0.0.1"
-chinadns_port_2="5555"
-chinadns_port_3="5656"
-chinadns_port_4="5757"
-v2_dns_port_2="5355"
-v2_dns_port_3="5356"
-v2_dns_port_4="5357"
+<p>两种模式都可以使用同一个v2ray的openwrt客户端配置，其中境外全局模式的防火墙配置非常简洁，看起来很舒服。。。</p>
+
+<p>6.最后设置一个多进程的chinadns启动脚本，start_multi_chinadns.sh，内容为：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c">#!/bin/sh</span>
+<span class="c"># To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first</span>
+<span class="nv">domestic_dns_1</span><span class="o">=</span><span class="s2">"114.114.114.114"</span>
+<span class="nv">domestic_dns_2</span><span class="o">=</span><span class="s2">"119.29.29.29"</span>
+<span class="nv">domestic_dns_3</span><span class="o">=</span><span class="s2">"223.5.5.5"</span>
+<span class="nv">domestic_dns_4</span><span class="o">=</span><span class="s2">"180.76.76.76"</span>
+<span class="nv">localip</span><span class="o">=</span><span class="s2">"127.0.0.1"</span>
+<span class="nv">chinadns_port_2</span><span class="o">=</span><span class="s2">"5555"</span>
+<span class="nv">chinadns_port_3</span><span class="o">=</span><span class="s2">"5656"</span>
+<span class="nv">chinadns_port_4</span><span class="o">=</span><span class="s2">"5757"</span>
+<span class="nv">v2_dns_port_2</span><span class="o">=</span><span class="s2">"5355"</span>
+<span class="nv">v2_dns_port_3</span><span class="o">=</span><span class="s2">"5356"</span>
+<span class="nv">v2_dns_port_4</span><span class="o">=</span><span class="s2">"5357"</span>
 killall chinadns
 /etc/init.d/chinadns restart
-sleep 1
-nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_2} -s ${domestic_dns_2},${localip}:${v2_dns_port_2} -c /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
-sleep 1
-nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_3} -s ${domestic_dns_3},${localip}:${v2_dns_port_3} -c /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
-sleep 1
-nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4},${localip}:${v2_dns_port_4} -c /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
+<span class="nb">sleep </span>1
+<span class="nb">nohup</span> /usr/bin/chinadns <span class="nt">-m</span> <span class="nt">-b</span> 0.0.0.0 <span class="nt">-p</span> <span class="k">${</span><span class="nv">chinadns_port_2</span><span class="k">}</span> <span class="nt">-s</span> <span class="k">${</span><span class="nv">domestic_dns_2</span><span class="k">}</span>,<span class="k">${</span><span class="nv">localip</span><span class="k">}</span>:<span class="k">${</span><span class="nv">v2_dns_port_2</span><span class="k">}</span> <span class="nt">-c</span> /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
+<span class="nb">sleep </span>1
+<span class="nb">nohup</span> /usr/bin/chinadns <span class="nt">-m</span> <span class="nt">-b</span> 0.0.0.0 <span class="nt">-p</span> <span class="k">${</span><span class="nv">chinadns_port_3</span><span class="k">}</span> <span class="nt">-s</span> <span class="k">${</span><span class="nv">domestic_dns_3</span><span class="k">}</span>,<span class="k">${</span><span class="nv">localip</span><span class="k">}</span>:<span class="k">${</span><span class="nv">v2_dns_port_3</span><span class="k">}</span> <span class="nt">-c</span> /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
+<span class="nb">sleep </span>1
+<span class="nb">nohup</span> /usr/bin/chinadns <span class="nt">-m</span> <span class="nt">-b</span> 0.0.0.0 <span class="nt">-p</span> <span class="k">${</span><span class="nv">chinadns_port_4</span><span class="k">}</span> <span class="nt">-s</span> <span class="k">${</span><span class="nv">domestic_dns_4</span><span class="k">}</span>,<span class="k">${</span><span class="nv">localip</span><span class="k">}</span>:<span class="k">${</span><span class="nv">v2_dns_port_4</span><span class="k">}</span> <span class="nt">-c</span> /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
 
-</code></pre>
-设置在rc.local中作为启动项，即可在openwrt启动的时候带起4个进程的chinadns。
 
-附：luci的效果图如下：
+</code></pre></div></div>
+<p>设置在rc.local中作为启动项，即可在openwrt启动的时候带起4个进程的chinadns。</p>
 
-<img src="https://jibenfa.github.io/uploads/2020/03/screencapture-2020-03-29-20_27_10.png" width="900" height="1100" alt="AltText" />
-</p></p></p></p></p></p></p></p></p></p></p></p></p></p></p></code></pre>
+<p>附：luci的效果图如下：</p>
+
+<p><img src="https://jibenfa.github.io/uploads/2020/03/screencapture-2020-03-29-20_27_10.png" width="900" height="1100" alt="AltText" /></p>
   
 	</div>
 	<footer class="article-footer clearfix">

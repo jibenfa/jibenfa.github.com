@@ -123,8 +123,9 @@
 
 <p>1.安装必要的软件：</p>
 
-<pre><code class="language-sh">opkg update
-opkg install ppp chat comgt luci-proto-3g kmod-usb-serial kmod-usb-serial-option kmod-usb-serial-wwan usb-modeswitch kmod-usb-serial-wwan kmod-usb-acm kmod-usb2 kmod-usb-ohci kmod-usb-uhci sdparm</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg <span class="nb">install </span>ppp chat comgt luci-proto-3g kmod-usb-serial kmod-usb-serial-option kmod-usb-serial-wwan usb-modeswitch kmod-usb-serial-wwan kmod-usb-acm kmod-usb2 kmod-usb-ohci kmod-usb-uhci sdparm
+</code></pre></div></div>
 
 <p>注：usb-modeswitch-data 已经在14.07版本中与usb-modeswitch合并了，所以不需要了，后面设置也与前几个版本不太相同。<br />
 <!--more--></p>
@@ -134,47 +135,53 @@ opkg install ppp chat comgt luci-proto-3g kmod-usb-serial kmod-usb-serial-option
 
 <p>3.将上网卡插到路由器usb口，并重启路由器，重启完成后，进行如下操作：</p>
 
-<pre><code class="language-sh">cd /dev
-ls</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /dev
+<span class="nb">ls</span>
+</code></pre></div></div>
 
 <p>如果有ttlUSB0，ttlUSB1，ttlUSB2设备说明识别了，否则说明上网卡有问题。</p>
 
 <p>但是光识别没用，因为：</p>
 
-<pre><code class="language-sh">vi /etc/usb-mode.json</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/usb-mode.json
+</code></pre></div></div>
 
 <p>发现压根木有‘19d2:0117’这个硬件，这也是为啥我之前拨号都失败的原因，解决办法为：<br />
 由于看到别的网友的mf190是1224的，所以我就复制：</p>
 
-<pre><code class="language-vim">"19d2:1224": {
-			"*": {
-				"t_vendor": 6610,
-				"t_product": [ 130 ],
-				"mode": "StandardEject",
-				"msg": [  ]
-			}
-		},</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">"19d2:1224": {</span>
+			<span class="c">"*": {</span>
+				<span class="c">"t_vendor": 6610,</span>
+				<span class="c">"t_product": [ 130 ],</span>
+				<span class="c">"mode": "StandardEject",</span>
+				<span class="c">"msg": [  ]</span>
+			<span class="p">}</span>
+		<span class="p">},</span>
+</code></pre></div></div>
 
 <p>修改为：</p>
 
-<pre><code class="language-vim">"19d2:0117": {
-			"*": {
-				"t_vendor": 6610,
-				"t_product": [ 130 ],
-				"mode": "StandardEject",
-				"msg": [  ]
-			}
-		},</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">"19d2:0117": {</span>
+			<span class="c">"*": {</span>
+				<span class="c">"t_vendor": 6610,</span>
+				<span class="c">"t_product": [ 130 ],</span>
+				<span class="c">"mode": "StandardEject",</span>
+				<span class="c">"msg": [  ]</span>
+			<span class="p">}</span>
+		<span class="p">},</span>
+</code></pre></div></div>
 
 <p>贴入/etc/usb-mode.json，保存退出。</p>
 
 <p>3.按照<a href="http://wiki.openwrt.org/doc/recipes/3gdongle"><strong>官网攻略</strong></a>将vid和pid写入new_id并自启动写入：</p>
 
-<pre><code class="language-sh">vi /etc/rc.local</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/rc.local
+</code></pre></div></div>
 
 <p>在exit 0前加入</p>
 
-<pre><code class="language-vim">echo '19d2 0117 ff' &gt; /sys/bus/usb-serial/drivers/option1/new_id</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo <span class="s1">'19d2 0117 ff'</span> <span class="p">&gt;</span> <span class="sr">/sys/</span>bus<span class="sr">/usb-serial/</span>drivers<span class="sr">/option1/</span>new_id
+</code></pre></div></div>
 
 <p>保存退出，重启路由。</p>
 
@@ -184,55 +191,57 @@ ls</code></pre>
 
 <p>保存并应用后查看系统日志。</p>
 
-<pre><code class="language-vim">Fri Mar 20 12:45:06 2015 daemon.notice pppd[7400]: pppd 2.4.7 started by root, uid 0
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: abort on (BUSY)
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: abort on (NO CARRIER)
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: abort on (ERROR)
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: report (CONNECT)
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: timeout set to 30 seconds
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: send (AT&amp;F^M)
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: expect (OK)
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: AT&amp;F^M^M
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: OK
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]:  -- got it
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: send (ATE1^M)
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: expect (OK)
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: ^M
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: ATE1^M^M
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: OK
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]:  -- got it
-Fri Mar 20 12:45:07 2015 local2.info chat[7402]: send (AT+CGDCONT=1,"IP","3gnet"^M)
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: timeout set to 30 seconds
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: expect (OK)
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: ^M
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: AT+CGDCONT=1,"IP","3gnet"^M^M
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: OK
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]:  -- got it
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: send (ATD*99#^M)
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: expect (CONNECT)
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: ^M
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: ATD*99#^M^M
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: CONNECT
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]:  -- got it
-Fri Mar 20 12:45:08 2015 local2.info chat[7402]: send (^M)
-Fri Mar 20 12:45:08 2015 daemon.info pppd[7400]: Serial connection established.
-Fri Mar 20 12:45:08 2015 daemon.info pppd[7400]: Using interface 3g-3g
-Fri Mar 20 12:45:08 2015 daemon.notice pppd[7400]: Connect: 3g-3g &lt;--&gt; /dev/ttyUSB2</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">06</span> <span class="m">2015</span> daemon<span class="p">.</span>notice pppd<span class="p">[</span><span class="m">7400</span><span class="p">]:</span> pppd <span class="m">2</span><span class="p">.</span><span class="m">4</span><span class="p">.</span><span class="m">7</span> started by root<span class="p">,</span> uid <span class="m">0</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> abort <span class="k">on</span> <span class="p">(</span>BUSY<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> abort <span class="k">on</span> <span class="p">(</span>NO CARRIER<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> abort <span class="k">on</span> <span class="p">(</span>ERROR<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> <span class="nb">report</span> <span class="p">(</span>CONNECT<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> <span class="nb">timeout</span> <span class="k">set</span> <span class="k">to</span> <span class="m">30</span> seconds
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> send <span class="p">(</span>AT&amp;F^M<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> expect <span class="p">(</span>OK<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> AT&amp;F^M^M
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> OK
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span>  <span class="p">--</span> got it
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> send <span class="p">(</span>ATE1^M<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> expect <span class="p">(</span>OK<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> ^M
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> ATE1^M^M
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> OK
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span>  <span class="p">--</span> got it
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">07</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> send <span class="p">(</span>AT<span class="p">+</span>CGDCONT<span class="p">=</span><span class="m">1</span><span class="p">,</span><span class="s2">"IP"</span><span class="p">,</span><span class="s2">"3gnet"</span>^M<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> <span class="nb">timeout</span> <span class="k">set</span> <span class="k">to</span> <span class="m">30</span> seconds
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> expect <span class="p">(</span>OK<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> ^M
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> AT<span class="p">+</span>CGDCONT<span class="p">=</span><span class="m">1</span><span class="p">,</span><span class="s2">"IP"</span><span class="p">,</span><span class="s2">"3gnet"</span>^M^M
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> OK
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span>  <span class="p">--</span> got it
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> send <span class="p">(</span>ATD*<span class="m">99</span>#^M<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> expect <span class="p">(</span>CONNECT<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> ^M
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> ATD*<span class="m">99</span>#^M^M
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> CONNECT
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span>  <span class="p">--</span> got it
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> local2<span class="p">.</span>info chat<span class="p">[</span><span class="m">7402</span><span class="p">]:</span> send <span class="p">(</span>^M<span class="p">)</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> daemon<span class="p">.</span>info pppd<span class="p">[</span><span class="m">7400</span><span class="p">]:</span> Serial connection established<span class="p">.</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> daemon<span class="p">.</span>info pppd<span class="p">[</span><span class="m">7400</span><span class="p">]:</span> Using interface <span class="m">3</span><span class="k">g</span><span class="m">-3</span><span class="k">g</span>
+Fri Mar <span class="m">20</span> <span class="m">12</span><span class="p">:</span><span class="m">45</span><span class="p">:</span><span class="m">08</span> <span class="m">2015</span> daemon<span class="p">.</span>notice pppd<span class="p">[</span><span class="m">7400</span><span class="p">]:</span> Connect<span class="p">:</span> <span class="m">3</span><span class="k">g</span><span class="m">-3</span><span class="k">g</span> <span class="p">&lt;--&gt;</span> <span class="sr">/dev/</span>ttyUSB2
+</code></pre></div></div>
 
 <p>注意，这里的拨号脚本为/etc/chatscripts/3g.chat，因为我是联通，所以拨号脚本如下：</p>
 
-<pre><code class="language-vim">ABORT   BUSY
-ABORT   'NO CARRIER'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ABORT   BUSY
+ABORT   <span class="s1">'NO CARRIER'</span>
 ABORT   ERROR
 REPORT  CONNECT
-TIMEOUT 30
-""      "AT&amp;F"
-OK      "ATE1"
-OK      'AT+CGDCONT=1,"IP","$USE_APN"'
-SAY     "Calling UMTS/GPRS"
-TIMEOUT 30
-OK      "ATD*99#"
-CONNECT ''</code></pre>
+TIMEOUT <span class="m">30</span>
+<span class="c">""      "AT&amp;F"</span>
+OK      <span class="s2">"ATE1"</span>
+OK      <span class="s1">'AT+CGDCONT=1,"IP","$USE_APN"'</span>
+SAY     <span class="s2">"Calling UMTS/GPRS"</span>
+TIMEOUT <span class="m">30</span>
+OK      <span class="s2">"ATD*99#"</span>
+CONNECT <span class="s1">''</span>
+</code></pre></div></div>
 
 <p><br />
 <img src="https://jibenfa.github.io/uploads/2015/03/IMG_20150320_153346.jpg" width="1000" height="618" alt="AltText" />

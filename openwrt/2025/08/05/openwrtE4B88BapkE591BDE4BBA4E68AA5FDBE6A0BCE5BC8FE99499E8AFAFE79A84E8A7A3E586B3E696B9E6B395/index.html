@@ -120,14 +120,15 @@
 		
 		<p>话说openwrt正式版安装命令是opkg，现在snapshot里面变成了apk。前几天尝试了一下，居然得到一个报错：</p>
 
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
   
 root@OpenWrt:~# apk update
-ERROR: FDB format error (line 7002, entry 'Z')
-ERROR: Unable to read database: v2 database format error
+ERROR: FDB format error <span class="o">(</span>line 7002, entry <span class="s1">'Z'</span><span class="o">)</span>
+ERROR: Unable to <span class="nb">read </span>database: v2 database format error
 ERROR: Failed to open apk database: v2 database format error
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>研究了一下，其实这个报错，跟以前opkg被lock的情况有点相似，只不过是apk采用了数据库，更新的时候异常关闭导致的。</p>
 

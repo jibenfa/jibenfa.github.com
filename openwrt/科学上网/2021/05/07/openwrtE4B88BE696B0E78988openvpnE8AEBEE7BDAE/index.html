@@ -124,64 +124,72 @@
 
 <p>1）编辑/etc/easy-rsa/vars，修改部分内容</p>
 
-<pre><code class="language-vim"># Choose a size in bits for your keypairs. The recommended value is 2048.  Using
-# 2048-bit keys is considered more than sufficient for many years into the
-# future. Larger keysizes will slow down TLS negotiation and make key/DH param
-# generation take much longer. Values up to 4096 should be accepted by most
-# software. Only used when the crypto alg is rsa (see below.)
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Choose <span class="k">a</span> size <span class="k">in</span> bits <span class="k">for</span> your keypairs<span class="p">.</span> The recommended value <span class="k">is</span> <span class="m">2048</span><span class="p">.</span>  Using
+# <span class="m">2048</span><span class="p">-</span>bit <span class="nb">keys</span> <span class="k">is</span> considered <span class="nb">more</span> than sufficient <span class="k">for</span> many years into the
+# future<span class="p">.</span> Larger keysizes will slow down TLS negotiation <span class="nb">and</span> <span class="k">make</span> <span class="nb">key</span>/DH param
+# generation take much longer<span class="p">.</span> Values <span class="k">up</span> <span class="k">to</span> <span class="m">4096</span> should be accepted by most
+# software<span class="p">.</span> Only used when the crypto alg <span class="k">is</span> rsa <span class="p">(</span>see below<span class="p">.)</span>
 
-set_var EASYRSA_KEY_SIZE	4096
+set_var EASYRSA_KEY_SIZE	<span class="m">4096</span>
 
-# In how many days should the root CA key expire?
+# In how many days should the root CA <span class="nb">key</span> expire?
 
-set_var EASYRSA_CA_EXPIRE	3650
+set_var EASYRSA_CA_EXPIRE	<span class="m">3650</span>
 
 # In how many days should certificates expire?
 
-set_var EASYRSA_CERT_EXPIRE	3650
+set_var EASYRSA_CERT_EXPIRE	<span class="m">3650</span>
 
-# These are the default values for fields
-# which will be placed in the certificate.
-# Don't leave any of these fields blank.
-export KEY_COUNTRY="xx"
-export KEY_PROVINCE="xx"
-export KEY_CITY="xxxx"
-export KEY_ORG="XXxxxx"
-export KEY_EMAIL="xxxxxx@gmail.com"
-export KEY_OU="XXxxxxxx"
-</code></pre>
+# These are the default <span class="nb">values</span> <span class="k">for</span> fields
+# which will be placed <span class="k">in</span> the certificate<span class="p">.</span>
+# Don'<span class="k">t</span> leave any of these fields blank<span class="p">.</span>
+<span class="k">export</span> KEY_COUNTRY<span class="p">=</span><span class="s2">"xx"</span>
+<span class="k">export</span> KEY_PROVINCE<span class="p">=</span><span class="s2">"xx"</span>
+<span class="k">export</span> KEY_CITY<span class="p">=</span><span class="s2">"xxxx"</span>
+<span class="k">export</span> KEY_ORG<span class="p">=</span><span class="s2">"XXxxxx"</span>
+<span class="k">export</span> KEY_EMAIL<span class="p">=</span><span class="s2">"xxxxxx@gmail.com"</span>
+<span class="k">export</span> KEY_OU<span class="p">=</span><span class="s2">"XXxxxxxx"</span>
+
+</code></pre></div></div>
 
 <p>2）接着生成证书和diffie-hellman key：<br />
 手工清空/etc/easy-rsa/下的key目录或者运行：</p>
-<pre><code class="language-vim">
-easyrsa clean-all  
-easyrsa init-pki
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+easyrsa clean<span class="p">-</span><span class="k">all</span>  
+easyrsa init<span class="p">-</span>pki
+
+</code></pre></div></div>
 <p>生成ca证书</p>
-<pre><code class="language-vim">
-easyrsa build-ca nopass 
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+easyrsa build<span class="p">-</span><span class="k">ca</span> nopass 
+
+</code></pre></div></div>
 <p>生成dh密钥</p>
-<pre><code class="language-vim">
-easyrsa gen-dh  
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+easyrsa gen<span class="p">-</span>dh  
+
+</code></pre></div></div>
 <p>服务器证书</p>
-<pre><code class="language-vim">
-easyrsa build-server-full server nopass
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+easyrsa build<span class="p">-</span>server<span class="p">-</span>full server nopass
+
+</code></pre></div></div>
 <p>客户端证书给coffeecat</p>
-<pre><code class="language-vim">
-easyrsa build-client-full coffeecat nopass
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+easyrsa build<span class="p">-</span>client<span class="p">-</span>full coffeecat nopass
+
+</code></pre></div></div>
 <p>生成ta.key</p>
-<pre><code class="language-vim">
-openvpn --genkey --secret ta.key
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+openvpn <span class="p">--</span>genkey <span class="p">--</span>secret <span class="k">ta</span><span class="p">.</span><span class="nb">key</span>
+
+</code></pre></div></div>
 
 <p>3）拷贝到服务器目录下：</p>
 
-<pre><code class="language-sh">cd /etc/easy-rsa/keys/
-cp ca.crt ca.key dh4096.pem server.key server.crt ta.key /etc/openvpn/</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /etc/easy-rsa/keys/
+<span class="nb">cp </span>ca.crt ca.key dh4096.pem server.key server.crt ta.key /etc/openvpn/
+</code></pre></div></div>
 
 <p>4）将以下文件拷贝到客户端或者将文件的内容贴在客户端配置文件中（移动设备）：<br />
 ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key</p>
@@ -192,116 +200,122 @@ ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key</p>
 
 <p><em>注意：172.24.1.1为路由器的lan ip，10.1.1.0/24是为vpn客户端分配的ip段，一定要和路由器为lan dhcp的ip段错开。</em></p>
 
-<pre><code class="language-vim">
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
-config openvpn 'tun_cert'
-	option port '3366'
-	option proto 'tcp4'
-	option dev 'tun0'
-	option ca '/etc/openvpn/ca.crt'
-	option cert '/etc/openvpn/server.crt'
-	option key '/etc/openvpn/server.key'
-	option dh '/etc/openvpn/dh4096.pem'
-  	option tls_auth '/etc/openvpn/ta.key 0'
-	option server '10.1.1.0 255.255.255.0'
-	option client_config_dir '/etc/openvpn/tunstatic'
-	option ccd_exclusive '1'
-	option cipher 'AES-256-CBC'
-	option ifconfig_pool_persist '/tmp/ipp2.txt'
-	option duplicate_cn '1'
-	option client_to_client '1'
-	option keepalive '10 120'
-	option compress 'lzo'
-	option persist_key '1'
-	option persist_tun '1'
-	option status '/tmp/openvpn-status2.log'
-	option verb '3'
-	option topology 'subnet'
-	list push 'dhcp-option DNS 172.24.1.1'
-	list push 'redirect-gateway def1 local'
-	option enabled '1'
-</code></pre>
+config openvpn <span class="s1">'tun_cert'</span>
+	option port <span class="s1">'3366'</span>
+	option proto <span class="s1">'tcp4'</span>
+	option dev <span class="s1">'tun0'</span>
+	option <span class="k">ca</span> <span class="s1">'/etc/openvpn/ca.crt'</span>
+	option cert <span class="s1">'/etc/openvpn/server.crt'</span>
+	option <span class="nb">key</span> <span class="s1">'/etc/openvpn/server.key'</span>
+	option dh <span class="s1">'/etc/openvpn/dh4096.pem'</span>
+  	option tls_auth <span class="s1">'/etc/openvpn/ta.key 0'</span>
+	option server <span class="s1">'10.1.1.0 255.255.255.0'</span>
+	option client_config_dir <span class="s1">'/etc/openvpn/tunstatic'</span>
+	option ccd_exclusive <span class="s1">'1'</span>
+	option cipher <span class="s1">'AES-256-CBC'</span>
+	option ifconfig_pool_persist <span class="s1">'/tmp/ipp2.txt'</span>
+	option duplicate_cn <span class="s1">'1'</span>
+	option client_to_client <span class="s1">'1'</span>
+	option keepalive <span class="s1">'10 120'</span>
+	option compress <span class="s1">'lzo'</span>
+	option persist_key <span class="s1">'1'</span>
+	option persist_tun <span class="s1">'1'</span>
+	option status <span class="s1">'/tmp/openvpn-status2.log'</span>
+	option <span class="k">verb</span> <span class="s1">'3'</span>
+	option topology <span class="s1">'subnet'</span>
+	<span class="k">list</span> push <span class="s1">'dhcp-option DNS 172.24.1.1'</span>
+	<span class="k">list</span> push <span class="s1">'redirect-gateway def1 local'</span>
+	option enabled <span class="s1">'1'</span>
+
+</code></pre></div></div>
 
 <p>在/etc/openvpn/tunstatic文件夹下创建名为coffeecat的文件，内容为：</p>
 
-<pre><code class="language-vim">
-ifconfig-push 10.1.1.7 255.255.255.0
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ifconfig<span class="p">-</span>push <span class="m">10</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">7</span> <span class="m">255</span><span class="p">.</span><span class="m">255</span><span class="p">.</span><span class="m">255</span><span class="p">.</span><span class="m">0</span>
+
+</code></pre></div></div>
 
 <p>然后在luci或者命令行启动openvpn：</p>
 
-<pre><code class="language-sh">/etc/init.d/openvpn restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/init.d/openvpn restart
+</code></pre></div></div>
 
 <p>ps一下有进程就对了</p>
 
 <p>openvpn客户端配置client.ovpn,此处设置为单文件模式：</p>
-<pre><code class="language-vim">
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 client
 dev tun
 proto tcp4
-connect-retry-max 5
-connect-retry 5
+connect<span class="p">-</span>retry<span class="p">-</span><span class="nb">max</span> <span class="m">5</span>
+connect<span class="p">-</span>retry <span class="m">5</span>
 
 
-remote 你的服务器地址 3366
-resolv-retry infinite
+remote 你的服务器地址 <span class="m">3366</span>
+resolv<span class="p">-</span>retry infinite
 nobind
 float
-persist-key
-persist-tun
-remote-cert-tls server
-comp-lzo
-verb 3
-cipher		AES-256-CBC
-tun-mtu		1500
-key-direction 1
+persist<span class="p">-</span><span class="nb">key</span>
+persist<span class="p">-</span>tun
+remote<span class="p">-</span>cert<span class="p">-</span>tls server
+<span class="k">comp</span><span class="p">-</span>lzo
+<span class="k">verb</span> <span class="m">3</span>
+cipher		AES<span class="m">-256</span><span class="p">-</span>CBC
+tun<span class="p">-</span>mtu		<span class="m">1500</span>
+<span class="nb">key</span><span class="p">-</span>direction <span class="m">1</span>
 
-&lt;tls-auth&gt;
+<span class="p">&lt;</span>tls<span class="p">-</span>auth<span class="p">&gt;</span>
 #
-# 2048 bit OpenVPN static key
+# <span class="m">2048</span> bit OpenVPN static <span class="nb">key</span>
 #
------BEGIN OpenVPN Static key V1-----
+<span class="p">-----</span>BEGIN OpenVPN Static <span class="nb">key</span> V1<span class="p">-----</span>
 此处省略。。。。。
------END OpenVPN Static key V1-----
-&lt;/tls-auth&gt;
+<span class="p">-----</span>END OpenVPN Static <span class="nb">key</span> V1<span class="p">-----</span>
+<span class="p">&lt;</span>/tls<span class="p">-</span>auth<span class="p">&gt;</span>
 
-&lt;ca&gt;
------BEGIN CERTIFICATE-----
+<span class="p">&lt;</span><span class="k">ca</span><span class="p">&gt;</span>
+<span class="p">-----</span>BEGIN CERTIFICATE<span class="p">-----</span>
 此处省略。。。。。
------END CERTIFICATE-----
-&lt;/ca&gt;
+<span class="p">-----</span>END CERTIFICATE<span class="p">-----</span>
+<span class="p">&lt;</span>/<span class="k">ca</span><span class="p">&gt;</span>
 
-&lt;cert&gt;
------BEGIN CERTIFICATE-----
+<span class="p">&lt;</span>cert<span class="p">&gt;</span>
+<span class="p">-----</span>BEGIN CERTIFICATE<span class="p">-----</span>
 此处省略。。。。。
------END CERTIFICATE-----
-&lt;/cert&gt;
+<span class="p">-----</span>END CERTIFICATE<span class="p">-----</span>
+<span class="p">&lt;</span>/cert<span class="p">&gt;</span>
 
-&lt;key&gt;
------BEGIN PRIVATE KEY-----
+<span class="p">&lt;</span><span class="nb">key</span><span class="p">&gt;</span>
+<span class="p">-----</span>BEGIN PRIVATE KEY<span class="p">-----</span>
 此处省略。。。。。
------END PRIVATE KEY-----
-&lt;/key&gt;
+<span class="p">-----</span>END PRIVATE KEY<span class="p">-----</span>
+<span class="p">&lt;</span>/<span class="nb">key</span><span class="p">&gt;</span>
 
-</code></pre>
+
+</code></pre></div></div>
 <p>特别要注意的是，server配置文件中的：</p>
-<pre><code class="language-vim">
-option tls_auth '/etc/openvpn/ta.key 0'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+option tls_auth <span class="s1">'/etc/openvpn/ta.key 0'</span>
 
-</code></pre>
+
+</code></pre></div></div>
 <p>要和client配置文件中的：</p>
-<pre><code class="language-vim">
-key-direction 1
-&lt;tls-auth&gt;
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">key</span><span class="p">-</span>direction <span class="m">1</span>
+<span class="p">&lt;</span>tls<span class="p">-</span>auth<span class="p">&gt;</span>
 #
-# 2048 bit OpenVPN static key
+# <span class="m">2048</span> bit OpenVPN static <span class="nb">key</span>
 #
------BEGIN OpenVPN Static key V1-----
+<span class="p">-----</span>BEGIN OpenVPN Static <span class="nb">key</span> V1<span class="p">-----</span>
 此处省略。。。。。
------END OpenVPN Static key V1-----
-&lt;/tls-auth&gt;
+<span class="p">-----</span>END OpenVPN Static <span class="nb">key</span> V1<span class="p">-----</span>
+<span class="p">&lt;</span>/tls<span class="p">-</span>auth<span class="p">&gt;</span>
 
-</code></pre>
+
+</code></pre></div></div>
 <p>对应，否则无法连通。</p>
 
 <p>参考：</p>

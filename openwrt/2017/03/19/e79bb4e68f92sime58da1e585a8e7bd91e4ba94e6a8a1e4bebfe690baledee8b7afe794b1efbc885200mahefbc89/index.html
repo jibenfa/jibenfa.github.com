@@ -122,11 +122,12 @@
 1.直插sim卡上网，目前测试了移动3g和联通3g，使用的是上海移远EC20-C 4g mini pcie模块（注意经研究该模块有很多个批次，需要芯片为高通MDM9215才行，pid 05c6 vid 9215），参数为：<br />
 EC20-C</p>
 
-<pre><code class="language-vim">FDD LTE: B1/B3/B8
-TDD LTE: B38/B39/B40/B41
-TDSCDMA: B34/B39
-UMTS: B1/B8
-GSM: 900/1800MHz</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FDD LTE<span class="p">:</span> B1<span class="sr">/B3/</span>B8
+TDD LTE<span class="p">:</span> B38<span class="sr">/B39/</span>B40/B41
+TDSCDMA<span class="p">:</span> B34/B39
+UMTS<span class="p">:</span> B1/B8
+GSM<span class="p">:</span> <span class="m">900</span>/<span class="m">1800</span>MHz
+</code></pre></div></div>
 
 <!--more-->
 
@@ -138,12 +139,13 @@ GSM: 900/1800MHz</code></pre>
 原厂OP可以支持EC20-CE（高通MDM9215，pid 05c6 vid 9215，注意此CE支持电信3g）但不支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125）<br />
 EC20-CE</p>
 
-<pre><code class="language-vim">FDD LTE: B1/B3 
-TDD LTE: B38/B39/B40/B41 
-TDSCDMA: B34/B39 
-WCDMA: B1 
-CDMA2000 1x/EVDO: BC0 
-GSM: 900/1800MHz </code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FDD LTE<span class="p">:</span> B1/B3 
+TDD LTE<span class="p">:</span> B38<span class="sr">/B39/</span>B40/B41 
+TDSCDMA<span class="p">:</span> B34/B39 
+WCDMA<span class="p">:</span> B1 
+CDMA2000 <span class="m">1</span><span class="k">x</span>/EVDO<span class="p">:</span> BC0 
+GSM<span class="p">:</span> <span class="m">900</span>/<span class="m">1800</span>MHz 
+</code></pre></div></div>
 
 <p>目前LEDE 17.07是4.4的kernel，开源驱动仅支持EC20-C 4g模块（芯片为高通MDM9215，pid 05c6 vid 9215），查阅linux kernel qmi_wwan.c源代码，4.10可以支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125），但目前LEDE还不行。<br />
 2.直插SD卡，但是根据原厂说明，usb仅限对外充电，不支持外挂U盘<br />
@@ -152,170 +154,174 @@ GSM: 900/1800MHz </code></pre>
 <p>适配采用修改ZTE-Q7代码来实现（led在系统启动的时候是不亮的，启动成功后显示蓝色，囧）：<br />
 1.修改target/linux/ramips/base-files/etc/board.d/01_leds</p>
 
-<pre><code class="language-vim">zte-q7)
-	ucidef_set_led_default "power" "power" "$board:green:sys" "0"
-	;;</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zte<span class="p">-</span>q7<span class="p">)</span>
+	ucidef_set_led_default <span class="s2">"power"</span> <span class="s2">"power"</span> <span class="s2">"$board:green:sys"</span> <span class="s2">"0"</span>
+	;;
+</code></pre></div></div>
 
 <p>2.修改target/linux/ramips/base-files/etc/diag.sh</p>
 
-<pre><code class="language-vim">zte-q7)
-		status_led="$board:green:wifi"
-		;;</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zte<span class="p">-</span>q7<span class="p">)</span>
+		status_led<span class="p">=</span><span class="s2">"$board:green:wifi"</span>
+		;;
+</code></pre></div></div>
 
 <p>3.修改target/linux/ramips/dts/ZTE-Q7.dts</p>
 
-<pre><code class="language-vim">/dts-v1/;
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/dts-v1/</span>;
 
-#include "mt7620a.dtsi"
+#<span class="nb">include</span> <span class="s2">"mt7620a.dtsi"</span>
 
-#include &lt;dt-bindings/input/input.h&gt;
+#<span class="nb">include</span> <span class="p">&lt;</span>dt<span class="p">-</span>bindings<span class="sr">/input/</span><span class="nb">input</span><span class="p">.</span><span class="k">h</span><span class="p">&gt;</span>
 
-/ {
-	compatible = "ZTE-Q7", "ralink,mt7620a-soc";
-	model = "ZTE Q7";
+/ <span class="p">{</span>
+	<span class="nb">compatible</span> <span class="p">=</span> <span class="s2">"ZTE-Q7"</span><span class="p">,</span> <span class="s2">"ralink,mt7620a-soc"</span>;
+	model <span class="p">=</span> <span class="s2">"ZTE Q7"</span>;
 
-	gpio-leds {
-		compatible = "gpio-leds";
+	gpio<span class="p">-</span>leds <span class="p">{</span>
+		<span class="nb">compatible</span> <span class="p">=</span> <span class="s2">"gpio-leds"</span>;
 
-		usb {
-			label = "zte-q7:usb";
-			gpios = &lt;&amp;gpio0 11 1&gt;;
-		};
-		sys {
-			label = "zte-q7:sys";
-			gpios = &lt;&amp;gpio1 14 1&gt;;
-		};
-		wlan {
-			label = "zte-q7:wlan";
-			gpios = &lt;&amp;gpio3 0 1&gt;;
-		};
-		wps {
-			label = "zte-q7:wps";
-			gpios = &lt;&amp;gpio1 15 0&gt;;
-		};
-	};
+		usb <span class="p">{</span>
+			label <span class="p">=</span> <span class="s2">"zte-q7:usb"</span>;
+			gpios <span class="p">=</span> <span class="p">&lt;</span>&amp;gpio0 <span class="m">11</span> <span class="m">1</span><span class="p">&gt;</span>;
+		<span class="p">}</span>;
+		sys <span class="p">{</span>
+			label <span class="p">=</span> <span class="s2">"zte-q7:sys"</span>;
+			gpios <span class="p">=</span> <span class="p">&lt;</span>&amp;gpio1 <span class="m">14</span> <span class="m">1</span><span class="p">&gt;</span>;
+		<span class="p">}</span>;
+		wlan <span class="p">{</span>
+			label <span class="p">=</span> <span class="s2">"zte-q7:wlan"</span>;
+			gpios <span class="p">=</span> <span class="p">&lt;</span>&amp;gpio3 <span class="m">0</span> <span class="m">1</span><span class="p">&gt;</span>;
+		<span class="p">}</span>;
+		wps <span class="p">{</span>
+			label <span class="p">=</span> <span class="s2">"zte-q7:wps"</span>;
+			gpios <span class="p">=</span> <span class="p">&lt;</span>&amp;gpio1 <span class="m">15</span> <span class="m">0</span><span class="p">&gt;</span>;
+		<span class="p">}</span>;
+	<span class="p">}</span>;
 
-	gpio-keys-polled {
-		compatible = "gpio-keys-polled";
-		#address-cells = &lt;1&gt;;
-		#size-cells = &lt;0&gt;;
-		poll-interval = &lt;20&gt;;
+	gpio<span class="p">-</span><span class="nb">keys</span><span class="p">-</span>polled <span class="p">{</span>
+		<span class="nb">compatible</span> <span class="p">=</span> <span class="s2">"gpio-keys-polled"</span>;
+		#address<span class="p">-</span>cells <span class="p">=</span> <span class="p">&lt;</span><span class="m">1</span><span class="p">&gt;</span>;
+		#size<span class="p">-</span>cells <span class="p">=</span> <span class="p">&lt;</span><span class="m">0</span><span class="p">&gt;</span>;
+		poll<span class="p">-</span>interval <span class="p">=</span> <span class="p">&lt;</span><span class="m">20</span><span class="p">&gt;</span>;
 
-		reset {
-			label = "reset";
-			gpios = &lt;&amp;gpio0 1 0&gt;;
-			linux,code = &lt;0x198&gt;;
-		};
-	};
-};
+		reset <span class="p">{</span>
+			label <span class="p">=</span> <span class="s2">"reset"</span>;
+			gpios <span class="p">=</span> <span class="p">&lt;</span>&amp;gpio0 <span class="m">1</span> <span class="m">0</span><span class="p">&gt;</span>;
+			linux<span class="p">,</span>code <span class="p">=</span> <span class="p">&lt;</span><span class="m">0</span>x198<span class="p">&gt;</span>;
+		<span class="p">}</span>;
+	<span class="p">}</span>;
+<span class="p">}</span>;
 
-&amp;gpio0 {
-	status = "okay";
-};
+&amp;gpio0 <span class="p">{</span>
+	status <span class="p">=</span> <span class="s2">"okay"</span>;
+<span class="p">}</span>;
 
-&amp;gpio1 {
-	status = "okay";
-};
+&amp;gpio1 <span class="p">{</span>
+	status <span class="p">=</span> <span class="s2">"okay"</span>;
+<span class="p">}</span>;
 
-&amp;gpio3 {
-	status = "okay";
-};
+&amp;gpio3 <span class="p">{</span>
+	status <span class="p">=</span> <span class="s2">"okay"</span>;
+<span class="p">}</span>;
 
-&amp;spi0 {
-	status = "okay";
+&amp;spi0 <span class="p">{</span>
+	status <span class="p">=</span> <span class="s2">"okay"</span>;
 
-	en25q128@0 {
-		#address-cells = &lt;1&gt;;
-		#size-cells = &lt;1&gt;;
-		compatible = "w25q128";
-		reg = &lt;0&gt;;
-		linux,modalias = "m25p80";
-		spi-max-frequency = &lt;10000000&gt;;
+	en25q128@<span class="m">0</span> <span class="p">{</span>
+		#address<span class="p">-</span>cells <span class="p">=</span> <span class="p">&lt;</span><span class="m">1</span><span class="p">&gt;</span>;
+		#size<span class="p">-</span>cells <span class="p">=</span> <span class="p">&lt;</span><span class="m">1</span><span class="p">&gt;</span>;
+		<span class="nb">compatible</span> <span class="p">=</span> <span class="s2">"w25q128"</span>;
+		<span class="k">reg</span> <span class="p">=</span> <span class="p">&lt;</span><span class="m">0</span><span class="p">&gt;</span>;
+		linux<span class="p">,</span>modalias <span class="p">=</span> <span class="s2">"m25p80"</span>;
+		spi<span class="p">-</span><span class="nb">max</span><span class="p">-</span>frequency <span class="p">=</span> <span class="p">&lt;</span><span class="m">10000000</span><span class="p">&gt;</span>;
 
-		partition@0 {
-			label = "u-boot";
-			reg = &lt;0x0 0x30000&gt;;
-			read-only;
-		};
+		partition@<span class="m">0</span> <span class="p">{</span>
+			label <span class="p">=</span> <span class="s2">"u-boot"</span>;
+			<span class="k">reg</span> <span class="p">=</span> <span class="p">&lt;</span><span class="m">0</span>x0 <span class="m">0</span>x30000<span class="p">&gt;</span>;
+			<span class="k">read</span><span class="p">-</span><span class="k">only</span>;
+		<span class="p">}</span>;
 
-		partition@30000 {
-			label = "u-boot-env";
-			reg = &lt;0x30000 0x10000&gt;;
-			read-only;
-		};
+		partition@<span class="m">30000</span> <span class="p">{</span>
+			label <span class="p">=</span> <span class="s2">"u-boot-env"</span>;
+			<span class="k">reg</span> <span class="p">=</span> <span class="p">&lt;</span><span class="m">0</span>x30000 <span class="m">0</span>x10000<span class="p">&gt;</span>;
+			<span class="k">read</span><span class="p">-</span><span class="k">only</span>;
+		<span class="p">}</span>;
 
-		factory: partition@40000 {
-			label = "factory";
-			reg = &lt;0x40000 0x10000&gt;;
-			read-only;
-		};
+		factory<span class="p">:</span> partition@<span class="m">40000</span> <span class="p">{</span>
+			label <span class="p">=</span> <span class="s2">"factory"</span>;
+			<span class="k">reg</span> <span class="p">=</span> <span class="p">&lt;</span><span class="m">0</span>x40000 <span class="m">0</span>x10000<span class="p">&gt;</span>;
+			<span class="k">read</span><span class="p">-</span><span class="k">only</span>;
+		<span class="p">}</span>;
 
-		partition@50000 {
-			label = "firmware";
-			reg = &lt;0x50000 0xfb0000&gt;;
-		};
-	};
-};
+		partition@<span class="m">50000</span> <span class="p">{</span>
+			label <span class="p">=</span> <span class="s2">"firmware"</span>;
+			<span class="k">reg</span> <span class="p">=</span> <span class="p">&lt;</span><span class="m">0</span>x50000 <span class="m">0</span>xfb0000<span class="p">&gt;</span>;
+		<span class="p">}</span>;
+	<span class="p">}</span>;
+<span class="p">}</span>;
 
-&amp;pinctrl {
-	state_default: pinctrl0 {
-		gpio {
-				ralink,group ="i2c", "uartf", "wled", "spi refclk";
-				ralink,function = "gpio";
-			};
-                        pa {
-                                ralink,group = "pa";
-                                ralink,function = "pa";
-                        };
-	};
-};
+&amp;pinctrl <span class="p">{</span>
+	state_default<span class="p">:</span> pinctrl0 <span class="p">{</span>
+		gpio <span class="p">{</span>
+				ralink<span class="p">,</span>group <span class="p">=</span><span class="s2">"i2c"</span><span class="p">,</span> <span class="s2">"uartf"</span><span class="p">,</span> <span class="s2">"wled"</span><span class="p">,</span> <span class="s2">"spi refclk"</span>;
+				ralink<span class="p">,</span><span class="k">function</span> <span class="p">=</span> <span class="s2">"gpio"</span>;
+			<span class="p">}</span>;
+                        <span class="k">pa</span> <span class="p">{</span>
+                                ralink<span class="p">,</span>group <span class="p">=</span> <span class="s2">"pa"</span>;
+                                ralink<span class="p">,</span><span class="k">function</span> <span class="p">=</span> <span class="s2">"pa"</span>;
+                        <span class="p">}</span>;
+	<span class="p">}</span>;
+<span class="p">}</span>;
 
-&amp;ethernet {
-	pinctrl-names = "default";
-	pinctrl-0 = &lt;&amp;ephy_pins&gt;;
-	mtd-mac-address = &lt;&amp;factory 0x4&gt;;
-	mediatek,portmap = "wllll";
-};
+&amp;ethernet <span class="p">{</span>
+	pinctrl<span class="p">-</span>names <span class="p">=</span> <span class="s2">"default"</span>;
+	pinctrl<span class="m">-0</span> <span class="p">=</span> <span class="p">&lt;</span>&amp;ephy_pins<span class="p">&gt;</span>;
+	mtd<span class="p">-</span>mac<span class="p">-</span>address <span class="p">=</span> <span class="p">&lt;</span>&amp;factory <span class="m">0</span>x4<span class="p">&gt;</span>;
+	mediatek<span class="p">,</span>portmap <span class="p">=</span> <span class="s2">"wllll"</span>;
+<span class="p">}</span>;
 
-&amp;wmac {
-	ralink,mtd-eeprom = &lt;&amp;factory 0&gt;;
-};
+&amp;wmac <span class="p">{</span>
+	ralink<span class="p">,</span>mtd<span class="p">-</span>eeprom <span class="p">=</span> <span class="p">&lt;</span>&amp;factory <span class="m">0</span><span class="p">&gt;</span>;
+<span class="p">}</span>;
 
-&amp;sdhci {
-	status = "okay";
-};
+&amp;sdhci <span class="p">{</span>
+	status <span class="p">=</span> <span class="s2">"okay"</span>;
+<span class="p">}</span>;
 
-&amp;ehci {
-	status = "okay";
-};
+&amp;ehci <span class="p">{</span>
+	status <span class="p">=</span> <span class="s2">"okay"</span>;
+<span class="p">}</span>;
 
-&amp;ohci {
-	status = "okay";
-};
+&amp;ohci <span class="p">{</span>
+	status <span class="p">=</span> <span class="s2">"okay"</span>;
+<span class="p">}</span>;
 
-&amp;pcie {
-	status = "okay";
+&amp;pcie <span class="p">{</span>
+	status <span class="p">=</span> <span class="s2">"okay"</span>;
 
-	compatible = "ralink,mt7620a-pci";
-		reg = &lt;0x10140000 0x100
-			0x10142000 0x100&gt;;
+	<span class="nb">compatible</span> <span class="p">=</span> <span class="s2">"ralink,mt7620a-pci"</span>;
+		<span class="k">reg</span> <span class="p">=</span> <span class="p">&lt;</span><span class="m">0</span>x10140000 <span class="m">0</span>x100
+			<span class="m">0</span>x10142000 <span class="m">0</span>x100<span class="p">&gt;</span>;
 
-		resets = &lt;&amp;rstctrl 26&gt;;
-		reset-names = "pcie0";
+		resets <span class="p">=</span> <span class="p">&lt;</span>&amp;rstctrl <span class="m">26</span><span class="p">&gt;</span>;
+		reset<span class="p">-</span>names <span class="p">=</span> <span class="s2">"pcie0"</span>;
 
-		interrupt-parent = &lt;&amp;cpuintc&gt;;
-		interrupts = &lt;4&gt;;
-};
+		<span class="nb">interrupt</span><span class="p">-</span>parent <span class="p">=</span> <span class="p">&lt;</span>&amp;cpuintc<span class="p">&gt;</span>;
+		interrupts <span class="p">=</span> <span class="p">&lt;</span><span class="m">4</span><span class="p">&gt;</span>;
+<span class="p">}</span>;
 
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>最后编译的时候，选择</p>
 
-<pre><code class="language-sh">git clone https://git.lede-project.org/source.git
-git fetch --tags
-git tag -l
-git checkout v17.01.0</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://git.lede-project.org/source.git
+git fetch <span class="nt">--tags</span>
+git tag <span class="nt">-l</span>
+git checkout v17.01.0
+</code></pre></div></div>
 
 <p>参考：<br />
 1.http://lists.infradead.org/pipermail/lede-commits/2016-September/000876.html<br />

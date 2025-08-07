@@ -122,26 +122,29 @@
 
 <p>ssh登陆gl-inet路由器(基于OPENWRT-AR71XX(AR913X)，adbyby官网上下载对应插件)，输入：</p>
 
-<pre><code class="language-sh">mkdir adbyby
-cd adbyby
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>adbyby
+<span class="nb">cd </span>adbyby
 wget http://info.adbyby.com/download/openwrt.tar.gz
-tar -xzvf openwrt.tar.gz
-cd bin
-chmod +x adbyby
-vi /etc/rc.local</code></pre>
+<span class="nb">tar</span> <span class="nt">-xzvf</span> openwrt.tar.gz
+<span class="nb">cd </span>bin
+<span class="nb">chmod</span> +x adbyby
+vi /etc/rc.local
+</code></pre></div></div>
 
 <p>在exit 0 前加入</p>
 
-<pre><code class="language-vim">/root/adbyby/bin/adbyby&amp;
-iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8118</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/root/</span>adbyby<span class="sr">/bin/</span>adbyby&amp;
+iptables <span class="p">-</span><span class="k">t</span> nat <span class="p">-</span>A PREROUTING <span class="p">-</span><span class="k">p</span> tcp <span class="p">--</span>dport <span class="m">80</span> <span class="p">-</span><span class="k">j</span> REDIRECT <span class="p">--</span><span class="k">to</span><span class="p">-</span>ports <span class="m">8118</span>
+</code></pre></div></div>
 
 <p>另外更新adhook.ini中的exrule：<br />
 vi /root/adbyby/bin/adhook.ini<br />
 找到[exrule]，修改为：</p>
 
-<pre><code class="language-vim">[exrule]^M
-rule=https://easylist-downloads.adblockplus.org/easylistchina.txt^M
-rule=https://easylist-downloads.adblockplus.org/easyprivacy.txt^M</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span>exrule<span class="p">]</span>^M
+rule<span class="p">=</span>https<span class="p">:</span><span class="sr">//</span>easylist<span class="p">-</span>downloads<span class="p">.</span>adblockplus<span class="p">.</span>org/easylistchina<span class="p">.</span>txt^M
+rule<span class="p">=</span>https<span class="p">:</span><span class="sr">//</span>easylist<span class="p">-</span>downloads<span class="p">.</span>adblockplus<span class="p">.</span>org/easyprivacy<span class="p">.</span>txt^M
+</code></pre></div></div>
 
 <p>重启路由器，搞定。。。<br />
 经测试：打开网易、优酷，页面没有讨厌的广告了，也不会弹出广告，视频内嵌的前置广告也没了。。。手机浏览器也是。。。<br />
@@ -150,61 +153,71 @@ rule=https://easylist-downloads.adblockplus.org/easyprivacy.txt^M</code></pre>
 <p>由于adbyby不是很稳定，一旦挂掉就不能上网了，所以按照<br />
 http://www.groad.net/bbs/thread-8832-1-1.html （有修改）创建守护进程，一旦adbyby进程挂了，就重启进程。。。</p>
 
-<pre><code class="language-sh">vi /etc/check_ad_by_by.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/check_ad_by_by.sh
+</code></pre></div></div>
 
-<pre><code class="language-vim">#!/bin/sh
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
  
-mon() {
-while [ "1" ];
-do
- cc=`ps | grep adbyby | grep -v grep | grep -v catch`
- if [ -z "$cc" ];then
-    /root/adbyby/bin/adbyby&amp; &gt;/dev/null
+mon<span class="p">()</span> <span class="p">{</span>
+<span class="k">while</span> <span class="p">[</span> <span class="s2">"1"</span> <span class="p">]</span>;
+<span class="k">do</span>
+ <span class="k">cc</span><span class="p">=</span>`<span class="k">ps</span> <span class="p">|</span> <span class="k">grep</span> adbyby <span class="p">|</span> <span class="k">grep</span> <span class="p">-</span><span class="k">v</span> <span class="k">grep</span> <span class="p">|</span> <span class="k">grep</span> <span class="p">-</span><span class="k">v</span> <span class="k">catch</span>`
+ <span class="k">if</span> <span class="p">[</span> <span class="p">-</span>z <span class="s2">"$cc"</span> <span class="p">]</span>;then
+    <span class="sr">/root/</span>adbyby<span class="sr">/bin/</span>adbyby&amp; <span class="p">&gt;</span><span class="sr">/dev/</span>null
  fi
- sleep 4
+ <span class="k">sleep</span> <span class="m">4</span>
 done
-}
+<span class="p">}</span>
  
-mon &amp;</code></pre>
+mon &amp;
+</code></pre></div></div>
 
-<pre><code class="language-sh">chmod a+x /etc/check_ad_by_by.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>a+x /etc/check_ad_by_by.sh
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/rc.local</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/rc.local
+</code></pre></div></div>
 
 <p>在exit 0前加入</p>
 
-<pre><code class="language-vim">/etc/check_ad_by_by.sh</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/etc/</span>check_ad_by_by<span class="p">.</span><span class="k">sh</span>
+</code></pre></div></div>
 
 <p>另外为了防止adbyby 僵死,可以定期检查重启adbyby：</p>
 
-<pre><code class="language-sh">vi /etc/restart_ad_by_by.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/restart_ad_by_by.sh
+</code></pre></div></div>
 
-<pre><code class="language-sh">#!/bin/sh
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
 
-ping -c 1 www.baidu.com &gt; /dev/null
-ret=$?
-if [ $ret -eq 0 ]
-then
-echo ' It seems OK ! '
-else
-echo ' restarting adbyby! '
-killall -9 adbyby
-/root/adbyby/bin/adbyby&amp; &gt;/dev/null
+ping <span class="nt">-c</span> 1 www.baidu.com <span class="o">&gt;</span> /dev/null
+<span class="nv">ret</span><span class="o">=</span><span class="nv">$?</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$ret</span> <span class="nt">-eq</span> 0 <span class="o">]</span>
+<span class="k">then
+</span><span class="nb">echo</span> <span class="s1">' It seems OK ! '</span>
+<span class="k">else
+</span><span class="nb">echo</span> <span class="s1">' restarting adbyby! '</span>
+killall <span class="nt">-9</span> adbyby
+/root/adbyby/bin/adbyby&amp; <span class="o">&gt;</span>/dev/null
 
-fi</code></pre>
+<span class="k">fi</span>
+</code></pre></div></div>
 
-<pre><code class="language-sh">chmod a+x /etc/restart_ad_by_by.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>a+x /etc/restart_ad_by_by.sh
+</code></pre></div></div>
 
 <p>在crontab里面增加</p>
 
-<pre><code class="language-sh">0 * * * * /etc/restart_ad_by_by.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> <span class="k">*</span> /etc/restart_ad_by_by.sh
+</code></pre></div></div>
 
 <p>每小时检查重启adbyby</p>
 
 <p>如果adbyby还是无法启动，可能需要安装libstdcpp</p>
 
-<pre><code class="language-sh">opkg install libstdcpp
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg <span class="nb">install </span>libstdcpp
+
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

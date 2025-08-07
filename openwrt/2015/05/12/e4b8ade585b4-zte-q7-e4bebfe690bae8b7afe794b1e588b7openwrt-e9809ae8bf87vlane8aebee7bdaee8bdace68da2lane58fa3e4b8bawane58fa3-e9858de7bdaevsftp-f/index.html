@@ -133,7 +133,8 @@
 1.telnet登陆q7，默认ip是192.168.1.254，用户名和密码是admin和opendoor（瀑布汗的密码）<br />
 2.刷入<a href="http://www.right.com.cn/forum/thread-161906-1-1.html">恩山H大的breed</a>：把u盘用fat32分区以后拷贝 插入usb口，在q7的telnet命令行下运行mount，就可以看到u盘mount路径例如/media/sdp1/，然后运行：</p>
 
-<pre><code class="language-sh">mtd_write -r -e mtd1 write /media/sdp1/breed-mt7620-zte-q7.bin mtd1</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mtd_write <span class="nt">-r</span> <span class="nt">-e</span> mtd1 write /media/sdp1/breed-mt7620-zte-q7.bin mtd1
+</code></pre></div></div>
 
 <p>然后等几分钟。。这个breed是H大搞出来的替代不死uboot的东东，非常之好用！</p>
 
@@ -143,40 +144,44 @@
 
 <p>3)然后安装SD读卡器驱动，以便识别SD卡：</p>
 
-<pre><code class="language-sh">opkg install kmod-sdhci-mt7620</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg <span class="nb">install </span>kmod-sdhci-mt7620
+</code></pre></div></div>
 
 <p>装的同时会安装几个dependent的软件，例如kmod-sdhci和kmod-mmc<br />
 装完以后插入sd卡或者带套的tf卡，我是把tf卡分2个区，ext4的2.6G，swap的1.2G<br />
 重启完q7路由后就会发现在/dev下多了几个mmc开头的东东，其中mmcblk0p1就是我的2.6G的ext4分区，mmcblk0p5是1.2G的swap分区，然后运行</p>
 
-<pre><code class="language-sh">block detect &gt; /etc/config/fstab
-mkdir /mnt/anonymous
-vi /etc/config/fstab</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>block detect <span class="o">&gt;</span> /etc/config/fstab
+<span class="nb">mkdir</span> /mnt/anonymous
+vi /etc/config/fstab
+</code></pre></div></div>
 
 <p>修改为（uuid每个人的不一样，不改）：</p>
 
-<pre><code class="language-vim">config global
-	option anon_swap '0'
-	option anon_mount '0'
-	option auto_swap '1'
-	option auto_mount '1'
-	option delay_root '5'
-	option check_fs '0'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config global
+	option anon_swap <span class="s1">'0'</span>
+	option anon_mount <span class="s1">'0'</span>
+	option auto_swap <span class="s1">'1'</span>
+	option auto_mount <span class="s1">'1'</span>
+	option delay_root <span class="s1">'5'</span>
+	option check_fs <span class="s1">'0'</span>
 
 config mount
-	option uuid '0c033b6b-9d12-4fa9-8b0f-9c68988a9f1c'
-	option enabled '1'
-	option target '/mnt/anonymous'
+	option uuid <span class="s1">'0c033b6b-9d12-4fa9-8b0f-9c68988a9f1c'</span>
+	option enabled <span class="s1">'1'</span>
+	option target <span class="s1">'/mnt/anonymous'</span>
 
 config swap
-	option device '/dev/mmcblk0p5'
-	option enabled '1'</code></pre>
+	option device <span class="s1">'/dev/mmcblk0p5'</span>
+	option enabled <span class="s1">'1'</span>
+</code></pre></div></div>
 
 <p>4）安装vsftpd</p>
 
-<pre><code class="language-sh">opkg install vsftpd
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg <span class="nb">install </span>vsftpd
 vi /etc/vsftpd.conf
-</code></pre>
+
+</code></pre></div></div>
 
 <p>修改为：</p>
 
@@ -219,67 +224,71 @@ session_support=NO
 #syslog_enable=YES
 #xferlog_enable=YES
 #xferlog_file=/var/log/vsftpd.log
-#xferlog_std_format=YES</code></pre>
-
-<pre><code class="language-sh">chmod -R 557 /mnt/anonymous 
-chmod a-w /mnt/anonymous/
+#xferlog_std_format=YES
 </code></pre>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> <span class="nt">-R</span> 557 /mnt/anonymous 
+<span class="nb">chmod </span>a-w /mnt/anonymous/
+
+</code></pre></div></div>
 
 <p>5）修改lan口为wan口（注意，这一步操作前必须开启wifi，否则将无法再访问路由器设置界面！！！！！！！！！只能再次刷机！！！！慎重！！！！）,这里参考了<a href="http://www.right.com.cn/Forum/thread-164504-1-1.html">恩山论坛文章</a></p>
 
-<pre><code class="language-sh">vi /etc/config/network</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/config/network
+</code></pre></div></div>
 
 <p>修改为（注意我改了默认网关IP为：172.24.0.1）：</p>
 
-<pre><code class="language-vim">config interface 'loopback'
-	option ifname 'lo'
-	option proto 'static'
-	option ipaddr '127.0.0.1'
-	option netmask '255.0.0.0'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config interface <span class="s1">'loopback'</span>
+	option ifname <span class="s1">'lo'</span>
+	option proto <span class="s1">'static'</span>
+	option ipaddr <span class="s1">'127.0.0.1'</span>
+	option netmask <span class="s1">'255.0.0.0'</span>
 
-config globals 'globals'
-	option ula_prefix 'fd37:04f5:111b::/48'
+config globals <span class="s1">'globals'</span>
+	option ula_prefix <span class="s1">'fd37:04f5:111b::/48'</span>
 
-config interface 'lan'
-	option ifname 'eth0.1'
-	option force_link '1'
-	option macaddr '08:12:62:62:ad:24'
-	option type 'bridge'
-	option proto 'static'
-	option netmask '255.255.255.0'
-	option ip6assign '60'
-	option ipaddr '172.24.0.1'
+config interface <span class="s1">'lan'</span>
+	option ifname <span class="s1">'eth0.1'</span>
+	option force_link <span class="s1">'1'</span>
+	option macaddr <span class="s1">'08:12:62:62:ad:24'</span>
+	option <span class="nb">type</span> <span class="s1">'bridge'</span>
+	option proto <span class="s1">'static'</span>
+	option netmask <span class="s1">'255.255.255.0'</span>
+	option ip6assign <span class="s1">'60'</span>
+	option ipaddr <span class="s1">'172.24.0.1'</span>
 
-config interface 'wan'
-        option ifname 'eth0.2'
-        option proto 'dhcp'
+config interface <span class="s1">'wan'</span>
+        option ifname <span class="s1">'eth0.2'</span>
+        option proto <span class="s1">'dhcp'</span>
 
 config switch
-        option name 'switch0'
-        option reset '1'
-        option enable_vlan '1'
+        option name <span class="s1">'switch0'</span>
+        option reset <span class="s1">'1'</span>
+        option enable_vlan <span class="s1">'1'</span>
 
 config switch_vlan
-        option device 'switch0'
-        option vlan '1'
-        option ports '0 1 2 3 5 6t'
-        option vid '1'
+        option device <span class="s1">'switch0'</span>
+        option vlan <span class="s1">'1'</span>
+        option ports <span class="s1">'0 1 2 3 5 6t'</span>
+        option vid <span class="s1">'1'</span>
 
 config switch_vlan
-        option device 'switch0'
-        option vlan '2'
-        option ports '6t 4'
-        option vid '2'
+        option device <span class="s1">'switch0'</span>
+        option vlan <span class="s1">'2'</span>
+        option ports <span class="s1">'6t 4'</span>
+        option vid <span class="s1">'2'</span>
 
-config interface '3g'
-	option proto '3g'
-	option device '/dev/ttyUSB2'
-	option service 'umts'
-	option apn '3gnet'
-	option dialnumber '*99#'
+config interface <span class="s1">'3g'</span>
+	option proto <span class="s1">'3g'</span>
+	option device <span class="s1">'/dev/ttyUSB2'</span>
+	option service <span class="s1">'umts'</span>
+	option apn <span class="s1">'3gnet'</span>
+	option dialnumber <span class="s1">'*99#'</span>
 
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>重启路由生效，lan口变为wan口</p>
   

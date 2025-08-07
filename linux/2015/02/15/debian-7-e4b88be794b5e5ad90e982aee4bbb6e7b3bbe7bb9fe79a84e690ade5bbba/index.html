@@ -157,21 +157,25 @@ SMTP 认证，简单地说就是要求必须在提供了账户名和密码之后
 
 <p>1).修改 /etc/hostname 添加一个名字，例如：holycoco。</p>
 
-<pre><code class="language-sh">echo "holycoco" &gt; /etc/hostname</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"holycoco"</span> <span class="o">&gt;</span> /etc/hostname
+</code></pre></div></div>
 
 <p>2).使之生效。</p>
 
-<pre><code class="language-sh">hostname -F /etc/hostname</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">hostname</span> <span class="nt">-F</span> /etc/hostname
+</code></pre></div></div>
 
 <p>3).修改 /etc/hosts，添加一些内容，如果网站是example.com，就这样写，如果网站是别的就填别的。</p>
 
-<pre><code class="language-vim">127.0.0.1 localhost.localdomain localhost
-我的IP holycoco.example.com holycoco</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span> localhost<span class="p">.</span>localdomain localhost
+我的IP holycoco<span class="p">.</span>example<span class="p">.</span><span class="k">com</span> holycoco
+</code></pre></div></div>
 
 <p>4).检查host。</p>
 
-<pre><code class="language-sh">hostname
-hostname -f</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">hostname
+hostname</span> <span class="nt">-f</span>
+</code></pre></div></div>
 
 <p>前者应该显示holycoco，后者应该显示holycoco.example.com，千万别略过这步骤，否则会后悔的。。。</p>
 
@@ -179,112 +183,124 @@ hostname -f</code></pre>
 
 <h3 id="a安装">a.安装</h3>
 
-<pre><code class="language-sh">apt-get install apache2
-cp /etc/apache2/apache2.conf /etc/apache2/apache2.backup.conf
-vi /etc/apache2/apache2.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>apache2
+<span class="nb">cp</span> /etc/apache2/apache2.conf /etc/apache2/apache2.backup.conf
+vi /etc/apache2/apache2.conf
+</code></pre></div></div>
 
 <h3 id="b由于我的vps内存只有1gb所以进行优化">b.由于我的vps内存只有1GB所以进行优化：</h3>
 
-<pre><code class="language-vim">KeepAlive Off
-...
-&lt;IfModule mpm_prefork_module&gt;
-StartServers 2
-MinSpareServers 6
-MaxSpareServers 12
-MaxClients 80
-MaxRequestsPerChild 3000
-&lt;/IfModule&gt;</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>KeepAlive Off
+<span class="p">...</span>
+<span class="p">&lt;</span>IfModule mpm_prefork_module<span class="p">&gt;</span>
+StartServers <span class="m">2</span>
+MinSpareServers <span class="m">6</span>
+MaxSpareServers <span class="m">12</span>
+MaxClients <span class="m">80</span>
+MaxRequestsPerChild <span class="m">3000</span>
+<span class="p">&lt;</span>/IfModule<span class="p">&gt;</span>
+</code></pre></div></div>
 
 <h3 id="c重启服务">c.重启服务</h3>
 
-<pre><code class="language-sh">service apache2 restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service apache2 restart
+</code></pre></div></div>
 
 <h3 id="d禁用apache默认设置创建一些文件夹做一些配置">d.禁用apache默认设置，创建一些文件夹，做一些配置</h3>
 
-<pre><code class="language-sh">a2dissite *default
-cd /var/www
-mkdir example.com
-mkdir -p example.com/public_html
-mkdir -p example.com/log
-mkdir -p example.com/backups
-vi /etc/apache2/sites-available/example.com.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a2dissite <span class="k">*</span>default
+<span class="nb">cd</span> /var/www
+<span class="nb">mkdir </span>example.com
+<span class="nb">mkdir</span> <span class="nt">-p</span> example.com/public_html
+<span class="nb">mkdir</span> <span class="nt">-p</span> example.com/log
+<span class="nb">mkdir</span> <span class="nt">-p</span> example.com/backups
+vi /etc/apache2/sites-available/example.com.conf
+</code></pre></div></div>
 
 <h3 id="e为了支持多个域名编辑内容如下重启apache以后可能会有warning因为还没建后面几个文件夹">e.为了支持多个域名，编辑内容如下，（重启apache以后可能会有warning，因为还没建后面几个文件夹）</h3>
 
-<pre><code class="language-vim"># domain: example.com
-# public: /var/www/example.com/public_html/
-&lt;VirtualHost *:80&gt;
-  # Admin email, Server Name (domain name), and any aliases
-  ServerAdmin webmaster@example.com
-  ServerName  www.example.com
-  ServerAlias example.com
-  # Index file and Document Root (where the public files are located)
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html
-  # Log file locations
-  LogLevel warn
-  ErrorLog  /var/www/example.com/log/error.log
-  CustomLog /var/www/example.com/log/access.log combined
-&lt;/VirtualHost&gt;
-&lt;VirtualHost *:80&gt;
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html/postfixadmin
-  ServerName pfadmin.example.com
-&lt;/VirtualHost&gt;
-&lt;Directory /var/www/example.com/public_html/webmail&gt;
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># domain<span class="p">:</span> example<span class="p">.</span><span class="k">com</span>
+# public<span class="p">:</span> <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">80</span><span class="p">&gt;</span>
+  # Admin email<span class="p">,</span> Server Name <span class="p">(</span>domain name<span class="p">),</span> <span class="nb">and</span> any aliases
+  ServerAdmin webmaster@example<span class="p">.</span><span class="k">com</span>
+  ServerName  www<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>
+  ServerAlias example<span class="p">.</span><span class="k">com</span>
+  # Index <span class="k">file</span> <span class="nb">and</span> Document Root <span class="p">(</span>where the public <span class="k">files</span> are located<span class="p">)</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html
+  # Log <span class="k">file</span> locations
+  LogLevel <span class="nb">warn</span>
+  ErrorLog  <span class="sr">/var/</span>www<span class="sr">/example.com/</span><span class="nb">log</span>/error<span class="p">.</span><span class="nb">log</span>
+  CustomLog <span class="sr">/var/</span>www<span class="sr">/example.com/</span><span class="nb">log</span>/access<span class="p">.</span><span class="nb">log</span> combined
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">80</span><span class="p">&gt;</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/postfixadmin
+  ServerName pfadmin<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
+<span class="p">&lt;</span>Directory <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/webmail<span class="p">&gt;</span>
   Options FollowSymLinks
-  &lt;IfModule mod_php5.c&gt;
+  <span class="p">&lt;</span>IfModule mod_php5<span class="p">.</span><span class="k">c</span><span class="p">&gt;</span>
     php_flag register_globals off
-  &lt;/IfModule&gt;
-  &lt;IfModule mod_dir.c&gt;
-    DirectoryIndex index.php
-  &lt;/IfModule&gt;
-&lt;/Directory&gt;
-&lt;Directory /var/www/example.com/public_html/webmail/data&gt;
- deny from all
-&lt;/Directory&gt;
-&lt;VirtualHost *:80&gt;
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html/webmail
-  ServerName webmail.example.com
-&lt;/VirtualHost&gt;</code></pre>
+  <span class="p">&lt;</span>/IfModule<span class="p">&gt;</span>
+  <span class="p">&lt;</span>IfModule mod_dir<span class="p">.</span><span class="k">c</span><span class="p">&gt;</span>
+    DirectoryIndex <span class="nb">index</span><span class="p">.</span>php
+  <span class="p">&lt;</span>/IfModule<span class="p">&gt;</span>
+<span class="p">&lt;</span>/Directory<span class="p">&gt;</span>
+<span class="p">&lt;</span>Directory <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html<span class="sr">/webmail/</span>data<span class="p">&gt;</span>
+ deny from <span class="k">all</span>
+<span class="p">&lt;</span>/Directory<span class="p">&gt;</span>
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">80</span><span class="p">&gt;</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/webmail
+  ServerName webmail<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
+</code></pre></div></div>
 
 <h3 id="f使配置文件生效重启服务">f.使配置文件生效，重启服务</h3>
 
-<pre><code class="language-sh">a2ensite example.com.conf
-service apache2 restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a2ensite example.com.conf
+service apache2 restart
+</code></pre></div></div>
 
 <h1 id="2安装mysql">2、安装mysql</h1>
 
 <h3 id="a安装-1">a.安装</h3>
 
-<pre><code class="language-sh">apt-get install mysql-server
-mysql_secure_installation</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>mysql-server
+mysql_secure_installation
+</code></pre></div></div>
 
 <p>设置完root的密码，一定要自己记录下来。。。<br />
 另外安全设置时要删除匿名用户，删除默认测试数据库，禁止root远程登录</p>
 
 <h3 id="b为1gb内存进行优化">b.为1GB内存进行优化</h3>
 
-<pre><code class="language-sh">vi /etc/mysql/my.cnf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/mysql/my.cnf
+</code></pre></div></div>
 
-<pre><code class="language-vim">max_connections = 75
-key_buffer = 32M
-max_allowed_packet = 1M
-thread_stack = 128K
-table_cache = 32</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>max_connections <span class="p">=</span> <span class="m">75</span>
+key_buffer <span class="p">=</span> <span class="m">32</span>M
+max_allowed_packet <span class="p">=</span> <span class="m">1</span>M
+thread_stack <span class="p">=</span> <span class="m">128</span>K
+table_cache <span class="p">=</span> <span class="m">32</span>
+</code></pre></div></div>
 
 <h3 id="c创建数据库后面要用">c.创建数据库，后面要用：</h3>
 
-<pre><code class="language-sh">mysql -u root -p</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql <span class="nt">-u</span> root <span class="nt">-p</span>
+</code></pre></div></div>
 
 <pre><code class="language-mysql">create database mynamemailserver;
 GRANT all privileges  ON mynamemailserver.* TO 'mymailuser'@'holycoco.example.com' IDENTIFIED BY 'mypassword';
-GRANT all privileges  ON mynamemailserver.* TO 'mymailuser'@'127.0.0.1' IDENTIFIED BY 'mypassword';</code></pre>
+GRANT all privileges  ON mynamemailserver.* TO 'mymailuser'@'127.0.0.1' IDENTIFIED BY 'mypassword';
+</code></pre>
 
 <h3 id="d重启数据库服务">d.重启数据库服务</h3>
 
-<pre><code class="language-sh">service mysql restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service mysql restart
+</code></pre></div></div>
 
 <p>这里可以不建表，因为装postadmin的时候会建的。。。</p>
 
@@ -292,103 +308,110 @@ GRANT all privileges  ON mynamemailserver.* TO 'mymailuser'@'127.0.0.1' IDENTIFI
 
 <h3 id="a安装-2">a.安装</h3>
 
-<pre><code class="language-sh">apt-get install php5 libapache2-mod-auth-mysql libmysqlclient15-dev php5-mysql curl libcurl3 libcurl3-dev php5-curl php5-json php-pear</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>php5 libapache2-mod-auth-mysql libmysqlclient15-dev php5-mysql curl libcurl3 libcurl3-dev php5-curl php5-json php-pear
+</code></pre></div></div>
 
 <h3 id="b为1gb内存进行优化修改部分内容">b.为1GB内存进行优化，修改部分内容</h3>
 
-<pre><code class="language-sh">vi /etc/php5/apache2/php.ini</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/php5/apache2/php.ini
+</code></pre></div></div>
 
-<pre><code class="language-vim">max_execution_time = 30
-memory_limit = 128M
-error_reporting = E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR
-display_errors = Off
-log_errors = On
-error_log = /var/log/php/error.log
-register_globals = Off</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>max_execution_time <span class="p">=</span> <span class="m">30</span>
+memory_limit <span class="p">=</span> <span class="m">128</span>M
+error_reporting <span class="p">=</span> E_COMPILE_ERROR<span class="p">|</span>E_RECOVERABLE_ERROR<span class="p">|</span>E_ERROR<span class="p">|</span>E_CORE_ERROR
+display_errors <span class="p">=</span> Off
+log_errors <span class="p">=</span> On
+error_log <span class="p">=</span> <span class="sr">/var/</span><span class="nb">log</span><span class="sr">/php/</span>error<span class="p">.</span><span class="nb">log</span>
+register_globals <span class="p">=</span> Off
+</code></pre></div></div>
 
 <h3 id="c记录日志重启web服务加载php模块">c.记录日志，重启web服务，加载php模块</h3>
 
-<pre><code class="language-sh">mkdir -p /var/log/php
-chown www-data /var/log/php
-service apache2 restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> /var/log/php
+<span class="nb">chown </span>www-data /var/log/php
+service apache2 restart
+</code></pre></div></div>
 
 <h1 id="4安装postfix和dovecot">4.安装postfix和dovecot</h1>
 
 <h3 id="a安装-3">a.安装</h3>
 
-<pre><code class="language-sh">apt-get install postfix postfix-mysql dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd dovecot-mysql</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install </span>postfix postfix-mysql dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd dovecot-mysql
+</code></pre></div></div>
 
 <p>弹出的框里面Postfix configuration选<strong>Internet Site</strong>，System mail name填入<strong>example.com</strong>，如果网站是别的就填别的。</p>
 
 <h3 id="b配置postfix限制用户邮箱大小等一系列东东用户认证使用dovecot而不是默认的virtual_mailbox">b.配置postfix，限制用户邮箱大小等一系列东东，用户认证使用dovecot，而不是默认的virtual_mailbox</h3>
 
-<pre><code class="language-sh">cp /etc/postfix/main.cf /etc/postfix/main.cf.orig
-vi /etc/postfix/main.cf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> /etc/postfix/main.cf /etc/postfix/main.cf.orig
+vi /etc/postfix/main.cf
+</code></pre></div></div>
 
 <p>/etc/postfix/main.cf 参数必须顶格写。。。。。。。。。。。。内容为：</p>
 
-<pre><code class="language-vim"># See /usr/share/postfix/main.cf.dist for a commented, more complete version
-# Debian specific:  Specifying a file name will cause the first
-# line of that file to be used as the name.  The Debian default
-# is /etc/mailname.
-#myorigin = /etc/mailname
-smtpd_banner = $myhostname ESMTP $mail_name (Debian/GNU)
-biff = no
-# appending .domain is the MUA's job.
-append_dot_mydomain = no
-# Uncomment the next line to generate "delayed mail" warnings
-#delay_warning_time = 4h
-readme_directory = no
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># See <span class="sr">/usr/</span>share<span class="sr">/postfix/</span>main<span class="p">.</span><span class="k">cf</span><span class="p">.</span>dist <span class="k">for</span> <span class="k">a</span> commented<span class="p">,</span> <span class="nb">more</span> <span class="nb">complete</span> <span class="k">version</span>
+# Debian specific<span class="p">:</span>  Specifying <span class="k">a</span> <span class="k">file</span> name will cause the <span class="k">first</span>
+# <span class="nb">line</span> of that <span class="k">file</span> <span class="k">to</span> be used <span class="k">as</span> the name<span class="p">.</span>  The Debian default
+# <span class="k">is</span> <span class="sr">/etc/</span>mailname<span class="p">.</span>
+#myorigin <span class="p">=</span> <span class="sr">/etc/</span>mailname
+smtpd_banner <span class="p">=</span> $myhostname ESMTP $mail_name <span class="p">(</span>Debian/GNU<span class="p">)</span>
+biff <span class="p">=</span> no
+# appending <span class="p">.</span>domain <span class="k">is</span> the MUA's job<span class="p">.</span>
+append_dot_mydomain <span class="p">=</span> no
+# Uncomment the <span class="k">next</span> <span class="nb">line</span> <span class="k">to</span> generate <span class="s2">"delayed mail"</span> warnings
+#delay_warning_time <span class="p">=</span> <span class="m">4</span><span class="k">h</span>
+readme_directory <span class="p">=</span> no
 # TLS parameters
-#smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-#smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
-#smtpd_use_tls=yes
-#smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
-#smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
-smtpd_tls_cert_file=/etc/dovecot/dovecot.pem
-smtpd_tls_key_file=/etc/dovecot/private/dovecot.pem
-smtpd_use_tls=yes
-smtpd_tls_auth_only = yes
-#Enabling SMTP for authenticated users, and handing off authentication to Dovecot
-smtpd_sasl_type = dovecot
-smtpd_sasl_path = private/auth
-smtpd_sasl_auth_enable = yes
-smtpd_recipient_restrictions =
-          permit_sasl_authenticated,
-          permit_mynetworks,
+#smtpd_tls_cert_file<span class="p">=</span><span class="sr">/etc/</span><span class="nb">ssl</span><span class="sr">/certs/</span><span class="nb">ssl</span><span class="p">-</span>cert<span class="p">-</span>snakeoil<span class="p">.</span>pem
+#smtpd_tls_key_file<span class="p">=</span><span class="sr">/etc/</span><span class="nb">ssl</span><span class="sr">/private/</span><span class="nb">ssl</span><span class="p">-</span>cert<span class="p">-</span>snakeoil<span class="p">.</span><span class="nb">key</span>
+#smtpd_use_tls<span class="p">=</span>yes
+#smtpd_tls_session_cache_database <span class="p">=</span> btree<span class="p">:</span>$<span class="p">{</span>data_directory<span class="p">}</span>/smtpd_scache
+#smtp_tls_session_cache_database <span class="p">=</span> btree<span class="p">:</span>$<span class="p">{</span>data_directory<span class="p">}</span>/smtp_scache
+smtpd_tls_cert_file<span class="p">=</span><span class="sr">/etc/</span>dovecot/dovecot<span class="p">.</span>pem
+smtpd_tls_key_file<span class="p">=</span><span class="sr">/etc/</span>dovecot<span class="sr">/private/</span>dovecot<span class="p">.</span>pem
+smtpd_use_tls<span class="p">=</span>yes
+smtpd_tls_auth_only <span class="p">=</span> yes
+#Enabling SMTP <span class="k">for</span> authenticated users<span class="p">,</span> <span class="nb">and</span> handing off authentication <span class="k">to</span> Dovecot
+smtpd_sasl_type <span class="p">=</span> dovecot
+smtpd_sasl_path <span class="p">=</span> private/auth
+smtpd_sasl_auth_enable <span class="p">=</span> yes
+smtpd_recipient_restrictions <span class="p">=</span>
+          permit_sasl_authenticated<span class="p">,</span>
+          permit_mynetworks<span class="p">,</span>
           reject_unauth_destination
-# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
-# information on enabling SSL in the smtp client.
-inet_interfaces = all
-myhostname = holycoco.example.com
-alias_maps = hash:/etc/aliases
-alias_database = hash:/etc/aliases
-myorigin = /etc/mailname
-mydestination = localhost
-relayhost = 
-mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
-mailbox_command = procmail -a "$EXTENSION"
-mailbox_size_limit = 0
-recipient_delimiter = +
-#Handing off local delivery to Dovecot's LMTP, and telling it where to store mail
-virtual_transport = lmtp:unix:private/dovecot-lmtp
-# Virtual mailbox settings.
+# See <span class="sr">/usr/</span>share<span class="sr">/doc/</span>postfix/TLS_README<span class="p">.</span>gz <span class="k">in</span> the postfix<span class="p">-</span>doc package <span class="k">for</span>
+# information <span class="k">on</span> enabling SSL <span class="k">in</span> the smtp client<span class="p">.</span>
+inet_interfaces <span class="p">=</span> <span class="k">all</span>
+myhostname <span class="p">=</span> holycoco<span class="p">.</span>example<span class="p">.</span><span class="k">com</span>
+alias_maps <span class="p">=</span> hash<span class="p">:</span><span class="sr">/etc/</span>aliases
+alias_database <span class="p">=</span> hash<span class="p">:</span><span class="sr">/etc/</span>aliases
+myorigin <span class="p">=</span> <span class="sr">/etc/</span>mailname
+mydestination <span class="p">=</span> localhost
+relayhost <span class="p">=</span> 
+mynetworks <span class="p">=</span> <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="sr">/8 [::ffff:127.0.0.0]/</span><span class="m">104</span> <span class="p">[::</span><span class="m">1</span><span class="p">]</span>/<span class="m">128</span>
+mailbox_command <span class="p">=</span> procmail <span class="p">-</span><span class="k">a</span> <span class="s2">"$EXTENSION"</span>
+mailbox_size_limit <span class="p">=</span> <span class="m">0</span>
+recipient_delimiter <span class="p">=</span> <span class="p">+</span>
+#Handing off local delivery <span class="k">to</span> Dovecot's LMTP<span class="p">,</span> <span class="nb">and</span> telling it where <span class="k">to</span> store mail
+virtual_transport <span class="p">=</span> lmtp<span class="p">:</span>unix<span class="p">:</span>private/dovecot<span class="p">-</span>lmtp
+# Virtual mailbox settings<span class="p">.</span>
  
-virtual_mailbox_maps = mysql:/etc/postfix/mysql-virtual-mailbox_maps.cf
-virtual_mailbox_domains = mysql:/etc/postfix/mysql-virtual-mailbox-domains.cf
-virtual_alias_maps = mysql:/etc/postfix/mysql-virtual-alias-maps.cf
-virtual_uid_maps = static:<em>postfix 用户的uid</em>
+virtual_mailbox_maps <span class="p">=</span> mysql<span class="p">:</span><span class="sr">/etc/</span>postfix/mysql<span class="p">-</span>virtual<span class="p">-</span>mailbox_maps<span class="p">.</span><span class="k">cf</span>
+virtual_mailbox_domains <span class="p">=</span> mysql<span class="p">:</span><span class="sr">/etc/</span>postfix/mysql<span class="p">-</span>virtual<span class="p">-</span>mailbox<span class="p">-</span>domains<span class="p">.</span><span class="k">cf</span>
+virtual_alias_maps <span class="p">=</span> mysql<span class="p">:</span><span class="sr">/etc/</span>postfix/mysql<span class="p">-</span>virtual<span class="p">-</span>alias<span class="p">-</span>maps<span class="p">.</span><span class="k">cf</span>
+virtual_uid_maps <span class="p">=</span> static<span class="p">:&lt;</span><span class="k">em</span><span class="p">&gt;</span>postfix 用户的uid<span class="p">&lt;</span>/<span class="k">em</span><span class="p">&gt;</span>
 
-virtual_gid_maps = static:<em>postfix 用户的gid</em>
+virtual_gid_maps <span class="p">=</span> static<span class="p">:&lt;</span><span class="k">em</span><span class="p">&gt;</span>postfix 用户的gid<span class="p">&lt;</span>/<span class="k">em</span><span class="p">&gt;</span>
 
-message_size_limit = 102400000
-virtual_mailbox_limit = 2097152000
-virtual_create_maildirsize = yes
-virtual_mailbox_extended = yes
-virtual_mailbox_limit_maps = mysql:/etc/postfix/mysql-virtual-mailbox-limit-maps.cf
-virtual_mailbox_limit_override = yes
-virtual_maildir_limit_message = Sorry, the user's maildir has exceeded the quota.
-virtual_overquota_bounce = yes</code></pre>
+message_size_limit <span class="p">=</span> <span class="m">102400000</span>
+virtual_mailbox_limit <span class="p">=</span> <span class="m">2097152000</span>
+virtual_create_maildirsize <span class="p">=</span> yes
+virtual_mailbox_extended <span class="p">=</span> yes
+virtual_mailbox_limit_maps <span class="p">=</span> mysql<span class="p">:</span><span class="sr">/etc/</span>postfix/mysql<span class="p">-</span>virtual<span class="p">-</span>mailbox<span class="p">-</span>limit<span class="p">-</span>maps<span class="p">.</span><span class="k">cf</span>
+virtual_mailbox_limit_override <span class="p">=</span> yes
+virtual_maildir_limit_message <span class="p">=</span> Sorry<span class="p">,</span> the user's maildir <span class="nb">has</span> exceeded the quota<span class="p">.</span>
+virtual_overquota_bounce <span class="p">=</span> yes
+</code></pre></div></div>
 
 <p>virtual_uid_maps 和 virtual_gid_maps 改成postfix用户的uid和gid ,可用 id postfix 命令获取<br />
 注：postfix服务重启后会有warning，据说可以别理它。。。</p>
@@ -397,255 +420,290 @@ virtual_overquota_bounce = yes</code></pre>
 
 <p>这些表现在还没建，后面装postfixadmin的时候会自动建的</p>
 
-<pre><code class="language-sh">vi /etc/postfix/mysql-virtual-alias-maps.cf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/postfix/mysql-virtual-alias-maps.cf
+</code></pre></div></div>
 
 <p>这个是转发表查询</p>
 
-<pre><code class="language-vim">user = mymailuser
-password = mypassword
-hosts = 127.0.0.1
-dbname = mynamemailserver
-query = SELECT goto FROM alias WHERE address='%s' AND active = '1'
-#query = SELECT destination FROM virtual_aliases WHERE source='%s'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="p">=</span> mymailuser
+password <span class="p">=</span> mypassword
+hosts <span class="p">=</span> <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>
+dbname <span class="p">=</span> mynamemailserver
+query <span class="p">=</span> SELECT <span class="k">goto</span> FROM alias WHERE address<span class="p">=</span><span class="s1">'%s'</span> AND active <span class="p">=</span> <span class="s1">'1'</span>
+#query <span class="p">=</span> SELECT destination FROM virtual_aliases WHERE <span class="k">source</span><span class="p">=</span><span class="s1">'%s'</span>
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/postfix/mysql-virtual-mailbox-domains.cf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/postfix/mysql-virtual-mailbox-domains.cf
+</code></pre></div></div>
 
 <p>这个是domain表查询</p>
 
-<pre><code class="language-vim">user = mymailuser
-password = mypassword
-hosts = 127.0.0.1
-dbname = mynamemailserver
-query = SELECT domain FROM domain WHERE domain='%s' AND active = '1'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="p">=</span> mymailuser
+password <span class="p">=</span> mypassword
+hosts <span class="p">=</span> <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>
+dbname <span class="p">=</span> mynamemailserver
+query <span class="p">=</span> SELECT domain FROM domain WHERE domain<span class="p">=</span><span class="s1">'%s'</span> AND active <span class="p">=</span> <span class="s1">'1'</span>
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/postfix/mysql-virtual-mailbox-limit-maps.cf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/postfix/mysql-virtual-mailbox-limit-maps.cf
+</code></pre></div></div>
 
 <p>这个是邮箱空间配额查询，不知道有没有用。。。</p>
 
-<pre><code class="language-vim">user = mymailuser
-password = mypassword
-hosts = 127.0.0.1
-dbname = mynamemailserver
-query = SELECT quota FROM mailbox WHERE username='%s' AND active = '1'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="p">=</span> mymailuser
+password <span class="p">=</span> mypassword
+hosts <span class="p">=</span> <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>
+dbname <span class="p">=</span> mynamemailserver
+query <span class="p">=</span> SELECT quota FROM mailbox WHERE username<span class="p">=</span><span class="s1">'%s'</span> AND active <span class="p">=</span> <span class="s1">'1'</span>
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/postfix/mysql-virtual-mailbox-maps.cf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/postfix/mysql-virtual-mailbox-maps.cf
+</code></pre></div></div>
 
 <p>这个是最关键的登录查询了</p>
 
-<pre><code class="language-vim">user = mymailuser
-password = mypassword
-hosts = 127.0.0.1
-dbname = mynamemailserver
-query = SELECT CONCAT(domain,'/',maildir) FROM mailbox WHERE username='%s' AND active = '1'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user <span class="p">=</span> mymailuser
+password <span class="p">=</span> mypassword
+hosts <span class="p">=</span> <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>
+dbname <span class="p">=</span> mynamemailserver
+query <span class="p">=</span> SELECT CONCAT<span class="p">(</span>domain<span class="p">,</span><span class="s1">'/'</span><span class="p">,</span>maildir<span class="p">)</span> FROM mailbox WHERE username<span class="p">=</span><span class="s1">'%s'</span> AND active <span class="p">=</span> <span class="s1">'1'</span>
+</code></pre></div></div>
 
 <h3 id="d配置开启哪些邮件服务">d.配置开启哪些邮件服务</h3>
 
-<pre><code class="language-sh">cp /etc/postfix/master.cf /etc/postfix/master.cf.orig
-vi /etc/postfix/master.cf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> /etc/postfix/master.cf /etc/postfix/master.cf.orig
+vi /etc/postfix/master.cf
+</code></pre></div></div>
 
 <p>允许smtp走ssl，在端口 25，另外还有587和465（这个不懂），反正就是把submission和smtps前面注释去掉。</p>
 
-<pre><code class="language-vim">#
-# Postfix master process configuration file.  For details on the format
-# of the file, see the master(5) manual page (command: "man 5 master").
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#
+# Postfix master process configuration <span class="k">file</span><span class="p">.</span>  For details <span class="k">on</span> the format
+# of the <span class="k">file</span><span class="p">,</span> see the master<span class="p">(</span><span class="m">5</span><span class="p">)</span> manual page <span class="p">(</span>command<span class="p">:</span> <span class="s2">"man 5 master"</span><span class="p">).</span>
 #
-# Do not forget to execute "postfix reload" after editing this file.
+# Do not forget <span class="k">to</span> <span class="nb">execute</span> <span class="s2">"postfix reload"</span> after editing this <span class="k">file</span><span class="p">.</span>
 #
-# ==========================================================================
-# service type  private unpriv  chroot  wakeup  maxproc command + args
-#               (yes)   (yes)   (yes)   (never) (100)
-# ==========================================================================
-smtp      inet  n       -       -       -       -       smtpd
-#smtp      inet  n       -       -       -       1       postscreen
-#smtpd     pass  -       -       -       -       -       smtpd
-#dnsblog   unix  -       -       -       -       0       dnsblog
-#tlsproxy  unix  -       -       -       -       0       tlsproxy
-submission inet n       -       -       -       -       smtpd
-#  -o syslog_name=postfix/submission
-#  -o smtpd_tls_security_level=encrypt
-#  -o smtpd_sasl_auth_enable=yes
-#  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
-#  -o milter_macro_daemon_name=ORIGINATING
-smtps     inet  n       -       -       -       -       smtpd
-#  -o syslog_name=postfix/smtps
-#  -o smtpd_tls_wrappermode=yes
-#  -o smtpd_sasl_auth_enable=yes
-#  -o smtpd_client_restrictions=permit_sasl_authenticated,reject
-#  -o milter_macro_daemon_name=ORIGINATING</code></pre>
+# <span class="p">==========================================================================</span>
+# service <span class="nb">type</span>  private unpriv  chroot  wakeup  maxproc command <span class="p">+</span> <span class="k">args</span>
+#               <span class="p">(</span>yes<span class="p">)</span>   <span class="p">(</span>yes<span class="p">)</span>   <span class="p">(</span>yes<span class="p">)</span>   <span class="p">(</span>never<span class="p">)</span> <span class="p">(</span><span class="m">100</span><span class="p">)</span>
+# <span class="p">==========================================================================</span>
+smtp      inet  <span class="k">n</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       smtpd
+#smtp      inet  <span class="k">n</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="m">1</span>       postscreen
+#smtpd     pass  <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       smtpd
+#dnsblog   unix  <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="m">0</span>       dnsblog
+#tlsproxy  unix  <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="m">0</span>       tlsproxy
+submission inet <span class="k">n</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       smtpd
+#  <span class="p">-</span><span class="k">o</span> syslog_name<span class="p">=</span>postfix/submission
+#  <span class="p">-</span><span class="k">o</span> smtpd_tls_security_level<span class="p">=</span>encrypt
+#  <span class="p">-</span><span class="k">o</span> smtpd_sasl_auth_enable<span class="p">=</span>yes
+#  <span class="p">-</span><span class="k">o</span> smtpd_client_restrictions<span class="p">=</span>permit_sasl_authenticated<span class="p">,</span>reject
+#  <span class="p">-</span><span class="k">o</span> milter_macro_daemon_name<span class="p">=</span>ORIGINATING
+smtps     inet  <span class="k">n</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       <span class="p">-</span>       smtpd
+#  <span class="p">-</span><span class="k">o</span> syslog_name<span class="p">=</span>postfix/smtps
+#  <span class="p">-</span><span class="k">o</span> smtpd_tls_wrappermode<span class="p">=</span>yes
+#  <span class="p">-</span><span class="k">o</span> smtpd_sasl_auth_enable<span class="p">=</span>yes
+#  <span class="p">-</span><span class="k">o</span> smtpd_client_restrictions<span class="p">=</span>permit_sasl_authenticated<span class="p">,</span>reject
+#  <span class="p">-</span><span class="k">o</span> milter_macro_daemon_name<span class="p">=</span>ORIGINATING
+</code></pre></div></div>
 
 <h3 id="e重启postfix服务">e.重启postfix服务</h3>
 
-<pre><code class="language-sh">service postfix restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service postfix restart
+</code></pre></div></div>
 
 <h3 id="f配置dovecot">f.配置dovecot</h3>
 
-<pre><code class="language-sh">cp /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.orig
-cp /etc/dovecot/conf.d/10-mail.conf /etc/dovecot/conf.d/10-mail.conf.orig
-cp /etc/dovecot/conf.d/10-auth.conf /etc/dovecot/conf.d/10-auth.conf.orig
-cp /etc/dovecot/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext.orig
-cp /etc/dovecot/conf.d/10-master.conf /etc/dovecot/conf.d/10-master.conf.orig
-cp /etc/dovecot/conf.d/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf.orig</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.orig
+<span class="nb">cp</span> /etc/dovecot/conf.d/10-mail.conf /etc/dovecot/conf.d/10-mail.conf.orig
+<span class="nb">cp</span> /etc/dovecot/conf.d/10-auth.conf /etc/dovecot/conf.d/10-auth.conf.orig
+<span class="nb">cp</span> /etc/dovecot/dovecot-sql.conf.ext /etc/dovecot/dovecot-sql.conf.ext.orig
+<span class="nb">cp</span> /etc/dovecot/conf.d/10-master.conf /etc/dovecot/conf.d/10-master.conf.orig
+<span class="nb">cp</span> /etc/dovecot/conf.d/10-ssl.conf /etc/dovecot/conf.d/10-ssl.conf.orig
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/dovecot/dovecot.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/dovecot/dovecot.conf
+</code></pre></div></div>
 
-<pre><code class="language-vim">!include conf.d/*.conf
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">!</span><span class="nb">include</span> <span class="k">conf</span><span class="p">.</span><span class="k">d</span>/*<span class="p">.</span><span class="k">conf</span>
 # Enable installed protocols
-!include_try /usr/share/dovecot/protocols.d/*.protocol
-protocols = imap pop3 lmtp</code></pre>
+<span class="p">!</span>include_try <span class="sr">/usr/</span>share<span class="sr">/dovecot/</span>protocols<span class="p">.</span><span class="k">d</span>/*<span class="p">.</span>protocol
+protocols <span class="p">=</span> imap pop3 lmtp
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/dovecot/conf.d/10-mail.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/dovecot/conf.d/10-mail.conf
+</code></pre></div></div>
 
-<pre><code class="language-vim">#这个配置很重要
-mail_location = maildir:/var/mail/vhosts/%d/%n
-mail_privileged_group = mail</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#这个配置很重要
+mail_location <span class="p">=</span> maildir<span class="p">:</span><span class="sr">/var/</span>mail<span class="sr">/vhosts/</span>%<span class="k">d</span>/%<span class="k">n</span>
+mail_privileged_group <span class="p">=</span> mail
+</code></pre></div></div>
 
 <p>检查权限</p>
 
-<pre><code class="language-sh">ls -ld /var/mail</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls</span> <span class="nt">-ld</span> /var/mail
+</code></pre></div></div>
 
 <p>应该是这样</p>
 
-<pre><code class="language-vim">drwxrwsr-x 2 root mail 4096 Mar  6 15:08 /var/mail</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>drwxrwsr<span class="p">-</span><span class="k">x</span> <span class="m">2</span> root mail <span class="m">4096</span> Mar  <span class="m">6</span> <span class="m">15</span><span class="p">:</span><span class="m">08</span> <span class="sr">/var/</span>mail
+</code></pre></div></div>
 
-<pre><code class="language-sh">mkdir -p /var/mail/vhosts/example.com
-groupadd -g 5000 vmail
-useradd -g vmail -u 5000 vmail -d /var/mail
-chown -R vmail:vmail /var/mail</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> /var/mail/vhosts/example.com
+groupadd <span class="nt">-g</span> 5000 vmail
+useradd <span class="nt">-g</span> vmail <span class="nt">-u</span> 5000 vmail <span class="nt">-d</span> /var/mail
+<span class="nb">chown</span> <span class="nt">-R</span> vmail:vmail /var/mail
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/dovecot/conf.d/10-auth.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/dovecot/conf.d/10-auth.conf
+</code></pre></div></div>
 
-<pre><code class="language-vim">disable_plaintext_auth = yes
-auth_mechanisms = plain login
-#!include auth-system.conf.ext
-!include auth-sql.conf.ext
-#!include auth-ldap.conf.ext
-#!include auth-passwdfile.conf.ext
-#!include auth-checkpassword.conf.ext
-#!include auth-vpopmail.conf.ext
-#!include auth-static.conf.ext</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>disable_plaintext_auth <span class="p">=</span> yes
+auth_mechanisms <span class="p">=</span> plain login
+#<span class="p">!</span><span class="nb">include</span> auth<span class="p">-</span><span class="nb">system</span><span class="p">.</span><span class="k">conf</span><span class="p">.</span>ext
+<span class="p">!</span><span class="nb">include</span> auth<span class="p">-</span>sql<span class="p">.</span><span class="k">conf</span><span class="p">.</span>ext
+#<span class="p">!</span><span class="nb">include</span> auth<span class="p">-</span>ldap<span class="p">.</span><span class="k">conf</span><span class="p">.</span>ext
+#<span class="p">!</span><span class="nb">include</span> auth<span class="p">-</span>passwdfile<span class="p">.</span><span class="k">conf</span><span class="p">.</span>ext
+#<span class="p">!</span><span class="nb">include</span> auth<span class="p">-</span>checkpassword<span class="p">.</span><span class="k">conf</span><span class="p">.</span>ext
+#<span class="p">!</span><span class="nb">include</span> auth<span class="p">-</span>vpopmail<span class="p">.</span><span class="k">conf</span><span class="p">.</span>ext
+#<span class="p">!</span><span class="nb">include</span> auth<span class="p">-</span>static<span class="p">.</span><span class="k">conf</span><span class="p">.</span>ext
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/dovecot/conf.d/auth-sql.conf.ext</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/dovecot/conf.d/auth-sql.conf.ext
+</code></pre></div></div>
 
-<pre><code class="language-sh">passdb {
-  driver = sql
-  args = /etc/dovecot/dovecot-sql.conf.ext
-}
-userdb {
-  driver = static
-  args = uid=vmail gid=vmail home=/var/mail/vhosts/%d/%n
-}</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>passdb <span class="o">{</span>
+  driver <span class="o">=</span> sql
+  args <span class="o">=</span> /etc/dovecot/dovecot-sql.conf.ext
+<span class="o">}</span>
+userdb <span class="o">{</span>
+  driver <span class="o">=</span> static
+  args <span class="o">=</span> <span class="nv">uid</span><span class="o">=</span>vmail <span class="nv">gid</span><span class="o">=</span>vmail <span class="nv">home</span><span class="o">=</span>/var/mail/vhosts/%d/%n
+<span class="o">}</span>
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/dovecot/dovecot-sql.conf.ext</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/dovecot/dovecot-sql.conf.ext
+</code></pre></div></div>
 
-<pre><code class="language-vim">driver = mysql
-connect = host=127.0.0.1 dbname=mailserver user=mailuser password=mailuserpass
-default_pass_scheme = SHA512-CRYPT
-#注意这2个表现在还没有，后面postfixadmin会建的
-password_query = SELECT password FROM mailbox WHERE username = '%u'
-user_query = SELECT maildir, 502 AS uid, 502 AS gid FROM mailbox WHERE username = '%u'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>driver <span class="p">=</span> mysql
+connect <span class="p">=</span> host<span class="p">=</span><span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span> dbname<span class="p">=</span>mailserver user<span class="p">=</span>mailuser password<span class="p">=</span>mailuserpass
+default_pass_scheme <span class="p">=</span> SHA512<span class="p">-</span>CRYPT
+#注意这<span class="m">2</span>个表现在还没有，后面postfixadmin会建的
+password_query <span class="p">=</span> SELECT password FROM mailbox WHERE username <span class="p">=</span> <span class="s1">'%u'</span>
+user_query <span class="p">=</span> SELECT maildir<span class="p">,</span> <span class="m">502</span> AS uid<span class="p">,</span> <span class="m">502</span> AS gid FROM mailbox WHERE username <span class="p">=</span> <span class="s1">'%u'</span>
+</code></pre></div></div>
 
-<pre><code class="language-sh">chown -R vmail:dovecot /etc/dovecot
-chmod -R o-rwx /etc/dovecot</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chown</span> <span class="nt">-R</span> vmail:dovecot /etc/dovecot
+<span class="nb">chmod</span> <span class="nt">-R</span> o-rwx /etc/dovecot
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/dovecot/conf.d/10-master.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/dovecot/conf.d/10-master.conf
+</code></pre></div></div>
 
-<pre><code class="language-vim">#禁止不加 密登录
-service imap-login {
-    inet_listener imap {
-      port = 0
-    }
-  ...
-  }
-  service pop3-login {
-    inet_listener pop3 {
-      port = 0
-    }
-  ...
-  }
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#禁止不加 密登录
+service imap<span class="p">-</span>login <span class="p">{</span>
+    inet_listener imap <span class="p">{</span>
+      port <span class="p">=</span> <span class="m">0</span>
+    <span class="p">}</span>
+  <span class="p">...</span>
+  <span class="p">}</span>
+  service pop3<span class="p">-</span>login <span class="p">{</span>
+    inet_listener pop3 <span class="p">{</span>
+      port <span class="p">=</span> <span class="m">0</span>
+    <span class="p">}</span>
+  <span class="p">...</span>
+  <span class="p">}</span>
 #lmtp
-  service lmtp {
-   unix_listener /var/spool/postfix/private/dovecot-lmtp {
-     mode = 0600
-     user = postfix
-     group = postfix
-    }
-    # Create inet listener only if you can't use the above UNIX socket
-    #inet_listener lmtp {
-      # Avoid making LMTP visible for the entire internet
-      #address =
-      #port =
-    #}
-  }
+  service lmtp <span class="p">{</span>
+   unix_listener <span class="sr">/var/</span>spool<span class="sr">/postfix/</span>private/dovecot<span class="p">-</span>lmtp <span class="p">{</span>
+     <span class="k">mode</span> <span class="p">=</span> <span class="m">0600</span>
+     user <span class="p">=</span> postfix
+     group <span class="p">=</span> postfix
+    <span class="p">}</span>
+    # Create inet listener <span class="k">only</span> <span class="k">if</span> you can'<span class="k">t</span> use the above UNIX socket
+    #inet_listener lmtp <span class="p">{</span>
+      # Avoid making LMTP visible <span class="k">for</span> the entire internet
+      #address <span class="p">=</span>
+      #port <span class="p">=</span>
+    #<span class="p">}</span>
+  <span class="p">}</span>
 #auth
-service auth {
-  # auth_socket_path points to this userdb socket by default. It's typically
-  # used by dovecot-lda, doveadm, possibly imap process, etc. Its default
-  # permissions make it readable only by root, but you may need to relax these
-  # permissions. Users that have access to this socket are able to get a list
-  # of all usernames and get results of everyone's userdb lookups.
-  unix_listener /var/spool/postfix/private/auth {
-    mode = 0666
-    user = postfix
-    group = postfix
-  }
-  unix_listener auth-userdb {
-    mode = 0600
-    user = vmail
-    #group =
-  }
-  # Postfix smtp-auth
-  #unix_listener /var/spool/postfix/private/auth {
-  #  mode = 0666
-  #}
-  # Auth process is run as this user.
-  user = dovecot
-}
-#auth-worker
-service auth-worker {
-  # Auth worker process is run as root by default, so that it can access
-  # /etc/shadow. If this isn't necessary, the user should be changed to
-  # $default_internal_user.
-  user = vmail
-}</code></pre>
+service auth <span class="p">{</span>
+  # auth_socket_path points <span class="k">to</span> this userdb socket by default<span class="p">.</span> It's typically
+  # used by dovecot<span class="p">-</span>lda<span class="p">,</span> doveadm<span class="p">,</span> possibly imap process<span class="p">,</span> etc<span class="p">.</span> Its default
+  # permissions <span class="k">make</span> it readable <span class="k">only</span> by root<span class="p">,</span> but you may need <span class="k">to</span> relax these
+  # permissions<span class="p">.</span> Users that have access <span class="k">to</span> this socket are able <span class="k">to</span> <span class="nb">get</span> <span class="k">a</span> <span class="k">list</span>
+  # of <span class="k">all</span> usernames <span class="nb">and</span> <span class="nb">get</span> results of everyone's userdb lookups<span class="p">.</span>
+  unix_listener <span class="sr">/var/</span>spool<span class="sr">/postfix/</span>private/auth <span class="p">{</span>
+    <span class="k">mode</span> <span class="p">=</span> <span class="m">0666</span>
+    user <span class="p">=</span> postfix
+    group <span class="p">=</span> postfix
+  <span class="p">}</span>
+  unix_listener auth<span class="p">-</span>userdb <span class="p">{</span>
+    <span class="k">mode</span> <span class="p">=</span> <span class="m">0600</span>
+    user <span class="p">=</span> vmail
+    #group <span class="p">=</span>
+  <span class="p">}</span>
+  # Postfix smtp<span class="p">-</span>auth
+  #unix_listener <span class="sr">/var/</span>spool<span class="sr">/postfix/</span>private/auth <span class="p">{</span>
+  #  <span class="k">mode</span> <span class="p">=</span> <span class="m">0666</span>
+  #<span class="p">}</span>
+  # Auth process <span class="k">is</span> run <span class="k">as</span> this user<span class="p">.</span>
+  user <span class="p">=</span> dovecot
+<span class="p">}</span>
+#auth<span class="p">-</span>worker
+service auth<span class="p">-</span>worker <span class="p">{</span>
+  # Auth worker process <span class="k">is</span> run <span class="k">as</span> root by default<span class="p">,</span> <span class="k">so</span> that it can access
+  # <span class="sr">/etc/</span>shadow<span class="p">.</span> If this isn'<span class="k">t</span> necessary<span class="p">,</span> the user should be changed <span class="k">to</span>
+  # $default_internal_user<span class="p">.</span>
+  user <span class="p">=</span> vmail
+<span class="p">}</span>
+</code></pre></div></div>
 
 <p>检查自签名证书，非常重要</p>
 
-<pre><code class="language-sh">ls /etc/dovecot/dovecot.pem
-ls /etc/dovecot/private/dovecot.pem</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls</span> /etc/dovecot/dovecot.pem
+<span class="nb">ls</span> /etc/dovecot/private/dovecot.pem
+</code></pre></div></div>
 
-<pre><code class="language-sh">vi /etc/dovecot/conf.d/10-ssl.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/dovecot/conf.d/10-ssl.conf
+</code></pre></div></div>
 
 <p>强制ssl</p>
 
-<pre><code class="language-vim">ssl_cert = &lt;/etc/dovecot/dovecot.pem
-ssl_key = &lt;/etc/dovecot/private/dovecot.pem
-ssl = required</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssl_cert <span class="p">=</span> <span class="p">&lt;</span><span class="sr">/etc/</span>dovecot/dovecot<span class="p">.</span>pem
+ssl_key <span class="p">=</span> <span class="p">&lt;</span><span class="sr">/etc/</span>dovecot<span class="sr">/private/</span>dovecot<span class="p">.</span>pem
+<span class="nb">ssl</span> <span class="p">=</span> required
+</code></pre></div></div>
 
 <p>重启dovecot服务</p>
 
-<pre><code class="language-sh">service dovecot restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service dovecot restart
+</code></pre></div></div>
 
 <h1 id="5安装postfixadmin">5.安装postfixadmin</h1>
 
 <h3 id="a下载安装postfixadmin">a.下载安装postfixadmin</h3>
 
-<pre><code class="language-sh">wget 'http://downloads.sourceforge.net/project/postfixadmin/postfixadmin/postfixadmin-2.92/postfixadmin-2.92.tar.gz?use_mirror=jaist'
-tar zxvf postfixadmin-2.92.tar.gz
-mv postfixadmin-2.92 /var/www/example.com/public_html/postfixadmin</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget <span class="s1">'http://downloads.sourceforge.net/project/postfixadmin/postfixadmin/postfixadmin-2.92/postfixadmin-2.92.tar.gz?use_mirror=jaist'</span>
+<span class="nb">tar </span>zxvf postfixadmin-2.92.tar.gz
+<span class="nb">mv </span>postfixadmin-2.92 /var/www/example.com/public_html/postfixadmin
+</code></pre></div></div>
 
 <p>这时候/var/www/example.com/public_html/postfixadmin下应该有config.inc.php文件，否则就是再嵌了个文件夹了。。。</p>
 
 <h3 id="b修改配置文件">b.修改配置文件</h3>
 
-<pre><code class="language-sh">vi config.inc.php</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi config.inc.php
+</code></pre></div></div>
 
-<pre><code class="language-vim">$CONF['default_language'] = 'cn';
-$CONF['configured'] = true;
-$CONF['default_language'] = 'en';
-$CONF['database_type'] = 'mynamemailserver';
-$CONF['database_host'] = '127.0.0.1';
-$CONF['database_user'] = 'mymailuser';
-$CONF['database_password'] = 'mypassword';</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$CONF<span class="p">[</span><span class="s1">'default_language'</span><span class="p">]</span> <span class="p">=</span> <span class="s1">'cn'</span>;
+$CONF<span class="p">[</span><span class="s1">'configured'</span><span class="p">]</span> <span class="p">=</span> true;
+$CONF<span class="p">[</span><span class="s1">'default_language'</span><span class="p">]</span> <span class="p">=</span> <span class="s1">'en'</span>;
+$CONF<span class="p">[</span><span class="s1">'database_type'</span><span class="p">]</span> <span class="p">=</span> <span class="s1">'mynamemailserver'</span>;
+$CONF<span class="p">[</span><span class="s1">'database_host'</span><span class="p">]</span> <span class="p">=</span> <span class="s1">'127.0.0.1'</span>;
+$CONF<span class="p">[</span><span class="s1">'database_user'</span><span class="p">]</span> <span class="p">=</span> <span class="s1">'mymailuser'</span>;
+$CONF<span class="p">[</span><span class="s1">'database_password'</span><span class="p">]</span> <span class="p">=</span> <span class="s1">'mypassword'</span>;
+</code></pre></div></div>
 
 <p>汉化不完全的可以打开language下的cn.lang手工修改。。。</p>
 
@@ -666,22 +724,26 @@ $CONF['database_password'] = 'mypassword';</code></pre>
 | quota2                        |
 | vacation                      |
 | vacation_notification         |
-...</code></pre>
+...
+</code></pre>
 
 <h3 id="d在浏览器页面下面创建setup-password填复杂一些点击generate-password-hash获取hash代码将代码拷贝到配置文件configincphp中的以下配置中">d.在浏览器页面下面创建Setup password，填复杂一些，点击“Generate password hash”获取hash代码，将代码拷贝到配置文件config.inc.php中的以下配置中</h3>
 
-<pre><code class="language-vim">$CONF['setup_password'] = 'changeme';#（用hash代码替换changeme）</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$CONF<span class="p">[</span><span class="s1">'setup_password'</span><span class="p">]</span> <span class="p">=</span> <span class="s1">'changeme'</span>;#（用hash代码替换changeme）
+</code></pre></div></div>
 
 <h3 id="e然后重启apache2服务">e.然后重启apache2服务：</h3>
 
-<pre><code class="language-sh">service apache2 restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service apache2 restart
+</code></pre></div></div>
 
 <h3 id="f再次访问httppfadminexamplecomsetupphp创建管理员的账号和密码">f.再次访问http://pfadmin.example.com/setup.php，创建管理员的账号和密码</h3>
 <p>（需要正确输入之前创建的Setup password（填的不是hash值）才能创建管理员账号）<br />
 设置完成后要做一些安全工作</p>
 
-<pre><code class="language-sh">rm setup.php
-chown root config.inc.php</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">rm </span>setup.php
+<span class="nb">chown </span>root config.inc.php
+</code></pre></div></div>
 
 <h3 id="g最后访问postfixadmin的登录页httppfadminexamplecom">g.最后访问PostfixAdmin的登录页http://pfadmin.example.com/</h3>
 <p>使用管理员账号登录后，就可以添加domain和多用户邮箱什么的了。</p>
@@ -692,20 +754,22 @@ chown root config.inc.php</code></pre>
 
 <h3 id="a下载解压">a.下载解压</h3>
 
-<pre><code class="language-sh">mkdir /var/www/example.com/public_html/webmail
-cd /var/www/example.com/public_html/webmail
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> /var/www/example.com/public_html/webmail
+<span class="nb">cd</span> /var/www/example.com/public_html/webmail
 wget http://repository.rainloop.net/v2/webmail/rainloop-latest.zip
 unzip rainloop-latest.zip
-rm rainloop-*.zip</code></pre>
+<span class="nb">rm </span>rainloop-<span class="k">*</span>.zip
+</code></pre></div></div>
 
 <p>这时候webmail目录下应该有个index.php,还有2个文件夹data和rainloop，否则又是嵌套了一层。</p>
 
 <h3 id="b设置权限">b.设置权限</h3>
 
-<pre><code class="language-sh">cd /var/www/example.com/public_html/webmail
-find . -type d -exec chmod 755 {} \;
-find . -type f -exec chmod 644 {} \;
-chown -R www-data:www-data .</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /var/www/example.com/public_html/webmail
+find <span class="nb">.</span> <span class="nt">-type</span> d <span class="nt">-exec</span> <span class="nb">chmod </span>755 <span class="o">{}</span> <span class="se">\;</span>
+find <span class="nb">.</span> <span class="nt">-type</span> f <span class="nt">-exec</span> <span class="nb">chmod </span>644 <span class="o">{}</span> <span class="se">\;</span>
+<span class="nb">chown</span> <span class="nt">-R</span> www-data:www-data <span class="nb">.</span>
+</code></pre></div></div>
 
 <h3 id="c直接访问管理页面进行配置">c.直接访问管理页面进行配置：</h3>
 

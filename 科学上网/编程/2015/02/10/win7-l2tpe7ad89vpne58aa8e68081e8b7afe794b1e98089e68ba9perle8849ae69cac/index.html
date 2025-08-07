@@ -127,86 +127,87 @@
 如果要删除路由，只需在同文件夹下建一个deleteip.txt的空文件即可<br />
 <!--more--></p>
 
-<pre><code class="language-perl">#!/usr/bin/perl -w
+<div class="language-perl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/perl -w</span>
 
-use strict;
+<span class="k">use</span> <span class="nv">strict</span><span class="p">;</span>
 
-use warnings;
+<span class="k">use</span> <span class="nv">warnings</span><span class="p">;</span>
 
-$| =1;
-use LWP;
-use LWP::Simple;
-use LWP::UserAgent;
-use HTTP::Cookies;
-use HTTP::Headers;
-use HTTP::Response;
+<span class="vg">$|</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="k">use</span> <span class="nv">LWP</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">LWP::</span><span class="nv">Simple</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">LWP::</span><span class="nv">UserAgent</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">HTTP::</span><span class="nv">Cookies</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">HTTP::</span><span class="nv">Headers</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">HTTP::</span><span class="nv">Response</span><span class="p">;</span>
 
-my $ua = LWP::UserAgent-&gt;new;
-$ua-&gt;agent("Mozilla/5.0 (Windows NT 6.1; rv:30.0) Gecko/20100101 Firefox/30.0");
-my $cookie_jar = HTTP::Cookies-&gt;new(file=&gt;'lwp_cookies.txt',autosave=&gt;1, ignore_discard=&gt;1);
-$ua-&gt;cookie_jar($cookie_jar); 
-my $page='';
-my $delsig=0;
-if(-e "deleteip.txt")
-{
-   $delsig=1;
-}
+<span class="k">my</span> <span class="nv">$ua</span> <span class="o">=</span> <span class="nn">LWP::</span><span class="nv">UserAgent</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">;</span>
+<span class="nv">$ua</span><span class="o">-&gt;</span><span class="nv">agent</span><span class="p">("</span><span class="s2">Mozilla/5.0 (Windows NT 6.1; rv:30.0) Gecko/20100101 Firefox/30.0</span><span class="p">");</span>
+<span class="k">my</span> <span class="nv">$cookie_jar</span> <span class="o">=</span> <span class="nn">HTTP::</span><span class="nv">Cookies</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="s">file</span><span class="o">=&gt;</span><span class="p">'</span><span class="s1">lwp_cookies.txt</span><span class="p">',</span><span class="s">autosave</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="s">ignore_discard</span><span class="o">=&gt;</span><span class="mi">1</span><span class="p">);</span>
+<span class="nv">$ua</span><span class="o">-&gt;</span><span class="nv">cookie_jar</span><span class="p">(</span><span class="nv">$cookie_jar</span><span class="p">);</span> 
+<span class="k">my</span> <span class="nv">$page</span><span class="o">=</span><span class="p">'';</span>
+<span class="k">my</span> <span class="nv">$delsig</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="o">-</span><span class="nv">e</span> <span class="p">"</span><span class="s2">deleteip.txt</span><span class="p">")</span>
+<span class="p">{</span>
+   <span class="nv">$delsig</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
-if(!-e "ip.list"){
-my $result = $ua-&gt;get("http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest");
-die"An error occurred:", $result-&gt;status_line() unless $result-&gt;is_success;
+<span class="k">if</span><span class="p">(</span><span class="o">!-</span><span class="nv">e</span> <span class="p">"</span><span class="s2">ip.list</span><span class="p">"){</span>
+<span class="k">my</span> <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$ua</span><span class="o">-&gt;</span><span class="nv">get</span><span class="p">("</span><span class="s2">http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest</span><span class="p">");</span>
+<span class="nb">die</span><span class="p">"</span><span class="s2">An error occurred:</span><span class="p">",</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="nv">status_line</span><span class="p">()</span> <span class="k">unless</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="nv">is_success</span><span class="p">;</span>
 
-$page=$result-&gt;content;;
+<span class="nv">$page</span><span class="o">=</span><span class="nv">$result</span><span class="o">-&gt;</span><span class="nv">content</span><span class="p">;;</span>
 
-open(IPFILE,"&gt;ip.list") or die "file ip.list cannot be created";
-print IPFILE $page;
-close(IPFILE);
-}else
-{
-open(IPFILE2,"&lt;ip.list") or die "file ip.list cannot be opened";
-while(my $content = &lt;IPFILE2&gt;)
-{
-	$page =$page.$content;
-	}
-close(IPFILE2);
-}
-my @line = split("\n",$page);
+<span class="nb">open</span><span class="p">(</span><span class="nv">IPFILE</span><span class="p">,"</span><span class="s2">&gt;ip.list</span><span class="p">")</span> <span class="ow">or</span> <span class="nb">die</span> <span class="p">"</span><span class="s2">file ip.list cannot be created</span><span class="p">";</span>
+<span class="k">print</span> <span class="nv">IPFILE</span> <span class="nv">$page</span><span class="p">;</span>
+<span class="nb">close</span><span class="p">(</span><span class="nv">IPFILE</span><span class="p">);</span>
+<span class="p">}</span><span class="k">else</span>
+<span class="p">{</span>
+<span class="nb">open</span><span class="p">(</span><span class="nv">IPFILE2</span><span class="p">,"</span><span class="s2">&lt;ip.list</span><span class="p">")</span> <span class="ow">or</span> <span class="nb">die</span> <span class="p">"</span><span class="s2">file ip.list cannot be opened</span><span class="p">";</span>
+<span class="k">while</span><span class="p">(</span><span class="k">my</span> <span class="nv">$content</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nv">IPFILE2</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="nv">$page</span> <span class="o">=</span><span class="nv">$page</span><span class="o">.</span><span class="nv">$content</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="nb">close</span><span class="p">(</span><span class="nv">IPFILE2</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">my</span> <span class="nv">@line</span> <span class="o">=</span> <span class="nb">split</span><span class="p">("</span><span class="se">\n</span><span class="p">",</span><span class="nv">$page</span><span class="p">);</span>
 
-my $route = `route print 0*`;
+<span class="k">my</span> <span class="nv">$route</span> <span class="o">=</span> <span class="p">`</span><span class="sb">route print 0*</span><span class="p">`;</span>
 
-$route =~ s/\n//g;
-my $gatewayip='';
-if($route =~/0\.0\.0\.0\s+0\.0\.0\.0\s+(\d+\.\d+\.\d+\.\d+)/)
-{$gatewayip=$1;print "################$gatewayip##############";}
+<span class="nv">$route</span> <span class="o">=~</span> <span class="sr">s/\n//g</span><span class="p">;</span>
+<span class="k">my</span> <span class="nv">$gatewayip</span><span class="o">=</span><span class="p">'';</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$route</span> <span class="o">=~</span><span class="sr">/0\.0\.0\.0\s+0\.0\.0\.0\s+(\d+\.\d+\.\d+\.\d+)/</span><span class="p">)</span>
+<span class="p">{</span><span class="nv">$gatewayip</span><span class="o">=</span><span class="err">$</span><span class="mi">1</span><span class="p">;</span><span class="k">print</span> <span class="p">"</span><span class="s2">################</span><span class="si">$gatewayip</span><span class="s2">##############</span><span class="p">";}</span>
 
-my $i=0;
+<span class="k">my</span> <span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 
-foreach my $cc (@line)
-{
-    chomp $cc;
-    if(!$cc=~/^apnic/){next;}
-    #print $cc,"\n";
-    my @el = split /\|/,$cc;
-     my $locate =$el[1];
+<span class="k">foreach</span> <span class="k">my</span> <span class="nv">$cc</span> <span class="p">(</span><span class="nv">@line</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nb">chomp</span> <span class="nv">$cc</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$cc</span><span class="o">=~</span><span class="sr">/^apnic/</span><span class="p">){</span><span class="k">next</span><span class="p">;}</span>
+    <span class="c1">#print $cc,"\n";</span>
+    <span class="k">my</span> <span class="nv">@el</span> <span class="o">=</span> <span class="nb">split</span> <span class="sr">/\|/</span><span class="p">,</span><span class="nv">$cc</span><span class="p">;</span>
+     <span class="k">my</span> <span class="nv">$locate</span> <span class="o">=</span><span class="nv">$el</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
  
-     my $iptype =$el[2];
-     my $ip = $el[3];
-         #print $locate,' ',$ip,' ',$iptype,"\n";
-     if(defined $locate and $locate eq 'CN' and $iptype eq 'ipv4'){
+     <span class="k">my</span> <span class="nv">$iptype</span> <span class="o">=</span><span class="nv">$el</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+     <span class="k">my</span> <span class="nv">$ip</span> <span class="o">=</span> <span class="nv">$el</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+         <span class="c1">#print $locate,' ',$ip,' ',$iptype,"\n";</span>
+     <span class="k">if</span><span class="p">(</span><span class="nb">defined</span> <span class="nv">$locate</span> <span class="ow">and</span> <span class="nv">$locate</span> <span class="ow">eq</span> <span class="p">'</span><span class="s1">CN</span><span class="p">'</span> <span class="ow">and</span> <span class="nv">$iptype</span> <span class="ow">eq</span> <span class="p">'</span><span class="s1">ipv4</span><span class="p">'){</span>
      	
-     	my $mask = int (32- log($el[4])/log(2));
+     	<span class="k">my</span> <span class="nv">$mask</span> <span class="o">=</span> <span class="nb">int</span> <span class="p">(</span><span class="mi">32</span><span class="o">-</span> <span class="nb">log</span><span class="p">(</span><span class="nv">$el</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span><span class="o">/</span><span class="nb">log</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
     
    
-     $i++;
-    if($delsig==0) {print "route -p add $ip/$mask $gatewayip metric 25\n"; system("route -p add $ip/$mask $gatewayip metric 25");}
-    else{print "route delete $ip\n";system("route delete $ip");}
-   }
+     <span class="nv">$i</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$delsig</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span><span class="k">print</span> <span class="p">"</span><span class="s2">route -p add </span><span class="si">$ip</span><span class="s2">/</span><span class="si">$mask</span><span class="s2"> </span><span class="si">$gatewayip</span><span class="s2"> metric 25</span><span class="se">\n</span><span class="p">";</span> <span class="nb">system</span><span class="p">("</span><span class="s2">route -p add </span><span class="si">$ip</span><span class="s2">/</span><span class="si">$mask</span><span class="s2"> </span><span class="si">$gatewayip</span><span class="s2"> metric 25</span><span class="p">");}</span>
+    <span class="k">else</span><span class="p">{</span><span class="k">print</span> <span class="p">"</span><span class="s2">route delete </span><span class="si">$ip</span><span class="se">\n</span><span class="p">";</span><span class="nb">system</span><span class="p">("</span><span class="s2">route delete </span><span class="si">$ip</span><span class="p">");}</span>
+   <span class="p">}</span>
   
   
-    #system("route add $line mask------------- 255.255.255.0 $ip metric 25");
-}
-print $i;
-</code></pre>
+    <span class="c1">#system("route add $line mask------------- 255.255.255.0 $ip metric 25");</span>
+<span class="p">}</span>
+<span class="k">print</span> <span class="nv">$i</span><span class="p">;</span>
+
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

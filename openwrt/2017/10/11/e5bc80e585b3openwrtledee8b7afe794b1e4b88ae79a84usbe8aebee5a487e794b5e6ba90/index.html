@@ -121,10 +121,12 @@
 		<p>最近搞了个华为的usb无线网卡E8372插在lede路由上，但是想实现程序控制其供电，查阅资料后发现可以这样实现：<br />
 首先：</p>
 
-<pre><code class="language-sh">ls /sys/class/gpio/</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls</span> /sys/class/gpio/
+</code></pre></div></div>
 
-<pre><code class="language-vim">export      gpiochip32  unexport    usb3power
-gpiochip0   gpiochip64  usb2power</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span>      gpiochip32  unexport    usb3power
+gpiochip0   gpiochip64  usb2power
+</code></pre></div></div>
 
 <p>由于网卡是插在usb3的口上。<br />
 于是：<br />

@@ -125,30 +125,34 @@ i-Shanghai的wifi连接上以后，任意打开某网页，例如:www.baidu.com�
 
 <!--more-->
 
-<pre><code class="language-vim">'https://wlan.ct10000.com/?basetype=3&amp;nasPortId='.$nasPortId.'&amp;UserInputURL=http://www.baidu.com/&amp;nasIp='.$nasIp;</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s1">'https://wlan.ct10000.com/?basetype=3&amp;nasPortId='</span><span class="p">.</span>$nasPortId<span class="p">.</span><span class="s1">'&amp;UserInputURL=http://www.baidu.com/&amp;nasIp='</span><span class="p">.</span>$nasIp;
+</code></pre></div></div>
 
 <p>里面的id和ip估计就是热点的id和ip了。。。</p>
 
 <p>这个页面包含一个框架，实际的登录页面就是在框架里面的，我认为这是基于安全性的考虑，框架的地址，类似：</p>
 
-<pre><code class="language-vim">'https://wlan.ct10000.com/'.$longString</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s1">'https://wlan.ct10000.com/'</span><span class="p">.</span>$longString
+</code></pre></div></div>
 
 <p>直接打开框架地址后，出现了熟悉的登录框，通过分析元素发现，提交的要素有些是hidden的，且最后的提交按钮是调用javascript，经测试直接通过模拟点击是不行了（perl的www::mechanize似乎不支持javascript），这样的设计也是为了安全考虑吧，只有最后一条路——抓包分析了。</p>
 
 <p>最麻烦的是，为了安全考虑，这些网址都是https的，通过wireshark抓包是没有用的，只能通过Fiddler或者chrome的开发者模式抓包，通过抓包，知道了提交的要素和地址：<br />
 提交的内容是：</p>
 
-<pre><code class="language-vim">paramStr
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>paramStr
 paramStrEnc
 province
 prefix
 logintype
 UserName
-PassWord</code></pre>
+PassWord
+</code></pre></div></div>
 
 <p>提交的地址是：</p>
 
-<pre><code class="language-vim">https://wlan.ct10000.com/authServlet</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https<span class="p">:</span><span class="sr">//</span>wlan<span class="p">.</span>ct10000<span class="p">.</span><span class="k">com</span>/authServlet
+</code></pre></div></div>
 
 <p>前2个提交内容在框架页面就已经生成了，里面应该包含了热点的id等相关信息，如果提交时不带上或者带错了这些信息，就会提示此处不是热点。。。</p>
 
@@ -158,89 +162,90 @@ PassWord</code></pre>
 
 <p>下面附上PC端i-Shanghai自动登录perl脚本，模拟iPhone登录（python脚本不提供，免得被不法奸商利用）：</p>
 
-<pre><code class="language-perl">#/usr/bin/perl -w
-    use strict;
-    use warnings;
-    use WWW::Mechanize; 
+<div class="language-perl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#/usr/bin/perl -w</span>
+    <span class="k">use</span> <span class="nv">strict</span><span class="p">;</span>
+    <span class="k">use</span> <span class="nv">warnings</span><span class="p">;</span>
+    <span class="k">use</span> <span class="nn">WWW::</span><span class="nv">Mechanize</span><span class="p">;</span> 
 
-    my $username = '13888888888';
-    my $pass = '222222';
-    my $nasIp = '133.133.133.133'; 
-    my $nasPortId = 'lag-1:8888.888';   
-    my $url = 'https://wlan.ct10000.com/?basetype=3&amp;nasPortId='.$nasPortId.'&amp;UserInputURL=http://www.baidu.com/&amp;nasIp='.$nasIp;
+    <span class="k">my</span> <span class="nv">$username</span> <span class="o">=</span> <span class="p">'</span><span class="s1">13888888888</span><span class="p">';</span>
+    <span class="k">my</span> <span class="nv">$pass</span> <span class="o">=</span> <span class="p">'</span><span class="s1">222222</span><span class="p">';</span>
+    <span class="k">my</span> <span class="nv">$nasIp</span> <span class="o">=</span> <span class="p">'</span><span class="s1">133.133.133.133</span><span class="p">';</span> 
+    <span class="k">my</span> <span class="nv">$nasPortId</span> <span class="o">=</span> <span class="p">'</span><span class="s1">lag-1:8888.888</span><span class="p">';</span>   
+    <span class="k">my</span> <span class="nv">$url</span> <span class="o">=</span> <span class="p">'</span><span class="s1">https://wlan.ct10000.com/?basetype=3&amp;nasPortId=</span><span class="p">'</span><span class="o">.</span><span class="nv">$nasPortId</span><span class="o">.</span><span class="p">'</span><span class="s1">&amp;UserInputURL=http://www.baidu.com/&amp;nasIp=</span><span class="p">'</span><span class="o">.</span><span class="nv">$nasIp</span><span class="p">;</span>
     
-    my $impcontent;
-    #打开浏览器
-    my $ua = WWW::Mechanize-&gt;new(); 
-    $ua-&gt;cookie_jar(HTTP::Cookies-&gt;new()); 
-    $ua-&gt;agent_alias('Windows IE 6');
+    <span class="k">my</span> <span class="nv">$impcontent</span><span class="p">;</span>
+    <span class="c1">#打开浏览器</span>
+    <span class="k">my</span> <span class="nv">$ua</span> <span class="o">=</span> <span class="nn">WWW::</span><span class="nv">Mechanize</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">();</span> 
+    <span class="nv">$ua</span><span class="o">-&gt;</span><span class="nv">cookie_jar</span><span class="p">(</span><span class="nn">HTTP::</span><span class="nv">Cookies</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">());</span> 
+    <span class="nv">$ua</span><span class="o">-&gt;</span><span class="nv">agent_alias</span><span class="p">('</span><span class="s1">Windows IE 6</span><span class="p">');</span>
     
-    #打开网址
-    my $response = $ua-&gt;get($url);
-    my $decontent =$response-&gt;decoded_content;
+    <span class="c1">#打开网址</span>
+    <span class="k">my</span> <span class="nv">$response</span> <span class="o">=</span> <span class="nv">$ua</span><span class="o">-&gt;</span><span class="nv">get</span><span class="p">(</span><span class="nv">$url</span><span class="p">);</span>
+    <span class="k">my</span> <span class="nv">$decontent</span> <span class="o">=</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="nv">decoded_content</span><span class="p">;</span>
     
-    $decontent =~ s/\n//g;
+    <span class="nv">$decontent</span> <span class="o">=~</span> <span class="sr">s/\n//g</span><span class="p">;</span>
                 
-   #打开框架网址            
-   if($decontent =~ /mainFrame\" src=\"(.*)\" noresize/)
-   {
-   	 $url = 'https://wlan.ct10000.com'.$1;
+   <span class="c1">#打开框架网址            </span>
+   <span class="k">if</span><span class="p">(</span><span class="nv">$decontent</span> <span class="o">=~</span> <span class="sr">/mainFrame\" src=\"(.*)\" noresize/</span><span class="p">)</span>
+   <span class="p">{</span>
+   	 <span class="nv">$url</span> <span class="o">=</span> <span class="p">'</span><span class="s1">https://wlan.ct10000.com</span><span class="p">'</span><span class="o">.</span><span class="err">$</span><span class="mi">1</span><span class="p">;</span>
 
-   }
-    $response = $ua-&gt;get($url);           
-    $decontent =$response-&gt;decoded_content; 
-    $decontent =~ s/\n/0D0A/g;
-    $decontent =~ s/\s//g;
+   <span class="p">}</span>
+    <span class="nv">$response</span> <span class="o">=</span> <span class="nv">$ua</span><span class="o">-&gt;</span><span class="nv">get</span><span class="p">(</span><span class="nv">$url</span><span class="p">);</span>           
+    <span class="nv">$decontent</span> <span class="o">=</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="nv">decoded_content</span><span class="p">;</span> 
+    <span class="nv">$decontent</span> <span class="o">=~</span> <span class="sr">s/\n/0D0A/g</span><span class="p">;</span>
+    <span class="nv">$decontent</span> <span class="o">=~</span> <span class="sr">s/\s//g</span><span class="p">;</span>
  
     
-    #取出框架要素
-    my $paramStr='';
-    if($decontent =~ /id=\"paramStr\"value=\"(.*)?\"\/&gt;0D0A&lt;inputtype=\"hidden\"name=\"paramStrEnc\"/)  
-    {
-    	 $paramStr=$1;   	  
-    }
-    my $paramStrEnc='';
-    if($decontent =~ /id=\"paramStrEnc\"value=\"(.*)?\"\/&gt;0D0A&lt;inputtype=\"hidden\"name=\"province\"id=\"province\"/)
-    {
-    	 $paramStrEnc=$1;
-    }
-    my $province='telecom.dynamic@ish';
-    my $prefix='NE';
-    my $logintype='2';
+    <span class="c1">#取出框架要素</span>
+    <span class="k">my</span> <span class="nv">$paramStr</span><span class="o">=</span><span class="p">'';</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$decontent</span> <span class="o">=~</span> <span class="sr">/id=\"paramStr\"value=\"(.*)?\"\/&gt;0D0A&lt;inputtype=\"hidden\"name=\"paramStrEnc\"/</span><span class="p">)</span>  
+    <span class="p">{</span>
+    	 <span class="nv">$paramStr</span><span class="o">=</span><span class="err">$</span><span class="mi">1</span><span class="p">;</span>   	  
+    <span class="p">}</span>
+    <span class="k">my</span> <span class="nv">$paramStrEnc</span><span class="o">=</span><span class="p">'';</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$decontent</span> <span class="o">=~</span> <span class="sr">/id=\"paramStrEnc\"value=\"(.*)?\"\/&gt;0D0A&lt;inputtype=\"hidden\"name=\"province\"id=\"province\"/</span><span class="p">)</span>
+    <span class="p">{</span>
+    	 <span class="nv">$paramStrEnc</span><span class="o">=</span><span class="err">$</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">my</span> <span class="nv">$province</span><span class="o">=</span><span class="p">'</span><span class="s1">telecom.dynamic@ish</span><span class="p">';</span>
+    <span class="k">my</span> <span class="nv">$prefix</span><span class="o">=</span><span class="p">'</span><span class="s1">NE</span><span class="p">';</span>
+    <span class="k">my</span> <span class="nv">$logintype</span><span class="o">=</span><span class="p">'</span><span class="s1">2</span><span class="p">';</span>
    
-    #简易uri编码，不用调用URI::Encode
-    $paramStr =~ s/([^^A-Za-z0-9\-_.!~*'()])/ sprintf "%%%02X", ord $1 /eg;
-    $paramStr =~ s/0D0A/\%0D\%0A/g;
-    $paramStrEnc =~ s/([^^A-Za-z0-9\-_.!~*'()])/ sprintf "%%%02X", ord $1 /eg;
-    $province =~ s/([^^A-Za-z0-9\-_.!~*'()])/ sprintf "%%%02X", ord $1 /eg;
-    my $location = 'https://wlan.ct10000.com/style/ish_fx/index.jsp?paramStr=' . $paramStr;
+    <span class="c1">#简易uri编码，不用调用URI::Encode</span>
+    <span class="nv">$paramStr</span> <span class="o">=~</span> <span class="sr">s/([^^A-Za-z0-9\-_.!~*'()])/ sprintf "%%%02X", ord $1 /</span><span class="nv">eg</span><span class="p">;</span>
+    <span class="nv">$paramStr</span> <span class="o">=~</span> <span class="sr">s/0D0A/\%0D\%0A/g</span><span class="p">;</span>
+    <span class="nv">$paramStrEnc</span> <span class="o">=~</span> <span class="sr">s/([^^A-Za-z0-9\-_.!~*'()])/ sprintf "%%%02X", ord $1 /</span><span class="nv">eg</span><span class="p">;</span>
+    <span class="nv">$province</span> <span class="o">=~</span> <span class="sr">s/([^^A-Za-z0-9\-_.!~*'()])/ sprintf "%%%02X", ord $1 /</span><span class="nv">eg</span><span class="p">;</span>
+    <span class="k">my</span> <span class="nv">$location</span> <span class="o">=</span> <span class="p">'</span><span class="s1">https://wlan.ct10000.com/style/ish_fx/index.jsp?paramStr=</span><span class="p">'</span> <span class="o">.</span> <span class="nv">$paramStr</span><span class="p">;</span>
     
-    my $content =  'paramStr=' . $paramStr . '&amp;paramStrEnc=' . $paramStrEnc  . '&amp;province=' . $province . '&amp;prefix=' . $prefix . '&amp;logintype=' . $logintype . '&amp;UserName=' . $username . '&amp;PassWord=' . $pass;  
-    print $content;  
+    <span class="k">my</span> <span class="nv">$content</span> <span class="o">=</span>  <span class="p">'</span><span class="s1">paramStr=</span><span class="p">'</span> <span class="o">.</span> <span class="nv">$paramStr</span> <span class="o">.</span> <span class="p">'</span><span class="s1">&amp;paramStrEnc=</span><span class="p">'</span> <span class="o">.</span> <span class="nv">$paramStrEnc</span>  <span class="o">.</span> <span class="p">'</span><span class="s1">&amp;province=</span><span class="p">'</span> <span class="o">.</span> <span class="nv">$province</span> <span class="o">.</span> <span class="p">'</span><span class="s1">&amp;prefix=</span><span class="p">'</span> <span class="o">.</span> <span class="nv">$prefix</span> <span class="o">.</span> <span class="p">'</span><span class="s1">&amp;logintype=</span><span class="p">'</span> <span class="o">.</span> <span class="nv">$logintype</span> <span class="o">.</span> <span class="p">'</span><span class="s1">&amp;UserName=</span><span class="p">'</span> <span class="o">.</span> <span class="nv">$username</span> <span class="o">.</span> <span class="p">'</span><span class="s1">&amp;PassWord=</span><span class="p">'</span> <span class="o">.</span> <span class="nv">$pass</span><span class="p">;</span>  
+    <span class="k">print</span> <span class="nv">$content</span><span class="p">;</span>  
     
-    my $url2='https://wlan.ct10000.com/authServlet';
-    #发起登陆
-    $response =  $ua-&gt;post($url2,              
-                        'Accept' =&gt;  'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                        'Accept-Encoding' =&gt;  'gzip, deflate',
-                        'Accept-Language' =&gt;  'zh-CN,zh;q=0.8',
-                        'Cache-Control' =&gt;  'max-age=0',
-                        'Connection' =&gt;  'keep-alive',
-                        'Content-Length' =&gt;  '1067',
-                        'Content-Type' =&gt;  'application/x-www-form-urlencoded',
-                        'Cookie' =&gt;  'JSESSIONID=22B2B92222C0F258866778895E2F4450F80',
-                        'Host' =&gt;  'wlan.ct10000.com',
-                        'Origin' =&gt;  'https://wlan.ct10000.com',
-                        'Referer' =&gt;   $location,  
-                        'Upgrade-Insecure-Requests' =&gt;  '1',
-                        'User-Agent' =&gt;  'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5',
-                        'Content' =&gt; $content
-                        );
+    <span class="k">my</span> <span class="nv">$url2</span><span class="o">=</span><span class="p">'</span><span class="s1">https://wlan.ct10000.com/authServlet</span><span class="p">';</span>
+    <span class="c1">#发起登陆</span>
+    <span class="nv">$response</span> <span class="o">=</span>  <span class="nv">$ua</span><span class="o">-&gt;</span><span class="nv">post</span><span class="p">(</span><span class="nv">$url2</span><span class="p">,</span>              
+                        <span class="p">'</span><span class="s1">Accept</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Accept-Encoding</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">gzip, deflate</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Accept-Language</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">zh-CN,zh;q=0.8</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Cache-Control</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">max-age=0</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Connection</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">keep-alive</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Content-Length</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">1067</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Content-Type</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">application/x-www-form-urlencoded</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Cookie</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">JSESSIONID=22B2B92222C0F258866778895E2F4450F80</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Host</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">wlan.ct10000.com</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Origin</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">https://wlan.ct10000.com</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Referer</span><span class="p">'</span> <span class="o">=&gt;</span>   <span class="nv">$location</span><span class="p">,</span>  
+                        <span class="p">'</span><span class="s1">Upgrade-Insecure-Requests</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">1</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">User-Agent</span><span class="p">'</span> <span class="o">=&gt;</span>  <span class="p">'</span><span class="s1">Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5</span><span class="p">',</span>
+                        <span class="p">'</span><span class="s1">Content</span><span class="p">'</span> <span class="o">=&gt;</span> <span class="nv">$content</span>
+                        <span class="p">);</span>
                         
        
-   # $decontent = $response-&gt;decoded_content;       
-   # print $decontent;
-                 </code></pre>
+   <span class="c1"># $decontent = $response-&gt;decoded_content;       </span>
+   <span class="c1"># print $decontent;</span>
+                 
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

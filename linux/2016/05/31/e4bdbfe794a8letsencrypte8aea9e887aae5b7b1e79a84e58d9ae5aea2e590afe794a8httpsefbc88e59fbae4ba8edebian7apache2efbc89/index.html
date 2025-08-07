@@ -126,103 +126,110 @@ Let’s Encrypt 是一个将于2015年末推出的数字证书认证机构，将
 
 <p>假如你是example.com 的所有者，只要在server端登录，并执行：</p>
 
-<pre><code class="language-sh">wget https://dl.eff.org/certbot-auto
-chmod a+x certbot-auto
-./certbot-auto certonly --webroot -w /var/www/example -d example.com -d www.example.com</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://dl.eff.org/certbot-auto
+<span class="nb">chmod </span>a+x certbot-auto
+./certbot-auto certonly <span class="nt">--webroot</span> <span class="nt">-w</span> /var/www/example <span class="nt">-d</span> example.com <span class="nt">-d</span> www.example.com
+</code></pre></div></div>
 
 <p>如果之前域名解析正常可以访问的话，会有如下提示：</p>
 
-<pre><code class="language-vim">IMPORTANT NOTES:
- - Congratulations! Your certificate and chain have been saved at
-   /etc/letsencrypt/live/example.com/fullchain.pem. Your cert will
-   expire on 2016-08-29. To obtain a new or tweaked version of this
-   certificate in the future, simply run certbot-auto again. To
-   non-interactively renew *all* of your ceriticates, run
-   "certbot-auto renew"
- - If you like Certbot, please consider supporting our work by:
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IMPORTANT NOTES<span class="p">:</span>
+ <span class="p">-</span> Congratulations<span class="p">!</span> Your certificate <span class="nb">and</span> chain have been saved at
+   <span class="sr">/etc/</span>letsencrypt<span class="sr">/live/</span>example<span class="p">.</span><span class="k">com</span>/fullchain<span class="p">.</span>pem<span class="p">.</span> Your cert will
+   expire <span class="k">on</span> <span class="m">2016-08-29</span><span class="p">.</span> To obtain <span class="k">a</span> <span class="k">new</span> <span class="nb">or</span> tweaked <span class="k">version</span> of this
+   certificate <span class="k">in</span> the future<span class="p">,</span> simply run certbot<span class="p">-</span>auto again<span class="p">.</span> To
+   non<span class="p">-</span>interactively renew *<span class="k">all</span>* of your ceriticates<span class="p">,</span> run
+   <span class="c">"certbot-auto renew"</span>
+ <span class="p">-</span> If you like Certbot<span class="p">,</span> please consider supporting our work by<span class="p">:</span>
 
-   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
-   Donating to EFF:                    https://eff.org/donate-le</code></pre>
+   Donating <span class="k">to</span> ISRG <span class="sr">/ Let's Encrypt:   https://letsencrypt.org/</span>donate
+   Donating <span class="k">to</span> EFF<span class="p">:</span>                    https<span class="p">:</span><span class="sr">//</span>eff<span class="p">.</span>org/donate<span class="p">-</span><span class="k">le</span>
+</code></pre></div></div>
 
 <p>说明证书链和私钥、证书已经产生了。。。</p>
 
 <p>如果失败，则会有类似提示：</p>
 
-<pre><code class="language-vim">Failed authorization procedure. www.example.com (http-01): urn:acme:error:unauthorized :: The client lacks sufficient authorization :: Invalid response from http://www.example.com/.well-known/acme-challenge/OJvVsXKC4odxeV4darP05x4T7-ymOykX0UT6jqh0rees: "&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
-&lt;html&gt;&lt;head&gt;
-&lt;title&gt;403 Forbidden&lt;/title&gt;
-&lt;/head&gt;&lt;body&gt;
-&lt;h1&gt;Forbidden&lt;/h1&gt;
-&lt;p"
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Failed authorization procedure<span class="p">.</span> www<span class="p">.</span>example<span class="p">.</span><span class="k">com</span> <span class="p">(</span>http<span class="m">-01</span><span class="p">):</span> urn<span class="p">:</span>acme<span class="p">:</span>error<span class="p">:</span>unauthorized <span class="p">::</span> The client lacks sufficient authorization <span class="p">::</span> Invalid response from http<span class="p">:</span><span class="sr">//</span>www<span class="p">.</span>example<span class="p">.</span><span class="k">com</span><span class="sr">/.well-known/</span>acme<span class="p">-</span>challenge<span class="sr">/OJvVsXKC4odxeV4darP05x4T7-ymOykX0UT6jqh0rees: "&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0/</span>/EN"<span class="p">&gt;</span>
+<span class="p">&lt;</span>html<span class="p">&gt;&lt;</span>head<span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nb">title</span><span class="p">&gt;</span><span class="m">403</span> Forbidden<span class="p">&lt;</span>/<span class="nb">title</span><span class="p">&gt;</span>
+<span class="p">&lt;</span>/head<span class="p">&gt;&lt;</span>body<span class="p">&gt;</span>
+<span class="p">&lt;</span>h1<span class="p">&gt;</span>Forbidden<span class="p">&lt;</span>/h1<span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="k">p</span>"
 
-IMPORTANT NOTES:
- - The following errors were reported by the server:
-……</code></pre>
+IMPORTANT NOTES<span class="p">:</span>
+ <span class="p">-</span> The following errors were reported by the server<span class="p">:</span>
+……
+</code></pre></div></div>
 
 <p>这就需要另外改配置了。。。</p>
 
 <p>然后修改一下apache的配置文件：</p>
 
-<pre><code class="language-vim"># domain: example.com
-# public: /var/www/example.com/public_html/
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># domain<span class="p">:</span> example<span class="p">.</span><span class="k">com</span>
+# public<span class="p">:</span> <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/
 
-NameVirtualHost *:443  
-&lt;VirtualHost *:80&gt;
+NameVirtualHost *<span class="p">:</span><span class="m">443</span>  
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">80</span><span class="p">&gt;</span>
 ServerName ip地址，防止直接ip访问
-&lt;Location /&gt;
-Order Allow,Deny
-Deny from all
-&lt;/Location&gt;
-&lt;/VirtualHost&gt;
+<span class="p">&lt;</span>Location /<span class="p">&gt;</span>
+Order Allow<span class="p">,</span>Deny
+Deny from <span class="k">all</span>
+<span class="p">&lt;</span>/Location<span class="p">&gt;</span>
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
 
 
 
-&lt;Directory /var/www/example.com/public_html/&gt;
-  &lt;IfModule mod_headers.c&gt; 
-        Header always set Strict-Transport-Security "max-age=15553000; includeSubDomains; preload" 
-  &lt;/IfModule&gt; 
-  RewriteEngine on
-  RewriteCond %{SERVER_PORT} !^443$
-  RewriteRule ^(.*)?$ https://routeragency.com/$1 [L,R]
-&lt;/Directory&gt;
+<span class="p">&lt;</span>Directory <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/<span class="p">&gt;</span>
+  <span class="p">&lt;</span>IfModule mod_headers<span class="p">.</span><span class="k">c</span><span class="p">&gt;</span> 
+        Header always <span class="k">set</span> Strict<span class="p">-</span>Transport<span class="p">-</span>Security <span class="s2">"max-age=15553000; includeSubDomains; preload"</span> 
+  <span class="p">&lt;</span>/IfModule<span class="p">&gt;</span> 
+  RewriteEngine <span class="k">on</span>
+  RewriteCond %<span class="p">{</span>SERVER_PORT<span class="p">}</span> <span class="p">!</span>^<span class="m">443</span>$
+  RewriteRule ^<span class="p">(.</span>*<span class="p">)</span>?$ https<span class="p">:</span><span class="sr">//</span>routeragency<span class="p">.</span><span class="k">com</span>/$<span class="m">1</span> <span class="p">[</span>L<span class="p">,</span>R<span class="p">]</span>
+<span class="p">&lt;</span>/Directory<span class="p">&gt;</span>
 
 
-&lt;VirtualHost *:443&gt;
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html/
-  ServerName routeragency.com:443
-  ServerAlias routeragency.com example.com www.routeragency.com
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">443</span><span class="p">&gt;</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/
+  ServerName routeragency<span class="p">.</span><span class="k">com</span><span class="p">:</span><span class="m">443</span>
+  ServerAlias routeragency<span class="p">.</span><span class="k">com</span> example<span class="p">.</span><span class="k">com</span> www<span class="p">.</span>routeragency<span class="p">.</span><span class="k">com</span>
   SSLEngine On
-  SSLProtocol ALL -SSLv2 -SSLv3
-  SSLHonorCipherOrder on
-  SSLCipherSuite ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4
+  SSLProtocol ALL <span class="p">-</span>SSLv2 <span class="p">-</span>SSLv3
+  SSLHonorCipherOrder <span class="k">on</span>
+  SSLCipherSuite ECDHE<span class="p">-</span>RSA<span class="p">-</span>AES256<span class="p">-</span>GCM<span class="p">-</span>SHA384<span class="p">:</span>ECDHE<span class="p">-</span>RSA<span class="p">-</span>AES128<span class="p">-</span>GCM<span class="p">-</span>SHA256<span class="p">:</span>DHE<span class="p">-</span>RSA<span class="p">-</span>AES256<span class="p">-</span>GCM<span class="p">-</span>SHA384<span class="p">:</span>DHE<span class="p">-</span>RSA<span class="p">-</span>AES128<span class="p">-</span>GCM<span class="p">-</span>SHA256<span class="p">:</span>ECDHE<span class="p">-</span>RSA<span class="p">-</span>AES256<span class="p">-</span>SHA384<span class="p">:</span>ECDHE<span class="p">-</span>RSA<span class="p">-</span>AES128<span class="p">-</span>SHA256<span class="p">:</span>ECDHE<span class="p">-</span>RSA<span class="p">-</span>AES256<span class="p">-</span>SHA<span class="p">:</span>ECDHE<span class="p">-</span>RSA<span class="p">-</span>AES128<span class="p">-</span>SHA<span class="p">:</span>DHE<span class="p">-</span>RSA<span class="p">-</span>AES256<span class="p">-</span>SHA256<span class="p">:</span>DHE<span class="p">-</span>RSA<span class="p">-</span>AES128<span class="p">-</span>SHA256<span class="p">:</span>DHE<span class="p">-</span>RSA<span class="p">-</span>AES256<span class="p">-</span>SHA<span class="p">:</span>DHE<span class="p">-</span>RSA<span class="p">-</span>AES128<span class="p">-</span>SHA<span class="p">:</span>ECDHE<span class="p">-</span>RSA<span class="p">-</span>DES<span class="p">-</span>CBC3<span class="p">-</span>SHA<span class="p">:</span>EDH<span class="p">-</span>RSA<span class="p">-</span>DES<span class="p">-</span>CBC3<span class="p">-</span>SHA<span class="p">:</span>AES256<span class="p">-</span>GCM<span class="p">-</span>SHA384<span class="p">:</span>AES128<span class="p">-</span>GCM<span class="p">-</span>SHA256<span class="p">:</span>AES256<span class="p">-</span>SHA256<span class="p">:</span>AES128<span class="p">-</span>SHA256<span class="p">:</span>AES256<span class="p">-</span>SHA<span class="p">:</span>AES128<span class="p">-</span>SHA<span class="p">:</span>DES<span class="p">-</span>CBC3<span class="p">-</span>SHA<span class="p">:</span>HIGH<span class="p">:!</span>aNULL<span class="p">:!</span>eNULL<span class="p">:!</span>EXPORT<span class="p">:!</span>CAMELLIA<span class="p">:!</span>DES<span class="p">:!</span>MD5<span class="p">:!</span>PSK<span class="p">:!</span>RC4
   SSLCompression Off
-  SSLOptions +StrictRequire
-  SSLCertificateFile  /etc/letsencrypt/live/routeragency.com/fullchain.pem
-  SSLCertificateKeyFile /etc/letsencrypt/live/routeragency.com/privkey.pem
-  SSLCACertificateFile /etc/letsencrypt/live/routeragency.com/chain.pem
-&lt;/VirtualHost&gt;
+  SSLOptions <span class="p">+</span>StrictRequire
+  SSLCertificateFile  <span class="sr">/etc/</span>letsencrypt<span class="sr">/live/</span>routeragency<span class="p">.</span><span class="k">com</span>/fullchain<span class="p">.</span>pem
+  SSLCertificateKeyFile <span class="sr">/etc/</span>letsencrypt<span class="sr">/live/</span>routeragency<span class="p">.</span><span class="k">com</span>/privkey<span class="p">.</span>pem
+  SSLCACertificateFile <span class="sr">/etc/</span>letsencrypt<span class="sr">/live/</span>routeragency<span class="p">.</span><span class="k">com</span>/chain<span class="p">.</span>pem
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
 
-&lt;VirtualHost *:80&gt;
-  DirectoryIndex index.html index.php
-  DocumentRoot /var/www/example.com/public_html/
-  ServerName routeragency.com
-  ServerAlias www.example.com www.routeragency.com example.com
-&lt;/VirtualHost&gt;</code></pre>
+<span class="p">&lt;</span>VirtualHost *<span class="p">:</span><span class="m">80</span><span class="p">&gt;</span>
+  DirectoryIndex <span class="nb">index</span><span class="p">.</span>html <span class="nb">index</span><span class="p">.</span>php
+  DocumentRoot <span class="sr">/var/</span>www<span class="sr">/example.com/</span>public_html/
+  ServerName routeragency<span class="p">.</span><span class="k">com</span>
+  ServerAlias www<span class="p">.</span>example<span class="p">.</span><span class="k">com</span> www<span class="p">.</span>routeragency<span class="p">.</span><span class="k">com</span> example<span class="p">.</span><span class="k">com</span>
+<span class="p">&lt;</span>/VirtualHost<span class="p">&gt;</span>
+</code></pre></div></div>
 
 <p>然后重启apache服务：</p>
 
-<pre><code class="language-sh">service apache2 restart
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>service apache2 restart
+
+</code></pre></div></div>
 
 <p>最后在crotab中设置2个月更新一次证书（因为这个机构的证书只有3个月有效期）：</p>
 
-<pre><code class="language-sh">crontab -e
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crontab <span class="nt">-e</span>
+
+</code></pre></div></div>
 
 <p>添加定时任务</p>
 
-<pre><code class="language-sh">0 0 1 */2 * xxx/certbot/certbot-auto renew &amp;&amp; /etc/init.d/apache2 restart</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 0 1 <span class="k">*</span>/2 <span class="k">*</span> xxx/certbot/certbot-auto renew <span class="o">&amp;&amp;</span> /etc/init.d/apache2 restart
+</code></pre></div></div>
 
 <p>搞定，简单吧。。。<br />
 可以到www.ssllabs.com测试一下评级，满足一下虚荣心。。。</p>

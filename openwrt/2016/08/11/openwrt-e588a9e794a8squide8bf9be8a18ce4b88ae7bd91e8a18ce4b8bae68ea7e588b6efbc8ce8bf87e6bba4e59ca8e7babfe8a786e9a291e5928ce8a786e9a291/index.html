@@ -121,64 +121,65 @@
 		<p>某些情况下，需要过滤在线视频和视频下载，按照IP或者网址过滤当然是可以的，不过要找到那么多视频网址很麻烦，现在大多数视频网站都开启了CDN，即便拿到ip池也是不全的。找了半天，终于看到了一个办法。<br />
 首先当然是安装squid了：</p>
 
-<pre><code class="language-sh">opkg update
-opkg install squid
-vi /etc/squid/squid.conf</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg <span class="nb">install </span>squid
+vi /etc/squid/squid.conf
+</code></pre></div></div>
 
 <p>内容为：</p>
 
 <!--more-->
 
-<pre><code class="language-vim">######General Settings##############
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>######General Settings##############
 
-http_port 3128 transparent
+http_port <span class="m">3128</span> transparent
 
 ######Block Video Streaming##############
 
-acl media rep_mime_type video/flv video/x-flv
-acl media rep_mime_type -i ^video/
-acl media rep_mime_type -i ^video\/
-#acl media rep_mime_type ^application/x-shockwave-flash
-acl media rep_mime_type ^application/vnd.ms.wms-hdr.asfv1
-acl media rep_mime_type ^application/x-fcs
-acl media rep_mime_type ^application/x-mms-framed
-acl media rep_mime_type ^video/x-ms-asf
+acl media rep_mime_type video<span class="sr">/flv video/</span><span class="k">x</span><span class="p">-</span>flv
+acl media rep_mime_type <span class="p">-</span><span class="k">i</span> ^video/
+acl media rep_mime_type <span class="p">-</span><span class="k">i</span> ^video\/
+#acl media rep_mime_type ^application/<span class="k">x</span><span class="p">-</span>shockwave<span class="p">-</span>flash
+acl media rep_mime_type ^application/vnd<span class="p">.</span>ms<span class="p">.</span>wms<span class="p">-</span>hdr<span class="p">.</span>asfv1
+acl media rep_mime_type ^application/<span class="k">x</span><span class="p">-</span><span class="nb">fcs</span>
+acl media rep_mime_type ^application/<span class="k">x</span><span class="p">-</span>mms<span class="p">-</span>framed
+acl media rep_mime_type ^video/<span class="k">x</span><span class="p">-</span>ms<span class="p">-</span>asf
 acl media rep_mime_type ^audio/mpeg
-acl media rep_mime_type ^audio/x-scpls
-acl media rep_mime_type ^video/x-flv
+acl media rep_mime_type ^audio/<span class="k">x</span><span class="p">-</span>scpls
+acl media rep_mime_type ^video/<span class="k">x</span><span class="p">-</span>flv
 acl media rep_mime_type ^video/mpeg4
-acl media rep_mime_type ms-hdr
-acl media rep_mime_type x-fcs
-acl mediapr urlpath_regex \.flv(\?.*)?$
-acl mediapr urlpath_regex -i \.(avi|mp4|mov|m4v|mkv|flv)(\?.*)?$
-acl mediapr urlpath_regex -i \.(mpg|mpeg|avi|mov|flv|wmv|mkv|rmvb)(\?.*)?$
+acl media rep_mime_type ms<span class="p">-</span>hdr
+acl media rep_mime_type <span class="k">x</span><span class="p">-</span><span class="nb">fcs</span>
+acl mediapr urlpath_regex \<span class="p">.</span>flv<span class="p">(</span>\?<span class="p">.</span>*<span class="p">)</span>?$
+acl mediapr urlpath_regex <span class="p">-</span><span class="k">i</span> \<span class="p">.(</span>avi<span class="p">|</span>mp4<span class="p">|</span>mov<span class="p">|</span>m4v<span class="p">|</span><span class="k">mkv</span><span class="p">|</span>flv<span class="p">)(</span>\?<span class="p">.</span>*<span class="p">)</span>?$
+acl mediapr urlpath_regex <span class="p">-</span><span class="k">i</span> \<span class="p">.(</span>mpg<span class="p">|</span>mpeg<span class="p">|</span>avi<span class="p">|</span>mov<span class="p">|</span>flv<span class="p">|</span>wmv<span class="p">|</span><span class="k">mkv</span><span class="p">|</span>rmvb<span class="p">)(</span>\?<span class="p">.</span>*<span class="p">)</span>?$
 
 
-acl localnet src 172.16.0.0/12
-acl localnet src 192.168.0.0/16
-acl localnet src fc00::/7
-acl localnet src fe80::/10
+acl localnet <span class="k">src</span> <span class="m">172</span><span class="p">.</span><span class="m">16</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">12</span>
+acl localnet <span class="k">src</span> <span class="m">192</span><span class="p">.</span><span class="m">168</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>/<span class="m">16</span>
+acl localnet <span class="k">src</span> fc00<span class="p">::</span>/<span class="m">7</span>
+acl localnet <span class="k">src</span> fe80<span class="p">::</span>/<span class="m">10</span>
 
-acl ssl_ports port 443
+acl ssl_ports port <span class="m">443</span>
 
-acl safe_ports port 80
-acl safe_ports port 21
-acl safe_ports port 443
-acl safe_ports port 70
-acl safe_ports port 210
-acl safe_ports port 1025-65535
-acl safe_ports port 280
-acl safe_ports port 488
-acl safe_ports port 591
-acl safe_ports port 777
+acl safe_ports port <span class="m">80</span>
+acl safe_ports port <span class="m">21</span>
+acl safe_ports port <span class="m">443</span>
+acl safe_ports port <span class="m">70</span>
+acl safe_ports port <span class="m">210</span>
+acl safe_ports port <span class="m">1025-65535</span>
+acl safe_ports port <span class="m">280</span>
+acl safe_ports port <span class="m">488</span>
+acl safe_ports port <span class="m">591</span>
+acl safe_ports port <span class="m">777</span>
 acl connect method connect
 
 
 http_access deny mediapr
 http_reply_access deny media
 
-http_access deny !safe_ports
-http_access deny connect !ssl_ports
+http_access deny <span class="p">!</span>safe_ports
+http_access deny connect <span class="p">!</span>ssl_ports
 
 http_access allow localhost manager
 http_access deny manager
@@ -188,33 +189,36 @@ http_access deny to_localhost
 http_access allow localnet
 http_access allow localhost
 
-http_access deny all
+http_access deny <span class="k">all</span>
 
-refresh_pattern ^ftp: 1440 20% 10080
-refresh_pattern ^gopher: 1440 0% 1440
-refresh_pattern -i (/cgi-bin/|\?) 0 0% 0
-refresh_pattern . 0 20% 4320
+refresh_pattern ^ftp<span class="p">:</span> <span class="m">1440</span> <span class="m">20</span>% <span class="m">10080</span>
+refresh_pattern ^gopher<span class="p">:</span> <span class="m">1440</span> <span class="m">0</span>% <span class="m">1440</span>
+refresh_pattern <span class="p">-</span><span class="k">i</span> <span class="p">(</span><span class="sr">/cgi-bin/</span><span class="p">|</span>\?<span class="p">)</span> <span class="m">0</span> <span class="m">0</span>% <span class="m">0</span>
+refresh_pattern <span class="p">.</span> <span class="m">0</span> <span class="m">20</span>% <span class="m">4320</span>
 
 access_log none
-cache_mem 16 MB
-cache_log /dev/null
-cache_store_log /dev/null
-logfile_rotate 0
+cache_mem <span class="m">16</span> MB
+cache_log <span class="sr">/dev/</span>null
+cache_store_log <span class="sr">/dev/</span>null
+logfile_rotate <span class="m">0</span>
 
-logfile_daemon /dev/null</code></pre>
+logfile_daemon <span class="sr">/dev/</span>null
+</code></pre></div></div>
 
 <p>然后在防火墙打开重定向：</p>
 
-<pre><code class="language-sh">iptables -t nat -A PREROUTING -p tcp -s 192.168.1.0/24 --dport 80 -j REDIRECT --to-ports 3128
-#iptables -t nat -A PREROUTING -p tcp -s 192.168.1.0/24 --dport 443 -j REDIRECT --to-ports 3128
-iptables -t nat -A PREROUTING -p tcp -s 192.168.1.0/24 --dport 1024:65535 -j REDIRECT --to-ports 3128
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables <span class="nt">-t</span> nat <span class="nt">-A</span> PREROUTING <span class="nt">-p</span> tcp <span class="nt">-s</span> 192.168.1.0/24 <span class="nt">--dport</span> 80 <span class="nt">-j</span> REDIRECT <span class="nt">--to-ports</span> 3128
+<span class="c">#iptables -t nat -A PREROUTING -p tcp -s 192.168.1.0/24 --dport 443 -j REDIRECT --to-ports 3128</span>
+iptables <span class="nt">-t</span> nat <span class="nt">-A</span> PREROUTING <span class="nt">-p</span> tcp <span class="nt">-s</span> 192.168.1.0/24 <span class="nt">--dport</span> 1024:65535 <span class="nt">-j</span> REDIRECT <span class="nt">--to-ports</span> 3128
+
+</code></pre></div></div>
 
 <p>注意443端口重定向可能会造成网页无法访问。</p>
 
 <p>最后启动squid:</p>
 
-<pre><code class="language-sh">/etc/init.d/squid start</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/init.d/squid start
+</code></pre></div></div>
 
 <p>参考：<br />
 1.https://rbgeek.wordpress.com/2012/09/12/how-to-block-video-streaming-with-squid/</p>

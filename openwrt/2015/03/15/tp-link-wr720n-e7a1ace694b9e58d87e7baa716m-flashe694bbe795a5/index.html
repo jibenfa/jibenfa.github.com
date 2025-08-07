@@ -151,8 +151,9 @@
 a.备份原路由器art文件，这里面是无线的调试信息，每个路由器理论上都不一样的，必须自己弄。<br />
 进入原路由器ssh界面下，输入：</p>
 
-<pre><code class="language-sh">cd /tmp
-dd if=/dev/mtd4 of=art.bin</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /tmp
+<span class="nb">dd </span><span class="k">if</span><span class="o">=</span>/dev/mtd4 <span class="nv">of</span><span class="o">=</span>art.bin
+</code></pre></div></div>
 
 <p>然后winscp登陆路由器，把art.bin拷贝下来，然后看看是不是正好64k，一个字节都不可以差的，最好备份到安全的地方。</p>
 
@@ -162,28 +163,30 @@ dd if=/dev/mtd4 of=art.bin</code></pre>
 先计算填充值，16M-128K-固件大小-64k<br />
 然后写一个perl脚本，生成二进制文件：</p>
 
-<pre><code class="language-perl">#!/usr/bin/perl
-use strict;
-my $i = 12648448;#需填充的字节
-open(FH,'&gt;','12M_FF.bin');
-binmode(FH);
-my $xff =pack("H*","FF");
-while($i&gt;0)
-{
-  print FH $xff;
-  $i--;
-}
+<div class="language-perl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/perl</span>
+<span class="k">use</span> <span class="nv">strict</span><span class="p">;</span>
+<span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">12648448</span><span class="p">;</span><span class="c1">#需填充的字节</span>
+<span class="nb">open</span><span class="p">(</span><span class="nv">FH</span><span class="p">,'</span><span class="s1">&gt;</span><span class="p">','</span><span class="s1">12M_FF.bin</span><span class="p">');</span>
+<span class="nb">binmode</span><span class="p">(</span><span class="nv">FH</span><span class="p">);</span>
+<span class="k">my</span> <span class="nv">$xff</span> <span class="o">=</span><span class="nb">pack</span><span class="p">("</span><span class="s2">H*</span><span class="p">","</span><span class="s2">FF</span><span class="p">");</span>
+<span class="k">while</span><span class="p">(</span><span class="nv">$i</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">print</span> <span class="nv">FH</span> <span class="nv">$xff</span><span class="p">;</span>
+  <span class="nv">$i</span><span class="o">--</span><span class="p">;</span>
+<span class="p">}</span>
 
-close FH;</code></pre>
+<span class="nb">close</span> <span class="nv">FH</span><span class="p">;</span>
+</code></pre></div></div>
 
 <p>d.下载大神的uboot，我是从恩山论坛上下的u-boot-ar9331-wr720nv3_wr710n.bin ，其他的uboot也用过，但是最后只能认出12M左右的rom，这个大神的uboot可以认出14M。。。</p>
 
 <p>e.生成16M 编程器固件<br />
 把uboot文件、art文件、固件、填充文件上传到linux主机(强烈建议打包以后上传，保证完整性)，然后运行：</p>
 
-<pre><code class="language-sh">cat u-boot-ar9331-wr720nv3_wr710n.bin openwrt-ar71xx-generic-tl-wr720n-v3-squashfs-factory.bin 12M_FF.bin art.bin &gt; wr720_1407dashenfullflash.bin
-gzip wr720_1407dashenfullflash.bin
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>u-boot-ar9331-wr720nv3_wr710n.bin openwrt-ar71xx-generic-tl-wr720n-v3-squashfs-factory.bin 12M_FF.bin art.bin <span class="o">&gt;</span> wr720_1407dashenfullflash.bin
+<span class="nb">gzip </span>wr720_1407dashenfullflash.bin
+
+</code></pre></div></div>
 
 <p>然后下载下来就好了,解压后看看大小，一定是16.0 MB (16,777,216 字节)。</p>
 

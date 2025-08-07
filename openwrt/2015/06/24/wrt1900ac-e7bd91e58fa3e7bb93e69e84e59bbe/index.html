@@ -132,62 +132,63 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
 
 <!--more-->
 
-<pre><code class="language-vim">config interface 'loopback'
-	option ifname 'lo'
-	option proto 'static'
-	option ipaddr '127.0.0.1'
-	option netmask '255.0.0.0'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config interface <span class="s1">'loopback'</span>
+	option ifname <span class="s1">'lo'</span>
+	option proto <span class="s1">'static'</span>
+	option ipaddr <span class="s1">'127.0.0.1'</span>
+	option netmask <span class="s1">'255.0.0.0'</span>
 
-config globals 'globals'
-	option ula_prefix 'fd79:09a9:45d8::/48'
+config globals <span class="s1">'globals'</span>
+	option ula_prefix <span class="s1">'fd79:09a9:45d8::/48'</span>
 
-config interface 'lan'
-	option ifname 'eth0'
-	option force_link '1'
-	option type 'bridge'
-	option proto 'static'
-	option netmask '255.255.255.0'
-	option ip6assign '60'
-	option ipaddr '172.24.1.1'
+config interface <span class="s1">'lan'</span>
+	option ifname <span class="s1">'eth0'</span>
+	option force_link <span class="s1">'1'</span>
+	option <span class="nb">type</span> <span class="s1">'bridge'</span>
+	option proto <span class="s1">'static'</span>
+	option netmask <span class="s1">'255.255.255.0'</span>
+	option ip6assign <span class="s1">'60'</span>
+	option ipaddr <span class="s1">'172.24.1.1'</span>
 
-config interface 'wan'
-	option _orig_ifname 'eth1'
-	option _orig_bridge 'false'
-	option proto 'dhcp'
-	option ifname 'eth1'
-	option metric '1'
+config interface <span class="s1">'wan'</span>
+	option _orig_ifname <span class="s1">'eth1'</span>
+	option _orig_bridge <span class="s1">'false'</span>
+	option proto <span class="s1">'dhcp'</span>
+	option ifname <span class="s1">'eth1'</span>
+	option metric <span class="s1">'1'</span>
 
-config interface 'wan6'
-	option ifname 'eth1'
-	option proto 'dhcpv6'
+config interface <span class="s1">'wan6'</span>
+	option ifname <span class="s1">'eth1'</span>
+	option proto <span class="s1">'dhcpv6'</span>
 
 config switch
-	option name 'switch0'
-	option reset '1'
-	option enable_vlan '1'
+	option name <span class="s1">'switch0'</span>
+	option reset <span class="s1">'1'</span>
+	option enable_vlan <span class="s1">'1'</span>
 
 config switch_vlan
-	option device 'switch0'
-	option vlan '1'
-	option vid '1'
-	option ports '0 1 2 5'
+	option device <span class="s1">'switch0'</span>
+	option vlan <span class="s1">'1'</span>
+	option vid <span class="s1">'1'</span>
+	option ports <span class="s1">'0 1 2 5'</span>
 
 config switch_vlan
-	option device 'switch0'
-	option vlan '2'
-	option vid '2'
-	option ports '4 6'
+	option device <span class="s1">'switch0'</span>
+	option vlan <span class="s1">'2'</span>
+	option vid <span class="s1">'2'</span>
+	option ports <span class="s1">'4 6'</span>
 
 config switch_vlan
-	option device 'switch0'
-	option vlan '3'
-	option vid '3'
-	option ports '3 6t'
+	option device <span class="s1">'switch0'</span>
+	option vlan <span class="s1">'3'</span>
+	option vid <span class="s1">'3'</span>
+	option ports <span class="s1">'3 6t'</span>
 
-config interface 'wan2'
-	option ifname 'eth1.3'
-	option proto 'dhcp'
-	option metric '2'</code></pre>
+config interface <span class="s1">'wan2'</span>
+	option ifname <span class="s1">'eth1.3'</span>
+	option proto <span class="s1">'dhcp'</span>
+	option metric <span class="s1">'2'</span>
+</code></pre></div></div>
 
 <p>之前就是少了个t也就是tag，所以导致失败。</p>
 
@@ -217,74 +218,75 @@ IPv4: 192.168.8.138/24</p>
 
 <p>/etc/config/mwan3修改为：</p>
 
-<pre><code class="language-vim">config rule 'default_rule'
-	option dest_ip '我的VPS'
-	option sticky '0'
-	option dest_port '1:65535'
-	option proto 'all'
-	option use_policy 'wan2_only'
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config rule <span class="s1">'default_rule'</span>
+	option dest_ip <span class="s1">'我的VPS'</span>
+	option sticky <span class="s1">'0'</span>
+	option dest_port <span class="s1">'1:65535'</span>
+	option proto <span class="s1">'all'</span>
+	option use_policy <span class="s1">'wan2_only'</span>
 
-config rule 'dns'
-	option src_port '5151'
-	option sticky '0'
-	option proto 'udp'
-	option use_policy 'wan1_first'
+config rule <span class="s1">'dns'</span>
+	option src_port <span class="s1">'5151'</span>
+	option sticky <span class="s1">'0'</span>
+	option proto <span class="s1">'udp'</span>
+	option use_policy <span class="s1">'wan1_first'</span>
 
-config rule 'dns2'
-	option sticky '0'
-	option use_policy 'wan1_first'
-	option proto 'udp'
-	option dest_port '53'
+config rule <span class="s1">'dns2'</span>
+	option sticky <span class="s1">'0'</span>
+	option use_policy <span class="s1">'wan1_first'</span>
+	option proto <span class="s1">'udp'</span>
+	option dest_port <span class="s1">'53'</span>
 
-config rule 'default'
-	option sticky '0'
-	option use_policy 'wan1_first'
-	option proto 'all'
+config rule <span class="s1">'default'</span>
+	option sticky <span class="s1">'0'</span>
+	option use_policy <span class="s1">'wan1_first'</span>
+	option proto <span class="s1">'all'</span>
 
-config policy 'wan1_only'
-	option last_resort 'unreachable'
-	list use_member 'wan_m1_w3'
+config policy <span class="s1">'wan1_only'</span>
+	option last_resort <span class="s1">'unreachable'</span>
+	<span class="k">list</span> use_member <span class="s1">'wan_m1_w3'</span>
 
-config policy 'wan2_only'
-	option last_resort 'unreachable'
-	list use_member 'wan2_m1_w2'
+config policy <span class="s1">'wan2_only'</span>
+	option last_resort <span class="s1">'unreachable'</span>
+	<span class="k">list</span> use_member <span class="s1">'wan2_m1_w2'</span>
 
-config interface 'wan'
-	option enabled '1'
-	option count '1'
-	option timeout '2'
-	option interval '5'
-	option down '3'
-	option up '8'
-	option reliability '1'
-	list track_ip '202.96.199.133'
-	list track_ip '114.114.114.114'
+config interface <span class="s1">'wan'</span>
+	option enabled <span class="s1">'1'</span>
+	option <span class="nb">count</span> <span class="s1">'1'</span>
+	option <span class="nb">timeout</span> <span class="s1">'2'</span>
+	option interval <span class="s1">'5'</span>
+	option down <span class="s1">'3'</span>
+	option <span class="k">up</span> <span class="s1">'8'</span>
+	option reliability <span class="s1">'1'</span>
+	<span class="k">list</span> track_ip <span class="s1">'202.96.199.133'</span>
+	<span class="k">list</span> track_ip <span class="s1">'114.114.114.114'</span>
 
-config interface 'wan2'
-	option reliability '1'
-	option count '1'
-	option timeout '2'
-	option interval '5'
-	option down '3'
-	option up '8'
-	option enabled '1'
-	list track_ip '114.114.114.114'
-	list track_ip '114.114.115.115'
+config interface <span class="s1">'wan2'</span>
+	option reliability <span class="s1">'1'</span>
+	option <span class="nb">count</span> <span class="s1">'1'</span>
+	option <span class="nb">timeout</span> <span class="s1">'2'</span>
+	option interval <span class="s1">'5'</span>
+	option down <span class="s1">'3'</span>
+	option <span class="k">up</span> <span class="s1">'8'</span>
+	option enabled <span class="s1">'1'</span>
+	<span class="k">list</span> track_ip <span class="s1">'114.114.114.114'</span>
+	<span class="k">list</span> track_ip <span class="s1">'114.114.115.115'</span>
 
-config member 'wan_m1_w3'
-	option interface 'wan'
-	option metric '1'
-	option weight '1'
+config member <span class="s1">'wan_m1_w3'</span>
+	option interface <span class="s1">'wan'</span>
+	option metric <span class="s1">'1'</span>
+	option weight <span class="s1">'1'</span>
 
-config member 'wan2_m1_w2'
-	option interface 'wan2'
-	option weight '1'
-	option metric '2'
+config member <span class="s1">'wan2_m1_w2'</span>
+	option interface <span class="s1">'wan2'</span>
+	option weight <span class="s1">'1'</span>
+	option metric <span class="s1">'2'</span>
 
-config policy 'wan1_first'
-	list use_member 'wan_m1_w3'
-	list use_member 'wan2_m1_w2'
-	option last_resort 'unreachable'</code></pre>
+config policy <span class="s1">'wan1_first'</span>
+	<span class="k">list</span> use_member <span class="s1">'wan_m1_w3'</span>
+	<span class="k">list</span> use_member <span class="s1">'wan2_m1_w2'</span>
+	option last_resort <span class="s1">'unreachable'</span>
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

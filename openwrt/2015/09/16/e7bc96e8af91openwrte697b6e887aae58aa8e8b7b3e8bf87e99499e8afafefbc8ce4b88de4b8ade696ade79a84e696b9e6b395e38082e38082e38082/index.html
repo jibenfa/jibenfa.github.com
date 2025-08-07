@@ -122,21 +122,22 @@
 转载自：<br />
 https://lists.openwrt.org/pipermail/openwrt-devel/2009-June/004411.html</p>
 
-<pre><code class="language-vim">//.ichael
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">//</span><span class="p">.</span>ichael
 
-------------8&lt;---------------
-if [ "$1" != "-f" ] ; then
-        IGNORE_ERRORS=1 make 2&gt;&amp;1| tee errors.txt
+<span class="p">-----------</span><span class="m">-8</span><span class="p">&lt;---------------</span>
+<span class="k">if</span> <span class="p">[</span> <span class="s2">"$1"</span> <span class="p">!=</span> <span class="s2">"-f"</span> <span class="p">]</span> ; then
+        IGNORE_ERRORS<span class="p">=</span><span class="m">1</span> <span class="k">make</span> <span class="m">2</span><span class="p">&gt;</span>&amp;<span class="m">1</span><span class="p">|</span> tee errors<span class="p">.</span>txt
 
-        rm build_*.txt
+        rm build_*<span class="p">.</span>txt
 fi
 
-for i in $(grep "failed to build" errors.txt | sed 's/^.*ERROR:[[:space:]]*\([^[:space:]].*\) failed to build.*$/\1/' ) ; do
-        if [ "$i" != "" ] ; then
-                echo Compiling: ${i}
-                make ${i}-compile V=99 &gt; build_${i##*/}.txt 2&gt;&amp;1 || echo ${i} : Build failed, see build_${i##*/}.txt
+<span class="k">for</span> <span class="k">i</span> <span class="k">in</span> $<span class="p">(</span><span class="k">grep</span> <span class="s2">"failed to build"</span> errors<span class="p">.</span>txt <span class="p">|</span> sed <span class="s1">'s/^.*ERROR:[[:space:]]*\([^[:space:]].*\) failed to build.*$/\1/'</span> <span class="p">)</span> ; <span class="k">do</span>
+        <span class="k">if</span> <span class="p">[</span> <span class="s2">"$i"</span> <span class="p">!=</span> <span class="s2">""</span> <span class="p">]</span> ; then
+                echo Compiling<span class="p">:</span> $<span class="p">{</span><span class="k">i</span><span class="p">}</span>
+                <span class="k">make</span> $<span class="p">{</span><span class="k">i</span><span class="p">}-</span>compile V<span class="p">=</span><span class="m">99</span> <span class="p">&gt;</span> build_$<span class="p">{</span><span class="k">i</span>##*<span class="sr">/}.txt 2&gt;&amp;1 || echo ${i} : Build failed, see build_${i##*/</span><span class="p">}.</span>txt
         fi
-done</code></pre>
+done
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">

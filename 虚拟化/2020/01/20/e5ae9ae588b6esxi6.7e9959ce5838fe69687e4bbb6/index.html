@@ -122,48 +122,52 @@
 
 <p>1.下载并安装VMware-PowerCLI-6.5.0和ESXi-Customizer-PS封装工具</p>
 
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 VMware-PowerCLI-6.5.0-4624819
 
 ESXi-Customizer-PS-v2.6.0.ps1（绿色版）
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>2.下载ESXI6.7 offline bundle</p>
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 ESXi670-201912001.zip 放到和ESXi-Customizer同一个文件夹下
 
-</code></pre>
+
+</code></pre></div></div>
 
 <p>3.升级powershell至3.0版本以上（win10自带的是5.1，无需升级）</p>
 
 <p>4.下载网卡驱动</p>
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
-VMware ESXi 6.7 ixgben 1.8.7 NIC Driver for Intel Ethernet Controllers 82599, x520, x540, x550, x552 and x553 family
+VMware ESXi 6.7 ixgben 1.8.7 NIC Driver <span class="k">for </span>Intel Ethernet Controllers 82599, x520, x540, x550, x552 and x553 family
 
-https://my.vmware.com/web/vmware/details?productId=742&amp;downloadGroup=ESXI67U3B#drivers_tools
+https://my.vmware.com/web/vmware/details?productId<span class="o">=</span>742&amp;downloadGroup<span class="o">=</span>ESXI67U3B#drivers_tools
 
-</code></pre>
+
+</code></pre></div></div>
 <p>解压驱动到D:\vmware67u3b\vib\</p>
 
 <p>5.用管理员权限打开powershell，切换至ESXi-Customizer所在文件夹，执行以下命令：</p>
 
-<pre><code class="language-bash">
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
-1).Powershell中默认禁止执行脚本，所以先修改策略允许执行
+1<span class="o">)</span>.Powershell中默认禁止执行脚本，所以先修改策略允许执行
 
 Set-ExecutionPolicy Unrestricted
 
-2).禁止签名校验需修改2个参数(环境参数中nosignaturecheck改成true，另外打包命令后增加-nsc)
+2<span class="o">)</span>.禁止签名校验需修改2个参数<span class="o">(</span>环境参数中nosignaturecheck改成true，另外打包命令后增加-nsc<span class="o">)</span>
 
-$DeployNoSignatureCheck=$true
+<span class="nv">$DeployNoSignatureCheck</span><span class="o">=</span><span class="nv">$true</span>
 
- .\ESXi-Customizer-PS-v2.6.0.ps1 -izip .\ESXi670-201912001.zip -pkgDir D:\vmware67u3b\vib\ -nsc
+ .<span class="se">\E</span>SXi-Customizer-PS-v2.6.0.ps1 <span class="nt">-izip</span> .<span class="se">\E</span>SXi670-201912001.zip <span class="nt">-pkgDir</span> D:<span class="se">\v</span>mware67u3b<span class="se">\v</span>ib<span class="se">\ </span><span class="nt">-nsc</span>
  
-</code></pre>
+
+</code></pre></div></div>
 
 <p>如果出现了all done,就表示成功了，可以在上述文件夹下找到ESXi-6.7.0-20191204001-standard-customized.iso</p>
   

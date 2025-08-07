@@ -122,36 +122,38 @@
 
 <p>首先在刷了openwrt的wrt1900ac路由器上安装软件：</p>
 
-<pre><code class="language-sh">opkg update
-opkg install openvpn-openssl openvpn-easy-rsa luci-app-openvpn</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg <span class="nb">install </span>openvpn-openssl openvpn-easy-rsa luci-app-openvpn
+</code></pre></div></div>
 
 <p>然后编辑/etc/easy-rsa/vars，修改部分内容</p>
 
-<pre><code class="language-vim"># Increase this to 2048 if you
-# are paranoid.  This will slow
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Increase this <span class="k">to</span> <span class="m">2048</span> <span class="k">if</span> you
+# are paranoid<span class="p">.</span>  This will slow
 # down TLS negotiation performance
-# as well as the one-time DH parms
-# generation process.
-export KEY_SIZE=1024
+# <span class="k">as</span> well <span class="k">as</span> the one<span class="p">-</span>time DH parms
+# generation process<span class="p">.</span>
+<span class="k">export</span> KEY_SIZE<span class="p">=</span><span class="m">1024</span>
 
-# In how many days should the root CA key expire?
-export CA_EXPIRE=3650
+# In how many days should the root CA <span class="nb">key</span> expire?
+<span class="k">export</span> CA_EXPIRE<span class="p">=</span><span class="m">3650</span>
 
 # In how many days should certificates expire?
-export KEY_EXPIRE=3650
+<span class="k">export</span> KEY_EXPIRE<span class="p">=</span><span class="m">3650</span>
 
-# These are the default values for fields
-# which will be placed in the certificate.
-# Don't leave any of these fields blank.
-export KEY_COUNTRY="xx"
-export KEY_PROVINCE="xx"
-export KEY_CITY="xxxx"
-export KEY_ORG="XXxxxx"
-export KEY_EMAIL="xxxxxx@gmail.com"
-export KEY_OU="XXxxxxxx"
+# These are the default <span class="nb">values</span> <span class="k">for</span> fields
+# which will be placed <span class="k">in</span> the certificate<span class="p">.</span>
+# Don'<span class="k">t</span> leave any of these fields blank<span class="p">.</span>
+<span class="k">export</span> KEY_COUNTRY<span class="p">=</span><span class="s2">"xx"</span>
+<span class="k">export</span> KEY_PROVINCE<span class="p">=</span><span class="s2">"xx"</span>
+<span class="k">export</span> KEY_CITY<span class="p">=</span><span class="s2">"xxxx"</span>
+<span class="k">export</span> KEY_ORG<span class="p">=</span><span class="s2">"XXxxxx"</span>
+<span class="k">export</span> KEY_EMAIL<span class="p">=</span><span class="s2">"xxxxxx@gmail.com"</span>
+<span class="k">export</span> KEY_OU<span class="p">=</span><span class="s2">"XXxxxxxx"</span>
 
 # X509 Subject Field
-export KEY_NAME="EasyRSA"</code></pre>
+<span class="k">export</span> KEY_NAME<span class="p">=</span><span class="s2">"EasyRSA"</span>
+</code></pre></div></div>
 
 <p>接着生成证书和diffie-hellman key：<br />
 手工清空/etc/easy-rsa/下的key目录或者运行clean-all<br />
@@ -167,8 +169,9 @@ build-key coffeecat<br />
 
 <p>拷贝到服务器目录下：</p>
 
-<pre><code class="language-sh">cd /etc/easy-rsa/keys/
-cp ca.crt ca.key dh1024.pem server.key server.crt /etc/openvpn/</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /etc/easy-rsa/keys/
+<span class="nb">cp </span>ca.crt ca.key dh1024.pem server.key server.crt /etc/openvpn/
+</code></pre></div></div>
 
 <p>拷贝到客户端：<br />
 ca.crt dh1024.pem coffeecat.key coffeecat.crt</p>
@@ -179,71 +182,76 @@ ca.crt dh1024.pem coffeecat.key coffeecat.crt</p>
 
 <p><em>注意：172.24.1.1为路由器的lan ip，172.24.1.100-172.24.1.105是为vpn客户端分配的ip端，一定要和路由器为lan dhcp的ip段错开。</em></p>
 
-<pre><code class="language-vim">config openvpn 'cert_verify'
-	option port '1194'
-	option proto 'tcp'
-	option dev 'tap0'
-	option ca '/etc/openvpn/ca.crt'
-	option cert '/etc/openvpn/server.crt'
-	option key '/etc/openvpn/server.key'
-	option dh '/etc/openvpn/dh1024.pem'
-	option server_bridge '172.24.1.1 255.255.255.0 172.24.1.100 172.24.1.105'
-	option ifconfig_pool_persist '/tmp/ipp.txt'
-        option client_to_client 1
-        list push 'redirect-gateway def1 local'
-	option keepalive '10 120'
-	option comp_lzo 'yes'
-	option status '/tmp/openvpn-status.log'
-	option verb '3'
-	option enabled '1'
-</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config openvpn <span class="s1">'cert_verify'</span>
+	option port <span class="s1">'1194'</span>
+	option proto <span class="s1">'tcp'</span>
+	option dev <span class="s1">'tap0'</span>
+	option <span class="k">ca</span> <span class="s1">'/etc/openvpn/ca.crt'</span>
+	option cert <span class="s1">'/etc/openvpn/server.crt'</span>
+	option <span class="nb">key</span> <span class="s1">'/etc/openvpn/server.key'</span>
+	option dh <span class="s1">'/etc/openvpn/dh1024.pem'</span>
+	option server_bridge <span class="s1">'172.24.1.1 255.255.255.0 172.24.1.100 172.24.1.105'</span>
+	option ifconfig_pool_persist <span class="s1">'/tmp/ipp.txt'</span>
+        option client_to_client <span class="m">1</span>
+        <span class="k">list</span> push <span class="s1">'redirect-gateway def1 local'</span>
+	option keepalive <span class="s1">'10 120'</span>
+	option comp_lzo <span class="s1">'yes'</span>
+	option status <span class="s1">'/tmp/openvpn-status.log'</span>
+	option <span class="k">verb</span> <span class="s1">'3'</span>
+	option enabled <span class="s1">'1'</span>
+
+</code></pre></div></div>
 
 <p>然后在luci或者命令行启动openvpn：</p>
 
-<pre><code class="language-sh">/etc/init.d/openvpn start</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/init.d/openvpn start
+</code></pre></div></div>
 
 <p>ps一下有进程就对了</p>
 
 <p>windows7 openvpn客户端配置：<br />
 C:\Program Files\OpenVPN\config\client.ovpn</p>
 
-<pre><code class="language-vim">client
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>client
 
 dev tap
 proto tcp
 
-remote xxxxxxxxxxxxx 1194 #路由器的ddns地址或者IP 端口
-resolv-retry infinite
+remote xxxxxxxxxxxxx <span class="m">1194</span> #路由器的ddns地址或者IP 端口
+resolv<span class="p">-</span>retry infinite
 nobind
 
-persist-tun
-persist-key
+persist<span class="p">-</span>tun
+persist<span class="p">-</span><span class="nb">key</span>
 
 float
-ca ca.crt
-cert coffeecat.crt
-key coffeecat.key
-mute-replay-warnings
-comp-lzo
-verb 4
-##下面两行for WIN7
-route-method exe
-route-delay 2</code></pre>
+<span class="k">ca</span> <span class="k">ca</span><span class="p">.</span>crt
+cert coffeecat<span class="p">.</span>crt
+<span class="nb">key</span> coffeecat<span class="p">.</span><span class="nb">key</span>
+mute<span class="p">-</span>replay<span class="p">-</span>warnings
+<span class="k">comp</span><span class="p">-</span>lzo
+<span class="k">verb</span> <span class="m">4</span>
+##下面两行<span class="k">for</span> WIN7
+route<span class="p">-</span>method exe
+route<span class="p">-</span>delay <span class="m">2</span>
+</code></pre></div></div>
 
 <p>最后在路由器上增加自定义iptables规则：<br />
 先把tap0放到lan区域中，然后在自定义规则里面加上：</p>
 
-<pre><code class="language-sh">iptables -I INPUT 1 -p tcp --dport 1194 -j ACCEPT
-iptables -I INPUT 1 -p udp --dport 1194 -j ACCEPT</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iptables <span class="nt">-I</span> INPUT 1 <span class="nt">-p</span> tcp <span class="nt">--dport</span> 1194 <span class="nt">-j</span> ACCEPT
+iptables <span class="nt">-I</span> INPUT 1 <span class="nt">-p</span> udp <span class="nt">--dport</span> 1194 <span class="nt">-j</span> ACCEPT
+</code></pre></div></div>
 
 <p>另外win7里面要设置一下metric，否则可能不是走的vpn这个路，设完以后，可以看到vpn的跃点最小：</p>
 
-<pre><code class="language-vim">IPv4 路由表
-===========================================================================
-活动路由:
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IPv4 路由表
+<span class="p">===========================================================================</span>
+活动路由<span class="p">:</span>
 网络目标        网络掩码          网关       接口   跃点数
-          0.0.0.0          0.0.0.0       172.24.1.1     172.24.1.100     50
-          0.0.0.0          0.0.0.0       172.24.0.1     172.24.0.150    281</code></pre>
+          <span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>          <span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>       <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">1</span>     <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">1</span><span class="p">.</span><span class="m">100</span>     <span class="m">50</span>
+          <span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>          <span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>       <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>     <span class="m">172</span><span class="p">.</span><span class="m">24</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">150</span>    <span class="m">281</span>
+</code></pre></div></div>
 
 <p>参考：</p>
 

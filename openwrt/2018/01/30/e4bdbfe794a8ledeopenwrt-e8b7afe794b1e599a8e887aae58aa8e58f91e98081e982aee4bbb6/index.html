@@ -121,151 +121,161 @@
 		<p>今天研究实现了手动或者定时自动通过LEDE/openwrt路由对外发送邮件的功能。<br />
 1.安装软件包。</p>
 
-<pre><code class="language-sh">opkg update
-opkg install mutt ssmtp ca-certificates ca-bundle</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg <span class="nb">install </span>mutt ssmtp ca-certificates ca-bundle
+</code></pre></div></div>
 
 <p>2.配置ssmtp</p>
 
-<pre><code class="language-sh">vi /etc/ssmtp/ssmtp.conf
-</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/ssmtp/ssmtp.conf
+
+</code></pre></div></div>
 
 <p>内容为：<br />
 <!--more--></p>
 
-<pre><code class="language-vim">#
-# /etc/ssmtp.conf -- a config file for sSMTP sendmail.
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#
+# <span class="sr">/etc/</span>ssmtp<span class="p">.</span><span class="k">conf</span> <span class="p">--</span> <span class="k">a</span> config <span class="k">file</span> <span class="k">for</span> sSMTP sendmail<span class="p">.</span>
 #
 
-# The person who gets all mail for userids &lt; 1000
-# Make this empty to disable rewriting.
-root=MY@TEST.com
+# The person who gets <span class="k">all</span> mail <span class="k">for</span> userids <span class="p">&lt;</span> <span class="m">1000</span>
+# Make this <span class="nb">empty</span> <span class="k">to</span> disable rewriting<span class="p">.</span>
+root<span class="p">=</span>MY@TEST<span class="p">.</span><span class="k">com</span>
 
-# The place where the mail goes. The actual machine name is required
-# no MX records are consulted. Commonly mailhosts are named mail.domain.com
-# The example will fit if you are in domain.com and your mailhub is so named.
+# The place where the mail goes<span class="p">.</span> The actual machine name <span class="k">is</span> required
+# no MX records are consulted<span class="p">.</span> Commonly mailhosts are named mail<span class="p">.</span>domain<span class="p">.</span><span class="k">com</span>
+# The example will fit <span class="k">if</span> you are <span class="k">in</span> domain<span class="p">.</span><span class="k">com</span> <span class="nb">and</span> your mailhub <span class="k">is</span> <span class="k">so</span> named<span class="p">.</span>
 # 不同邮箱供应商的配置不同，需查阅供应商手册
-mailhub=smtp.TEST.com:465
+mailhub<span class="p">=</span>smtp<span class="p">.</span>TEST<span class="p">.</span><span class="k">com</span><span class="p">:</span><span class="m">465</span>
 
-# Example for SMTP port number 2525
-# mailhub=mail.your.domain:2525
-# Example for SMTP port number 25 (Standard/RFC)
-# mailhub=mail.your.domain
-# Example for SSL encrypted connection
-# mailhub=mail.your.domain:465
+# Example <span class="k">for</span> SMTP port <span class="k">number</span> <span class="m">2525</span>
+# mailhub<span class="p">=</span>mail<span class="p">.</span>your<span class="p">.</span>domain<span class="p">:</span><span class="m">2525</span>
+# Example <span class="k">for</span> SMTP port <span class="k">number</span> <span class="m">25</span> <span class="p">(</span>Standard/RFC<span class="p">)</span>
+# mailhub<span class="p">=</span>mail<span class="p">.</span>your<span class="p">.</span>domain
+# Example <span class="k">for</span> SSL encrypted connection
+# mailhub<span class="p">=</span>mail<span class="p">.</span>your<span class="p">.</span>domain<span class="p">:</span><span class="m">465</span>
 
-# Where will the mail seem to come from?
-rewriteDomain=TEST.com
+# Where will the mail seem <span class="k">to</span> come from?
+rewriteDomain<span class="p">=</span>TEST<span class="p">.</span><span class="k">com</span>
 
-# The full hostname
-hostname=TEST.com
+# The full <span class="nb">hostname</span>
+<span class="nb">hostname</span><span class="p">=</span>TEST<span class="p">.</span><span class="k">com</span>
 
-# Set this to never rewrite the "From:" line (unless not given) and to
-# use that address in the "from line" of the envelope.
-FromLineOverride=YES
+# Set this <span class="k">to</span> never rewrite the <span class="s2">"From:"</span> <span class="nb">line</span> <span class="p">(</span>unless not given<span class="p">)</span> <span class="nb">and</span> <span class="k">to</span>
+# use that address <span class="k">in</span> the <span class="s2">"from line"</span> of the envelope<span class="p">.</span>
+FromLineOverride<span class="p">=</span>YES
 
-# Use SSL/TLS to send secure messages to server.
-UseTLS=YES
+# Use SSL/TLS <span class="k">to</span> send <span class="nb">secure</span> <span class="k">messages</span> <span class="k">to</span> server<span class="p">.</span>
+UseTLS<span class="p">=</span>YES
 
-# Use SSL/TLS certificate to authenticate against smtp host.
-#UseTLSCert=YES
+# Use SSL/TLS certificate <span class="k">to</span> authenticate against smtp host<span class="p">.</span>
+#UseTLSCert<span class="p">=</span>YES
 
-# Use this RSA certificate.
-#TLSCert=/etc/ssl/certs/ssmtp.pem
+# Use this RSA certificate<span class="p">.</span>
+#TLSCert<span class="p">=</span><span class="sr">/etc/</span><span class="nb">ssl</span><span class="sr">/certs/</span>ssmtp<span class="p">.</span>pem
 
-# Get enhanced (*really* enhanced) debugging information in the logs
-# If you want to have debugging of the config file parsing, move this option
-# to the top of the config file and uncomment
-#Debug=YES
-</code></pre>
+# Get enhanced <span class="p">(</span>*really* enhanced<span class="p">)</span> debugging information <span class="k">in</span> the logs
+# If you want <span class="k">to</span> have debugging of the config <span class="k">file</span> parsing<span class="p">,</span> <span class="k">move</span> this option
+# <span class="k">to</span> the <span class="nb">top</span> of the config <span class="k">file</span> <span class="nb">and</span> uncomment
+#Debug<span class="p">=</span>YES
+
+</code></pre></div></div>
 
 <p>然后：</p>
 
-<pre><code class="language-sh">vi /etc/ssmtp/revaliases</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/ssmtp/revaliases
+</code></pre></div></div>
 
 <p>内容为：</p>
 
-<pre><code class="language-vim"># sSMTP aliases
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># sSMTP aliases
 #
-# Format:       local_account:outgoing_address:mailhub
+# Format<span class="p">:</span>       local_account<span class="p">:</span>outgoing_address<span class="p">:</span>mailhub
 #
-# Example: root:your_login@your.domain:mailhub.your.domain[:port]
-# where [:port] is an optional port number that defaults to 25.
-root:MY@TEST.com:smtp.TEST.com:465
-</code></pre>
+# Example<span class="p">:</span> root<span class="p">:</span>your_login@your<span class="p">.</span>domain<span class="p">:</span>mailhub<span class="p">.</span>your<span class="p">.</span>domain<span class="p">[:</span>port<span class="p">]</span>
+# where <span class="p">[:</span>port<span class="p">]</span> <span class="k">is</span> an optional port <span class="k">number</span> that defaults <span class="k">to</span> <span class="m">25</span><span class="p">.</span>
+root<span class="p">:</span>MY@TEST<span class="p">.</span><span class="k">com</span><span class="p">:</span>smtp<span class="p">.</span>TEST<span class="p">.</span><span class="k">com</span><span class="p">:</span><span class="m">465</span>
+
+</code></pre></div></div>
 
 <p>3.配置mutt</p>
 
-<pre><code class="language-sh">vi ~/.muttrc</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ~/.muttrc
+</code></pre></div></div>
 
 <p>内容为：</p>
 
-<pre><code class="language-vim">mailboxes /tmp/mail
-set sendmail="ssmtp -v -auMY@TEST.com -apMYPASSWORD"
-set from="MY@TEST.com"
-# Mail folder setup.
-set folder=/tmp/mail
-set mbox_type=mbox
-set spoolfile=+inbox
-set mbox=+received
-set postponed=+postponed
-set record=+sent</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mailboxes <span class="sr">/tmp/</span>mail
+<span class="k">set</span> sendmail<span class="p">=</span><span class="s2">"ssmtp -v -auMY@TEST.com -apMYPASSWORD"</span>
+<span class="k">set</span> from<span class="p">=</span><span class="s2">"MY@TEST.com"</span>
+# Mail folder setup<span class="p">.</span>
+<span class="k">set</span> folder<span class="p">=</span><span class="sr">/tmp/</span>mail
+<span class="k">set</span> mbox_type<span class="p">=</span>mbox
+<span class="k">set</span> spoolfile<span class="p">=+</span>inbox
+<span class="k">set</span> mbox<span class="p">=+</span>received
+<span class="k">set</span> postponed<span class="p">=+</span>postponed
+<span class="k">set</span> record<span class="p">=+</span>sent
+</code></pre></div></div>
 
 <p>4.编写脚本sendmail.sh</p>
 
-<pre><code class="language-sh">vi ./sendmail.sh
-chmod +x ./sendmail.sh</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi ./sendmail.sh
+<span class="nb">chmod</span> +x ./sendmail.sh
+</code></pre></div></div>
 
 <p>内容为：</p>
 
-<pre><code class="language-vim">mkdir /tmp/mail
-cat /tmp/sysinfo/model | mutt  -s "Mail from Router of Coffeecat"  receiver@TEST.com -a 'attachment.txt'</code></pre>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="sr">/tmp/</span>mail
+<span class="k">cat</span> <span class="sr">/tmp/</span>sysinfo/model <span class="p">|</span> mutt  <span class="p">-</span>s <span class="s2">"Mail from Router of Coffeecat"</span>  receiver@TEST<span class="p">.</span><span class="k">com</span> <span class="p">-</span><span class="k">a</span> <span class="s1">'attachment.txt'</span>
+</code></pre></div></div>
 
 <p>然后运行：<br />
 ./sendmail.sh<br />
 就可以看到结果了（如果是从vip.qq.com发送的话）：</p>
 
-<pre><code class="language-sh">[&lt;-] 220 smtp.qq.com Esmtp QQ Mail Server
-[-&gt;] EHLO vip.qq.com
-[&lt;-] 250 8BITMIME
-[-&gt;] AUTH LOGIN
-[&lt;-] 334 XXYlcm5hbDF6
-[-&gt;] Z2FyACDDbTT4dBB2aXAucWSuY29t
-[&lt;-] 334 REWzc3dverH6
-[&lt;-] 235 Authentication successful
-[-&gt;] MAIL FROM:&lt;MY@TEST.com&gt;
-[&lt;-] 250 Ok
-[-&gt;] RCPT TO:&lt;reciever@TEST.com&gt;
-[&lt;-] 250 Ok
-[-&gt;] DATA
-[&lt;-] 354 End data with &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
-[-&gt;] Received: by vip.qq.com (sSMTP sendmail emulation); Tue, 30 Jan 2018 22:25:31 +0800
-[-&gt;] Date: Tue, 30 Jan 2018 22:25:31 +0800
-[-&gt;] From: root &lt;MY@TEST.com&gt;
-[-&gt;] To: reciever@TEST.com
-[-&gt;] Subject: Mail from Router of Coffeecat
-[-&gt;] Message-ID: &lt;20180130142531.GA1968@Exciting.lan&gt;
-[-&gt;] MIME-Version: 1.0
-[-&gt;] Content-Type: multipart/mixed; boundary="Nq2Wo0NMKNjxTN9z"
-[-&gt;] Content-Disposition: inline
-[-&gt;] User-Agent: Mutt/1.9.2 (2017-12-15)
-[-&gt;]
-[-&gt;]
-[-&gt;] --Nq2Wo0NMKNjxTN9z
-[-&gt;] Content-Type: text/plain; charset=us-ascii
-[-&gt;] Content-Disposition: inline
-[-&gt;]
-[-&gt;] HiWiFi HC5962
-[-&gt;]
-[-&gt;] --Nq2Wo0NMKNjxTN9z
-[-&gt;] Content-Type: text/plain; charset=us-ascii
-[-&gt;] Content-Disposition: attachment; filename="maclist.txt"
-[-&gt;] .......
-[-&gt;]
-[-&gt;] --Nq2Wo0NMKNjxTN9z--
-[-&gt;] .
-[&lt;-] 250 Ok: queued as
-[-&gt;] QUIT
-[&lt;-] 221 Bye</code></pre>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>&lt;-] 220 smtp.qq.com Esmtp QQ Mail Server
+<span class="o">[</span>-&gt;] EHLO vip.qq.com
+<span class="o">[</span>&lt;-] 250 8BITMIME
+<span class="o">[</span>-&gt;] AUTH LOGIN
+<span class="o">[</span>&lt;-] 334 XXYlcm5hbDF6
+<span class="o">[</span>-&gt;] Z2FyACDDbTT4dBB2aXAucWSuY29t
+<span class="o">[</span>&lt;-] 334 REWzc3dverH6
+<span class="o">[</span>&lt;-] 235 Authentication successful
+<span class="o">[</span>-&gt;] MAIL FROM:&lt;MY@TEST.com&gt;
+<span class="o">[</span>&lt;-] 250 Ok
+<span class="o">[</span>-&gt;] RCPT TO:&lt;reciever@TEST.com&gt;
+<span class="o">[</span>&lt;-] 250 Ok
+<span class="o">[</span>-&gt;] DATA
+<span class="o">[</span>&lt;-] 354 End data with &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
+<span class="o">[</span>-&gt;] Received: by vip.qq.com <span class="o">(</span>sSMTP sendmail emulation<span class="o">)</span><span class="p">;</span> Tue, 30 Jan 2018 22:25:31 +0800
+<span class="o">[</span>-&gt;] Date: Tue, 30 Jan 2018 22:25:31 +0800
+<span class="o">[</span>-&gt;] From: root &lt;MY@TEST.com&gt;
+<span class="o">[</span>-&gt;] To: reciever@TEST.com
+<span class="o">[</span>-&gt;] Subject: Mail from Router of Coffeecat
+<span class="o">[</span>-&gt;] Message-ID: &lt;20180130142531.GA1968@Exciting.lan&gt;
+<span class="o">[</span>-&gt;] MIME-Version: 1.0
+<span class="o">[</span>-&gt;] Content-Type: multipart/mixed<span class="p">;</span> <span class="nv">boundary</span><span class="o">=</span><span class="s2">"Nq2Wo0NMKNjxTN9z"</span>
+<span class="o">[</span>-&gt;] Content-Disposition: inline
+<span class="o">[</span>-&gt;] User-Agent: Mutt/1.9.2 <span class="o">(</span>2017-12-15<span class="o">)</span>
+<span class="o">[</span>-&gt;]
+<span class="o">[</span>-&gt;]
+<span class="o">[</span>-&gt;] <span class="nt">--Nq2Wo0NMKNjxTN9z</span>
+<span class="o">[</span>-&gt;] Content-Type: text/plain<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>us-ascii
+<span class="o">[</span>-&gt;] Content-Disposition: inline
+<span class="o">[</span>-&gt;]
+<span class="o">[</span>-&gt;] HiWiFi HC5962
+<span class="o">[</span>-&gt;]
+<span class="o">[</span>-&gt;] <span class="nt">--Nq2Wo0NMKNjxTN9z</span>
+<span class="o">[</span>-&gt;] Content-Type: text/plain<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>us-ascii
+<span class="o">[</span>-&gt;] Content-Disposition: attachment<span class="p">;</span> <span class="nv">filename</span><span class="o">=</span><span class="s2">"maclist.txt"</span>
+<span class="o">[</span>-&gt;] .......
+<span class="o">[</span>-&gt;]
+<span class="o">[</span>-&gt;] <span class="nt">--Nq2Wo0NMKNjxTN9z--</span>
+<span class="o">[</span>-&gt;] <span class="nb">.</span>
+<span class="o">[</span>&lt;-] 250 Ok: queued as
+<span class="o">[</span>-&gt;] QUIT
+<span class="o">[</span>&lt;-] 221 Bye
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">
