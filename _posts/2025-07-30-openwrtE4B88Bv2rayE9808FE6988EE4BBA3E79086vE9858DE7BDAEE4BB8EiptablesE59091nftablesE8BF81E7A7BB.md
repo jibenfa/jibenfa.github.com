@@ -330,28 +330,26 @@ config chinadns
 ```bash
 
 #!/bin/sh
-# To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first
-domestic_dns_1="114.114.114.114"
-domestic_dns_2="119.29.29.29"
-domestic_dns_3="223.5.5.5"
-domestic_dns_4="180.76.76.76"
-localip="127.0.0.1"
-#chinadns_port_1="5354"
-chinadns_port_2="5357"
-chinadns_port_3="5359"
-chinadns_port_4="5361"
-#v2_dns_port_1="5355"
-v2_dns_port_2="5356"
-v2_dns_port_3="5358"
-v2_dns_port_4="5360"
-killall chinadns
+# 启动多个 chinadns 实例并使用不同的国内 DNS 和端口
+# 依赖：chinadns、v2ray、dnsmasq-full、coreutils-nohup
+
+killall chinadns 2>/dev/null
 /etc/init.d/chinadns restart
 sleep 1
-nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_2} -s ${domestic_dns_2},${localip}:${v2_dns_port_2} -c /etc/chinadns_chnroute.txt 1>/dev/null 2>&1 &
-sleep 1
-nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_3} -s ${domestic_dns_3},${localip}:${v2_dns_port_3} -c /etc/chinadns_chnroute.txt 1>/dev/null 2>&1 &
-sleep 1
-nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4},${localip}:${v2_dns_port_4} -c /etc/chinadns_chnroute.txt 1>/dev/null 2>&1 &
+
+start_chinadns() {
+  local port=$1
+  local dns=$2
+  local v2port=$3
+  nohup /usr/bin/chinadns -m -b 0.0.0.0 -p "$port" \
+    -s "$dns",127.0.0.1:"$v2port" -c /etc/chinadns_chnroute.txt \
+    >/dev/null 2>&1 &
+  sleep 1
+}
+
+start_chinadns 5357 119.29.29.29 5356
+start_chinadns 5359 223.5.5.5    5358
+start_chinadns 5361 180.76.76.76 5360
 
 ```
 
