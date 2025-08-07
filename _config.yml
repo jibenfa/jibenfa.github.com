@@ -9,7 +9,6 @@ exclude: [".rvmrc", ".rbenv-version", "README.md", "README_en.md", "Rakefile", "
 # preview style at https://highlightjs.org/demo
 codestyle: dirtysea.css
 
-
 #### Permalink
 # For more see: http://jekyllrb.com/docs/permalinks/
 permalink: pretty
