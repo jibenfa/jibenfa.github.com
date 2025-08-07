@@ -41,7 +41,8 @@ root@xxx:vi xxxx.sh
 里面填以下内容，前20行内容按照实际修改  
 <!--more-->
 
-<pre><code class="language-bash">#!/bin/sh
+```bash
+#!/bin/sh
  
  
 #VPN 账号
@@ -233,7 +234,7 @@ echo "
 # Short-Description: update iptables
 # Description:       update iptalbes
 ### END INIT INFO
-/sbin/iptables-restore &lt; /etc/network/iptables 
+/sbin/iptables-restore < /etc/network/iptables 
 " > $iptables_sh
 update-rc.d iptables.sh defaults
  
@@ -265,14 +266,16 @@ apt-get install lsof
 update-rc.d ipsec defaults
 
 
-</code></pre>
+
+```
 
 开始运行  
 root@xxx:sh ./xxxx.sh
 
 如果结果如下，则ok：
 
-<pre><code class="language-sh">Checking your system to see if IPsec got installed and started correctly:
+```sh
+Checking your system to see if IPsec got installed and started correctly:
 Version check and ipsec on-path [OK]
 Linux Openswan xxx (netkey)
 Checking for IPsec support in kernel [OK]
@@ -288,7 +291,8 @@ Checking NAT and MASQUERADEing [OK]
 Checking for 'ip' command [OK]
 Checking /bin/sh is not /bin/dash [WARNING]
 Checking for 'iptables' command [OK]
-Opportunistic Encryption Support [DISABLED]</code></pre>
+Opportunistic Encryption Support [DISABLED]
+```
 
 大工搞成，用PC或者手机连连试试吧~~
 

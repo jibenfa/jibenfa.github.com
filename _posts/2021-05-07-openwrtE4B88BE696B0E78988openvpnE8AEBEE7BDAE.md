@@ -17,7 +17,8 @@ tags:
 
 1）编辑/etc/easy-rsa/vars，修改部分内容
 
-<pre><code class="language-vim"># Choose a size in bits for your keypairs. The recommended value is 2048.  Using
+```vim
+# Choose a size in bits for your keypairs. The recommended value is 2048.  Using
 # 2048-bit keys is considered more than sufficient for many years into the
 # future. Larger keysizes will slow down TLS negotiation and make key/DH param
 # generation take much longer. Values up to 4096 should be accepted by most
@@ -42,39 +43,54 @@ export KEY_CITY="xxxx"
 export KEY_ORG="XXxxxx"
 export KEY_EMAIL="xxxxxx@gmail.com"
 export KEY_OU="XXxxxxxx"
-</code></pre>
+
+```
 
 2）接着生成证书和diffie-hellman key：  
 手工清空/etc/easy-rsa/下的key目录或者运行：
-<pre><code class="language-vim">
+```vim
+
 easyrsa clean-all  
 easyrsa init-pki
-</code></pre>
+
+```
 生成ca证书
-<pre><code class="language-vim">
+```vim
+
 easyrsa build-ca nopass 
-</code></pre>
+
+```
 生成dh密钥 
-<pre><code class="language-vim">
+```vim
+
 easyrsa gen-dh  
-</code></pre>
+
+```
 服务器证书
-<pre><code class="language-vim">
+```vim
+
 easyrsa build-server-full server nopass
-</code></pre>
+
+```
 客户端证书给coffeecat
-<pre><code class="language-vim">
+```vim
+
 easyrsa build-client-full coffeecat nopass
-</code></pre>
+
+```
 生成ta.key
-<pre><code class="language-vim">
+```vim
+
 openvpn --genkey --secret ta.key
-</code></pre>
+
+```
 
 3）拷贝到服务器目录下：
 
-<pre><code class="language-sh">cd /etc/easy-rsa/keys/
-cp ca.crt ca.key dh4096.pem server.key server.crt ta.key /etc/openvpn/</code></pre>
+```sh
+cd /etc/easy-rsa/keys/
+cp ca.crt ca.key dh4096.pem server.key server.crt ta.key /etc/openvpn/
+```
 
 4）将以下文件拷贝到客户端或者将文件的内容贴在客户端配置文件中（移动设备）：  
 ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key
@@ -85,7 +101,8 @@ ca.crt dh4096.pem coffeecat.key coffeecat.crt ta.key
 
 _注意：172.24.1.1为路由器的lan ip，10.1.1.0/24是为vpn客户端分配的ip段，一定要和路由器为lan dhcp的ip段错开。_
 
-<pre><code class="language-vim">
+```vim
+
 
 config openvpn 'tun_cert'
 	option port '3366'
@@ -113,22 +130,28 @@ config openvpn 'tun_cert'
 	list push 'dhcp-option DNS 172.24.1.1'
 	list push 'redirect-gateway def1 local'
 	option enabled '1'
-</code></pre>
+
+```
 
 在/etc/openvpn/tunstatic文件夹下创建名为coffeecat的文件，内容为：
 
-<pre><code class="language-vim">
+```vim
+
 ifconfig-push 10.1.1.7 255.255.255.0
-</code></pre>
+
+```
 
 然后在luci或者命令行启动openvpn：
 
-<pre><code class="language-sh">/etc/init.d/openvpn restart</code></pre>
+```sh
+/etc/init.d/openvpn restart
+```
 
 ps一下有进程就对了
 
 openvpn客户端配置client.ovpn,此处设置为单文件模式：
-<pre><code class="language-vim">
+```vim
+
 client
 dev tun
 proto tcp4
@@ -149,52 +172,57 @@ cipher		AES-256-CBC
 tun-mtu		1500
 key-direction 1
 
-&lt;tls-auth>
+<tls-auth>
 #
 # 2048 bit OpenVPN static key
 #
 -----BEGIN OpenVPN Static key V1-----
 此处省略。。。。。
 -----END OpenVPN Static key V1-----
-&lt;/tls-auth>
+</tls-auth>
 
-&lt;ca>
+<ca>
 -----BEGIN CERTIFICATE-----
 此处省略。。。。。
 -----END CERTIFICATE-----
-&lt;/ca>
+</ca>
 
-&lt;cert>
+<cert>
 -----BEGIN CERTIFICATE-----
 此处省略。。。。。
 -----END CERTIFICATE-----
-&lt;/cert>
+</cert>
 
-&lt;key>
+<key>
 -----BEGIN PRIVATE KEY-----
 此处省略。。。。。
 -----END PRIVATE KEY-----
-&lt;/key>
+</key>
 
-</code></pre>
+
+```
 特别要注意的是，server配置文件中的：
-<pre><code class="language-vim">
+```vim
+
 option tls_auth '/etc/openvpn/ta.key 0'
 
-</code></pre>
+
+```
 要和client配置文件中的：
-<pre><code class="language-vim">
+```vim
+
 key-direction 1
-&lt;tls-auth>
+<tls-auth>
 #
 # 2048 bit OpenVPN static key
 #
 -----BEGIN OpenVPN Static key V1-----
 此处省略。。。。。
 -----END OpenVPN Static key V1-----
-&lt;/tls-auth>
+</tls-auth>
 
-</code></pre>
+
+```
 对应，否则无法连通。
 
 

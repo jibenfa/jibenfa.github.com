@@ -17,7 +17,8 @@ tags:
 
 1）修改/etc/init.d/v2ray
 
- <pre><code class="language-bash">
+ ```bash
+
   
 #!/bin/sh /etc/rc.common
 #
@@ -287,27 +288,33 @@ service_triggers() {
     procd_add_reload_trigger "advancedconfig"
 }
       
-</code></pre>
+
+```
 
 2)修改/etc/dnsmasq.d/下的conf文件：
 
 将原来的所有
 
-<pre><code class="language-bash">
+```bash
+
 ipset=/xxxx.com/gfwlist
-</code></pre>
+
+```
 
 全部修改为：
 
-<pre><code class="language-bash">
+```bash
+
 nftset=/xxxx.com/4#inet#v2ray#gfwlist
-</code></pre>
+
+```
 
 需要注意的是，conf文件不能有windows换行符，因为nftset对于格式非常敏感，之前windows换行符对于ipset没有问题，但是对于nftset就无法正常执行。
 
 3）对应的/etc/config/chinadns文件：
 
-<pre><code class="language-bash">
+```bash
+
 config chinadns
 	option chnroute '/etc/chinadns_chnroute.txt'
 	option addr '0.0.0.0'
@@ -315,11 +322,13 @@ config chinadns
 	option port '5355'
 	option bidirectional '0'
 	option server '114.114.114.114,127.0.0.1:5354'
-</code></pre>
+
+```
 
 4）对应的/root/start_multi_chinadns.sh文件：
 
-<pre><code class="language-bash">
+```bash
+
 #!/bin/sh
 # To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first
 domestic_dns_1="114.114.114.114"
@@ -343,11 +352,13 @@ sleep 1
 nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_3} -s ${domestic_dns_3},${localip}:${v2_dns_port_3} -c /etc/chinadns_chnroute.txt 1>/dev/null 2>&1 &
 sleep 1
 nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4},${localip}:${v2_dns_port_4} -c /etc/chinadns_chnroute.txt 1>/dev/null 2>&1 &
-</code></pre>
+
+```
 
 5）对应的/etc/config/v2ray配置：
 
-<pre><code class="language-bash">
+```bash
+
 {
   "inbounds": [
     {    
@@ -449,7 +460,8 @@ nohup /usr/bin/chinadns -m -b 0.0.0.0 -p ${chinadns_port_4} -s ${domestic_dns_4}
   ]
 }
 
-</code></pre>
+
+```
 
 
 

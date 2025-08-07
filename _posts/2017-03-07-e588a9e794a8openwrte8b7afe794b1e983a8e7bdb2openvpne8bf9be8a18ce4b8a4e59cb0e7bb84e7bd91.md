@@ -16,14 +16,17 @@ tags:
 1.Openvpn服务端（内部局域网段172.24.1.0/24）：  
 首先/etc/config/network配置加一个interface：
 
-<pre><code class="language-vim">config interface 'vpn1'
+```vim
+config interface 'vpn1'
     option proto 'none'
-    option ifname 'tun1'</code></pre>
+    option ifname 'tun1'
+```
 
 /etc/config/openvpn文件增加内容：  
 <!--more-->
 
-<pre><code class="language-vim"> 
+```vim
+ 
 config openvpn 'tun_router'
         option port '3377'
         option proto 'tcp'
@@ -48,32 +51,40 @@ config openvpn 'tun_router'
         list push 'route 172.24.1.0 255.255.255.0'
         list route '172.24.8.0 255.255.255.0'
 
-</code></pre>
+
+```
 
 /etc/openvpn/ccd文件夹内增加一个文件，文件名为客户端证书的common name，例如tbjj，内容为：
 
-<pre><code class="language-vim">ifconfig-push "10.0.1.6 255.255.255.0"
-iroute 172.24.8.0 255.255.255.0</code></pre>
+```vim
+ifconfig-push "10.0.1.6 255.255.255.0"
+iroute 172.24.8.0 255.255.255.0
+```
 
 然后在防火墙自定义规则里面添加：
 
-<pre><code class="language-sh">iptables -I INPUT 1 -p tcp --dport 3377 -j ACCEPT
+```sh
+iptables -I INPUT 1 -p tcp --dport 3377 -j ACCEPT
 iptables -I INPUT 1 -p udp --dport 3377 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 10.0.1.0/24 -d 172.24.1.0/24 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 172.24.8.0/24 -d 172.24.1.0/24 -j ACCEPT
 iptables -I INPUT -i tun1 -s 172.24.8.0/24 -j ACCEPT
-iptables -A FORWARD -o tun1 -s 172.24.1.0/24 -j ACCEPT</code></pre>
+iptables -A FORWARD -o tun1 -s 172.24.1.0/24 -j ACCEPT
+```
 
 2.Openvpn客户端（内部局域网段172.24.8.0/24）：  
 首先/etc/config/network配置加一个interface：
 
-<pre><code class="language-vim">config interface 'vpn1'
+```vim
+config interface 'vpn1'
     option proto 'none'
-    option ifname 'tun1'</code></pre>
+    option ifname 'tun1'
+```
 
 /etc/config/openvpn文件增加内容：
 
-<pre><code class="language-vim">
+```vim
+
 config openvpn 'vpn_client'
         option client '1'
         option dev 'tun1'
@@ -93,17 +104,20 @@ config openvpn 'vpn_client'
         option nobind '1'
         option auth_nocache '1'
 
-        </code></pre>
+        
+```
 
 然后防火墙自定义规则添加：
 
-<pre><code class="language-vim">iptables -I INPUT 1 -p tcp --dport 1195 -j ACCEPT
+```vim
+iptables -I INPUT 1 -p tcp --dport 1195 -j ACCEPT
 iptables -I INPUT 1 -p udp --dport 1195 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 172.24.1.0/24 -d 172.24.8.0/24 -j ACCEPT
 iptables -I INPUT -i tun1 -s 172.24.1.0/24 -j ACCEPT
 iptables -A FORWARD -i tun1 -s 10.0.1.0/24 -d 172.24.8.0/24 -j ACCEPT
 iptables -A FORWARD -o tun1 -s 172.24.8.0/24 -j ACCEPT
- </code></pre>
+ 
+```
 
 3.最后重启两个路由，2个局域网就可以互相访问了。
 

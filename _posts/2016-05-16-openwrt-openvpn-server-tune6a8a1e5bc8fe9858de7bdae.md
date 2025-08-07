@@ -16,9 +16,11 @@ tags:
 首先是服务器端（openwrt路由）：  
 /etc/config/network配置加一个interface：
 
-<pre><code class="language-vim">config interface 'vpn'
+```vim
+config interface 'vpn'
     option proto 'none'
-    option ifname 'tun0'</code></pre>
+    option ifname 'tun0'
+```
 
 /etc/config/openvpn配置文件
 
@@ -26,7 +28,8 @@ tags:
 
 <!--more-->
 
-<pre><code class="language-vim">config openvpn 'tun_test'
+```vim
+config openvpn 'tun_test'
         option port '3366'
         option proto 'tcp'
         option dev 'tun'
@@ -55,11 +58,13 @@ tags:
         list push 'dhcp-option WINS 172.24.8.1'
         list push 'redirect-gateway def1'
         #list push 'route-gateway dhcp'
-        list push 'route 172.24.8.0 255.255.255.0'</code></pre>
+        list push 'route 172.24.8.0 255.255.255.0'
+```
 
 服务器端/etc/config/firewall配置(涉及vpn的部分)
 
-<pre><code class="language-vim">#这zone是在原来的lan zone上修改
+```vim
+#这zone是在原来的lan zone上修改
 #--- Add: option masq '1' ---#
 config zone
 	option name 'lan'
@@ -150,7 +155,8 @@ config forwarding
 	option dest 'wan'
 	option src 'vpn'
 
-</code></pre>
+
+```
 
 自定义防火墙规则：  
 iptables -I INPUT 1 -p tcp &#8211;dport 1194 -j ACCEPT  
@@ -160,7 +166,8 @@ iptables -I INPUT 1 -p udp &#8211;dport 3366 -j ACCEPT
 
 安卓客户端配置文件，test.ovpn:
 
-<pre><code class="language-vim">client
+```vim
+client
 dev tun
 proto tcp
 connect-retry-max 5
@@ -180,28 +187,30 @@ cipher		AES-256-CBC
 mssfix		0
 tun-mtu		24000
 
-&lt;ca&gt;
+<ca>
 -----BEGIN CERTIFICATE-----
 此处省略xxx字
 -----END CERTIFICATE-----
-&lt;/ca&gt;
+</ca>
 
-&lt;cert&gt;
+<cert>
 -----BEGIN CERTIFICATE-----
 此处省略xxx字
 -----END CERTIFICATE-----
-&lt;/cert&gt;
+</cert>
 
-&lt;key&gt;
+<key>
 -----BEGIN PRIVATE KEY-----
 此处省略xxx字
 -----END PRIVATE KEY-----
-&lt;/key&gt;
-</code></pre>
+</key>
+
+```
 
 如果openvpn服务器和chinadns、ss客户端部署在一个国内路由器上，会发现10.8.0.0/24网段虽然能够获得正确的dns，但是无法访问谷歌之类的网站，所以需要手动进行配置，编写 openvpn.firewall文件：
 
-<pre><code class="language-vim">#!/bin/sh
+```vim
+#!/bin/sh
 
 #Date:     2016-05-18
 
@@ -233,11 +242,14 @@ done
 # Anything else should be redirected to shadowsocks's local port
 iptables -t nat -A SHADOWSOCKSXX -s 10.8.0.0/24 -p tcp -j DNAT --to-destination 172.24.8.1:1180
 # Apply the rules
-iptables -t nat -A PREROUTING -s 10.8.0.0/24 -p tcp -j SHADOWSOCKSXX</code></pre>
+iptables -t nat -A PREROUTING -s 10.8.0.0/24 -p tcp -j SHADOWSOCKSXX
+```
 
 然后：
 
-<pre><code class="language-sh">chmod +x openvpn.firewall</code></pre>
+```sh
+chmod +x openvpn.firewall
+```
 
 每次启动的时候运行就是了。。。
 

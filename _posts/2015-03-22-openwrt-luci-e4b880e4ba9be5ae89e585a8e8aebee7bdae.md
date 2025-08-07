@@ -11,35 +11,45 @@ tags:
 ---
 1.关闭wan远程的http(s)登陆uhttpd的Luci的web管理界面
 
-<pre><code class="language-sh">vi /etc/config/uhttpd</code></pre>
+```sh
+vi /etc/config/uhttpd
+```
 
 修改为：
 
-<pre><code class="language-vim">config uhttpd 'main'
+```vim
+config uhttpd 'main'
         list listen_http '192.168.1.1:80'
         #list listen_http '[::]:80'
         list listen_https '192.168.1.1:443'
-        #list listen_https '[::]:443'</code></pre>
+        #list listen_https '[::]:443'
+```
 
 2.启用lan本地的https登陆uhttpd的Luci的web管理界面
 
-<pre><code class="language-sh">opkg install openssl-util luci-ssl
+```sh
+opkg install openssl-util luci-ssl
 
-vi /etc/config/uhttpd</code></pre>
+vi /etc/config/uhttpd
+```
 
 默认应该是：
 
-<pre><code class="language-vim">…
+```vim
+…
 option cert '/etc/uhttpd.crt'
 option key '/etc/uhttpd.key'
-…</code></pre>
+…
+```
 
 生成对应的key和证书文件，其中第二步随便填。。。10年证书。
 
-<pre><code class="language-sh">cd /etc
-openssl genrsa 1024 &gt; uhttpd.key
-openssl req -new -key uhttpd.key &gt; uhttpd.csr
-openssl req -x509 -days 3650 -key uhttpd.key -in uhttpd.csr &gt; uhttpd.crt</code></pre>
+```sh
+cd /etc
+openssl genrsa 1024 > uhttpd.key
+openssl req -new -key uhttpd.key > uhttpd.csr
+openssl req -x509 -days 3650 -key uhttpd.key -in uhttpd.csr > uhttpd.crt
+```
 
 最后重启服务：  
 /etc/init.d/uhttpd restart  

@@ -13,9 +13,12 @@ tags:
 
 1.该脚本在局域网没有在线设备时关闭路由器
 
-<pre><code class="language-sh">vi autoShutDownNoDevs.sh </code></pre>
+```sh
+vi autoShutDownNoDevs.sh 
+```
 
-<pre><code class="language-vim">#!/bin/sh
+```vim
+#!/bin/sh
 
 mon() {
 while [ "1" ];
@@ -33,23 +36,29 @@ do
 done
 }
 
-mon &</code></pre>
+mon &
+```
 
-<pre><code class="language-sh">chmod +x autoShutDownNoDevs.sh</code></pre>
+```sh
+chmod +x autoShutDownNoDevs.sh
+```
 
 2.该脚本在局域网某两台固定IP的PC离线时关闭路由器（防止未关手机wifi时路由器无法关闭）
 
-<pre><code class="language-sh">vi autoShutDownNoPCs.sh</code></pre>
+```sh
+vi autoShutDownNoPCs.sh
+```
 
-<pre><code class="language-vim">#!/bin/sh
+```vim
+#!/bin/sh
 sleep 300
-ping -c 1 172.24.1.150 &gt; /dev/null
+ping -c 1 172.24.1.150 > /dev/null
 ret=$?
 if [ $ret -eq 0 ]
 then
 echo ' Shut Down aborted! '
 else
-ping -c 1 172.24.1.155 &gt;/dev/null
+ping -c 1 172.24.1.155 >/dev/null
 res=$?
 if [ $res -eq 0 ]
 then
@@ -63,13 +72,18 @@ kill -USR1 1
 fi
 fi
 fi
-</code></pre>
 
-<pre><code class="language-sh">chmod +x autoShutDownNoPCs.sh</code></pre>
+```
+
+```sh
+chmod +x autoShutDownNoPCs.sh
+```
 
 定时任务
 
-<pre><code class="language-vim">*/5 22-4 * * * /root/autoShutDownNoPCs.sh</code></pre>
+```vim
+*/5 22-4 * * * /root/autoShutDownNoPCs.sh
+```
 
 参考资料：  
 1. http://blog.csdn.net/qianguozheng/article/details/28393145

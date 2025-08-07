@@ -13,11 +13,13 @@ tags:
 1.直插sim卡上网，目前测试了移动3g和联通3g，使用的是上海移远EC20-C 4g mini pcie模块（注意经研究该模块有很多个批次，需要芯片为高通MDM9215才行，pid 05c6 vid 9215），参数为：  
 EC20-C
 
-<pre><code class="language-vim">FDD LTE: B1/B3/B8
+```vim
+FDD LTE: B1/B3/B8
 TDD LTE: B38/B39/B40/B41
 TDSCDMA: B34/B39
 UMTS: B1/B8
-GSM: 900/1800MHz</code></pre>
+GSM: 900/1800MHz
+```
 
 <!--more-->
 
@@ -29,12 +31,14 @@ GSM: 900/1800MHz</code></pre>
 原厂OP可以支持EC20-CE（高通MDM9215，pid 05c6 vid 9215，注意此CE支持电信3g）但不支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125）  
 EC20-CE
 
-<pre><code class="language-vim">FDD LTE: B1/B3 
+```vim
+FDD LTE: B1/B3 
 TDD LTE: B38/B39/B40/B41 
 TDSCDMA: B34/B39 
 WCDMA: B1 
 CDMA2000 1x/EVDO: BC0 
-GSM: 900/1800MHz </code></pre>
+GSM: 900/1800MHz 
+```
 
 目前LEDE 17.07是4.4的kernel，开源驱动仅支持EC20-C 4g模块（芯片为高通MDM9215，pid 05c6 vid 9215），查阅linux kernel qmi_wwan.c源代码，4.10可以支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125），但目前LEDE还不行。  
 2.直插SD卡，但是根据原厂说明，usb仅限对外充电，不支持外挂U盘  
@@ -43,23 +47,28 @@ GSM: 900/1800MHz </code></pre>
 适配采用修改ZTE-Q7代码来实现（led在系统启动的时候是不亮的，启动成功后显示蓝色，囧）：  
 1.修改target/linux/ramips/base-files/etc/board.d/01_leds
 
-<pre><code class="language-vim">zte-q7)
+```vim
+zte-q7)
 	ucidef_set_led_default "power" "power" "$board:green:sys" "0"
-	;;</code></pre>
+	;;
+```
 
 2.修改target/linux/ramips/base-files/etc/diag.sh
 
-<pre><code class="language-vim">zte-q7)
+```vim
+zte-q7)
 		status_led="$board:green:wifi"
-		;;</code></pre>
+		;;
+```
 
 3.修改target/linux/ramips/dts/ZTE-Q7.dts
 
-<pre><code class="language-vim">/dts-v1/;
+```vim
+/dts-v1/;
 
 #include "mt7620a.dtsi"
 
-#include &lt;dt-bindings/input/input.h&gt;
+#include <dt-bindings/input/input.h>
 
 / {
 	compatible = "ZTE-Q7", "ralink,mt7620a-soc";
@@ -70,32 +79,32 @@ GSM: 900/1800MHz </code></pre>
 
 		usb {
 			label = "zte-q7:usb";
-			gpios = &lt;&gpio0 11 1&gt;;
+			gpios = <&gpio0 11 1>;
 		};
 		sys {
 			label = "zte-q7:sys";
-			gpios = &lt;&gpio1 14 1&gt;;
+			gpios = <&gpio1 14 1>;
 		};
 		wlan {
 			label = "zte-q7:wlan";
-			gpios = &lt;&gpio3 0 1&gt;;
+			gpios = <&gpio3 0 1>;
 		};
 		wps {
 			label = "zte-q7:wps";
-			gpios = &lt;&gpio1 15 0&gt;;
+			gpios = <&gpio1 15 0>;
 		};
 	};
 
 	gpio-keys-polled {
 		compatible = "gpio-keys-polled";
-		#address-cells = &lt;1&gt;;
-		#size-cells = &lt;0&gt;;
-		poll-interval = &lt;20&gt;;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		poll-interval = <20>;
 
 		reset {
 			label = "reset";
-			gpios = &lt;&gpio0 1 0&gt;;
-			linux,code = &lt;0x198&gt;;
+			gpios = <&gpio0 1 0>;
+			linux,code = <0x198>;
 		};
 	};
 };
@@ -116,34 +125,34 @@ GSM: 900/1800MHz </code></pre>
 	status = "okay";
 
 	en25q128@0 {
-		#address-cells = &lt;1&gt;;
-		#size-cells = &lt;1&gt;;
+		#address-cells = <1>;
+		#size-cells = <1>;
 		compatible = "w25q128";
-		reg = &lt;0&gt;;
+		reg = <0>;
 		linux,modalias = "m25p80";
-		spi-max-frequency = &lt;10000000&gt;;
+		spi-max-frequency = <10000000>;
 
 		partition@0 {
 			label = "u-boot";
-			reg = &lt;0x0 0x30000&gt;;
+			reg = <0x0 0x30000>;
 			read-only;
 		};
 
 		partition@30000 {
 			label = "u-boot-env";
-			reg = &lt;0x30000 0x10000&gt;;
+			reg = <0x30000 0x10000>;
 			read-only;
 		};
 
 		factory: partition@40000 {
 			label = "factory";
-			reg = &lt;0x40000 0x10000&gt;;
+			reg = <0x40000 0x10000>;
 			read-only;
 		};
 
 		partition@50000 {
 			label = "firmware";
-			reg = &lt;0x50000 0xfb0000&gt;;
+			reg = <0x50000 0xfb0000>;
 		};
 	};
 };
@@ -163,13 +172,13 @@ GSM: 900/1800MHz </code></pre>
 
 &ethernet {
 	pinctrl-names = "default";
-	pinctrl-0 = &lt;&ephy_pins&gt;;
-	mtd-mac-address = &lt;&factory 0x4&gt;;
+	pinctrl-0 = <&ephy_pins>;
+	mtd-mac-address = <&factory 0x4>;
 	mediatek,portmap = "wllll";
 };
 
 &wmac {
-	ralink,mtd-eeprom = &lt;&factory 0&gt;;
+	ralink,mtd-eeprom = <&factory 0>;
 };
 
 &sdhci {
@@ -188,25 +197,28 @@ GSM: 900/1800MHz </code></pre>
 	status = "okay";
 
 	compatible = "ralink,mt7620a-pci";
-		reg = &lt;0x10140000 0x100
-			0x10142000 0x100&gt;;
+		reg = <0x10140000 0x100
+			0x10142000 0x100>;
 
-		resets = &lt;&rstctrl 26&gt;;
+		resets = <&rstctrl 26>;
 		reset-names = "pcie0";
 
-		interrupt-parent = &lt;&cpuintc&gt;;
-		interrupts = &lt;4&gt;;
+		interrupt-parent = <&cpuintc>;
+		interrupts = <4>;
 };
 
 
-</code></pre>
+
+```
 
 最后编译的时候，选择
 
-<pre><code class="language-sh">git clone https://git.lede-project.org/source.git
+```sh
+git clone https://git.lede-project.org/source.git
 git fetch --tags
 git tag -l
-git checkout v17.01.0</code></pre>
+git checkout v17.01.0
+```
 
 参考：  
 1.http://lists.infradead.org/pipermail/lede-commits/2016-September/000876.html  

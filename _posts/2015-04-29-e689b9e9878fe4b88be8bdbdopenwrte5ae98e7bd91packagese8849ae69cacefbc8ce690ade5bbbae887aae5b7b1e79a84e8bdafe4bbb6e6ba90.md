@@ -15,9 +15,12 @@ tags:
 
 例如在/root/wrt1900ac/packages下：
 
-<pre><code class="language-sh">vi downloadpackages.sh</code></pre>
+```sh
+vi downloadpackages.sh
+```
 
-<pre><code class="language-vim">#!/bin/sh
+```vim
+#!/bin/sh
 
 mkdir /root/wrt1900ac/packages/base
 cd /root/wrt1900ac/packages/base
@@ -49,6 +52,9 @@ cd /root/wrt1900ac/packages/telephony
 wget http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/telephony/
 wget -i index.html -F -B http://downloads.openwrt.org/snapshots/trunk/mvebu/generic/packages/telephony/
 
-</code></pre>
 
-<pre><code class="language-sh">chmod +x downloadpackages.sh</code></pre>
+```
+
+```sh
+chmod +x downloadpackages.sh
+```

@@ -16,30 +16,38 @@ i-Shanghai的wifi连接上以后，任意打开某网页，例如:www.baidu.com�
 
 <!--more-->
 
-<pre><code class="language-vim">'https://wlan.ct10000.com/?basetype=3&nasPortId='.$nasPortId.'&UserInputURL=http://www.baidu.com/&nasIp='.$nasIp;</code></pre>
+```vim
+'https://wlan.ct10000.com/?basetype=3&nasPortId='.$nasPortId.'&UserInputURL=http://www.baidu.com/&nasIp='.$nasIp;
+```
 
 里面的id和ip估计就是热点的id和ip了。。。
 
 这个页面包含一个框架，实际的登录页面就是在框架里面的，我认为这是基于安全性的考虑，框架的地址，类似：
 
-<pre><code class="language-vim">'https://wlan.ct10000.com/'.$longString</code></pre>
+```vim
+'https://wlan.ct10000.com/'.$longString
+```
 
 直接打开框架地址后，出现了熟悉的登录框，通过分析元素发现，提交的要素有些是hidden的，且最后的提交按钮是调用javascript，经测试直接通过模拟点击是不行了（perl的www::mechanize似乎不支持javascript），这样的设计也是为了安全考虑吧，只有最后一条路——抓包分析了。
 
 最麻烦的是，为了安全考虑，这些网址都是https的，通过wireshark抓包是没有用的，只能通过Fiddler或者chrome的开发者模式抓包，通过抓包，知道了提交的要素和地址：  
 提交的内容是：
 
-<pre><code class="language-vim">paramStr
+```vim
+paramStr
 paramStrEnc
 province
 prefix
 logintype
 UserName
-PassWord</code></pre>
+PassWord
+```
 
 提交的地址是：
 
-<pre><code class="language-vim">https://wlan.ct10000.com/authServlet</code></pre>
+```vim
+https://wlan.ct10000.com/authServlet
+```
 
 前2个提交内容在框架页面就已经生成了，里面应该包含了热点的id等相关信息，如果提交时不带上或者带错了这些信息，就会提示此处不是热点。。。
 
@@ -49,7 +57,8 @@ PassWord</code></pre>
 
 下面附上PC端i-Shanghai自动登录perl脚本，模拟iPhone登录（python脚本不提供，免得被不法奸商利用）： 
 
-<pre><code class="language-perl">#/usr/bin/perl -w
+```perl
+#/usr/bin/perl -w
     use strict;
     use warnings;
     use WWW::Mechanize; 
@@ -62,13 +71,13 @@ PassWord</code></pre>
     
     my $impcontent;
     #打开浏览器
-    my $ua = WWW::Mechanize-&gt;new(); 
-    $ua-&gt;cookie_jar(HTTP::Cookies-&gt;new()); 
-    $ua-&gt;agent_alias('Windows IE 6');
+    my $ua = WWW::Mechanize->new(); 
+    $ua->cookie_jar(HTTP::Cookies->new()); 
+    $ua->agent_alias('Windows IE 6');
     
     #打开网址
-    my $response = $ua-&gt;get($url);
-    my $decontent =$response-&gt;decoded_content;
+    my $response = $ua->get($url);
+    my $decontent =$response->decoded_content;
     
     $decontent =~ s/\n//g;
                 
@@ -78,20 +87,20 @@ PassWord</code></pre>
    	 $url = 'https://wlan.ct10000.com'.$1;
 
    }
-    $response = $ua-&gt;get($url);           
-    $decontent =$response-&gt;decoded_content; 
+    $response = $ua->get($url);           
+    $decontent =$response->decoded_content; 
     $decontent =~ s/\n/0D0A/g;
     $decontent =~ s/\s//g;
  
     
     #取出框架要素
     my $paramStr='';
-    if($decontent =~ /id=\"paramStr\"value=\"(.*)?\"\/&gt;0D0A&lt;inputtype=\"hidden\"name=\"paramStrEnc\"/)  
+    if($decontent =~ /id=\"paramStr\"value=\"(.*)?\"\/>0D0A<inputtype=\"hidden\"name=\"paramStrEnc\"/)  
     {
     	 $paramStr=$1;   	  
     }
     my $paramStrEnc='';
-    if($decontent =~ /id=\"paramStrEnc\"value=\"(.*)?\"\/&gt;0D0A&lt;inputtype=\"hidden\"name=\"province\"id=\"province\"/)
+    if($decontent =~ /id=\"paramStrEnc\"value=\"(.*)?\"\/>0D0A<inputtype=\"hidden\"name=\"province\"id=\"province\"/)
     {
     	 $paramStrEnc=$1;
     }
@@ -111,24 +120,25 @@ PassWord</code></pre>
     
     my $url2='https://wlan.ct10000.com/authServlet';
     #发起登陆
-    $response =  $ua-&gt;post($url2,              
-                        'Accept' =&gt;  'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                        'Accept-Encoding' =&gt;  'gzip, deflate',
-                        'Accept-Language' =&gt;  'zh-CN,zh;q=0.8',
-                        'Cache-Control' =&gt;  'max-age=0',
-                        'Connection' =&gt;  'keep-alive',
-                        'Content-Length' =&gt;  '1067',
-                        'Content-Type' =&gt;  'application/x-www-form-urlencoded',
-                        'Cookie' =&gt;  'JSESSIONID=22B2B92222C0F258866778895E2F4450F80',
-                        'Host' =&gt;  'wlan.ct10000.com',
-                        'Origin' =&gt;  'https://wlan.ct10000.com',
-                        'Referer' =&gt;   $location,  
-                        'Upgrade-Insecure-Requests' =&gt;  '1',
-                        'User-Agent' =&gt;  'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5',
-                        'Content' =&gt; $content
+    $response =  $ua->post($url2,              
+                        'Accept' =>  'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                        'Accept-Encoding' =>  'gzip, deflate',
+                        'Accept-Language' =>  'zh-CN,zh;q=0.8',
+                        'Cache-Control' =>  'max-age=0',
+                        'Connection' =>  'keep-alive',
+                        'Content-Length' =>  '1067',
+                        'Content-Type' =>  'application/x-www-form-urlencoded',
+                        'Cookie' =>  'JSESSIONID=22B2B92222C0F258866778895E2F4450F80',
+                        'Host' =>  'wlan.ct10000.com',
+                        'Origin' =>  'https://wlan.ct10000.com',
+                        'Referer' =>   $location,  
+                        'Upgrade-Insecure-Requests' =>  '1',
+                        'User-Agent' =>  'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5',
+                        'Content' => $content
                         );
                         
        
-   # $decontent = $response-&gt;decoded_content;       
+   # $decontent = $response->decoded_content;       
    # print $decontent;
-                 </code></pre>
+                 
+```

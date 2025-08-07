@@ -12,12 +12,16 @@ tags:
 两种办法：  
 1.通过luci配置
 
-<pre><code class="language-sh">opkg update
-opkg install luci-app-ddns ddns-scripts</code></pre>
+```sh
+opkg update
+opkg install luci-app-ddns ddns-scripts
+```
 
 然后在luci界面中‘更新的url’填入：
 
-<pre><code class="language-vim">http://[username]:[password]@ddns.oray.com:80/ph/update?hostname=[domain]&myip=[ip]</code></pre>
+```vim
+http://[username]:[password]@ddns.oray.com:80/ph/update?hostname=[domain]&myip=[ip]
+```
 
 其他按照要求填写，注意：‘ip地址来源’选‘接口’，‘接口’ 选‘pppoe-wan’
 
@@ -28,11 +32,14 @@ opkg install luci-app-ddns ddns-scripts</code></pre>
 
 先写一个sh脚本：(路径)
 
-<pre><code class="language-sh">vi /etc/hotplug.d/iface/25-Oray</code></pre>
+```sh
+vi /etc/hotplug.d/iface/25-Oray
+```
 
 内容如下：
 
-<pre><code class="language-vim">#!/bin/sh
+```vim
+#!/bin/sh
 
 USER="***********"
 PASS="******"
@@ -51,15 +58,20 @@ fi
 echo "start ddns refresh"
 URL="http://${USER}:${PASS}@ddns.oray.com:80/ph/update?hostname=${DOMAIN}&myip=${LIP}"
 wget -q -O /tmp/orayddnsResult -q ${URL}
-</code></pre>
+
+```
 
 <del datetime="2017-07-28T14:47:43+00:00">大概意思就是当路由器的ip和上一次保存在临时文件里的ip不一样的时候就访问花生壳网站更新ip</del>  
 2017-07-28更新了代码，采用ping的方式，如果返回的ip与get发送的ip不一致时，重新发送。
 
 给文件增加执行权限
 
-<pre><code class="language-sh">chmod a+x /etc/hotplug.d/iface/25-Oray</code></pre>
+```sh
+chmod a+x /etc/hotplug.d/iface/25-Oray
+```
 
 给路由增加一个定时任务，每隔一分钟执行一次上面的脚本
 
-<pre><code class="language-sh">echo */1 * * * * /etc/hotplug.d/iface/25-Oray start&gt;&gt; /etc/crontabs/root</code></pre>
+```sh
+echo */1 * * * * /etc/hotplug.d/iface/25-Oray start>> /etc/crontabs/root
+```

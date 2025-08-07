@@ -13,7 +13,9 @@ tags:
 
 # 1.apache2启用ssl
 
-<pre><code class="language-sh">a2enmod ssl</code></pre>
+```sh
+a2enmod ssl
+```
 
 # 2.修改apache配置文件
 
@@ -23,24 +25,27 @@ tags:
 自签名证书一般不会得到认证，所以浏览器访问时会提示证书非 法，是红色的。  
 如果要显示为绿色，可以考虑向某些组织申请ssl证书，有收费和免费的。
 
-<pre><code class="language-sh">vi /etc/apache2/sites-enabled/example.com.conf</code></pre>
+```sh
+vi /etc/apache2/sites-enabled/example.com.conf
+```
 
 内容如下（这种方法感觉挺笨的，但是有效。。）：  
 <!--more-->
 
-<pre><code class="language-vim"># domain: example.com
+```vim
+# domain: example.com
 # public: /var/www/example.com/public_html/
 
 NameVirtualHost *:443  
-&lt;VirtualHost *:80&gt;
+<VirtualHost *:80>
 ServerName <strong>ip地址</strong>
-&lt;Location /&gt;
+<Location />
 Order Allow,Deny
 Deny from all
-&lt;/Location&gt;
-&lt;/VirtualHost&gt;
+</Location>
+</VirtualHost>
 
-&lt;VirtualHost *:80&gt;
+<VirtualHost *:80>
   # Admin email, Server Name (domain name), and any aliases
   ServerAdmin webmaster@example.com
   ServerName  www.example.com
@@ -52,15 +57,15 @@ Deny from all
   LogLevel warn
   ErrorLog  /var/www/example.com/log/error.log
   CustomLog /var/www/example.com/log/access.log combined
-&lt;/VirtualHost&gt;
+</VirtualHost>
   
-&lt;Directory /var/www/example.com/public_html/postfixadmin&gt;
+<Directory /var/www/example.com/public_html/postfixadmin>
   RewriteEngine on
   RewriteCond %{SERVER_PORT} !^443$
   RewriteRule ^(.*)?$ https://pfadmin.example.com/$1 [L,R]
-&lt;/Directory&gt;
+</Directory>
 
-&lt;VirtualHost *:443&gt;
+<VirtualHost *:443>
   DirectoryIndex index.html index.php
   DocumentRoot /var/www/example.com/public_html/postfixadmin
   ServerName pfadmin.example.com:443
@@ -69,32 +74,32 @@ Deny from all
   SSLOptions +StrictRequire
   SSLCertificateFile /etc/dovecot/dovecot.pem
   SSLCertificateKeyFile /etc/dovecot/private/dovecot.pem
-&lt;/VirtualHost&gt;
+</VirtualHost>
 
-&lt;VirtualHost *:80&gt;
+<VirtualHost *:80>
   DirectoryIndex index.html index.php
   DocumentRoot /var/www/example.com/public_html/postfixadmin
   ServerName pfadmin.example.com
-&lt;/VirtualHost&gt;
+</VirtualHost>
 
-&lt;Directory /var/www/example.com/public_html/webmail&gt;
+<Directory /var/www/example.com/public_html/webmail>
   Options FollowSymLinks
-  &lt;IfModule mod_php5.c&gt;
+  <IfModule mod_php5.c>
     php_flag register_globals off
-  &lt;/IfModule&gt;
-  &lt;IfModule mod_dir.c&gt;
+  </IfModule>
+  <IfModule mod_dir.c>
     DirectoryIndex index.php
-  &lt;/IfModule&gt;
+  </IfModule>
   RewriteEngine on
   RewriteCond %{SERVER_PORT} !^443$
   RewriteRule ^(.*)?$ https://webmail.example.com/$1 [L,R]
-&lt;/Directory&gt;
+</Directory>
 
-&lt;Directory /var/www/example.com/public_html/webmail/data&gt;
+<Directory /var/www/example.com/public_html/webmail/data>
  deny from all
-&lt;/Directory&gt;
+</Directory>
 
-&lt;VirtualHost *:443&gt;
+<VirtualHost *:443>
   DirectoryIndex index.html index.php
   DocumentRoot /var/www/example.com/public_html/webmail
   ServerName webmail.example.com:443
@@ -103,19 +108,24 @@ Deny from all
   SSLOptions +StrictRequire
   SSLCertificateFile /etc/dovecot/dovecot.pem
   SSLCertificateKeyFile /etc/dovecot/private/dovecot.pem
-&lt;/VirtualHost&gt;
+</VirtualHost>
 
-&lt;VirtualHost *:80&gt;
+<VirtualHost *:80>
   DirectoryIndex index.html index.php
   DocumentRoot /var/www/example.com/public_html/webmail
   ServerName webmail.example.com
-&lt;/VirtualHost&gt;</code></pre>
+</VirtualHost>
+```
 
 # 3.重启apache2服务
 
-<pre><code class="language-sh">service apache2 restart</code></pre>
+```sh
+service apache2 restart
+```
 
 避免重启时apache因证书密码卡住无法ssh  
 需将加密的key文件解密。。。
 
-<pre><code class="language-sh">openssl rsa -in key.pem -out newkey.pem</code></pre>
+```sh
+openssl rsa -in key.pem -out newkey.pem
+```

@@ -14,7 +14,8 @@ tags:
 
 换dns供应商了，撸了一个openwrt下基于dnspod api的ddns脚本：
 
-<pre><code class="language-bash">
+```bash
+
 #!/bin/sh
 
 TOKEN="xxx,xxxxxxxxxxxxxxx"
@@ -57,4 +58,5 @@ echo "start ddns refresh"
 refresh_cmd="curl -X POST https://dnsapi.cn/Record.Ddns -d 'login_token=${TOKEN}&format=json&domain_id=${DOMAIN_ID}&record_id=${RECORD_ID}&record_line_id=0&value=${LIP}&sub_domain=${SUB_DOMAIN}'"
 refreah_result=`eval ${refresh_cmd}`
 echo "${refreah_result}"
-</code></pre>
+
+```

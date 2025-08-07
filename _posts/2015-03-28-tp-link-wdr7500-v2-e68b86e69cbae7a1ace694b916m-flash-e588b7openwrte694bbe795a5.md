@@ -38,24 +38,28 @@ tags:
  <br>
  flash在中间，周围小元件也不多，一把烙铁就拆下了，拆下后用编程器读取flash，备份官方flash 8M编程器固件：uboot，firmware和art。然后用winhex提取art.bin，到[恩山论坛](http://http://www.right.com.cn/FORUM/thread-136444-1-1.html)上下载H大大的wdr7500 uboot:u-boot-qca9558-ar8327n.bin，然后计算uboot，firmware，art的大小之和，用16M减去这个值后，得到8454144，填入我的perl脚本，生成填充文件16M_FF.bin：
 
-<pre><code class="language-perl">#!/usr/bin/perl 
+```perl
+#!/usr/bin/perl 
 use strict;
 my $i = 8454144;
-open(FH,'&gt;','16M_FF.bin');
+open(FH,'>','16M_FF.bin');
 binmode(FH);
 my $xff =pack("H*","FF");
-while($i&gt;0)
+while($i>0)
 {
   print FH $xff; 
   $i--; 
 }
 
 close FH;
-</code></pre>
+
+```
 
 最后运行：
 
-<pre><code class="language-sh">cat u-boot-qca9558-ar8327n.bin openwrt-ar71xx-generic-archer-c7-v1-squashfs-factory.bin 16M_FF.bin art.bin &gt; wdr7500v2fullflash16M.bin</code></pre>
+```sh
+cat u-boot-qca9558-ar8327n.bin openwrt-ar71xx-generic-archer-c7-v1-squashfs-factory.bin 16M_FF.bin art.bin > wdr7500v2fullflash16M.bin
+```
 
 然后用编程器烧录到winbond W25Q128FVSG，焊接到电路板上。 
 
