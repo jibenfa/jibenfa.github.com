@@ -4,7 +4,7 @@
       <span></span>
       {% for category in item.categories %}
         {% assign slug = category | slugify %}
-        <a class="article-category-link" href="{{ site.baseurl }}/categories/{{ slug }}/">{{ category }}</a>
+        <a href="{{ site.baseurl }}/categories/{{ slug }}/">{{ category }}</a>
       {% endfor %}
     </div>
   {% endif %}
