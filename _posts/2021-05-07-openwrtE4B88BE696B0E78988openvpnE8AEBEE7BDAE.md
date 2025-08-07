@@ -225,7 +225,3 @@ key-direction 1
 ```
 对应，否则无法连通。
 
-
-参考：
-
-1.https://wallsee.org/2015/07/05/e588a9e794a8openvpne8bf9ce7a88be8bf9ee59b9ee5aeb6e9878ce8b7afe794b1e599a8e4b88ae58685e5a496e7bd91e38082e38082e38082.html
