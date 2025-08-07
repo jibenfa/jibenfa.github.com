@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-07T02:25:46+00:00</updated>
+ <updated>2025-08-07T03:56:32+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -857,9 +857,6 @@ option tls_auth &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/ta.key 0&apo
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;对应，否则无法连通。&lt;/p&gt;
 
-&lt;p&gt;参考：&lt;/p&gt;
-
-&lt;p&gt;1.https://wallsee.org/2015/07/05/e588a9e794a8openvpne8bf9ce7a88be8bf9ee59b9ee5aeb6e9878ce8b7afe794b1e599a8e4b88ae58685e5a496e7bd91e38082e38082e38082.html&lt;/p&gt;
 </content>
  </entry>
  
@@ -1879,7 +1876,7 @@ service v2ray restart
 &lt;p&gt;五、openwrt上配置防火墙&lt;/p&gt;
 
 &lt;p&gt;参考上一篇文章
-&lt;a href=&quot;https://wallsee.org/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2.html&quot;&gt;配置&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&quot;https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2/&quot;&gt;配置&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;参考资料：&lt;/p&gt;
 
