@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-07T00:53:18+00:00</updated>
+ <updated>2025-08-07T01:22:43+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -357,28 +357,26 @@ config chinadns
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;domestic_dns_1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;114.114.114.114&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;domestic_dns_2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;119.29.29.29&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;domestic_dns_3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;223.5.5.5&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;domestic_dns_4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;180.76.76.76&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;localip&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#chinadns_port_1=&quot;5354&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;chinadns_port_2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5357&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;chinadns_port_3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5359&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;chinadns_port_4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5361&quot;&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#v2_dns_port_1=&quot;5355&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;v2_dns_port_2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5356&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;v2_dns_port_3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5358&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;v2_dns_port_4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5360&quot;&lt;/span&gt;
-killall chinadns
+&lt;span class=&quot;c&quot;&gt;# 启动多个 chinadns 实例并使用不同的国内 DNS 和端口&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 依赖：chinadns、v2ray、dnsmasq-full、coreutils-nohup&lt;/span&gt;
+
+killall chinadns 2&amp;gt;/dev/null
 /etc/init.d/chinadns restart
 &lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;1
-&lt;span class=&quot;nb&quot;&gt;nohup&lt;/span&gt; /usr/bin/chinadns &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; 0.0.0.0 &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;chinadns_port_2&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;domestic_dns_2&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;localip&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2_dns_port_2&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; /etc/chinadns_chnroute.txt 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &amp;amp;
-&lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;1
-&lt;span class=&quot;nb&quot;&gt;nohup&lt;/span&gt; /usr/bin/chinadns &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; 0.0.0.0 &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;chinadns_port_3&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;domestic_dns_3&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;localip&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2_dns_port_3&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; /etc/chinadns_chnroute.txt 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &amp;amp;
-&lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;1
-&lt;span class=&quot;nb&quot;&gt;nohup&lt;/span&gt; /usr/bin/chinadns &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; 0.0.0.0 &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;chinadns_port_4&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;domestic_dns_4&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;localip&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2_dns_port_4&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; /etc/chinadns_chnroute.txt 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &amp;amp;
+
+start_chinadns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;nohup&lt;/span&gt; /usr/bin/chinadns &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; 0.0.0.0 &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$port&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$dns&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;,127.0.0.1:&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$v2port&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; /etc/chinadns_chnroute.txt &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null 2&amp;gt;&amp;amp;1 &amp;amp;
+  &lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;1
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+start_chinadns 5357 119.29.29.29 5356
+start_chinadns 5359 223.5.5.5    5358
+start_chinadns 5361 180.76.76.76 5360
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 

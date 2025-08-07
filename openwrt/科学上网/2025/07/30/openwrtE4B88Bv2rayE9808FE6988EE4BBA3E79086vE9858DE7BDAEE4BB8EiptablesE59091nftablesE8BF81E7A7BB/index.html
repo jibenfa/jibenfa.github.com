@@ -431,28 +431,26 @@ config chinadns
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="c">#!/bin/sh</span>
-<span class="c"># To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup first</span>
-<span class="nv">domestic_dns_1</span><span class="o">=</span><span class="s2">"114.114.114.114"</span>
-<span class="nv">domestic_dns_2</span><span class="o">=</span><span class="s2">"119.29.29.29"</span>
-<span class="nv">domestic_dns_3</span><span class="o">=</span><span class="s2">"223.5.5.5"</span>
-<span class="nv">domestic_dns_4</span><span class="o">=</span><span class="s2">"180.76.76.76"</span>
-<span class="nv">localip</span><span class="o">=</span><span class="s2">"127.0.0.1"</span>
-<span class="c">#chinadns_port_1="5354"</span>
-<span class="nv">chinadns_port_2</span><span class="o">=</span><span class="s2">"5357"</span>
-<span class="nv">chinadns_port_3</span><span class="o">=</span><span class="s2">"5359"</span>
-<span class="nv">chinadns_port_4</span><span class="o">=</span><span class="s2">"5361"</span>
-<span class="c">#v2_dns_port_1="5355"</span>
-<span class="nv">v2_dns_port_2</span><span class="o">=</span><span class="s2">"5356"</span>
-<span class="nv">v2_dns_port_3</span><span class="o">=</span><span class="s2">"5358"</span>
-<span class="nv">v2_dns_port_4</span><span class="o">=</span><span class="s2">"5360"</span>
-killall chinadns
+<span class="c"># 启动多个 chinadns 实例并使用不同的国内 DNS 和端口</span>
+<span class="c"># 依赖：chinadns、v2ray、dnsmasq-full、coreutils-nohup</span>
+
+killall chinadns 2&gt;/dev/null
 /etc/init.d/chinadns restart
 <span class="nb">sleep </span>1
-<span class="nb">nohup</span> /usr/bin/chinadns <span class="nt">-m</span> <span class="nt">-b</span> 0.0.0.0 <span class="nt">-p</span> <span class="k">${</span><span class="nv">chinadns_port_2</span><span class="k">}</span> <span class="nt">-s</span> <span class="k">${</span><span class="nv">domestic_dns_2</span><span class="k">}</span>,<span class="k">${</span><span class="nv">localip</span><span class="k">}</span>:<span class="k">${</span><span class="nv">v2_dns_port_2</span><span class="k">}</span> <span class="nt">-c</span> /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
-<span class="nb">sleep </span>1
-<span class="nb">nohup</span> /usr/bin/chinadns <span class="nt">-m</span> <span class="nt">-b</span> 0.0.0.0 <span class="nt">-p</span> <span class="k">${</span><span class="nv">chinadns_port_3</span><span class="k">}</span> <span class="nt">-s</span> <span class="k">${</span><span class="nv">domestic_dns_3</span><span class="k">}</span>,<span class="k">${</span><span class="nv">localip</span><span class="k">}</span>:<span class="k">${</span><span class="nv">v2_dns_port_3</span><span class="k">}</span> <span class="nt">-c</span> /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
-<span class="nb">sleep </span>1
-<span class="nb">nohup</span> /usr/bin/chinadns <span class="nt">-m</span> <span class="nt">-b</span> 0.0.0.0 <span class="nt">-p</span> <span class="k">${</span><span class="nv">chinadns_port_4</span><span class="k">}</span> <span class="nt">-s</span> <span class="k">${</span><span class="nv">domestic_dns_4</span><span class="k">}</span>,<span class="k">${</span><span class="nv">localip</span><span class="k">}</span>:<span class="k">${</span><span class="nv">v2_dns_port_4</span><span class="k">}</span> <span class="nt">-c</span> /etc/chinadns_chnroute.txt 1&gt;/dev/null 2&gt;&amp;1 &amp;
+
+start_chinadns<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local </span><span class="nv">port</span><span class="o">=</span><span class="nv">$1</span>
+  <span class="nb">local </span><span class="nv">dns</span><span class="o">=</span><span class="nv">$2</span>
+  <span class="nb">local </span><span class="nv">v2port</span><span class="o">=</span><span class="nv">$3</span>
+  <span class="nb">nohup</span> /usr/bin/chinadns <span class="nt">-m</span> <span class="nt">-b</span> 0.0.0.0 <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$port</span><span class="s2">"</span> <span class="se">\</span>
+    <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$dns</span><span class="s2">"</span>,127.0.0.1:<span class="s2">"</span><span class="nv">$v2port</span><span class="s2">"</span> <span class="nt">-c</span> /etc/chinadns_chnroute.txt <span class="se">\</span>
+    <span class="o">&gt;</span>/dev/null 2&gt;&amp;1 &amp;
+  <span class="nb">sleep </span>1
+<span class="o">}</span>
+
+start_chinadns 5357 119.29.29.29 5356
+start_chinadns 5359 223.5.5.5    5358
+start_chinadns 5361 180.76.76.76 5360
 
 </code></pre></div></div>
 
