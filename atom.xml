@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-08T00:54:41+00:00</updated>
+ <updated>2025-08-08T00:55:25+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -24,11 +24,11 @@
 &lt;p&gt;3.修复了页面布局中分类和标签的左右间距和上下对齐问题。
 &lt;p&gt;另外发现通过：
 
-  &apos;&apos;&apos;bash
-  &apos;&apos;&apos;lua
+  ```bash
+  ```lua
   ...代码块
-  &apos;&apos;&apos;
-  &apos;&apos;&apos;
+  ```
+  ```
   
   比使用：
   
