@@ -49,6 +49,34 @@
 
     
     
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".article-content pre").forEach(pre => {
+    const btn = document.createElement("button");
+    btn.className = "copy-btn";
+    btn.type = "button";
+    btn.setAttribute("data-tooltip", "Click to copy");
+
+    btn.addEventListener("click", () => {
+      navigator.clipboard.writeText(pre.innerText).then(() => {
+        btn.setAttribute("data-tooltip", "Copied!");
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.setAttribute("data-tooltip", "Click to copy");
+          btn.classList.remove("copied");
+        }, 1500);
+      }).catch(() => {
+        btn.setAttribute("data-tooltip", "Copy failed!");
+        setTimeout(() => {
+          btn.setAttribute("data-tooltip", "Click to copy");
+        }, 1500);
+      });
+    });
+
+    pre.appendChild(btn);
+  });
+});
+</script>
 </head>
 
   <body>
