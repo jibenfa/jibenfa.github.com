@@ -27,6 +27,7 @@
 /tags/%E8%99%9A%E6%8B%9F%E5%8C%96/
 /tags/apk/
 /tags/cayman/
+/tags/highlight-js/
 /page2/
 /page3/
 /page4/
