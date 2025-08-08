@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-08T00:55:25+00:00</updated>
+ <updated>2025-08-08T00:55:52+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -27,7 +27,7 @@
   ```bash
   ```lua
   ...代码块
-  ```
+  \```
   ```
   
   比使用：
