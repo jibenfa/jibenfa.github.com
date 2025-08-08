@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-08T00:16:39+00:00</updated>
+ <updated>2025-08-08T00:20:02+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -17,7 +17,8 @@
    <link href="https://jibenfa.github.io/%E5%85%B6%E4%BB%96/2025/08/08/E69BB4E68DA2E4BA86E69CACE7AB99E79A84E4B8BBE9A298/"/>
    <updated>2025-08-08T00:12:13+00:00</updated>
    <id>https://jibenfa.github.io/%E5%85%B6%E4%BB%96/2025/08/08/E69BB4E68DA2E4BA86E69CACE7AB99E79A84E4B8BBE9A298</id>
-   <content type="html">
+   <content type="html">&lt;p&gt;最近更换了本站的主题，主要是基于
+&lt;a href=&quot;https://github.com/Simpleyyt/jekyll-jacman&quot;&gt;jekyll-jacman主题&lt;/a&gt;做的二次开发。&lt;/p&gt;
 </content>
  </entry>
  
