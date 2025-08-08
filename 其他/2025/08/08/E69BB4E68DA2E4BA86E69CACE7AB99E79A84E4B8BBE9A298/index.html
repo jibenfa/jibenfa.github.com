@@ -120,9 +120,24 @@
 		<p>最近更换了本站的主题，主要是基于
 <a href="https://github.com/Simpleyyt/jekyll-jacman">jekyll-jacman主题</a>做的二次开发，主要修改内容：</p>
 <p>1.修复了当分类和标签为中文时，超级链接失效的问题。
-<p>2.从原来的rouge代码高亮主题升级成了<a href="https://github.com/highlightjs/highlight.js">highlight.js</a>代码高亮js，支持切换主题和多语言。
+<p>2.从原来内置的rouge代码高亮主题升级成了<a href="https://github.com/highlightjs/highlight.js">highlight.js</a>代码高亮方案，支持切换主题和多语言。
 <p>3.修复了页面布局中分类和标签的左右间距和上下对齐问题。
-</p></p></p>
+<p>另外发现通过：
+
+  '''bash
+  '''lua
+  ...代码块
+  '''
+  '''
+  
+  比使用：
+  
+  <pre><code class="language-lua">
+  ...代码块
+  </code></pre>
+
+  对于lua类的代码兼容性更好，不会出现jekyll解析时的错误转义，导致显示错误。
+</p></p></p></p>
   
 	</div>
 	<footer class="article-footer clearfix">
