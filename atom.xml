@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-08T00:55:52+00:00</updated>
+ <updated>2025-08-08T00:56:55+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -25,16 +25,12 @@
 &lt;p&gt;另外发现通过：
 
   ```bash
-  ```lua
-  ...代码块
-  \```
+  ```lua ...代码块 ```
   ```
   
   比使用：
   
-  &lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;
-  ...代码块
-  &lt;/code&gt;&lt;/pre&gt;
+  &lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt;...代码块&lt;/code&gt;&lt;/pre&gt;
 
   对于lua类的代码兼容性更好，不会出现jekyll解析时的错误转义，导致显示错误。
 &lt;/p&gt;&lt;/p&gt;&lt;/p&gt;&lt;/p&gt;
