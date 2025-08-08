@@ -4,13 +4,22 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-08T00:13:15+00:00</updated>
+ <updated>2025-08-08T00:16:39+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>openwrt下apk命令报FDB格式错误的解决方法</title>
+   <link href="https://jibenfa.github.io/%E5%85%B6%E4%BB%96/2025/08/08/E69BB4E68DA2E4BA86E69CACE7AB99E79A84E4B8BBE9A298/"/>
+   <updated>2025-08-08T00:12:13+00:00</updated>
+   <id>https://jibenfa.github.io/%E5%85%B6%E4%BB%96/2025/08/08/E69BB4E68DA2E4BA86E69CACE7AB99E79A84E4B8BBE9A298</id>
+   <content type="html">
+</content>
+ </entry>
  
  <entry>
    <title>openwrt下apk命令报FDB格式错误的解决方法</title>
@@ -3195,27 +3204,6 @@ THE ACTIVE CODE IS:
    <updated>2017-02-13T20:54:41+00:00</updated>
    <id>https://jibenfa.github.io/openwrt/2017/02/13/openwrte79a84e5af86e7a081apie58f98e58c96e5b8a6e69da5e79a84e5bdb1e5938d</id>
    <content type="html">&lt;p&gt;从openwrt &lt;a href=&quot;https://dev.openwrt.org/changeset/46483&quot;&gt;r46483&lt;/a&gt; &lt;a href=&quot;https://dev.openwrt.org/browser/trunk/package/kernel/linux/modules/crypto.mk?rev=46820&quot;&gt;r46820&lt;/a&gt;版本开始，kmod-crypto-aes,kmod-crypto-arc4,kmod-crypto-core不再作为单独的软件包提供，而是在kernel中提供，目前测试下来，在mt7621的dd trunk版本中，wifi的wpa2的aes加密未受到影响，但是shadowsocks受到了影响，aes和rc4-md5相关算法均会报cipher not found 的错误导致不能使用。只能使用chacha20或者salsa20的算法，后者是基于libsodium包的，实测未受到影响。&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>MT7621路由性能评测</title>
-   <link href="https://jibenfa.github.io/openwrt/2017/02/11/mt7621e8b7afe794b1e680a7e883bde8af84e6b58b/"/>
-   <updated>2017-02-11T17:10:56+00:00</updated>
-   <id>https://jibenfa.github.io/openwrt/2017/02/11/mt7621e8b7afe794b1e680a7e883bde8af84e6b58b</id>
-   <content type="html">&lt;p&gt;最近在网上逛的时候发现一款MT7621的路由，由于OPENWRT的TRUNK版官方支持该路由，所以就买了一个回来，型号是ZBT-WG3526,16MB ROM，512MB RAM，MT7603EN的2.4GHz芯片，据说此芯片驱动有不少问题，目前还在解决中，MT7612EN的5GHz芯片，驱动据说非常稳定，支持ac，另外还有一个sata口和mini pcie，可以接一个笔记本硬盘，测试了一下，可以塞进去，不过要想办法固定。&lt;br /&gt;
-出厂系统直接不能用，而且只能识别128MB内存，简直坑爹。。。所以到手就用sysupgrade刷了trunk版本的OP官方系统。。。由于trunk版本是musl的c库，很多软件需要重新编译才能使用，例如chinadns，迅雷xware直接不能用。。。等15.05.2出个glibc的版本才可以。。。&lt;br /&gt;
-&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
- &lt;img src=&quot;https://jibenfa.github.io/uploads/2017/02/QQ20170211165927.png&quot; width=&quot;1000&quot; height=&quot;618&quot; alt=&quot;AltText&quot; /&gt;
- &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;下面是几个路由性能对比，这个cpu单核性能约是MT7620的2倍，双核性能约是MT7620的4倍，但是还是不如linksys wrt1900ac，MT7621 880Mhz双核性能都只有Marvell MV78230-B0 1.2GHZ的一半左右，价格嘛，mt7620基本是100块，mt7621路由320块,1900ac要999块&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
- &lt;img src=&quot;https://jibenfa.github.io/uploads/2017/02/QQ20170211171416.png&quot; width=&quot;1000&quot; height=&quot;618&quot; alt=&quot;AltText&quot; /&gt;
- &lt;br /&gt;&lt;/p&gt;
 </content>
  </entry>
  

@@ -99,6 +99,84 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/07/05/e588a9e794a8openvpne8bf9ce7a88be8bf9ee59b9ee5aeb6e9878ce8b7afe794b1e599a8e4b88ae58685e5a496e7bd91e38082e38082e38082/" title="利用openvpn远程连回家里openwrt路由器上内/外网。。。" itemprop="url">利用openvpn远程连回家里openwrt路由器上内/外网。。。</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2015-07-05 19:03:31 +0000" itemprop="datePublished">  2015-07-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>最近考虑搞个双线或者精品网，但有时出门在外，无法享受，岂不浪费。于是考虑通过openvpn连回家里路由器来上网，还能访问家里的设备。。。家里的刚升了上行带宽，正好来试试。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/07/05/e588a9e794a8openvpne8bf9ce7a88be8bf9ee59b9ee5aeb6e9878ce8b7afe794b1e599a8e4b88ae58685e5a496e7bd91e38082e38082e38082/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+  
+    <div class="article-categories">
+      <span></span>
+      
+        
+        <a href="/categories/openwrt/">openwrt</a>
+      
+        
+        <a href="/categories/科学上网/">科学上网</a>
+      
+    </div>
+  
+
+  
+    <div class="article-tags">
+      <span></span>
+      
+        
+        <a href="/tags/openwrt/">openwrt</a>
+      
+        
+        <a href="/tags/科学上网/">科学上网</a>
+      
+    </div>
+  
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/openwrt/2015/06/24/wrt1900ac-e7bd91e58fa3e7bb93e69e84e59bbe/" title="Linksys WRT1900AC 路由器双线（Dual Wan）/多线（Multi Wan）设置教程" itemprop="url">Linksys WRT1900AC 路由器双线（Dual Wan）/多线（Multi Wan）设置教程</a>
   </h1>
   <p class="article-author">By
@@ -1495,82 +1573,6 @@ StrongSwan是一个完整的在Linux的 2.6和3.x内核下实现的的IPsec，�
 
 
 
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/linux/2015/02/15/debian-7-e4b88be794b5e5ad90e982aee4bbb6e7b3bbe7bb9fe79a84e690ade5bbba/" title="Debian 7 下电子邮件系统的搭建（apache2 + postfix + dovecot + rainloop + mysql）" itemprop="url">Debian 7 下电子邮件系统的搭建（apache2 + postfix + dovecot + rainloop + mysql）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
-		
-  <p class="article-time">
-    <time datetime="2015-02-15 00:30:17 +0000" itemprop="datePublished">  2015-02-15</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>这两天心血来潮，准备在Debian 7 下搭建一个电子邮件系统，然后就去学习了一下。<br />
-根据度娘定义：电子邮件系统由用户代理MUA（Mail User Agent）以及邮件传输代理MTA（Mail Transfer Agent）,MDA（Mail Delivery Agent）邮件投递代理组成。<br />
-Mail User Agent (MUA)：邮件使用者代理人，这是使用者用来写信、收信的程序。例如，我们常用的 Outlook Exporess、Thunderbird 等。它的作用在于提供使用者一个好用的收发信件接口，并将信传到自己的邮件服务器。这个一般不需要自己弄，我在安卓手机上用gmail客户端，win7电脑上用foxmail客户端，当然在手机和电脑上都可以使用浏览器，通过webmail访问邮箱，我使用的是rainloop，它是使用MUA方式在服务器上实现的webmail解决方案。<br />
-Mail Delivery Agent (MDA)：邮件递送代理人，负责将要给本地使用者的邮件分配到使用者的信箱中。在 UNIX 中，MDA 通常是 mail 这支程序。<br />
-Mail Transfer Agent (MTA)：邮件转送代理人，是一个负责转送信件的服务器。UNIX 中使用的 Sendmail、Postfix 就是 MTA 软件。它的作用在于收到 MTU 寄来的信后，根据信件地址，将信件转送到目的地。在目的地中，也有另一台 MTA 会负责接收信件。有时候信件并不会一次就从使用者的计算机传送到目的地的主机，而是会经由许多 MTA 转送到目的地的主机。这种 MTA 接收非自己的信件，并转送到别台 MTA 的动作就叫作「Relay」。<!--more--></p>
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/linux/2015/02/15/debian-7-e4b88be794b5e5ad90e982aee4bbb6e7b3bbe7bb9fe79a84e690ade5bbba/#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-  
-    <div class="article-categories">
-      <span></span>
-      
-        
-        <a href="/categories/linux/">linux</a>
-      
-    </div>
-  
-
-  
-    <div class="article-tags">
-      <span></span>
-      
-        
-        <a href="/tags/linux/">linux</a>
-      
-    </div>
-  
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
@@ -1618,7 +1620,7 @@ Mail Transfer Agent (MTA)：邮件转送代理人，是一个负责转送信件�
         
         <li>
           <a href="/categories/其他/" title="其他">
-            其他<sup>5</sup>
+            其他<sup>6</sup>
           </a>
         </li>
       
@@ -1682,7 +1684,7 @@ Mail Transfer Agent (MTA)：邮件转送代理人，是一个负责转送信件�
         
         <li>
           <a href="/tags/里程碑/" title="里程碑">
-            里程碑<sup>1</sup>
+            里程碑<sup>2</sup>
           </a>
         </li>
       
@@ -1773,6 +1775,15 @@ Mail Transfer Agent (MTA)：邮件转送代理人，是一个负责转送信件�
         <li>
           <a href="/tags/apk/" title="apk">
             apk<sup>1</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/cayman/" title="cayman">
+            cayman<sup>1</sup>
           </a>
         </li>
       
@@ -1920,7 +1931,7 @@ $(document).ready(function(){
 $(document).ready(function() {
   var tags = [
     
-    { "name": "里程碑", "path": "/tags/里程碑/", "length": 1 },
+    { "name": "里程碑", "path": "/tags/里程碑/", "length": 2 },
     
     { "name": "linux", "path": "/tags/linux/", "length": 9 },
     
@@ -1941,6 +1952,8 @@ $(document).ready(function() {
     { "name": "虚拟化", "path": "/tags/虚拟化/", "length": 2 },
     
     { "name": "apk", "path": "/tags/apk/", "length": 1 },
+    
+    { "name": "cayman", "path": "/tags/cayman/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));
