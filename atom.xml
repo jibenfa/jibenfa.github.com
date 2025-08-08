@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-08T07:37:47+00:00</updated>
+ <updated>2025-08-08T07:58:01+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -27,15 +27,15 @@
 &lt;p&gt;3.修复了页面布局中分类和标签的左右间距和上下对齐问题。&lt;/p&gt;
 
 &lt;p&gt;另外发现通过：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-lua&quot;&gt; 
+&lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt; 
 ```lua 
 {代码} 
 ```
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;比使用：&lt;/p&gt;
-&lt;div class=&quot;language-lua highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;language-lua&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;代码&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; 
-&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;pre&amp;gt;&amp;lt;code&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;language-lua&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; 
+{代码} 
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;对lua类的代码兼容性更好，不会出现jekyll解析时的错误转义，导致显示错误。&lt;/p&gt;
 </content>

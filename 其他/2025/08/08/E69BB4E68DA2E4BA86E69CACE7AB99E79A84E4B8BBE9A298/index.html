@@ -155,15 +155,15 @@ document.addEventListener("DOMContentLoaded", () => {
 <p>3.修复了页面布局中分类和标签的左右间距和上下对齐问题。</p>
 
 <p>另外发现通过：</p>
-<pre><code class="language-lua"> 
+<pre><code class="language-html"> 
 ```lua 
 {代码} 
 ```
 </code></pre>
 <p>比使用：</p>
-<div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span> <span class="n">class</span><span class="o">=</span><span class="s2">"language-lua"</span><span class="o">&gt;</span> 
-<span class="p">{</span><span class="err">代码</span><span class="p">}</span> 
-<span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;pre&gt;&lt;code</span> <span class="na">class=</span><span class="s">"language-lua"</span><span class="nt">&gt;</span> 
+{代码} 
+<span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
 </code></pre></div></div>
 <p>对lua类的代码兼容性更好，不会出现jekyll解析时的错误转义，导致显示错误。</p>
   
