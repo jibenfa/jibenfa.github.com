@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-08T07:58:01+00:00</updated>
+ <updated>2025-08-11T02:11:49+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -25,6 +25,8 @@
 &lt;p&gt;2.从原来内置的rouge代码高亮主题升级成了&lt;a href=&quot;https://github.com/highlightjs/highlight.js&quot;&gt;highlight.js&lt;/a&gt;代码高亮方案，支持切换主题和多语言。&lt;/p&gt;
 
 &lt;p&gt;3.修复了页面布局中分类和标签的左右间距和上下对齐问题。&lt;/p&gt;
+
+&lt;p&gt;4.增加了代码复制按钮。&lt;/p&gt;
 
 &lt;p&gt;另外发现通过：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-html&quot;&gt; 
