@@ -153,11 +153,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <p>具体配置如下：</p>
 
-<p>1）安装warp</p>
+<p>1.安装warp
+根据 https://pkg.cloudflareclient.com/ 网站上的安装指南安装warp，我的vps是ubuntu，安装步骤如下：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Add cloudflare gpg key</span>
+curl <span class="nt">-fsSL</span> https://pkg.cloudflareclient.com/pubkey.gpg | <span class="nb">sudo </span>gpg <span class="nt">--yes</span> <span class="nt">--dearmor</span> <span class="nt">--output</span> /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
 
-<p>2）设置warp</p>
 
-<p>3）配置v2ray服务端</p>
+<span class="c"># Add this repo to your apt repositories</span>
+<span class="nb">echo</span> <span class="s2">"deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> main"</span> | <span class="nb">sudo tee</span> /etc/apt/sources.list.d/cloudflare-client.list
+
+
+<span class="c"># Install</span>
+<span class="nb">sudo </span>apt-get update <span class="o">&amp;&amp;</span> <span class="nb">sudo </span>apt-get <span class="nb">install </span>cloudflare-warp
+
+<span class="c"># 启动 WARP 服务</span>
+<span class="nb">sudo </span>systemctl start warp-svc
+<span class="nb">sudo </span>systemctl <span class="nb">enable </span>warp-svc
+</code></pre></div></div>
+
+<p>2.设置warp
+1)注册warp</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>warp-cli registration new
+</code></pre></div></div>
+<p>2)设置warp为代理模式</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>warp-cli mode proxy
+</code></pre></div></div>
+<p>注意，这里如果直接运行：sudo warp-cli connect 的话会直接导致vps的ssh断连，因为所有出口都经过warp，且没有任何配置，这时候需要通过vps供应商的管理界面把warp断掉才行。</p>
+
+<p>3）启动warp</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>warp-cli connect
+</code></pre></div></div>
+
+<p>4）检测warp运行情况</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 测试 SOCKS5 代理是否能访问 Google</span>
+curl <span class="nt">--socks5</span> 127.0.0.1:40000 https://www.google.com <span class="nt">-v</span>
+
+<span class="c"># 或者测试 Cloudflare 是否通</span>
+curl <span class="nt">--socks5</span> 127.0.0.1:40000 https://www.cloudflare.com/cdn-cgi/trace
+</code></pre></div></div>
+<p>如果有返回结果就ok了。</p>
+
+<p>5）把warp-proxy注册为系统服务</p>
+
+<p>3.配置v2ray服务端</p>
+
+<p>参考：</p>
+
+<p>1.https://pkg.cloudflareclient.com/
+2.chatgpt</p>
   
 	</div>
 	<footer class="article-footer clearfix">

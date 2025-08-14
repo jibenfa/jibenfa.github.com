@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-14T02:43:22+00:00</updated>
+ <updated>2025-08-14T03:32:18+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -25,11 +25,54 @@
 
 &lt;p&gt;具体配置如下：&lt;/p&gt;
 
-&lt;p&gt;1）安装warp&lt;/p&gt;
+&lt;p&gt;1.安装warp
+根据 https://pkg.cloudflareclient.com/ 网站上的安装指南安装warp，我的vps是ubuntu，安装步骤如下：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Add cloudflare gpg key&lt;/span&gt;
+curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://pkg.cloudflareclient.com/pubkey.gpg | &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;gpg &lt;span class=&quot;nt&quot;&gt;--yes&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--dearmor&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--output&lt;/span&gt; /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
 
-&lt;p&gt;2）设置warp&lt;/p&gt;
 
-&lt;p&gt;3）配置v2ray服务端&lt;/p&gt;
+&lt;span class=&quot;c&quot;&gt;# Add this repo to your apt repositories&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;lsb_release &lt;span class=&quot;nt&quot;&gt;-cs&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; main&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;sudo tee&lt;/span&gt; /etc/apt/sources.list.d/cloudflare-client.list
+
+
+&lt;span class=&quot;c&quot;&gt;# Install&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get update &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;cloudflare-warp
+
+&lt;span class=&quot;c&quot;&gt;# 启动 WARP 服务&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start warp-svc
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;warp-svc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;2.设置warp
+1)注册warp&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;warp-cli registration new
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;2)设置warp为代理模式&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;warp-cli mode proxy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;注意，这里如果直接运行：sudo warp-cli connect 的话会直接导致vps的ssh断连，因为所有出口都经过warp，且没有任何配置，这时候需要通过vps供应商的管理界面把warp断掉才行。&lt;/p&gt;
+
+&lt;p&gt;3）启动warp&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;warp-cli connect
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;4）检测warp运行情况&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 测试 SOCKS5 代理是否能访问 Google&lt;/span&gt;
+curl &lt;span class=&quot;nt&quot;&gt;--socks5&lt;/span&gt; 127.0.0.1:40000 https://www.google.com &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 或者测试 Cloudflare 是否通&lt;/span&gt;
+curl &lt;span class=&quot;nt&quot;&gt;--socks5&lt;/span&gt; 127.0.0.1:40000 https://www.cloudflare.com/cdn-cgi/trace
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;如果有返回结果就ok了。&lt;/p&gt;
+
+&lt;p&gt;5）把warp-proxy注册为系统服务&lt;/p&gt;
+
+&lt;p&gt;3.配置v2ray服务端&lt;/p&gt;
+
+&lt;p&gt;参考：&lt;/p&gt;
+
+&lt;p&gt;1.https://pkg.cloudflareclient.com/
+2.chatgpt&lt;/p&gt;
 </content>
  </entry>
  
