@@ -4,13 +4,22 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-11T02:11:49+00:00</updated>
+ <updated>2025-08-14T02:34:18+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>使用warp隐藏vps的真实ip</title>
+   <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/14/E4BDBFE794A8warpE99A90E8978FvpsE79A84E79C9FE5AE9Eip/"/>
+   <updated>2025-08-14T00:12:13+00:00</updated>
+   <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/14/E4BDBFE794A8warpE99A90E8978FvpsE79A84E79C9FE5AE9Eip</id>
+   <content type="html">
+</content>
+ </entry>
  
  <entry>
    <title>更换了本站的主题</title>
@@ -3217,15 +3226,6 @@ THE ACTIVE CODE IS:
 1.http://lists.infradead.org/pipermail/lede-dev/2016-June/001145.html&lt;br /&gt;
 2.https://lists.openwrt.org/pipermail/openwrt-devel/2009-June/004411.html&lt;br /&gt;
 3.https://www.mail-archive.com/lede-dev@lists.infradead.org/msg05838.html&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Openwrt的密码api变化带来的影响</title>
-   <link href="https://jibenfa.github.io/openwrt/2017/02/13/openwrte79a84e5af86e7a081apie58f98e58c96e5b8a6e69da5e79a84e5bdb1e5938d/"/>
-   <updated>2017-02-13T20:54:41+00:00</updated>
-   <id>https://jibenfa.github.io/openwrt/2017/02/13/openwrte79a84e5af86e7a081apie58f98e58c96e5b8a6e69da5e79a84e5bdb1e5938d</id>
-   <content type="html">&lt;p&gt;从openwrt &lt;a href=&quot;https://dev.openwrt.org/changeset/46483&quot;&gt;r46483&lt;/a&gt; &lt;a href=&quot;https://dev.openwrt.org/browser/trunk/package/kernel/linux/modules/crypto.mk?rev=46820&quot;&gt;r46820&lt;/a&gt;版本开始，kmod-crypto-aes,kmod-crypto-arc4,kmod-crypto-core不再作为单独的软件包提供，而是在kernel中提供，目前测试下来，在mt7621的dd trunk版本中，wifi的wpa2的aes加密未受到影响，但是shadowsocks受到了影响，aes和rc4-md5相关算法均会报cipher not found 的错误导致不能使用。只能使用chacha20或者salsa20的算法，后者是基于libsodium包的，实测未受到影响。&lt;/p&gt;
 </content>
  </entry>
  
