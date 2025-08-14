@@ -301,7 +301,11 @@ curl <span class="nt">--socks5</span> 127.0.0.1:40000 https://www.cloudflare.com
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
-<p>然后重启v2ray服务即可，客户端不用做任何改动。</p>
+<p>最后重启v2ray服务即可，客户端不用做任何改动。</p>
+
+<p>这个配置文件的含义是，除了Netflix和YouTube网站、本机、还有几个dns的ip走直连外，其他流量都经过warp。当然也可以根据需求使用其他配置。</p>
+
+<p>免费版 Warp 在高并发/大流量下会出现限速，一般稳定在 10~50Mbps 左右，而且网络延迟也会增加一些，所以只要网站不限制vps ip访问（或者没有强隐私需求），没有必要通过Warp。</p>
 
 <p>参考：</p>
 

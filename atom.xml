@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-14T03:54:39+00:00</updated>
+ <updated>2025-08-14T04:01:33+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -173,7 +173,11 @@ curl &lt;span class=&quot;nt&quot;&gt;--socks5&lt;/span&gt; 127.0.0.1:40000 http
   &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;然后重启v2ray服务即可，客户端不用做任何改动。&lt;/p&gt;
+&lt;p&gt;最后重启v2ray服务即可，客户端不用做任何改动。&lt;/p&gt;
+
+&lt;p&gt;这个配置文件的含义是，除了Netflix和YouTube网站、本机、还有几个dns的ip走直连外，其他流量都经过warp。当然也可以根据需求使用其他配置。&lt;/p&gt;
+
+&lt;p&gt;免费版 Warp 在高并发/大流量下会出现限速，一般稳定在 10~50Mbps 左右，而且网络延迟也会增加一些，所以只要网站不限制vps ip访问（或者没有强隐私需求），没有必要通过Warp。&lt;/p&gt;
 
 &lt;p&gt;参考：&lt;/p&gt;
 
