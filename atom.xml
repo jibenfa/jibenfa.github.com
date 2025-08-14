@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-14T04:13:27+00:00</updated>
+ <updated>2025-08-14T04:17:40+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -53,7 +53,7 @@ curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://pkg.cloudflarec
 &lt;p&gt;2)设置warp为代理模式&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;warp-cli mode proxy
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;注意，这里如果直接运行：sudo warp-cli connect 的话会直接导致vps的ssh断连，因为所有出口都经过warp，且没有任何配置，这时候需要通过vps供应商的管理界面把warp断掉才行。&lt;/p&gt;
+&lt;p&gt;注意，如果跳过这步，直接运行：sudo warp-cli connect 的话会直接导致vps的ssh断连，因为所有出口都经过warp，且没有任何配置，这时候需要通过vps供应商的管理界面把warp断掉才行。&lt;/p&gt;
 
 &lt;p&gt;3）启动warp&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;warp-cli connect

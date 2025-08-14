@@ -181,7 +181,7 @@ curl <span class="nt">-fsSL</span> https://pkg.cloudflareclient.com/pubkey.gpg |
 <p>2)设置warp为代理模式</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>warp-cli mode proxy
 </code></pre></div></div>
-<p>注意，这里如果直接运行：sudo warp-cli connect 的话会直接导致vps的ssh断连，因为所有出口都经过warp，且没有任何配置，这时候需要通过vps供应商的管理界面把warp断掉才行。</p>
+<p>注意，如果跳过这步，直接运行：sudo warp-cli connect 的话会直接导致vps的ssh断连，因为所有出口都经过warp，且没有任何配置，这时候需要通过vps供应商的管理界面把warp断掉才行。</p>
 
 <p>3）启动warp</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>warp-cli connect
