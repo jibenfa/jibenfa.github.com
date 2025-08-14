@@ -199,8 +199,9 @@ curl <span class="nt">--socks5</span> 127.0.0.1:40000 https://www.cloudflare.com
 </code></pre></div></div>
 <p>如果有返回结果就ok了。</p>
 
-<p>5）把warp-proxy注册为系统服务
-a.创建 systemd 服务文件</p>
+<p>5）把warp-proxy注册为系统服务</p>
+
+<p>a.创建 systemd 服务文件</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vi /etc/systemd/system/warp-proxy.service
 </code></pre></div></div>
 <p>b.编辑warp-proxy.service</p>

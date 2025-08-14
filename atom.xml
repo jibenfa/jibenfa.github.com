@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-14T03:53:24+00:00</updated>
+ <updated>2025-08-14T03:54:39+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -71,8 +71,9 @@ curl &lt;span class=&quot;nt&quot;&gt;--socks5&lt;/span&gt; 127.0.0.1:40000 http
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;如果有返回结果就ok了。&lt;/p&gt;
 
-&lt;p&gt;5）把warp-proxy注册为系统服务
-a.创建 systemd 服务文件&lt;/p&gt;
+&lt;p&gt;5）把warp-proxy注册为系统服务&lt;/p&gt;
+
+&lt;p&gt;a.创建 systemd 服务文件&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vi /etc/systemd/system/warp-proxy.service
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;b.编辑warp-proxy.service&lt;/p&gt;
