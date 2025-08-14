@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-14T04:01:33+00:00</updated>
+ <updated>2025-08-14T04:12:57+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -177,12 +177,13 @@ curl &lt;span class=&quot;nt&quot;&gt;--socks5&lt;/span&gt; 127.0.0.1:40000 http
 
 &lt;p&gt;这个配置文件的含义是，除了Netflix和YouTube网站、本机、还有几个dns的ip走直连外，其他流量都经过warp。当然也可以根据需求使用其他配置。&lt;/p&gt;
 
-&lt;p&gt;免费版 Warp 在高并发/大流量下会出现限速，一般稳定在 10~50Mbps 左右，而且网络延迟也会增加一些，所以只要网站不限制vps ip访问（或者没有强隐私需求），没有必要通过Warp。&lt;/p&gt;
+&lt;p&gt;免费版 Warp 在高并发/大流量下会出现限速，一般稳定在 10~50Mbps 左右，而且网络延迟也会增加一些，所以只要网站不限制vps ip访问（或者没有强隐私需求，有的网站会抓取访问的ip作别的用途），没有必要通过Warp。&lt;/p&gt;
 
 &lt;p&gt;参考：&lt;/p&gt;
 
-&lt;p&gt;1.https://pkg.cloudflareclient.com/
-2.chatgpt&lt;/p&gt;
+&lt;p&gt;1.https://pkg.cloudflareclient.com/&lt;/p&gt;
+
+&lt;p&gt;2.chatgpt&lt;/p&gt;
 </content>
  </entry>
  
