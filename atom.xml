@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-14T04:12:57+00:00</updated>
+ <updated>2025-08-14T04:13:27+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -21,7 +21,7 @@
 
 &lt;p&gt;简单来说访问网络的数据路径变更为：&lt;/p&gt;
 
-&lt;p&gt;境内v2ray客户端 → Cloudflare CDN server → 境外VPS → Cloudflare WARP SOCKS5 server→ reddit等网站&lt;/p&gt;
+&lt;p&gt;境内v2ray客户端 → Cloudflare CDN 集群 → 境外VPS → Cloudflare WARP 集群→ reddit等网站&lt;/p&gt;
 
 &lt;p&gt;这样vps出口ip就变成了Cloudflare池子里面的ip了，实际测试可以访问reddit等网站。不得不说Cloudflare真是赛博大善人！&lt;/p&gt;
 
