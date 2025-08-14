@@ -155,8 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <p>具体配置如下：</p>
 
-<p>1.安装warp
-根据 https://pkg.cloudflareclient.com/ 网站上的安装指南安装warp，我的vps是ubuntu，安装步骤如下：</p>
+<p>1.安装warp</p>
+
+<p>根据 https://pkg.cloudflareclient.com/ 网站上的安装指南安装warp，我的vps是ubuntu，安装步骤如下：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Add cloudflare gpg key</span>
 curl <span class="nt">-fsSL</span> https://pkg.cloudflareclient.com/pubkey.gpg | <span class="nb">sudo </span>gpg <span class="nt">--yes</span> <span class="nt">--dearmor</span> <span class="nt">--output</span> /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
 

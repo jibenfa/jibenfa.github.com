@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-14T04:17:40+00:00</updated>
+ <updated>2025-08-14T04:22:26+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -27,8 +27,9 @@
 
 &lt;p&gt;具体配置如下：&lt;/p&gt;
 
-&lt;p&gt;1.安装warp
-根据 https://pkg.cloudflareclient.com/ 网站上的安装指南安装warp，我的vps是ubuntu，安装步骤如下：&lt;/p&gt;
+&lt;p&gt;1.安装warp&lt;/p&gt;
+
+&lt;p&gt;根据 https://pkg.cloudflareclient.com/ 网站上的安装指南安装warp，我的vps是ubuntu，安装步骤如下：&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Add cloudflare gpg key&lt;/span&gt;
 curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://pkg.cloudflareclient.com/pubkey.gpg | &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;gpg &lt;span class=&quot;nt&quot;&gt;--yes&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--dearmor&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--output&lt;/span&gt; /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
 
