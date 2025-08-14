@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-14T02:34:18+00:00</updated>
+ <updated>2025-08-14T02:41:14+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -17,7 +17,19 @@
    <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/14/E4BDBFE794A8warpE99A90E8978FvpsE79A84E79C9FE5AE9Eip/"/>
    <updated>2025-08-14T00:12:13+00:00</updated>
    <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/14/E4BDBFE794A8warpE99A90E8978FvpsE79A84E79C9FE5AE9Eip</id>
-   <content type="html">
+   <content type="html">&lt;p&gt;最近发现一些境外的图层网站还有例如reddit等网站屏蔽了很多vps的ip地址，导致即使通过vps代理也无法访问这些网站。研究了一下，发现运行v2ray的vps使用warp可以隐藏vps的真实ip。具体网络路径是：&lt;/p&gt;
+
+&lt;p&gt;境内客户端 → Cloudflare CDN → VPS → Cloudflare WARP SOCKS5&lt;/p&gt;
+
+&lt;p&gt;这样出口ip就变成了Cloudflare池子里面的ip了，实际测试可以访问reddit等网站。&lt;/p&gt;
+
+&lt;p&gt;具体配置如下：&lt;/p&gt;
+
+&lt;p&gt;1）安装warp&lt;/p&gt;
+
+&lt;p&gt;2）设置warp&lt;/p&gt;
+
+&lt;p&gt;3）配置v2ray服务端&lt;/p&gt;
 </content>
  </entry>
  
