@@ -538,7 +538,7 @@
       {
         "title": "使用warp隐藏vps的真实ip",
         "date": "2025 年 08 月",
-        "excerpt": "最近发现一些境外的图层网站还有例如reddit等网站屏蔽了很多vps的ip地址，导致即使通过vps代理也无法访问这些网站。研究了一下，发现运行v2ray的vps使用warp可以隐藏vps的真实ip。具体网络路径是：\n",
+        "excerpt": "最近发现一些境外的图层网站还有例如reddit等网站屏蔽了很多vps的ip地址，导致即使通过vps代理也无法访问这些网站。研究了一下，发现运行v2ray的vps使用warp可以隐藏vps的真实ip。\n",
         
         "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/14/E4BDBFE794A8warpE99A90E8978FvpsE79A84E79C9FE5AE9Eip/"
       },
