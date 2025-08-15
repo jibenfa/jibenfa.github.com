@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-14T04:22:26+00:00</updated>
+ <updated>2025-08-15T08:01:47+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -603,11 +603,6 @@ start_chinadns 5361 180.76.76.76 5360
        &lt;span class=&quot;s2&quot;&gt;&quot;settings&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
          &lt;span class=&quot;s2&quot;&gt;&quot;network&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;tcp,udp&quot;&lt;/span&gt;,
          &lt;span class=&quot;s2&quot;&gt;&quot;followRedirect&quot;&lt;/span&gt;: &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt; 
-       &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
-       &lt;span class=&quot;s2&quot;&gt;&quot;streamSettings&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;s2&quot;&gt;&quot;sockopt&quot;&lt;/span&gt;: &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;s2&quot;&gt;&quot;tproxy&quot;&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&quot;redirect&quot;&lt;/span&gt; 
-           &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;,
     &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
