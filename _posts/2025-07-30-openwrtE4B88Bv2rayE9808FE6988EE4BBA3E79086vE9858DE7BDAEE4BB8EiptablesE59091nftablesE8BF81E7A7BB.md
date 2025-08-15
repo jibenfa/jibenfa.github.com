@@ -370,11 +370,6 @@ start_chinadns 5361 180.76.76.76 5360
        "settings": {
          "network": "tcp,udp",
          "followRedirect": true 
-       },
-       "streamSettings": {
-            "sockopt": {
-            "tproxy": "redirect" 
-           }
        }
     },
     {
