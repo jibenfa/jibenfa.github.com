@@ -127,6 +127,86 @@ document.addEventListener("DOMContentLoaded", () => {
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/linux/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/02/22/debian-7e4b88be690ade5bbbae7baafipsec-xauth-pskikev1ikev2-e5908ce697b6e59091e4b88be585bce5aeb9l2tp-vpn/" title="Debian 7 下搭建纯IPSEC XAUTH PSK/IKEv1/IKEv2 同时向下兼容L2TP VPN" itemprop="url">Debian 7 下搭建纯IPSEC XAUTH PSK/IKEv1/IKEv2 同时向下兼容L2TP VPN</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-22 22:58:59 +0000" itemprop="datePublished">  2015-02-22</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>由于debian上最终版本的openswan对iOS系统自带的VPN兼容性不好，另外openswan已经被strongswan所替代且debian也宣布不再支持它，加之openswan不支持IKEv2这种高级货，因此打算用strongswan 5.2.2搭一个ipsec服务，搞一个纯IPSEC的VPN，本来想彻底抛弃L2TP的，无奈现有的openwrt/ddwrt路由器均不支持IKEv2（只有少数企业级的路由器例如思科和华为的才支持IKEv2），所以还是保留一下l2tp。<br />
+先说说StrongSwan和IKEv2的优点吧：<br />
+StrongSwan是一个完整的在Linux的 2.6和3.x内核下实现的的IPsec，支持x509等证书和智能卡认证。StrongSwan支持IKEv1并完全实现了IKEv2协议。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/linux/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/02/22/debian-7e4b88be690ade5bbbae7baafipsec-xauth-pskikev1ikev2-e5908ce697b6e59091e4b88be585bce5aeb9l2tp-vpn/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+  
+    <div class="article-categories">
+      <span></span>
+      
+        
+        <a href="/categories/linux/">linux</a>
+      
+        
+        <a href="/categories/科学上网/">科学上网</a>
+      
+    </div>
+  
+
+  
+    <div class="article-tags">
+      <span></span>
+      
+        
+        <a href="/tags/linux/">linux</a>
+      
+        
+        <a href="/tags/科学上网/">科学上网</a>
+      
+    </div>
+  
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/linux/2015/02/16/debian7-apache2e4b88be4b8bae5ad90e7ab99e590afe794a8httpsefbc8ce4bf9de68c81e4b8bbe7ab99http/" title="Debian 7 Apache2下为子站启用HTTPS，保持主站HTTP" itemprop="url">Debian 7 Apache2下为子站启用HTTPS，保持主站HTTP</a>
   </h1>
   <p class="article-author">By
@@ -724,7 +804,7 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         
         <li>
           <a href="/categories/科学上网/" title="科学上网">
-            科学上网<sup>16</sup>
+            科学上网<sup>17</sup>
           </a>
         </li>
       
@@ -806,7 +886,7 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         
         <li>
           <a href="/tags/openwrt/" title="openwrt">
-            openwrt<sup>45</sup>
+            openwrt<sup>46</sup>
           </a>
         </li>
       
@@ -896,7 +976,16 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         
         <li>
           <a href="/tags/v2ray/" title="v2ray">
-            v2ray<sup>1</sup>
+            v2ray<sup>2</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/chinadns-ng/" title="chinadns-ng">
+            chinadns-ng<sup>1</sup>
           </a>
         </li>
       
@@ -1054,7 +1143,7 @@ $(document).ready(function() {
     
     { "name": "插件", "path": "/tags/插件/", "length": 1 },
     
-    { "name": "openwrt", "path": "/tags/openwrt/", "length": 45 },
+    { "name": "openwrt", "path": "/tags/openwrt/", "length": 46 },
     
     { "name": "Microsoft", "path": "/tags/microsoft/", "length": 1 },
     
@@ -1074,7 +1163,9 @@ $(document).ready(function() {
     
     { "name": "cloudflare", "path": "/tags/cloudflare/", "length": 1 },
     
-    { "name": "v2ray", "path": "/tags/v2ray/", "length": 1 },
+    { "name": "v2ray", "path": "/tags/v2ray/", "length": 2 },
+    
+    { "name": "chinadns-ng", "path": "/tags/chinadns-ng/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));

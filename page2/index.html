@@ -127,6 +127,80 @@ document.addEventListener("DOMContentLoaded", () => {
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/openwrt/2017/02/18/e4bdbfe794a8uclibc-toolchaine7bc96e8af91ledee7b3bbe7bb9fefbc8ce98082e9858de8bf85e99bb7xwaree8bf9ce7a88be4b88be8bdbd/" title="使用uClibc Toolchain编译LEDE系统，适配迅雷xware远程下载" itemprop="url">使用uClibc Toolchain编译LEDE系统，适配迅雷xware远程下载</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-18 21:44:38 +0000" itemprop="datePublished">  2017-02-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>最近买了MT7621路由，还带sata口，就想适配一个系统，由于：<br />
+1.Openwrt官方trunk里面kmod-mt76驱动居然还停留在2016年6月，实测2.4G比较弱，所以不予考虑了，再看LEDE的snapshot，更新到2017年2月了，当然要选择LEDE了。<br />
+2.LEDE目前全面切换到了MUSL库，导致迅雷xware mipsel的32位uclibc版本直接不能用了，为了适配，所以必须编译一个基于uClibc库的系统，但是LEDE/OPENWRT的toolchain默认菜单里面都只有musl和glibc了，uclibc被标记为了broken。。。。所以必须自行研究。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/openwrt/2017/02/18/e4bdbfe794a8uclibc-toolchaine7bc96e8af91ledee7b3bbe7bb9fefbc8ce98082e9858de8bf85e99bb7xwaree8bf9ce7a88be4b88be8bdbd/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+  
+    <div class="article-categories">
+      <span></span>
+      
+        
+        <a href="/categories/openwrt/">openwrt</a>
+      
+    </div>
+  
+
+  
+    <div class="article-tags">
+      <span></span>
+      
+        
+        <a href="/tags/openwrt/">openwrt</a>
+      
+    </div>
+  
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/openwrt/2017/02/13/openwrte79a84e5af86e7a081apie58f98e58c96e5b8a6e69da5e79a84e5bdb1e5938d/" title="Openwrt的密码api变化带来的影响" itemprop="url">Openwrt的密码api变化带来的影响</a>
   </h1>
   <p class="article-author">By
@@ -1523,78 +1597,6 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
 
 
 
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/openwrt/2015/07/21/openwrt-x86-32e4bd8de5ae98e696b9e78988e69cace79c9fe698afe59d91e788b9efbc8ce5b185e784b6e5b091kmod-e1000ee8bf99e4b8aae58c85e5aeb3e79a84e68891/" title="Openwrt X86 32位官方版本真是坑爹，居然少kmod-e1000e这个包,害的我只有自己编译了。。。。" itemprop="url">Openwrt X86 32位官方版本真是坑爹，居然少kmod-e1000e这个包,害的我只有自己编译了。。。。</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-21 23:00:52 +0000" itemprop="datePublished">  2015-07-21</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Openwrt X86 32位官方版本真是坑爹，居然少kmod-e1000e这个包,启动总是卡在 protocol family 24，后来发现原来板载网卡没认出来，害的我只有自己编译了。。。。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/openwrt/2015/07/21/openwrt-x86-32e4bd8de5ae98e696b9e78988e69cace79c9fe698afe59d91e788b9efbc8ce5b185e784b6e5b091kmod-e1000ee8bf99e4b8aae58c85e5aeb3e79a84e68891/#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-  
-    <div class="article-categories">
-      <span></span>
-      
-        
-        <a href="/categories/openwrt/">openwrt</a>
-      
-    </div>
-  
-
-  
-    <div class="article-tags">
-      <span></span>
-      
-        
-        <a href="/tags/openwrt/">openwrt</a>
-      
-    </div>
-  
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
@@ -1669,7 +1671,7 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
         
         <li>
           <a href="/categories/科学上网/" title="科学上网">
-            科学上网<sup>16</sup>
+            科学上网<sup>17</sup>
           </a>
         </li>
       
@@ -1751,7 +1753,7 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
         
         <li>
           <a href="/tags/openwrt/" title="openwrt">
-            openwrt<sup>45</sup>
+            openwrt<sup>46</sup>
           </a>
         </li>
       
@@ -1841,7 +1843,16 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
         
         <li>
           <a href="/tags/v2ray/" title="v2ray">
-            v2ray<sup>1</sup>
+            v2ray<sup>2</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/chinadns-ng/" title="chinadns-ng">
+            chinadns-ng<sup>1</sup>
           </a>
         </li>
       
@@ -1999,7 +2010,7 @@ $(document).ready(function() {
     
     { "name": "插件", "path": "/tags/插件/", "length": 1 },
     
-    { "name": "openwrt", "path": "/tags/openwrt/", "length": 45 },
+    { "name": "openwrt", "path": "/tags/openwrt/", "length": 46 },
     
     { "name": "Microsoft", "path": "/tags/microsoft/", "length": 1 },
     
@@ -2019,7 +2030,9 @@ $(document).ready(function() {
     
     { "name": "cloudflare", "path": "/tags/cloudflare/", "length": 1 },
     
-    { "name": "v2ray", "path": "/tags/v2ray/", "length": 1 },
+    { "name": "v2ray", "path": "/tags/v2ray/", "length": 2 },
+    
+    { "name": "chinadns-ng", "path": "/tags/chinadns-ng/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));

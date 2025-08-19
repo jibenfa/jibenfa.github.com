@@ -4,13 +4,22 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-15T08:01:47+00:00</updated>
+ <updated>2025-08-19T08:25:22+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>在openwrt下使用chinadns-ng搭配v2ray实现透明代理</title>
+   <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/19/E59CA8openwrtE4B88BE4BDBFE794A8chinadns-ngE690ADE9858Dv2rayE5AE9EE78EB0E9808FE6988EE4BBA3E79086/"/>
+   <updated>2025-08-19T00:12:13+00:00</updated>
+   <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/19/E59CA8openwrtE4B88BE4BDBFE794A8chinadns-ngE690ADE9858Dv2rayE5AE9EE78EB0E9808FE6988EE4BBA3E79086</id>
+   <content type="html">
+</content>
+ </entry>
  
  <entry>
    <title>使用warp隐藏vps的真实ip</title>
@@ -3253,141 +3262,6 @@ iptables &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;A FORWARD &lt;span class=
 
 &lt;p&gt;参考资料：&lt;br /&gt;
 1.http://blog.ltns.info/linux/connect_two_home_networks_using_openvpn_and_openwrt/&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>使用uClibc Toolchain编译LEDE系统，适配迅雷xware远程下载</title>
-   <link href="https://jibenfa.github.io/openwrt/2017/02/18/e4bdbfe794a8uclibc-toolchaine7bc96e8af91ledee7b3bbe7bb9fefbc8ce98082e9858de8bf85e99bb7xwaree8bf9ce7a88be4b88be8bdbd/"/>
-   <updated>2017-02-18T21:44:38+00:00</updated>
-   <id>https://jibenfa.github.io/openwrt/2017/02/18/e4bdbfe794a8uclibc-toolchaine7bc96e8af91ledee7b3bbe7bb9fefbc8ce98082e9858de8bf85e99bb7xwaree8bf9ce7a88be4b88be8bdbd</id>
-   <content type="html">&lt;p&gt;最近买了MT7621路由，还带sata口，就想适配一个系统，由于：&lt;br /&gt;
-1.Openwrt官方trunk里面kmod-mt76驱动居然还停留在2016年6月，实测2.4G比较弱，所以不予考虑了，再看LEDE的snapshot，更新到2017年2月了，当然要选择LEDE了。&lt;br /&gt;
-2.LEDE目前全面切换到了MUSL库，导致迅雷xware mipsel的32位uclibc版本直接不能用了，为了适配，所以必须编译一个基于uClibc库的系统，但是LEDE/OPENWRT的toolchain默认菜单里面都只有musl和glibc了，uclibc被标记为了broken。。。。所以必须自行研究。&lt;/p&gt;
-
-&lt;p&gt;折腾了大约1周，终于搞定了，步骤如下：&lt;br /&gt;
-&lt;strong&gt;1.下载LEDE源码，这个很简单：&lt;/strong&gt;&lt;br /&gt;
-&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://git.lede-project.org/source.git
-&lt;span class=&quot;nb&quot;&gt;cd source&lt;/span&gt;
-./scripts/feeds update &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
-./scripts/feeds &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;2.修改Toolchain，以便使用uClibc：&lt;/strong&gt;&lt;br /&gt;
-(1).修改/toolchain/Config.in&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/toolchain/&lt;/span&gt;Config&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;+++&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/toolchain/&lt;/span&gt;Config&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;
- 
- 	config LIBC_USE_UCLIBC
- 		select USE_UCLIBC
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;		bool &lt;span class=&quot;s2&quot;&gt;&quot;Use uClibc&quot;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;		bool &lt;span class=&quot;s2&quot;&gt;&quot;Use uClibc-ng&quot;&lt;/span&gt;
- 		depends &lt;span class=&quot;k&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!(&lt;/span&gt;aarch64 &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; aarch64_be&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;		depends &lt;span class=&quot;k&quot;&gt;on&lt;/span&gt; BROKEN &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!(&lt;/span&gt;arm &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; armeb &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; i386 &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; x86_64 &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; mips &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; mipsel &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; mips64 &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; mips64el &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; powerpc&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;(2).修改/toolchain/uClibc/Makefile&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/toolchain/&lt;/span&gt;uClibc/Makefile
-&lt;span class=&quot;p&quot;&gt;+++&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/toolchain/&lt;/span&gt;uClibc/Makefile
-
- &lt;span class=&quot;nb&quot;&gt;define&lt;/span&gt; Host/SetToolchainInfo
- 	$&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;SED&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;s,^\(LIBC_TYPE\)=.*,\1=$(PKG_NAME),&apos;&lt;/span&gt; $&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;TOOLCHAIN_DIR&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;/info&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mk&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;	$&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;SED&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;s,^\(LIBC_URL\)=.*,\1=http://www.uclibc.org/,&apos;&lt;/span&gt; $&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;TOOLCHAIN_DIR&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;/info&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mk&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt;	$&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;SED&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;s,^\(LIBC_URL\)=.*,\1=http://www.uclibc-ng.org/,&apos;&lt;/span&gt; $&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;TOOLCHAIN_DIR&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;/info&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mk&lt;/span&gt;
- 	$&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;SED&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;s,^\(LIBC_VERSION\)=.*,\1=$(PKG_VERSION),&apos;&lt;/span&gt; $&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;TOOLCHAIN_DIR&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;/info&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mk&lt;/span&gt;
- 	$&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;SED&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;s,^\(LIBC_SO_VERSION\)=.*,\1=$(LIBC_SO_VERSION),&apos;&lt;/span&gt; $&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;TOOLCHAIN_DIR&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;/info&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mk&lt;/span&gt;
- endef
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;(3).修改toolchain/uClibc/headers/Makefile&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;---&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/toolchain/&lt;/span&gt;uClibc&lt;span class=&quot;sr&quot;&gt;/headers/&lt;/span&gt;Makefile
-&lt;span class=&quot;p&quot;&gt;+++&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/toolchain/&lt;/span&gt;uClibc&lt;span class=&quot;sr&quot;&gt;/headers/&lt;/span&gt;Makefile
- 
- 		CC&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;$(TARGET_CC)&quot;&lt;/span&gt; \
- 		CPU_CFLAGS&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;$(TARGET_CFLAGS)&quot;&lt;/span&gt; \
- 		ARCH&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;$(CONFIG_ARCH)&quot;&lt;/span&gt; \
-&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;		pregen \
- 		install_headers
- endef
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;(4).如果要修改使用的uclibc-ng版本，需要修改toolchain/uClibc/common.mk里面的版本号和对应sha值，默认1.0.22不用修改了。&lt;/p&gt;
-
-&lt;p&gt;上述修改完成后，后续make menuconfig里面就可以选择到uclibc-ng了。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;3.编译系统&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;make menuconfig
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;通过advanced configuration options (for developers) &amp;gt; Toolchain Options &amp;gt; c library &amp;gt; uclibc-ng&lt;br /&gt;
-其他自己选择。保存.config后，输入：&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;nohup&lt;/span&gt; ./autocompile.sh &amp;amp;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;自动编译脚本autocompile.sh 内容为：&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;$1&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;-f&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ; then
-        IGNORE_ERRORS&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;make&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&amp;amp;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; tee errors&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt
-
-        rm build_*&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt
-fi
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; $&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;failed to build&quot;&lt;/span&gt; errors&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&apos;s/^.*ERROR:[[:space:]]*\([^[:space:]].*\) failed to build.*$/\1/&apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; ; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;$i&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; ; then
-                echo Compiling&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; $&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;make&lt;/span&gt; $&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}-&lt;/span&gt;compile V&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;99&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; build_$&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt;##*&lt;span class=&quot;sr&quot;&gt;/}.txt 2&amp;gt;&amp;amp;1 || echo ${i} : Build failed, see build_${i##*/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}.&lt;/span&gt;txt
-        fi
-done
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;等几个小时以后就可以在source/bin目录下找到编译完成的系统了，编译过程中另外一个ssh登录，通过errors.txt和nohup.out查看编译进度，原ssh窗口可以关闭。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;4.安装系统，配置调试迅雷&lt;/strong&gt;&lt;br /&gt;
-可以通过命令行sysupgrade -v xxxx.bin或者通过luci网页升级系统。&lt;br /&gt;
-升级完成后，由于uclibc-ng 1.0.18及之后版本将libpthread, libcrypt, libdl, libm, libutil等库合并到了libuClibc中，需要link一些libuClibc，以便迅雷xware可以使用：&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /lib
-&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; libuClibc-1.0.22.so libdl.so.0
-&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; libuClibc-1.0.22.so  libpthread.so.0 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;然后将Xware1.0.31_mipsel_32_uclibc上传路由，运行:&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@LEDE:~/xunlei# ./portal
-initing...
-try stopping xunlei service first...
-killall: ETMDaemon: no process killed
-killall: EmbedThunderManager: no process killed
-killall: vod_httpserver: no process killed
-setting xunlei runtime env...
-port: 9000 is usable.
-
-YOUR CONTROL PORT IS: 9000
-
-starting xunlei service...
-etm path: /root/xunlei
-execv: /root/xunlei/lib/ETMDaemon.
-
-getting xunlei service info...
-Connecting to 127.0.0.1:9000 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;127.0.0.1:9000&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-
-THE ACTIVE CODE IS: 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;常用软件例如chinadns可使用imagebuilder编译。&lt;/p&gt;
-
-&lt;p&gt;参考文档：&lt;br /&gt;
-1.http://lists.infradead.org/pipermail/lede-dev/2016-June/001145.html&lt;br /&gt;
-2.https://lists.openwrt.org/pipermail/openwrt-devel/2009-June/004411.html&lt;br /&gt;
-3.https://www.mail-archive.com/lede-dev@lists.infradead.org/msg05838.html&lt;/p&gt;
 </content>
  </entry>
  
