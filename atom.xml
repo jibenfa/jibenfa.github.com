@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-19T09:17:13+00:00</updated>
+ <updated>2025-08-19T09:21:44+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -17,7 +17,7 @@
    <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/19/E59CA8openwrtE4B88BE4BDBFE794A8chinadns-ngE690ADE9858Dv2rayE5AE9EE78EB0E9808FE6988EE4BBA3E79086/"/>
    <updated>2025-08-19T00:12:13+00:00</updated>
    <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/19/E59CA8openwrtE4B88BE4BDBFE794A8chinadns-ngE690ADE9858Dv2rayE5AE9EE78EB0E9808FE6988EE4BBA3E79086</id>
-   <content type="html">&lt;p&gt;之前在openwrt下一直用chinadns、dnsmasq搭配v2ray实现的透明代理上网，但是chinadns很久没维护了，另外看到了chinadns-ng，除了支持原版chinadns的功能外，还能实现dns over tcp/tls，按域名、ip分流，还支持dns缓存，最新版本已经可以全面替代dnsmasq，dns查询性能大幅度提升。所以研究了一下，部署以后通过cdn warp后的代理速度明显提升，访问github网页速度提升了约40-50%。&lt;/p&gt;
+   <content type="html">&lt;p&gt;之前在openwrt下一直用chinadns、dnsmasq搭配v2ray实现的透明代理上网，但是chinadns很久没维护了，另外看到了chinadns-ng，除了支持原版chinadns的功能外，还能实现dns over tcp/tls，按域名、ip分流，ipv6，还支持dns缓存，最新版本已经可以全面替代dnsmasq，dns查询性能大幅度提升。所以研究了一下，部署以后通过cdn warp后的代理速度明显提升，访问github网页速度提升了约40-50%。&lt;/p&gt;
 
 &lt;p&gt;下面是部署的步骤：&lt;/p&gt;
 
@@ -39,7 +39,7 @@ chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               chnroute6
 chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset            chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset          disable_chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset   &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
 chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset           chnroute_v2ray&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt        disable_chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset  &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt 是我创建的。&lt;/p&gt;
+&lt;p&gt;注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt disable_chnroute.nftset disable_chnroute6.nftset是我创建的。&lt;/p&gt;
 
 &lt;p&gt;其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：&lt;/p&gt;
 
@@ -58,6 +58,14 @@ vultur&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$data&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;{printf(&quot;%s\n&quot;, $0)}&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;chnroute_v2ray.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。&lt;/p&gt;
+
+&lt;p&gt;disable_chnroute.nftset内容为：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;delete &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global chnroute
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;disable_chnroute6.nftset内容为：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;delete &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global chnroute6
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;2.配置chinadns-ng&lt;/p&gt;
 
@@ -107,6 +115,47 @@ verdict&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cache &lt;span class=&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;2）注册为系统服务&lt;/p&gt;
+
+&lt;p&gt;创建并编辑/etc/init.d/chinadns-ng&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# init script for chinadns-ng&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;START&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;95
+&lt;span class=&quot;nv&quot;&gt;STOP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10
+
+&lt;span class=&quot;nv&quot;&gt;USE_PROCD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
+&lt;span class=&quot;nv&quot;&gt;PROG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/bin/chinadns-ng
+&lt;span class=&quot;nv&quot;&gt;CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/etc/config/chinadns-ng
+
+enable_nft_rules &lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/chnroute.nftset
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/chnroute6.nftset
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+disable_nft_rules &lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/disable_chnroute.nftset
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/disable_chnroute6.nftset
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-x&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PROG&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1
+    &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CONF&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 启动 chinadns-ng 服务&quot;&lt;/span&gt;
+    procd_open_instance
+    procd_set_param &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$PROG&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CONF&lt;/span&gt;
+    procd_set_param respawn
+    enable_nft_rules
+    procd_close_instance
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 停止 chinadns-ng 服务&quot;&lt;/span&gt;
+    disable_nft_rules
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;3.配置v2ray&lt;/p&gt;
 

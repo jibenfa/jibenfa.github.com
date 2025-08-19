@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		
 		</div>
 		
-		<p>之前在openwrt下一直用chinadns、dnsmasq搭配v2ray实现的透明代理上网，但是chinadns很久没维护了，另外看到了chinadns-ng，除了支持原版chinadns的功能外，还能实现dns over tcp/tls，按域名、ip分流，还支持dns缓存，最新版本已经可以全面替代dnsmasq，dns查询性能大幅度提升。所以研究了一下，部署以后通过cdn warp后的代理速度明显提升，访问github网页速度提升了约40-50%。</p>
+		<p>之前在openwrt下一直用chinadns、dnsmasq搭配v2ray实现的透明代理上网，但是chinadns很久没维护了，另外看到了chinadns-ng，除了支持原版chinadns的功能外，还能实现dns over tcp/tls，按域名、ip分流，ipv6，还支持dns缓存，最新版本已经可以全面替代dnsmasq，dns查询性能大幅度提升。所以研究了一下，部署以后通过cdn warp后的代理速度明显提升，访问github网页速度提升了约40-50%。</p>
 
 <p>下面是部署的步骤：</p>
 
@@ -167,7 +167,7 @@ chnlist<span class="p">.</span>txt               chnroute6<span class="p">.</spa
 chnroute<span class="p">.</span>ipset            chnroute6<span class="p">.</span>nftset          disable_chnroute<span class="p">.</span>nftset   <span class="k">update</span><span class="p">-</span>chnlist<span class="p">.</span><span class="k">sh</span>         <span class="k">update</span><span class="p">-</span>chnroute<span class="p">.</span><span class="k">sh</span>        <span class="k">update</span><span class="p">-</span>gfwlist<span class="p">.</span><span class="k">sh</span>
 chnroute<span class="p">.</span>nftset           chnroute_v2ray<span class="p">.</span>txt        disable_chnroute6<span class="p">.</span>nftset  <span class="k">update</span><span class="p">-</span>chnroute<span class="p">-</span>nft<span class="p">.</span><span class="k">sh</span>    <span class="k">update</span><span class="p">-</span>chnroute6<span class="p">-</span>nft<span class="p">.</span><span class="k">sh</span>
 </code></pre></div></div>
-<p>注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt 是我创建的。</p>
+<p>注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt disable_chnroute.nftset disable_chnroute6.nftset是我创建的。</p>
 
 <p>其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：</p>
 
@@ -186,6 +186,14 @@ vultur<span class="p">.</span><span class="k">com</span>
 <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$data</span><span class="s2">"</span> | <span class="nb">awk</span> <span class="s1">'{printf("%s\n", $0)}'</span> <span class="o">&gt;&gt;</span>chnroute_v2ray.txt
 </code></pre></div></div>
 <p>其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。</p>
+
+<p>disable_chnroute.nftset内容为：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>delete <span class="nb">set </span>inet global chnroute
+</code></pre></div></div>
+
+<p>disable_chnroute6.nftset内容为：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>delete <span class="nb">set </span>inet global chnroute6
+</code></pre></div></div>
 
 <p>2.配置chinadns-ng</p>
 
@@ -235,6 +243,47 @@ verdict<span class="p">-</span>cache <span class="m">4096</span>
 </code></pre></div></div>
 
 <p>2）注册为系统服务</p>
+
+<p>创建并编辑/etc/init.d/chinadns-ng</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh /etc/rc.common</span>
+<span class="c"># init script for chinadns-ng</span>
+
+<span class="nv">START</span><span class="o">=</span>95
+<span class="nv">STOP</span><span class="o">=</span>10
+
+<span class="nv">USE_PROCD</span><span class="o">=</span>1
+<span class="nv">PROG</span><span class="o">=</span>/usr/bin/chinadns-ng
+<span class="nv">CONF</span><span class="o">=</span>/etc/config/chinadns-ng
+
+enable_nft_rules <span class="o">(){</span>
+    nft <span class="nt">-f</span> /etc/chinadns-ng/chnroute.nftset
+    nft <span class="nt">-f</span> /etc/chinadns-ng/chnroute6.nftset
+<span class="o">}</span>
+
+disable_nft_rules <span class="o">(){</span>
+    nft <span class="nt">-f</span> /etc/chinadns-ng/disable_chnroute.nftset
+    nft <span class="nt">-f</span> /etc/chinadns-ng/disable_chnroute6.nftset
+<span class="o">}</span>
+
+start_service<span class="o">()</span> <span class="o">{</span>
+    <span class="o">[</span> <span class="nt">-x</span> <span class="s2">"</span><span class="nv">$PROG</span><span class="s2">"</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">exit </span>1
+    <span class="o">[</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$CONF</span><span class="s2">"</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">exit </span>1
+    <span class="nb">echo</span> <span class="s2">"[+] 启动 chinadns-ng 服务"</span>
+    procd_open_instance
+    procd_set_param <span class="nb">command</span> <span class="nv">$PROG</span> <span class="nt">-C</span> <span class="nv">$CONF</span>
+    procd_set_param respawn
+    enable_nft_rules
+    procd_close_instance
+<span class="o">}</span>
+
+stop_service<span class="o">()</span>  <span class="o">{</span>
+    <span class="nb">echo</span> <span class="s2">"[+] 停止 chinadns-ng 服务"</span>
+    disable_nft_rules
+<span class="o">}</span>
+
+
+
+</code></pre></div></div>
 
 <p>3.配置v2ray</p>
 

@@ -546,7 +546,7 @@
       {
         "title": "在openwrt下使用chinadns-ng搭配v2ray实现透明代理",
         "date": "2025 年 08 月",
-        "excerpt": "之前在openwrt下一直用chinadns、dnsmasq搭配v2ray实现的透明代理上网，但是chinadns很久没维护了，另外看到了chinadns-ng，除了支持原版chinadns的功能外，还能实现dns over tcp/tls，按域名、ip分流，还支持dns缓存，最新版本已经可以全面替代dnsmasq，dns查询性能大幅度提升。所以研究了一下，部署以后通过cdn warp后的代理速度明显提升，访问github网页速度提升了约40-50%。\n",
+        "excerpt": "之前在openwrt下一直用chinadns、dnsmasq搭配v2ray实现的透明代理上网，但是chinadns很久没维护了，另外看到了chinadns-ng，除了支持原版chinadns的功能外，还能实现dns over tcp/tls，按域名、ip分流，ipv6，还支持dns缓存，最新版本已经可以全面替代dnsmasq，dns查询性能大幅度提升。所以研究了一下，部署以后通过cdn warp后的代理速度明显提升，访问github网页速度提升了约40-50%。\n",
         
         "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/19/E59CA8openwrtE4B88BE4BDBFE794A8chinadns-ngE690ADE9858Dv2rayE5AE9EE78EB0E9808FE6988EE4BBA3E79086/"
       },
