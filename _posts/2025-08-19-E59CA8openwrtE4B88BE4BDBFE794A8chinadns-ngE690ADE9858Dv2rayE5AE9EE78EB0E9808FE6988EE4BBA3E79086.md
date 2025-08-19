@@ -544,3 +544,17 @@ service_triggers() {
 ```
 
 4.调整dnsmasq，chinadns等配置，避免冲突。
+
+```bash
+echo '' > /etc/dnsmasq.conf
+/etc/init.d/chinadns disable
+/etc/init.d/chinadns stop
+rm /root/start_multi_chinadns.sh
+```
+
+然后在luci界面中，把“网络->dhcp/dns->转发”菜单下的dns转发改成“127.0.0.1#5353”，保存后重启openwrt。
+
+
+参考：
+1.https://github.com/zfl9/chinadns-ng
+2.chatgpt
