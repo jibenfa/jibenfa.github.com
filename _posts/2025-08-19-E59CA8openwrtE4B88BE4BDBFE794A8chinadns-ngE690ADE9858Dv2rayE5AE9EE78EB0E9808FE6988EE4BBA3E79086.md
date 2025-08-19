@@ -12,7 +12,7 @@ tags:
 - v2ray
 ---
 
-之前在openwrt下一直用chinadns、dnsmasq搭配v2ray实现的透明代理上网，但是chinadns很久没维护了，另外看到了chinadns-ng，除了支持原版chinadns的功能外，还能实现dns over tcp/tls，按域名、ip分流，还支持dns缓存，最新版本已经可以全面替代dnsmasq，dns查询性能大幅度提升。所以研究了一下，部署以后通过cdn warp后的代理速度明显提升，访问github网页速度提升了约40-50%。
+之前在openwrt下一直用chinadns、dnsmasq搭配v2ray实现的透明代理上网，但是chinadns很久没维护了，另外看到了chinadns-ng，除了支持原版chinadns的功能外，还能实现dns over tcp/tls，按域名、ip分流，ipv6，还支持dns缓存，最新版本已经可以全面替代dnsmasq，dns查询性能大幅度提升。所以研究了一下，部署以后通过cdn warp后的代理速度明显提升，访问github网页速度提升了约40-50%。
 
 下面是部署的步骤：
 
@@ -37,7 +37,7 @@ chnlist.txt               chnroute6.ipset           direct.txt                gf
 chnroute.ipset            chnroute6.nftset          disable_chnroute.nftset   update-chnlist.sh         update-chnroute.sh        update-gfwlist.sh
 chnroute.nftset           chnroute_v2ray.txt        disable_chnroute6.nftset  update-chnroute-nft.sh    update-chnroute6-nft.sh
 ```
-注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt 是我创建的。
+注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt disable_chnroute.nftset disable_chnroute6.nftset是我创建的。
 
 其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：
 
@@ -58,6 +58,16 @@ data="$(curl -4fsSkL https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnr
 echo "$data" | awk '{printf("%s\n", $0)}' >>chnroute_v2ray.txt
 ```
 其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。
+
+disable_chnroute.nftset内容为：
+```bash
+delete set inet global chnroute
+```
+
+disable_chnroute6.nftset内容为：
+```bash
+delete set inet global chnroute6
+```
 
 2.配置chinadns-ng
 
@@ -110,6 +120,49 @@ verdict-cache 4096
 
 
 2）注册为系统服务
+
+创建并编辑/etc/init.d/chinadns-ng
+```bash
+#!/bin/sh /etc/rc.common
+# init script for chinadns-ng
+
+START=95
+STOP=10
+
+USE_PROCD=1
+PROG=/usr/bin/chinadns-ng
+CONF=/etc/config/chinadns-ng
+
+enable_nft_rules (){
+    nft -f /etc/chinadns-ng/chnroute.nftset
+    nft -f /etc/chinadns-ng/chnroute6.nftset
+}
+
+disable_nft_rules (){
+    nft -f /etc/chinadns-ng/disable_chnroute.nftset
+    nft -f /etc/chinadns-ng/disable_chnroute6.nftset
+}
+
+start_service() {
+    [ -x "$PROG" ] || exit 1
+    [ -f "$CONF" ] || exit 1
+    echo "[+] 启动 chinadns-ng 服务"
+    procd_open_instance
+    procd_set_param command $PROG -C $CONF
+    procd_set_param respawn
+    enable_nft_rules
+    procd_close_instance
+}
+
+stop_service()  {
+    echo "[+] 停止 chinadns-ng 服务"
+    disable_nft_rules
+}
+
+
+
+```
+
 
 3.配置v2ray
 
