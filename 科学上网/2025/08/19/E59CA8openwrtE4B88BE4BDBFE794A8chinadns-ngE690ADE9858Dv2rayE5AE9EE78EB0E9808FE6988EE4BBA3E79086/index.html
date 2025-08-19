@@ -171,7 +171,50 @@ chnroute<span class="p">.</span>nftset           chnroute_v2ray<span class="p">.
 
 <p>2.配置chinadns-ng</p>
 
-<p>1）修改配置文件</p>
+<p>1）创建并修改配置文件/etc/config/chinadns-ng:</p>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 监听地址和端口
+bind<span class="p">-</span>addr <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>
+bind<span class="p">-</span>port <span class="m">5353</span>
+
+# 国内 DNS
+china<span class="p">-</span>dns <span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span>
+china<span class="p">-</span>dns <span class="m">223</span><span class="p">.</span><span class="m">5</span><span class="p">.</span><span class="m">5</span><span class="p">.</span><span class="m">5</span>
+china<span class="p">-</span>dns <span class="m">119</span><span class="p">.</span><span class="m">29</span><span class="p">.</span><span class="m">29</span><span class="p">.</span><span class="m">29</span>
+
+# 国外 DNS
+trust<span class="p">-</span>dns <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>#<span class="m">5354</span>
+trust<span class="p">-</span>dns tcp<span class="p">:</span><span class="sr">//</span><span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>#<span class="m">5356</span>
+trust<span class="p">-</span>dns <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>#<span class="m">5358</span>
+trust<span class="p">-</span>dns <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>#<span class="m">5360</span>
+
+# 列表文件
+chnlist<span class="p">-</span><span class="k">file</span> <span class="sr">/etc/</span>chinadns<span class="p">-</span>ng/chnlist<span class="p">.</span>txt
+gfwlist<span class="p">-</span><span class="k">file</span> <span class="sr">/etc/</span>chinadns<span class="p">-</span>ng/gfwlist<span class="p">.</span>txt
+
+# group文件
+group direct
+group<span class="p">-</span>dnl <span class="sr">/etc/</span>chinadns<span class="p">-</span>ng/direct<span class="p">.</span>txt
+group<span class="p">-</span>upstream <span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span>
+
+# 收集 <span class="k">tag</span><span class="p">:</span>chn、<span class="k">tag</span><span class="p">:</span><span class="nb">gfw</span> 域名的 IP <span class="p">(</span>可选<span class="p">)</span>
+#<span class="nb">add</span><span class="p">-</span>tagchn<span class="p">-</span>ip chnip<span class="p">,</span>chnip6
+#<span class="nb">add</span><span class="p">-</span>taggfw<span class="p">-</span>ip gfwip<span class="p">,</span>gfwip6
+#<span class="nb">add</span><span class="p">-</span>tagchn<span class="p">-</span>ip inet@global@chnroute<span class="p">,</span>inet@global@chnroute6
+
+# 测试 <span class="k">tag</span><span class="p">:</span>none 域名的 IP <span class="p">(</span>针对国内上游<span class="p">)</span>
+#ipset<span class="p">-</span>name4 chnroute
+#ipset<span class="p">-</span>name6 chnroute6
+#ipset<span class="p">-</span>name4 inet@global@chnroute
+#ipset<span class="p">-</span>name6 inet@global@chnroute6
+
+# dns 缓存
+cache <span class="m">4096</span>
+cache<span class="p">-</span>stale <span class="m">86400</span>
+cache<span class="p">-</span>refresh <span class="m">20</span>
+
+# verdict 缓存 <span class="p">(</span>用于 <span class="k">tag</span><span class="p">:</span>none 域名<span class="p">)</span>
+verdict<span class="p">-</span>cache <span class="m">4096</span>
+</code></pre></div></div>
 
 <p>2）注册为系统服务</p>
 

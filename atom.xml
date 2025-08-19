@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-19T08:59:30+00:00</updated>
+ <updated>2025-08-19T09:04:11+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -43,7 +43,50 @@ chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset           chnroute_
 
 &lt;p&gt;2.配置chinadns-ng&lt;/p&gt;
 
-&lt;p&gt;1）修改配置文件&lt;/p&gt;
+&lt;p&gt;1）创建并修改配置文件/etc/config/chinadns-ng:&lt;/p&gt;
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 监听地址和端口
+bind&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;addr &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+bind&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;port &lt;span class=&quot;m&quot;&gt;5353&lt;/span&gt;
+
+# 国内 DNS
+china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;
+china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;223&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;
+china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;119&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;29&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;29&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;29&lt;/span&gt;
+
+# 国外 DNS
+trust&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;#&lt;span class=&quot;m&quot;&gt;5354&lt;/span&gt;
+trust&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns tcp&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;#&lt;span class=&quot;m&quot;&gt;5356&lt;/span&gt;
+trust&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;#&lt;span class=&quot;m&quot;&gt;5358&lt;/span&gt;
+trust&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;#&lt;span class=&quot;m&quot;&gt;5360&lt;/span&gt;
+
+# 列表文件
+chnlist&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/etc/&lt;/span&gt;chinadns&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ng/chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt
+gfwlist&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/etc/&lt;/span&gt;chinadns&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ng/gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt
+
+# group文件
+group direct
+group&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dnl &lt;span class=&quot;sr&quot;&gt;/etc/&lt;/span&gt;chinadns&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ng/direct&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt
+group&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;upstream &lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;
+
+# 收集 &lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;chn、&lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gfw&lt;/span&gt; 域名的 IP &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;可选&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+#&lt;span class=&quot;nb&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;tagchn&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ip chnip&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;chnip6
+#&lt;span class=&quot;nb&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;taggfw&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ip gfwip&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;gfwip6
+#&lt;span class=&quot;nb&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;tagchn&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ip inet@global@chnroute&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;inet@global@chnroute6
+
+# 测试 &lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;none 域名的 IP &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;针对国内上游&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+#ipset&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;name4 chnroute
+#ipset&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;name6 chnroute6
+#ipset&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;name4 inet@global@chnroute
+#ipset&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;name6 inet@global@chnroute6
+
+# dns 缓存
+cache &lt;span class=&quot;m&quot;&gt;4096&lt;/span&gt;
+cache&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;stale &lt;span class=&quot;m&quot;&gt;86400&lt;/span&gt;
+cache&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;refresh &lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;
+
+# verdict 缓存 &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;用于 &lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;none 域名&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+verdict&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cache &lt;span class=&quot;m&quot;&gt;4096&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;2）注册为系统服务&lt;/p&gt;
 
