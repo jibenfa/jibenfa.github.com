@@ -41,7 +41,52 @@ chnroute.nftset           chnroute_v2ray.txt        disable_chnroute6.nftset  up
 
 2.配置chinadns-ng
 
-1）修改配置文件
+1）创建并修改配置文件/etc/config/chinadns-ng:
+```vim
+# 监听地址和端口
+bind-addr 127.0.0.1
+bind-port 5353
+
+# 国内 DNS
+china-dns 114.114.114.114
+china-dns 223.5.5.5
+china-dns 119.29.29.29
+
+# 国外 DNS
+trust-dns 127.0.0.1#5354
+trust-dns tcp://127.0.0.1#5356
+trust-dns 127.0.0.1#5358
+trust-dns 127.0.0.1#5360
+
+# 列表文件
+chnlist-file /etc/chinadns-ng/chnlist.txt
+gfwlist-file /etc/chinadns-ng/gfwlist.txt
+
+# group文件
+group direct
+group-dnl /etc/chinadns-ng/direct.txt
+group-upstream 114.114.114.114
+
+# 收集 tag:chn、tag:gfw 域名的 IP (可选)
+#add-tagchn-ip chnip,chnip6
+#add-taggfw-ip gfwip,gfwip6
+#add-tagchn-ip inet@global@chnroute,inet@global@chnroute6
+
+# 测试 tag:none 域名的 IP (针对国内上游)
+#ipset-name4 chnroute
+#ipset-name6 chnroute6
+#ipset-name4 inet@global@chnroute
+#ipset-name6 inet@global@chnroute6
+
+# dns 缓存
+cache 4096
+cache-stale 86400
+cache-refresh 20
+
+# verdict 缓存 (用于 tag:none 域名)
+verdict-cache 4096
+```
+
 
 
 2）注册为系统服务
