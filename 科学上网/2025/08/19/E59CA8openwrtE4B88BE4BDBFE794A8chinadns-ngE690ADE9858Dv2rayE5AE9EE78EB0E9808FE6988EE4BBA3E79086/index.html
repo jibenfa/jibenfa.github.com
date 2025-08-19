@@ -167,7 +167,25 @@ chnlist<span class="p">.</span>txt               chnroute6<span class="p">.</spa
 chnroute<span class="p">.</span>ipset            chnroute6<span class="p">.</span>nftset          disable_chnroute<span class="p">.</span>nftset   <span class="k">update</span><span class="p">-</span>chnlist<span class="p">.</span><span class="k">sh</span>         <span class="k">update</span><span class="p">-</span>chnroute<span class="p">.</span><span class="k">sh</span>        <span class="k">update</span><span class="p">-</span>gfwlist<span class="p">.</span><span class="k">sh</span>
 chnroute<span class="p">.</span>nftset           chnroute_v2ray<span class="p">.</span>txt        disable_chnroute6<span class="p">.</span>nftset  <span class="k">update</span><span class="p">-</span>chnroute<span class="p">-</span>nft<span class="p">.</span><span class="k">sh</span>    <span class="k">update</span><span class="p">-</span>chnroute6<span class="p">-</span>nft<span class="p">.</span><span class="k">sh</span>
 </code></pre></div></div>
-<p>注意：direct.txt  update-chnroute-v2ray.sh chnroute_v2ray.txt 是我自己创建的后面会说。</p>
+<p>注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt 是我创建的。</p>
+
+<p>其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：</p>
+
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xxx<span class="p">.</span><span class="k">com</span>
+ntp<span class="p">.</span>org
+vultur<span class="p">.</span><span class="k">com</span>
+</code></pre></div></div>
+<p>update-chnroute-v2ray.sh主要用于拉取国内ip段，生成chnroute_v2ray.txt，内容为：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">set</span> <span class="nt">-o</span> errexit
+<span class="nb">set</span> <span class="nt">-o</span> pipefail
+
+<span class="c"># exit if curl failed</span>
+<span class="nv">data</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-4fsSkL</span> https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt<span class="si">)</span><span class="s2">"</span>
+
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$data</span><span class="s2">"</span> | <span class="nb">awk</span> <span class="s1">'{printf("%s\n", $0)}'</span> <span class="o">&gt;&gt;</span>chnroute_v2ray.txt
+</code></pre></div></div>
+<p>其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。</p>
 
 <p>2.配置chinadns-ng</p>
 

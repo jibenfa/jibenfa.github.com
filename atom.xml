@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-19T09:04:11+00:00</updated>
+ <updated>2025-08-19T09:17:13+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -39,7 +39,25 @@ chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               chnroute6
 chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset            chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset          disable_chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset   &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
 chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset           chnroute_v2ray&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt        disable_chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset  &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;注意：direct.txt  update-chnroute-v2ray.sh chnroute_v2ray.txt 是我自己创建的后面会说。&lt;/p&gt;
+&lt;p&gt;注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt 是我创建的。&lt;/p&gt;
+
+&lt;p&gt;其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：&lt;/p&gt;
+
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xxx&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;com&lt;/span&gt;
+ntp&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;org
+vultur&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;com&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;update-chnroute-v2ray.sh主要用于拉取国内ip段，生成chnroute_v2ray.txt，内容为：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; errexit
+&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; pipefail
+
+&lt;span class=&quot;c&quot;&gt;# exit if curl failed&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-4fsSkL&lt;/span&gt; https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$data&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;{printf(&quot;%s\n&quot;, $0)}&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;chnroute_v2ray.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。&lt;/p&gt;
 
 &lt;p&gt;2.配置chinadns-ng&lt;/p&gt;
 
