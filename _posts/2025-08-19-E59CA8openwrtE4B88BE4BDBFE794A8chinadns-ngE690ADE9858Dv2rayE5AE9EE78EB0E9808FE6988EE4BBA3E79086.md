@@ -37,7 +37,27 @@ chnlist.txt               chnroute6.ipset           direct.txt                gf
 chnroute.ipset            chnroute6.nftset          disable_chnroute.nftset   update-chnlist.sh         update-chnroute.sh        update-gfwlist.sh
 chnroute.nftset           chnroute_v2ray.txt        disable_chnroute6.nftset  update-chnroute-nft.sh    update-chnroute6-nft.sh
 ```
-注意：direct.txt  update-chnroute-v2ray.sh chnroute_v2ray.txt 是我自己创建的后面会说。
+注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt 是我创建的。
+
+其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：
+
+```vim
+xxx.com
+ntp.org
+vultur.com
+```
+update-chnroute-v2ray.sh主要用于拉取国内ip段，生成chnroute_v2ray.txt，内容为：
+```bash
+#!/bin/bash
+set -o errexit
+set -o pipefail
+
+# exit if curl failed
+data="$(curl -4fsSkL https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt)"
+
+echo "$data" | awk '{printf("%s\n", $0)}' >>chnroute_v2ray.txt
+```
+其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。
 
 2.配置chinadns-ng
 
