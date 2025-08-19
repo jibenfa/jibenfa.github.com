@@ -13,3 +13,19 @@ tags:
 ---
 
 之前在openwrt下一直用chinadns、dnsmasq搭配v2ray实现的透明代理上网，但是chinadns很久没维护了，另外看到了chinadns-ng，除了支持原版chinadns的功能外，还能实现dns over tcp/tls，按域名、ip分流，还支持dns缓存，最新版本已经可以全面替代dnsmasq，dns查询性能大幅度提升。所以研究了一下，部署以后通过cdn warp后的代理速度明显提升，访问github网页速度提升了约40-50%。
+
+下面是部署的步骤：
+
+1.下载chinadns-ng，
+
+2.配置chinadns-ng
+1）修改配置文件
+
+2）注册为系统服务
+
+3.配置v2ray
+1）修改配置文件
+
+2）调整启动脚本
+
+4.调整dnsmasq，chinadns等配置，避免冲突。
