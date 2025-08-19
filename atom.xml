@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-19T09:21:44+00:00</updated>
+ <updated>2025-08-19T09:27:21+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -41,13 +41,13 @@ chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset           chnroute_
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt disable_chnroute.nftset disable_chnroute6.nftset是我创建的。&lt;/p&gt;
 
-&lt;p&gt;其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：&lt;/p&gt;
+&lt;p&gt;a)其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：&lt;/p&gt;
 
 &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xxx&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;com&lt;/span&gt;
 ntp&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;org
 vultur&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;com&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;update-chnroute-v2ray.sh主要用于拉取国内ip段，生成chnroute_v2ray.txt，内容为：&lt;/p&gt;
+&lt;p&gt;b)update-chnroute-v2ray.sh主要用于拉取国内ip段，生成chnroute_v2ray.txt，内容为：&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; errexit
 &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; pipefail
@@ -59,11 +59,11 @@ vultur&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。&lt;/p&gt;
 
-&lt;p&gt;disable_chnroute.nftset内容为：&lt;/p&gt;
+&lt;p&gt;c)disable_chnroute.nftset内容为：&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;delete &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global chnroute
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;disable_chnroute6.nftset内容为：&lt;/p&gt;
+&lt;p&gt;d)disable_chnroute6.nftset内容为：&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;delete &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global chnroute6
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -156,12 +156,383 @@ stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quo
 
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;然后执行：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x /etc/init.d/chinadns-ng
+/etc/init.d/chinadns-ng &lt;span class=&quot;nb&quot;&gt;enable&lt;/span&gt;
+/etc/init.d/chinadns-ng start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;3.配置v2ray&lt;/p&gt;
 
-&lt;p&gt;1）修改配置文件&lt;/p&gt;
+&lt;p&gt;1）修改配置文件（/etc/config/v2ray.json）&lt;/p&gt;
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;&quot;inbounds&quot;: [&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;    
+      &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;dokodemo-door&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 1060,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;listen&quot;:&quot;0.0.0.0&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;sniffing&quot;: {&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;enabled&quot;: false,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;destOverride&quot;: [&quot;http&quot;, &quot;tls&quot;]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+       &lt;span class=&quot;c&quot;&gt;&quot;settings&quot;: {&lt;/span&gt;
+         &lt;span class=&quot;c&quot;&gt;&quot;network&quot;: &quot;tcp,udp&quot;,&lt;/span&gt;
+         &lt;span class=&quot;c&quot;&gt;&quot;followRedirect&quot;: true &lt;/span&gt;
+       &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;dokodemo-door&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;listen&quot;:&quot;0.0.0.0&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 5354,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;settings&quot;: {&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;address&quot;: &quot;8.8.8.8&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 53,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;network&quot;: &quot;udp&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;timeout&quot;: 0,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;followRedirect&quot;: false&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;dokodemo-door&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;listen&quot;:&quot;0.0.0.0&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 5356,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;settings&quot;: {&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;address&quot;: &quot;8.8.8.8&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 53,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;network&quot;: &quot;tcp&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;timeout&quot;: 0,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;followRedirect&quot;: false&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;dokodemo-door&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;listen&quot;:&quot;0.0.0.0&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 5358,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;settings&quot;: {&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;address&quot;: &quot;1.1.1.1&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 53,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;network&quot;: &quot;udp&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;timeout&quot;: 0,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;followRedirect&quot;: false&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;dokodemo-door&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;listen&quot;:&quot;0.0.0.0&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 5360,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;settings&quot;: {&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;address&quot;: &quot;8.8.4.4&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 53,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;network&quot;: &quot;udp&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;timeout&quot;: 0,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;followRedirect&quot;: false&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;&quot;outbounds&quot;: [&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;vless&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;tag&quot;: &quot;proxy&quot;,&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;settings&quot;: {&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;vnext&quot;: [&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;&quot;address&quot;: &quot;xxx.com&quot;,&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 443,&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;&quot;users&quot;: [&lt;/span&gt;
+              &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;&quot;id&quot;: &quot;***************uuid************************&quot;,&lt;/span&gt;
+                &lt;span class=&quot;c&quot;&gt;&quot;encryption&quot;: &quot;none&quot;&lt;/span&gt;
+              &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+          &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+      &lt;span class=&quot;c&quot;&gt;&quot;streamSettings&quot;: {&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;network&quot;: &quot;ws&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;security&quot;: &quot;tls&quot;,&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;wsSettings&quot;: {&lt;/span&gt;
+          &lt;span class=&quot;c&quot;&gt;&quot;path&quot;: &quot;/mypath&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;&quot;tcpSettings&quot;: {&lt;/span&gt;
+          &lt;span class=&quot;c&quot;&gt;&quot;allowInsecureCiphers&quot;: false&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;p&gt;2）调整启动脚本&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;2）调整启动脚本（/etc/init.d/v2ray）&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# This is free software, licensed under the GNU General Public License v3.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# See /LICENSE for more information.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# To use this file, install chinadns-ng,v2ray,coreutils-nohup,coreutils-paste first&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;START&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;90
+&lt;span class=&quot;nv&quot;&gt;USE_PROCD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
+
+&lt;span class=&quot;nv&quot;&gt;DOMAIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;xxx.com&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;DNS_SERVER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;114.114.114.114&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;BACKUP_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;119.29.29.29 223.5.5.5 180.76.76.76&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#CHINADNSNG和V2RAY端口范围:5353-5361，须搭配对应的chinadnsng和v2ray配置文件使用&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5353&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/chinadns-ng/&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CHNROUTE_FILE_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;chnroute_v2ray.txt&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CHNROUTE_FILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHNROUTE_FILE_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1060&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5361&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5357 5359 5361&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/v2ray&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/config/v2ray.json&quot;&lt;/span&gt;
+
+set_multi_domestic_dns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;current_dns_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;uci get dhcp.@dnsmasq[0].server 2&amp;gt;/dev/null&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DNS_SERVER&lt;/span&gt;:0:15&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_list&lt;/span&gt;:0:15&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置使用国内DNS服务器&quot;&lt;/span&gt;
+        uci &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; delete dhcp.@dnsmasq[0].server
+        uci add_list dhcp.@dnsmasq[0].server&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DNS_SERVER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;dns &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$BACKUP_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do
+            &lt;/span&gt;uci add_list dhcp.@dnsmasq[0].server&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dns&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;done
+        &lt;/span&gt;uci &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;dhcp.@dnsmasq[0].noresolv&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+        uci &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;dhcp.@dnsmasq[0].nohosts&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+        uci commit dhcp
+        &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 重启dnsmasq服务&quot;&lt;/span&gt;
+        /etc/init.d/dnsmasq restart 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1
+        &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[✓] 完成&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+set_multi_foreign_dns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;current_dns_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;uci get dhcp.@dnsmasq[0].server 2&amp;gt;/dev/null&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;:0:9&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_list&lt;/span&gt;:0:9&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置使用ChinaDNS DNS服务器&quot;&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;chinadnsng_listen_ipport&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+        uci &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; delete dhcp.@dnsmasq[0].server
+        uci add_list dhcp.@dnsmasq[0].server&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;chinadnsng_listen_ipport&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+        uci &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;dhcp.@dnsmasq[0].noresolv&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
+        uci &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;dhcp.@dnsmasq[0].nohosts&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
+        uci commit dhcp
+        &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 重启dnsmasq服务&quot;&lt;/span&gt;
+        /etc/init.d/dnsmasq restart 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1
+        &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[✓] 完成&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+create_bypasslist&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet v2ray 表和 bypasslist 集合&quot;&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 创建 table（如不存在）&lt;/span&gt;
+    nft list table inet v2ray 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-ne&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;nft add table inet v2ray
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 创建或清空 set：bypasslist&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray bypasslist 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;nft delete &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray bypasslist
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 创建 bypasslist 集合&lt;/span&gt;
+    nft add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray bypasslist &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;ipv4_addr&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt; flags interval&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 添加私有地址段&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 添加内网地址段到 bypasslist&quot;&lt;/span&gt;
+    nft add element inet v2ray bypasslist &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8, &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        169.254.0.0/16, 172.16.0.0/12, &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+        192.168.0.0/16, 224.0.0.0/4, 240.0.0.0/4 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 加载国内 IP（来自文件）&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CHNROUTE_FILE&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 加载国内 IP 到 bypasslist（来源: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CHNROUTE_FILE&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;）&quot;&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;BATCH_SIZE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1000
+        &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+        &lt;span class=&quot;nv&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
+
+        &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 正在批量导入到 nftables...&quot;&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; line&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$line&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;#\#&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$line&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;continue
+
+            &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$batch&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$line&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;,&quot;&lt;/span&gt;
+            &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$((&lt;/span&gt;count &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;))&lt;/span&gt;
+
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$count&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-ge&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$BATCH_SIZE&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+                &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+                nft add element inet v2ray bypasslist &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$batch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+                &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+                &lt;span class=&quot;nv&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;fi
+        done&lt;/span&gt; &amp;lt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CHNROUTE_FILE&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$batch&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+            &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+            nft add element inet v2ray bypasslist &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$batch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;fi
+
+        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[✓] 导入完成&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else
+        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[!] 未找到国内 IP 文件: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CHNROUTE_FILE&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 加载 VPS 域名解析结果&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 解析 &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$DOMAIN&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 并加入 bypasslist&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;ip &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;dig +short &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$DOMAIN&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; @&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$DNS_SERVER&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Eo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;([0-9]{1,3}\.){3}[0-9]{1,3}&apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do
+        &lt;/span&gt;nft add element inet v2ray bypasslist &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;    加入 &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;done
+    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;    bypasslist 已载入 &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray bypasslist | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-oE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(/[0-9]+)?&apos;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 条目&quot;&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 创建 nat 类型链&lt;/span&gt;
+    nft list chain inet v2ray prerouting 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; nft add chain inet v2ray prerouting &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;nat hook prerouting priority dstnat&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    nft list chain inet v2ray output 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; nft add chain inet v2ray output &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;nat hook output priority &lt;span class=&quot;nt&quot;&gt;-100&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+create_gfwlist&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet v2ray 表和 gfwlist 集合&quot;&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 创建 table（如不存在）&lt;/span&gt;
+    nft list table inet v2ray 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-ne&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;nft add table inet v2ray
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 创建或清空 set：gfwlist&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray gfwlist 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;nft delete &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray gfwlist
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 创建 gfwlist 集合&lt;/span&gt;
+    nft add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray gfwlist &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;ipv4_addr&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 注意dnsmasq配置文件中也有gfwlist的内容，所以需要重新加载,此操作不会直接增加gfwlist条目数，只会在解析网址时动态增加&lt;/span&gt;
+    /etc/init.d/dnsmasq reload 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;    gfwlist 已载入 &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray gfwlist | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-oE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(/[0-9]+)?&apos;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 条目&quot;&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 创建 nat 类型链&lt;/span&gt;
+    nft list chain inet v2ray prerouting 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; nft add chain inet v2ray prerouting &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;nat hook prerouting priority dstnat&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    nft list chain inet v2ray output 1&amp;gt;/dev/null 2&amp;gt;&amp;amp;1 &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; nft add chain inet v2ray output &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;nat hook output priority &lt;span class=&quot;nt&quot;&gt;-100&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+enable_bypasslist_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    nft add rule inet v2ray prerouting ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @bypasslist tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft add rule inet v2ray output ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @bypasslist tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft add rule inet v2ray prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft add rule inet v2ray prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft add rule inet v2ray output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft add rule inet v2ray output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+disable_bypasslist_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    nft delete rule inet v2ray prerouting ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @bypasslist tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft delete rule inet v2ray output ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @bypasslist tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft delete rule inet v2ray prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft delete rule inet v2ray prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft delete rule inet v2ray output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft delete rule inet v2ray output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+enable_gfwlist_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    nft add rule inet v2ray prerouting ip daddr @gfwlist tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft add rule inet v2ray output ip daddr @gfwlist tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft add rule inet v2ray prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft add rule inet v2ray prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft add rule inet v2ray output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft add rule inet v2ray output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+disable_gfwlist_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    nft delete rule inet v2ray prerouting ip daddr @gfwlist tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft delete rule inet v2ray output ip daddr @gfwlist tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft delete rule inet v2ray prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft delete rule inet v2ray prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft delete rule inet v2ray output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    nft delete rule inet v2ray output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;-&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_MAX_DNS_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+disable_v2ray_rules&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;nft list table inet v2ray 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;nft flush table inet v2ray
+    &lt;span class=&quot;k&quot;&gt;else
+        &lt;/span&gt;nft add table inet v2ray
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+    
+    &lt;span class=&quot;c&quot;&gt;# 创建或清空 set：gfwlist&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray gfwlist 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;nft delete &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray gfwlist
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# 创建 gfwlist 集合&lt;/span&gt;
+    nft add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet v2ray gfwlist &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;ipv4_addr&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    set_multi_domestic_dns
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ingfw&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /tmp/v2raymode.txt   
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 停止 v2ray 服务&quot;&lt;/span&gt;
+    disable_v2ray_rules
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+enable_v2ray_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;running_v2ray_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /tmp/v2raymode.txt 2&amp;gt;/dev/null | &lt;span class=&quot;nb&quot;&gt;tr&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;\r&apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;uci get advancedconfig.@rules[0].v2raymode 2&amp;gt;/dev/null&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;running_v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] v2ray模式未变化&quot;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else
+        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] v2ray模式已变化&quot;&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;模式中&quot;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;outlands&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+            &lt;/span&gt;disable_gfwlist_firewall_rules
+            create_bypasslist
+            enable_bypasslist_firewall_rules
+            set_multi_foreign_dns
+        
+        &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;gfwlist&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+            &lt;/span&gt;disable_bypasslist_firewall_rules
+            create_gfwlist
+            enable_gfwlist_firewall_rules
+            set_multi_foreign_dns
+        
+        &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ingfw&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+            &lt;/span&gt;disable_v2ray_rules
+        &lt;span class=&quot;k&quot;&gt;fi
+        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /tmp/v2raymode.txt
+    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 启动 v2ray 服务&quot;&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /var/log/v2ray
+    &lt;span class=&quot;nb&quot;&gt;ulimit&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 65535
+    procd_open_instance
+    procd_set_param &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$V2RAY_BIN&lt;/span&gt; run &lt;span class=&quot;nt&quot;&gt;-config&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$V2RAY_CONF&lt;/span&gt;
+    procd_set_param file &lt;span class=&quot;nv&quot;&gt;$V2RAY_CONF&lt;/span&gt;
+    procd_set_param respawn
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_set_param pidfile /var/run/v2ray.pid
+    enable_v2ray_rules
+    procd_close_instance
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    procd_add_reload_trigger &lt;span class=&quot;s2&quot;&gt;&quot;advancedconfig&quot;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;4.调整dnsmasq，chinadns等配置，避免冲突。&lt;/p&gt;
 </content>
