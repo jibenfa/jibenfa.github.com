@@ -309,7 +309,6 @@ DOMAIN="xxx.com"
 DNS_SERVER="114.114.114.114"
 BACKUP_DNS_SERVER="119.29.29.29 223.5.5.5 180.76.76.76"
 LOCAL_IP="127.0.0.1"
-#CHINADNSNG和V2RAY端口范围:5353-5361，须搭配对应的chinadnsng和v2ray配置文件使用
 CHINADNSNG_PORT="5353"
 CHINADNSNG_FILES_PATH="/etc/chinadns-ng/"
 CHNROUTE_NFT_NAME="chnroute.nftset"
@@ -317,8 +316,7 @@ CHNROUTE6_NFT_NAME="chnroute6.nftset"
 GFWIP_NFT_NAME="gfwip.nftset"
 GFWIP6_NFT_NAME="gfwip6.nftset"
 V2RAY_PORT="1060"
-V2RAY_MAX_DNS_PORT="5361"
-V2RAY_DNS_PORTS="5357 5359 5361"
+V2RAY_DNS_PORTS="5354 5356 5358 5360"
 V2RAY_BIN="/usr/bin/v2ray"
 V2RAY_CONF="/etc/config/v2ray.json"
 
@@ -357,15 +355,13 @@ set_multi_foreign_dns() {
 }
 
 create_chnroute() {   
-    echo "[*] 创建 inet global 表和 chnroute 集合" #注意这里的inet global chnroute要和chnroute.nftset中inet global chnroute的一致
+    #注意这里的inet global chnroute和inet global chnroute6要和chinadnsng配置文件中ipset-name4 inet@global@chnroute和ipset-name6 inet@global@chnroute6保持一致
+    echo "[*] 创建 inet global 表和 chnroute 和 chnroute6 集合" 
 
-    #add table inet global
-    #add set inet global chnroute { type ipv4_addr; flags interval; }
-    #add element inet global chnroute { 1.0.1.0/24 }
     nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE_NFT_NAME}
     nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE6_NFT_NAME}
 
-    # 添加私有地址段，注意这里的inet global chnroute要和chnroute.nftset中的一致
+    # 添加私有地址段
     echo "[+] 添加内网地址段到 chnroute"
     nft add element inet global chnroute  { \
         0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8, \
@@ -384,45 +380,55 @@ create_chnroute() {
 }
 
 create_gfwip(){
-    echo "[*] 创建 inet global 表和 gfwip 集合"
+    #注意这里的inet global gfwip，inet global gfwip6要和chinadnsng配置文件中的add-taggfw-ip的inet@global@gfwip,inet@global@gfwip6保持一致
+    echo "[*] 创建 inet global 表和 gfwip 和 gfwip6 集合"
 
     nft -f ${CHINADNSNG_FILES_PATH}${GFWIP_NFT_NAME}
     nft -f ${CHINADNSNG_FILES_PATH}${GFWIP6_NFT_NAME}
 
 }
 
+create_empty_chain(){
+    # 确保 table 存在
+    nft create table inet global 2>/dev/null
+
+    # 确保 prerouting/output 链存在
+    nft create chain inet global prerouting { type nat hook prerouting priority dstnat\; } 2>/dev/null
+    nft create chain inet global output { type nat hook output priority -100\; } 2>/dev/null
+
+    # 清空链
+    nft flush chain inet global prerouting
+    nft flush chain inet global output
+}
+
+create_chain_rules(){
+    create_empty_chain
+    nft add rule inet global prerouting ip daddr ${LOCAL_IP} tcp dport \{${CHINADNSNG_PORT},${V2RAY_DNS_PORTS// /,}\} return 2>/dev/null
+    nft add rule inet global prerouting ip daddr ${LOCAL_IP} udp dport \{${CHINADNSNG_PORT},${V2RAY_DNS_PORTS// /,}\} return 2>/dev/null
+    nft add rule inet global output ip daddr ${LOCAL_IP} tcp dport \{${CHINADNSNG_PORT},${V2RAY_DNS_PORTS// /,}\} return 2>/dev/null
+    nft add rule inet global output ip daddr ${LOCAL_IP} udp dport \{${CHINADNSNG_PORT},${V2RAY_DNS_PORTS// /,}\} return 2>/dev/null
+}
+
 enable_chnroute_firewall_rules(){
-    # 创建 nat 类型链
-    nft list chain inet global prerouting 1>/dev/null 2>&1 || nft add chain inet global prerouting { type nat hook prerouting priority dstnat\; }
-    nft list chain inet global output 1>/dev/null 2>&1 || nft add chain inet global output { type nat hook output priority -100\; }
-    nft flush chain inet global prerouting 2>/dev/null
-    nft flush chain inet global output 2>/dev/null
-    nft add rule inet global prerouting ip daddr ${LOCAL_IP} tcp dport ${CHINADNSNG_PORT}-${V2RAY_MAX_DNS_PORT} return 2>/dev/null
-    nft add rule inet global prerouting ip daddr ${LOCAL_IP} udp dport ${CHINADNSNG_PORT}-${V2RAY_MAX_DNS_PORT} return 2>/dev/null
-    nft add rule inet global output ip daddr ${LOCAL_IP} tcp dport ${CHINADNSNG_PORT}-${V2RAY_MAX_DNS_PORT} return 2>/dev/null
-    nft add rule inet global output ip daddr ${LOCAL_IP} udp dport ${CHINADNSNG_PORT}-${V2RAY_MAX_DNS_PORT} return 2>/dev/null
+    create_chain_rules
+    #注意这里的inet global chnroute和inet global chnroute6要和chinadnsng配置文件中ipset-name4 inet@global@chnroute和ipset-name6 inet@global@chnroute6保持一致
     nft add rule inet global prerouting ip daddr != @chnroute tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
     nft add rule inet global output ip daddr != @chnroute tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
+    nft add rule inet global prerouting ip6 daddr != @chnroute6 tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
+    nft add rule inet global output ip6 daddr != @chnroute6 tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
 }
 
 enable_gfwip_firewall_rules(){
-    # 创建 nat 类型链
-    nft list chain inet global prerouting 1>/dev/null 2>&1 || nft add chain inet global prerouting { type nat hook prerouting priority dstnat\; }
-    nft list chain inet global output 1>/dev/null 2>&1 || nft add chain inet global output { type nat hook output priority -100\; }
-    nft flush chain inet global prerouting 2>/dev/null
-    nft flush chain inet global output 2>/dev/null
-    nft add rule inet global prerouting ip daddr ${LOCAL_IP} tcp dport ${CHINADNSNG_PORT}-${V2RAY_MAX_DNS_PORT} return 2>/dev/null
-    nft add rule inet global prerouting ip daddr ${LOCAL_IP} udp dport ${CHINADNSNG_PORT}-${V2RAY_MAX_DNS_PORT} return 2>/dev/null
-    nft add rule inet global output ip daddr ${LOCAL_IP} tcp dport ${CHINADNSNG_PORT}-${V2RAY_MAX_DNS_PORT} return 2>/dev/null
-    nft add rule inet global output ip daddr ${LOCAL_IP} udp dport ${CHINADNSNG_PORT}-${V2RAY_MAX_DNS_PORT} return 2>/dev/null
+    create_chain_rules
+    #注意这里的inet global gfwip，inet global gfwip6要和chinadnsng配置文件中的add-taggfw-ip的inet@global@gfwip,inet@global@gfwip6保持一致
     nft add rule inet global prerouting ip daddr @gfwip tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
     nft add rule inet global output ip daddr @gfwip tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
-
+    nft add rule inet global prerouting ip6 daddr @gfwip6 tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
+    nft add rule inet global output ip6 daddr @gfwip6 tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
 }
 
 disable_v2ray_rules() {
-    nft flush chain inet global prerouting 2>/dev/null
-    nft flush chain inet global output 2>/dev/null
+    create_empty_chain
     set_multi_domestic_dns
     echo "ingfw" > /tmp/v2raymode.txt   
 }
@@ -441,20 +447,19 @@ enable_v2ray_rules(){
     else
         echo "[+] v2ray模式已变化"
         echo "[+] 设置${v2ray_mode}模式中"
+        disable_v2ray_rules
         if [ "${v2ray_mode}" = "outlands" ]; then
-            disable_v2ray_rules
             create_chnroute
             enable_chnroute_firewall_rules
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "gfwlist" ]; then
-            disable_v2ray_rules
             create_gfwip
             enable_gfwip_firewall_rules
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "ingfw" ]; then
-            disable_v2ray_rules
+            echo “[+] 启动墙内访问模式”
         fi
         echo "${v2ray_mode}" > /tmp/v2raymode.txt
     fi
@@ -478,7 +483,6 @@ start_service()  {
 service_triggers() {
     procd_add_reload_trigger "advancedconfig"
 }
-
 
 ```
 
