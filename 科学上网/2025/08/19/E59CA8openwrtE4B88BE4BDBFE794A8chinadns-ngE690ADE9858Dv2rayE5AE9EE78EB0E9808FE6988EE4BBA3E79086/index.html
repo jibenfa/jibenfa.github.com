@@ -182,7 +182,7 @@ vultur<span class="p">.</span><span class="k">com</span>
 
 <span class="c"># exit if curl failed</span>
 <span class="nv">data</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-4fsSkL</span> https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt<span class="si">)</span><span class="s2">"</span>
-
+<span class="nb">echo</span> <span class="s2">""</span> <span class="o">&gt;</span>chnroute_v2ray.txt
 <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$data</span><span class="s2">"</span> | <span class="nb">awk</span> <span class="s1">'{printf("%s\n", $0)}'</span> <span class="o">&gt;&gt;</span>chnroute_v2ray.txt
 </code></pre></div></div>
 <p>其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。</p>

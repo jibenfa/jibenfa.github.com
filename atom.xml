@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-19T09:32:16+00:00</updated>
+ <updated>2025-08-20T00:01:27+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -54,7 +54,7 @@ vultur&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;
 
 &lt;span class=&quot;c&quot;&gt;# exit if curl failed&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-4fsSkL&lt;/span&gt; https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;chnroute_v2ray.txt
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$data&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;{printf(&quot;%s\n&quot;, $0)}&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;chnroute_v2ray.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。&lt;/p&gt;
