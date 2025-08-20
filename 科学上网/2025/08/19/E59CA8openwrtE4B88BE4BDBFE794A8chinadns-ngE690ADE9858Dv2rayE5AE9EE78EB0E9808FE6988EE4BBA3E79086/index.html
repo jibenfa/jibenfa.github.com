@@ -215,8 +215,7 @@ add <span class="nb">set </span>inet global gfwip8 <span class="o">{</span> <spa
 <p>2.配置chinadns-ng</p>
 
 <p>1）创建并修改配置文件/etc/config/chinadns-ng:</p>
-<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-# 监听地址和端口
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 监听地址和端口
 bind<span class="p">-</span>addr <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>
 bind<span class="p">-</span>port <span class="m">5353</span>
 
@@ -241,10 +240,12 @@ group<span class="p">-</span>dnl <span class="sr">/etc/</span>chinadns<span clas
 group<span class="p">-</span>upstream <span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span>
 
 # 收集 <span class="k">tag</span><span class="p">:</span>chn、<span class="k">tag</span><span class="p">:</span><span class="nb">gfw</span> 域名的 IP <span class="p">(</span>可选<span class="p">)</span>
+# 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
 #<span class="nb">add</span><span class="p">-</span>tagchn<span class="p">-</span>ip inet@global@chnip<span class="p">,</span>inet@global@chnip6
 <span class="nb">add</span><span class="p">-</span>taggfw<span class="p">-</span>ip inet@global@gfwip<span class="p">,</span>inet@global@gfwip6
 
 # 测试 <span class="k">tag</span><span class="p">:</span>none 域名的 IP <span class="p">(</span>针对国内上游<span class="p">)</span>
+# 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
 ipset<span class="p">-</span>name4 inet@global@chnroute
 ipset<span class="p">-</span>name6 inet@global@chnroute6
 
@@ -263,13 +264,14 @@ verdict<span class="p">-</span>cache <span class="m">4096</span>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh /etc/rc.common</span>
 <span class="c"># init script for chinadns-ng</span>
 
-<span class="nv">START</span><span class="o">=</span>95
+<span class="nv">START</span><span class="o">=</span>85
 <span class="nv">STOP</span><span class="o">=</span>10
 
 <span class="nv">USE_PROCD</span><span class="o">=</span>1
 <span class="nv">PROG</span><span class="o">=</span>/usr/bin/chinadns-ng
 <span class="nv">CONF</span><span class="o">=</span>/etc/config/chinadns-ng
 
+<span class="c">#下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效</span>
 enable_nft_rules <span class="o">(){</span>
     nft <span class="nt">-f</span> /etc/chinadns-ng/chnroute.nftset
     nft <span class="nt">-f</span> /etc/chinadns-ng/chnroute6.nftset
@@ -415,7 +417,6 @@ stop_service<span class="o">()</span>  <span class="o">{</span>
 <span class="c">#</span>
 <span class="c"># To use this file, install chinadns-ng,v2ray,coreutils-nohup,coreutils-paste first</span>
 <span class="c">#</span>
-<span class="c">#!/bin/sh /etc/rc.common</span>
 
 <span class="nv">START</span><span class="o">=</span>90
 <span class="nv">USE_PROCD</span><span class="o">=</span>1
@@ -426,10 +427,20 @@ stop_service<span class="o">()</span>  <span class="o">{</span>
 <span class="nv">LOCAL_IP</span><span class="o">=</span><span class="s2">"127.0.0.1"</span>
 <span class="nv">CHINADNSNG_PORT</span><span class="o">=</span><span class="s2">"5353"</span>
 <span class="nv">CHINADNSNG_FILES_PATH</span><span class="o">=</span><span class="s2">"/etc/chinadns-ng/"</span>
+<span class="c"># 本配置文件中NFT默认参数为：</span>
+<span class="c"># family:inet</span>
+<span class="c"># table:global</span>
+<span class="c"># set:chnroute,chnroute6,gfwip,gfwip6</span>
+<span class="c"># 上述值需与chinadnsng配置文件中的一致，否则无法生效：</span>
+<span class="c"># add-taggfw-ip inet@global@gfwip,inet@global@gfwip6</span>
+<span class="c"># ipset-name4 inet@global@chnroute</span>
+<span class="c"># ipset-name6 inet@global@chnroute6</span>
+<span class="c"># 且下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效</span>
 <span class="nv">CHNROUTE_NFT_NAME</span><span class="o">=</span><span class="s2">"chnroute.nftset"</span>
 <span class="nv">CHNROUTE6_NFT_NAME</span><span class="o">=</span><span class="s2">"chnroute6.nftset"</span>
 <span class="nv">GFWIP_NFT_NAME</span><span class="o">=</span><span class="s2">"gfwip.nftset"</span>
 <span class="nv">GFWIP6_NFT_NAME</span><span class="o">=</span><span class="s2">"gfwip6.nftset"</span>
+
 <span class="nv">V2RAY_PORT</span><span class="o">=</span><span class="s2">"1060"</span>
 <span class="nv">V2RAY_DNS_PORTS</span><span class="o">=</span><span class="s2">"5354 5356 5358 5360"</span>
 <span class="nv">V2RAY_BIN</span><span class="o">=</span><span class="s2">"/usr/bin/v2ray"</span>
@@ -470,7 +481,6 @@ set_multi_foreign_dns<span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 
 create_chnroute<span class="o">()</span> <span class="o">{</span>   
-    <span class="c">#注意这里的inet global chnroute和inet global chnroute6要和chinadnsng配置文件中ipset-name4 inet@global@chnroute和ipset-name6 inet@global@chnroute6保持一致</span>
     <span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 chnroute 和 chnroute6 集合"</span> 
 
     nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE_NFT_NAME</span><span class="k">}</span>
@@ -495,7 +505,6 @@ create_chnroute<span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 
 create_gfwip<span class="o">(){</span>
-    <span class="c">#注意这里的inet global gfwip，inet global gfwip6要和chinadnsng配置文件中的add-taggfw-ip的inet@global@gfwip,inet@global@gfwip6保持一致</span>
     <span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 gfwip 和 gfwip6 集合"</span>
 
     nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">GFWIP_NFT_NAME</span><span class="k">}</span>
@@ -526,7 +535,6 @@ create_chain_rules<span class="o">(){</span>
 
 enable_chnroute_firewall_rules<span class="o">(){</span>
     create_chain_rules
-    <span class="c">#注意这里的inet global chnroute和inet global chnroute6要和chinadnsng配置文件中ipset-name4 inet@global@chnroute和ipset-name6 inet@global@chnroute6保持一致</span>
     nft add rule inet global prerouting ip daddr <span class="o">!=</span> @chnroute tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
     nft add rule inet global output ip daddr <span class="o">!=</span> @chnroute tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
     nft add rule inet global prerouting ip6 daddr <span class="o">!=</span> @chnroute6 tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
@@ -535,7 +543,6 @@ enable_chnroute_firewall_rules<span class="o">(){</span>
 
 enable_gfwip_firewall_rules<span class="o">(){</span>
     create_chain_rules
-    <span class="c">#注意这里的inet global gfwip，inet global gfwip6要和chinadnsng配置文件中的add-taggfw-ip的inet@global@gfwip,inet@global@gfwip6保持一致</span>
     nft add rule inet global prerouting ip daddr @gfwip tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
     nft add rule inet global output ip daddr @gfwip tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
     nft add rule inet global prerouting ip6 daddr @gfwip6 tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
@@ -598,7 +605,6 @@ start_service<span class="o">()</span>  <span class="o">{</span>
 service_triggers<span class="o">()</span> <span class="o">{</span>
     procd_add_reload_trigger <span class="s2">"advancedconfig"</span>
 <span class="o">}</span>
-
 </code></pre></div></div>
 
 <p>4.调整dnsmasq，chinadns等配置，避免冲突。</p>

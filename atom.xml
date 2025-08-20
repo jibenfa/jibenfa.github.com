@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-20T06:47:59+00:00</updated>
+ <updated>2025-08-20T09:17:36+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -87,8 +87,7 @@ add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global gfwip8 &lt;spa
 &lt;p&gt;2.配置chinadns-ng&lt;/p&gt;
 
 &lt;p&gt;1）创建并修改配置文件/etc/config/chinadns-ng:&lt;/p&gt;
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-# 监听地址和端口
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 监听地址和端口
 bind&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;addr &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
 bind&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;port &lt;span class=&quot;m&quot;&gt;5353&lt;/span&gt;
 
@@ -113,10 +112,12 @@ group&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dnl &lt;span class=&quot;sr&q
 group&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;upstream &lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;
 
 # 收集 &lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;chn、&lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gfw&lt;/span&gt; 域名的 IP &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;可选&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+# 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
 #&lt;span class=&quot;nb&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;tagchn&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ip inet@global@chnip&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;inet@global@chnip6
 &lt;span class=&quot;nb&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;taggfw&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ip inet@global@gfwip&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;inet@global@gfwip6
 
 # 测试 &lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;none 域名的 IP &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;针对国内上游&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+# 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
 ipset&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;name4 inet@global@chnroute
 ipset&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;name6 inet@global@chnroute6
 
@@ -135,13 +136,14 @@ verdict&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cache &lt;span class=&quot;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# init script for chinadns-ng&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;START&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;95
+&lt;span class=&quot;nv&quot;&gt;START&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;85
 &lt;span class=&quot;nv&quot;&gt;STOP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10
 
 &lt;span class=&quot;nv&quot;&gt;USE_PROCD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
 &lt;span class=&quot;nv&quot;&gt;PROG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/bin/chinadns-ng
 &lt;span class=&quot;nv&quot;&gt;CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/etc/config/chinadns-ng
 
+&lt;span class=&quot;c&quot;&gt;#下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效&lt;/span&gt;
 enable_nft_rules &lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
     nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/chnroute.nftset
     nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/chnroute6.nftset
@@ -287,7 +289,6 @@ stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quo
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# To use this file, install chinadns-ng,v2ray,coreutils-nohup,coreutils-paste first&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;START&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;90
 &lt;span class=&quot;nv&quot;&gt;USE_PROCD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
@@ -298,10 +299,20 @@ stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quo
 &lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5353&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/chinadns-ng/&quot;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 本配置文件中NFT默认参数为：&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# family:inet&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# table:global&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# set:chnroute,chnroute6,gfwip,gfwip6&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 上述值需与chinadnsng配置文件中的一致，否则无法生效：&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# add-taggfw-ip inet@global@gfwip,inet@global@gfwip6&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# ipset-name4 inet@global@chnroute&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# ipset-name6 inet@global@chnroute6&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# 且下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHNROUTE_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;chnroute.nftset&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHNROUTE6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;chnroute6.nftset&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;GFWIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gfwip.nftset&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;GFWIP6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gfwip6.nftset&quot;&lt;/span&gt;
+
 &lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1060&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5354 5356 5358 5360&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;V2RAY_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/v2ray&quot;&lt;/span&gt;
@@ -342,7 +353,6 @@ set_multi_foreign_dns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span cl
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 create_chnroute&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;   
-    &lt;span class=&quot;c&quot;&gt;#注意这里的inet global chnroute和inet global chnroute6要和chinadnsng配置文件中ipset-name4 inet@global@chnroute和ipset-name6 inet@global@chnroute6保持一致&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 chnroute 和 chnroute6 集合&quot;&lt;/span&gt; 
 
     nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHNROUTE_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
@@ -367,7 +377,6 @@ create_chnroute&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&q
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 create_gfwip&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#注意这里的inet global gfwip，inet global gfwip6要和chinadnsng配置文件中的add-taggfw-ip的inet@global@gfwip,inet@global@gfwip6保持一致&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 gfwip 和 gfwip6 集合&quot;&lt;/span&gt;
 
     nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GFWIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
@@ -398,7 +407,6 @@ create_chain_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
 
 enable_chnroute_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
     create_chain_rules
-    &lt;span class=&quot;c&quot;&gt;#注意这里的inet global chnroute和inet global chnroute6要和chinadnsng配置文件中ipset-name4 inet@global@chnroute和ipset-name6 inet@global@chnroute6保持一致&lt;/span&gt;
     nft add rule inet global prerouting ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     nft add rule inet global output ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     nft add rule inet global prerouting ip6 daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute6 tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
@@ -407,7 +415,6 @@ enable_chnroute_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
 
 enable_gfwip_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
     create_chain_rules
-    &lt;span class=&quot;c&quot;&gt;#注意这里的inet global gfwip，inet global gfwip6要和chinadnsng配置文件中的add-taggfw-ip的inet@global@gfwip,inet@global@gfwip6保持一致&lt;/span&gt;
     nft add rule inet global prerouting ip daddr @gfwip tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     nft add rule inet global output ip daddr @gfwip tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     nft add rule inet global prerouting ip6 daddr @gfwip6 tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
@@ -470,7 +477,6 @@ start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&qu
 service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     procd_add_reload_trigger &lt;span class=&quot;s2&quot;&gt;&quot;advancedconfig&quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;4.调整dnsmasq，chinadns等配置，避免冲突。&lt;/p&gt;
