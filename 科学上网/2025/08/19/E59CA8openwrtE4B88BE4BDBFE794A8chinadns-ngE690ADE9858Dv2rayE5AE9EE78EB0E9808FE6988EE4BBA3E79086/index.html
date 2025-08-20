@@ -163,11 +163,11 @@ document.addEventListener("DOMContentLoaded", () => {
 <p>2）从https://github.com/zfl9/chinadns-ng 中下载source，提取其中的res文件夹下的文件，拷贝到/etc/chinadns-ng文件夹下，没有的话就创建一个，主要有以下几个文件：</p>
 
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># <span class="k">ls</span> <span class="sr">/etc/</span>chinadns<span class="p">-</span>ng/
-chnlist<span class="p">.</span>txt               chnroute6<span class="p">.</span>ipset           direct<span class="p">.</span>txt                gfwlist<span class="p">.</span>txt               <span class="k">update</span><span class="p">-</span>chnroute<span class="p">-</span>v2ray<span class="p">.</span><span class="k">sh</span>  <span class="k">update</span><span class="p">-</span>chnroute6<span class="p">.</span><span class="k">sh</span>
-chnroute<span class="p">.</span>ipset            chnroute6<span class="p">.</span>nftset          disable_chnroute<span class="p">.</span>nftset   <span class="k">update</span><span class="p">-</span>chnlist<span class="p">.</span><span class="k">sh</span>         <span class="k">update</span><span class="p">-</span>chnroute<span class="p">.</span><span class="k">sh</span>        <span class="k">update</span><span class="p">-</span>gfwlist<span class="p">.</span><span class="k">sh</span>
-chnroute<span class="p">.</span>nftset           chnroute_v2ray<span class="p">.</span>txt        disable_chnroute6<span class="p">.</span>nftset  <span class="k">update</span><span class="p">-</span>chnroute<span class="p">-</span>nft<span class="p">.</span><span class="k">sh</span>    <span class="k">update</span><span class="p">-</span>chnroute6<span class="p">-</span>nft<span class="p">.</span><span class="k">sh</span>
+chnlist<span class="p">.</span>txt               chnroute6<span class="p">.</span>ipset           direct<span class="p">.</span>txt                disable_gfwip<span class="p">.</span>nftset      gfwip6<span class="p">.</span>nftset             <span class="k">update</span><span class="p">-</span>chnroute<span class="p">-</span>nft<span class="p">.</span><span class="k">sh</span>    <span class="k">update</span><span class="p">-</span>chnroute6<span class="p">-</span>nft<span class="p">.</span><span class="k">sh</span>
+chnroute<span class="p">.</span>ipset            chnroute6<span class="p">.</span>nftset          disable_chnroute<span class="p">.</span>nftset   disable_gfwip6<span class="p">.</span>nftset     gfwlist<span class="p">.</span>txt               <span class="k">update</span><span class="p">-</span>chnroute<span class="p">-</span>v2ray<span class="p">.</span><span class="k">sh</span>  <span class="k">update</span><span class="p">-</span>chnroute6<span class="p">.</span><span class="k">sh</span>
+chnroute<span class="p">.</span>nftset           chnroute_v2ray<span class="p">.</span>txt        disable_chnroute6<span class="p">.</span>nftset  gfwip<span class="p">.</span>nftset              <span class="k">update</span><span class="p">-</span>chnlist<span class="p">.</span><span class="k">sh</span>         <span class="k">update</span><span class="p">-</span>chnroute<span class="p">.</span><span class="k">sh</span>        <span class="k">update</span><span class="p">-</span>gfwlist<span class="p">.</span><span class="k">sh</span>
 </code></pre></div></div>
-<p>注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt disable_chnroute.nftset disable_chnroute6.nftset是我创建的。</p>
+<p>注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt,disable_chnroute.nftset,gfwip.nftset,gfwip6.nftset,,disable_chnroute.nftset,disable_chnroute6.nftset是我创建的。</p>
 
 <p>a)其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：</p>
 
@@ -188,17 +188,18 @@ vultur<span class="p">.</span><span class="k">com</span>
 <p>其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。</p>
 
 <p>c)disable_chnroute.nftset内容为：</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>delete <span class="nb">set </span>inet global chnroute
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush <span class="nb">set </span>inet global chnroute
 </code></pre></div></div>
 
 <p>d)disable_chnroute6.nftset内容为：</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>delete <span class="nb">set </span>inet global chnroute6
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush <span class="nb">set </span>inet global chnroute6
 </code></pre></div></div>
 
 <p>2.配置chinadns-ng</p>
 
 <p>1）创建并修改配置文件/etc/config/chinadns-ng:</p>
-<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 监听地址和端口
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+# 监听地址和端口
 bind<span class="p">-</span>addr <span class="m">127</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">1</span>
 bind<span class="p">-</span>port <span class="m">5353</span>
 
@@ -223,15 +224,12 @@ group<span class="p">-</span>dnl <span class="sr">/etc/</span>chinadns<span clas
 group<span class="p">-</span>upstream <span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span><span class="p">.</span><span class="m">114</span>
 
 # 收集 <span class="k">tag</span><span class="p">:</span>chn、<span class="k">tag</span><span class="p">:</span><span class="nb">gfw</span> 域名的 IP <span class="p">(</span>可选<span class="p">)</span>
-#<span class="nb">add</span><span class="p">-</span>tagchn<span class="p">-</span>ip chnip<span class="p">,</span>chnip6
-#<span class="nb">add</span><span class="p">-</span>taggfw<span class="p">-</span>ip gfwip<span class="p">,</span>gfwip6
-#<span class="nb">add</span><span class="p">-</span>tagchn<span class="p">-</span>ip inet@global@chnroute<span class="p">,</span>inet@global@chnroute6
+#<span class="nb">add</span><span class="p">-</span>tagchn<span class="p">-</span>ip inet@global@chnip<span class="p">,</span>inet@global@chnip6
+<span class="nb">add</span><span class="p">-</span>taggfw<span class="p">-</span>ip inet@global@gfwip<span class="p">,</span>inet@global@gfwip6
 
 # 测试 <span class="k">tag</span><span class="p">:</span>none 域名的 IP <span class="p">(</span>针对国内上游<span class="p">)</span>
-#ipset<span class="p">-</span>name4 chnroute
-#ipset<span class="p">-</span>name6 chnroute6
-#ipset<span class="p">-</span>name4 inet@global@chnroute
-#ipset<span class="p">-</span>name6 inet@global@chnroute6
+ipset<span class="p">-</span>name4 inet@global@chnroute
+ipset<span class="p">-</span>name6 inet@global@chnroute6
 
 # dns 缓存
 cache <span class="m">4096</span>
@@ -258,11 +256,15 @@ verdict<span class="p">-</span>cache <span class="m">4096</span>
 enable_nft_rules <span class="o">(){</span>
     nft <span class="nt">-f</span> /etc/chinadns-ng/chnroute.nftset
     nft <span class="nt">-f</span> /etc/chinadns-ng/chnroute6.nftset
+    nft <span class="nt">-f</span> /etc/chinadns-ng/gfwip.nftset
+    nft <span class="nt">-f</span> /etc/chinadns-ng/gfwip6.nftset
 <span class="o">}</span>
 
 disable_nft_rules <span class="o">(){</span>
     nft <span class="nt">-f</span> /etc/chinadns-ng/disable_chnroute.nftset
     nft <span class="nt">-f</span> /etc/chinadns-ng/disable_chnroute6.nftset
+    nft <span class="nt">-f</span> /etc/chinadns-ng/disable_gfwip.nftset
+    nft <span class="nt">-f</span> /etc/chinadns-ng/disable_gfwip6.nftset
 <span class="o">}</span>
 
 start_service<span class="o">()</span> <span class="o">{</span>
@@ -280,9 +282,6 @@ stop_service<span class="o">()</span>  <span class="o">{</span>
     <span class="nb">echo</span> <span class="s2">"[+] 停止 chinadns-ng 服务"</span>
     disable_nft_rules
 <span class="o">}</span>
-
-
-
 </code></pre></div></div>
 <p>然后执行：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x /etc/init.d/chinadns-ng
@@ -411,8 +410,10 @@ stop_service<span class="o">()</span>  <span class="o">{</span>
 <span class="c">#CHINADNSNG和V2RAY端口范围:5353-5361，须搭配对应的chinadnsng和v2ray配置文件使用</span>
 <span class="nv">CHINADNSNG_PORT</span><span class="o">=</span><span class="s2">"5353"</span>
 <span class="nv">CHINADNSNG_FILES_PATH</span><span class="o">=</span><span class="s2">"/etc/chinadns-ng/"</span>
-<span class="nv">CHNROUTE_FILE_NAME</span><span class="o">=</span><span class="s2">"chnroute_v2ray.txt"</span>
-<span class="nv">CHNROUTE_FILE</span><span class="o">=</span><span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE_FILE_NAME</span><span class="k">}</span>
+<span class="nv">CHNROUTE_NFT_NAME</span><span class="o">=</span><span class="s2">"chnroute.nftset"</span>
+<span class="nv">CHNROUTE6_NFT_NAME</span><span class="o">=</span><span class="s2">"chnroute6.nftset"</span>
+<span class="nv">GFWIP_NFT_NAME</span><span class="o">=</span><span class="s2">"gfwip.nftset"</span>
+<span class="nv">GFWIP6_NFT_NAME</span><span class="o">=</span><span class="s2">"gfwip6.nftset"</span>
 <span class="nv">V2RAY_PORT</span><span class="o">=</span><span class="s2">"1060"</span>
 <span class="nv">V2RAY_MAX_DNS_PORT</span><span class="o">=</span><span class="s2">"5361"</span>
 <span class="nv">V2RAY_DNS_PORTS</span><span class="o">=</span><span class="s2">"5357 5359 5361"</span>
@@ -440,7 +441,7 @@ set_multi_domestic_dns<span class="o">()</span> <span class="o">{</span>
 set_multi_foreign_dns<span class="o">()</span> <span class="o">{</span>
     <span class="nv">current_dns_list</span><span class="o">=</span><span class="sb">`</span>uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null<span class="sb">`</span>
     <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">LOCAL_IP</span>:0:9<span class="k">}</span> <span class="o">!=</span> x<span class="k">${</span><span class="nv">current_dns_list</span>:0:9<span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-        </span><span class="nb">echo</span> <span class="s2">"[+] 设置使用ChinaDNS DNS服务器"</span>
+        </span><span class="nb">echo</span> <span class="s2">"[+] 设置使用ChinaDNSNG DNS服务器"</span>
         <span class="nv">chinadnsng_listen_ipport</span><span class="o">=</span><span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span><span class="s2">"#"</span><span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>
         uci <span class="nt">-q</span> delete dhcp.@dnsmasq[0].server
         uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="k">${</span><span class="nv">chinadnsng_listen_ipport</span><span class="k">}</span>
@@ -453,157 +454,73 @@ set_multi_foreign_dns<span class="o">()</span> <span class="o">{</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
-create_bypasslist<span class="o">()</span> <span class="o">{</span>
-    <span class="nb">echo</span> <span class="s2">"[*] 创建 inet v2ray 表和 bypasslist 集合"</span>
+create_chnroute<span class="o">()</span> <span class="o">{</span>   
+    <span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 chnroute 集合"</span> <span class="c">#注意这里的inet global chnroute要和chnroute.nftset中inet global chnroute的一致</span>
 
-    <span class="c"># 创建 table（如不存在）</span>
-    nft list table inet v2ray 2&gt;/dev/null <span class="o">&gt;</span>/dev/null
-    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
-        </span>nft add table inet v2ray
-    <span class="k">fi</span>
+    <span class="c">#add table inet global</span>
+    <span class="c">#add set inet global chnroute { type ipv4_addr; flags interval; }</span>
+    <span class="c">#add element inet global chnroute { 1.0.1.0/24 }</span>
+    nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE_NFT_NAME</span><span class="k">}</span>
+    nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE6_NFT_NAME</span><span class="k">}</span>
 
-    <span class="c"># 创建或清空 set：bypasslist</span>
-    <span class="k">if </span>nft list <span class="nb">set </span>inet v2ray bypasslist 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
-        </span>nft delete <span class="nb">set </span>inet v2ray bypasslist
-    <span class="k">fi</span>
-
-    <span class="c"># 创建 bypasslist 集合</span>
-    nft add <span class="nb">set </span>inet v2ray bypasslist <span class="o">{</span> <span class="nb">type </span>ipv4_addr<span class="se">\;</span> flags interval<span class="se">\;</span><span class="o">}</span>
-
-    <span class="c"># 添加私有地址段</span>
-    <span class="nb">echo</span> <span class="s2">"[+] 添加内网地址段到 bypasslist"</span>
-    nft add element inet v2ray bypasslist <span class="o">{</span> <span class="se">\</span>
+    <span class="c"># 添加私有地址段，注意这里的inet global chnroute要和chnroute.nftset中的一致</span>
+    <span class="nb">echo</span> <span class="s2">"[+] 添加内网地址段到 chnroute"</span>
+    nft add element inet global chnroute  <span class="o">{</span> <span class="se">\</span>
         0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8, <span class="se">\</span>
         169.254.0.0/16, 172.16.0.0/12, <span class="se">\</span>
         192.168.0.0/16, 224.0.0.0/4, 240.0.0.0/4 <span class="se">\</span>
     <span class="o">}</span>
 
-    <span class="c"># 加载国内 IP（来自文件）</span>
-    <span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$CHNROUTE_FILE</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-        </span><span class="nb">echo</span> <span class="s2">"[+] 加载国内 IP 到 bypasslist（来源: </span><span class="nv">$CHNROUTE_FILE</span><span class="s2">）"</span>
-        <span class="nv">BATCH_SIZE</span><span class="o">=</span>1000
-        <span class="nv">count</span><span class="o">=</span>0
-        <span class="nv">batch</span><span class="o">=</span><span class="s2">""</span>
-
-        <span class="nb">echo</span> <span class="s2">"[*] 正在批量导入到 nftables..."</span>
-
-        <span class="k">while </span><span class="nb">read</span> <span class="nt">-r</span> line<span class="p">;</span> <span class="k">do</span>
-            <span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$line</span><span class="s2">"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">continue</span>
-            <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">line</span><span class="p">#\#</span><span class="k">}</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">"</span><span class="nv">$line</span><span class="s2">"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">continue
-
-            </span><span class="nv">batch</span><span class="o">=</span><span class="s2">"</span><span class="nv">$batch</span><span class="s2"> </span><span class="nv">$line</span><span class="s2">,"</span>
-            <span class="nv">count</span><span class="o">=</span><span class="k">$((</span>count <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
-
-            <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$count</span><span class="s2">"</span> <span class="nt">-ge</span> <span class="s2">"</span><span class="nv">$BATCH_SIZE</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-                </span><span class="nv">batch</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">batch</span><span class="p">%,</span><span class="k">}</span><span class="s2">"</span>
-                nft add element inet v2ray bypasslist <span class="o">{</span> <span class="nv">$batch</span> <span class="o">}</span>
-                <span class="nv">count</span><span class="o">=</span>0
-                <span class="nv">batch</span><span class="o">=</span><span class="s2">""</span>
-            <span class="k">fi
-        done</span> &lt; <span class="s2">"</span><span class="nv">$CHNROUTE_FILE</span><span class="s2">"</span>
-
-        <span class="k">if</span> <span class="o">[</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$batch</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-            </span><span class="nv">batch</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">batch</span><span class="p">%,</span><span class="k">}</span><span class="s2">"</span>
-            nft add element inet v2ray bypasslist <span class="o">{</span> <span class="nv">$batch</span> <span class="o">}</span>
-        <span class="k">fi
-
-        </span><span class="nb">echo</span> <span class="s2">"[✓] 导入完成"</span>
-    <span class="k">else
-        </span><span class="nb">echo</span> <span class="s2">"[!] 未找到国内 IP 文件: </span><span class="nv">$CHNROUTE_FILE</span><span class="s2">"</span>
-    <span class="k">fi</span>
-
     <span class="c"># 加载 VPS 域名解析结果</span>
-    <span class="nb">echo</span> <span class="s2">"[+] 解析 </span><span class="nv">$DOMAIN</span><span class="s2"> 并加入 bypasslist"</span>
+    <span class="nb">echo</span> <span class="s2">"[+] 解析 </span><span class="nv">$DOMAIN</span><span class="s2"> 并加入 chnroute"</span>
     <span class="k">for </span>ip <span class="k">in</span> <span class="si">$(</span>dig +short <span class="s2">"</span><span class="nv">$DOMAIN</span><span class="s2">"</span> @<span class="s2">"</span><span class="nv">$DNS_SERVER</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-Eo</span> <span class="s1">'([0-9]{1,3}\.){3}[0-9]{1,3}'</span><span class="si">)</span><span class="p">;</span> <span class="k">do
-        </span>nft add element inet v2ray bypasslist <span class="o">{</span> <span class="nv">$ip</span> <span class="o">}</span>
+        </span>nft add element inet global chnroute <span class="o">{</span> <span class="nv">$ip</span> <span class="o">}</span>
         <span class="nb">echo</span> <span class="s2">"    加入 </span><span class="nv">$ip</span><span class="s2">"</span>
     <span class="k">done
-    </span><span class="nb">echo</span> <span class="s2">"    bypasslist 已载入 </span><span class="si">$(</span>nft list <span class="nb">set </span>inet v2ray bypasslist | <span class="nb">grep</span> <span class="nt">-oE</span> <span class="s1">'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(/[0-9]+)?'</span> | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span><span class="s2"> 条目"</span>
+    </span><span class="nb">echo</span> <span class="s2">"    chnroute 已载入 </span><span class="si">$(</span>nft list <span class="nb">set </span>inet global chnroute | <span class="nb">grep</span> <span class="nt">-oE</span> <span class="s1">'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(/[0-9]+)?'</span> | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span><span class="s2"> 条目"</span>
 
+<span class="o">}</span>
+
+create_gfwip<span class="o">(){</span>
+    <span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 gfwip 集合"</span>
+
+    nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">GFWIP_NFT_NAME</span><span class="k">}</span>
+    nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">GFWIP6_NFT_NAME</span><span class="k">}</span>
+
+<span class="o">}</span>
+
+enable_chnroute_firewall_rules<span class="o">(){</span>
     <span class="c"># 创建 nat 类型链</span>
-    nft list chain inet v2ray prerouting 1&gt;/dev/null 2&gt;&amp;1 <span class="o">||</span> nft add chain inet v2ray prerouting <span class="o">{</span> <span class="nb">type </span>nat hook prerouting priority dstnat<span class="se">\;</span> <span class="o">}</span>
-    nft list chain inet v2ray output 1&gt;/dev/null 2&gt;&amp;1 <span class="o">||</span> nft add chain inet v2ray output <span class="o">{</span> <span class="nb">type </span>nat hook output priority <span class="nt">-100</span><span class="se">\;</span> <span class="o">}</span>
+    nft list chain inet global prerouting 1&gt;/dev/null 2&gt;&amp;1 <span class="o">||</span> nft add chain inet global prerouting <span class="o">{</span> <span class="nb">type </span>nat hook prerouting priority dstnat<span class="se">\;</span> <span class="o">}</span>
+    nft list chain inet global output 1&gt;/dev/null 2&gt;&amp;1 <span class="o">||</span> nft add chain inet global output <span class="o">{</span> <span class="nb">type </span>nat hook output priority <span class="nt">-100</span><span class="se">\;</span> <span class="o">}</span>
+    nft flush chain inet global prerouting 2&gt;/dev/null
+    nft flush chain inet global output 2&gt;/dev/null
+    nft add rule inet global prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
+    nft add rule inet global prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
+    nft add rule inet global output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
+    nft add rule inet global output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
+    nft add rule inet global prerouting ip daddr <span class="o">!=</span> @chnroute tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
+    nft add rule inet global output ip daddr <span class="o">!=</span> @chnroute tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
 <span class="o">}</span>
 
-create_gfwlist<span class="o">(){</span>
-    <span class="nb">echo</span> <span class="s2">"[*] 创建 inet v2ray 表和 gfwlist 集合"</span>
-
-    <span class="c"># 创建 table（如不存在）</span>
-    nft list table inet v2ray 2&gt;/dev/null <span class="o">&gt;</span>/dev/null
-    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
-        </span>nft add table inet v2ray
-    <span class="k">fi</span>
-
-    <span class="c"># 创建或清空 set：gfwlist</span>
-    <span class="k">if </span>nft list <span class="nb">set </span>inet v2ray gfwlist 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
-        </span>nft delete <span class="nb">set </span>inet v2ray gfwlist
-    <span class="k">fi</span>
-
-    <span class="c"># 创建 gfwlist 集合</span>
-    nft add <span class="nb">set </span>inet v2ray gfwlist <span class="o">{</span> <span class="nb">type </span>ipv4_addr<span class="se">\;</span><span class="o">}</span>
-
-    <span class="c"># 注意dnsmasq配置文件中也有gfwlist的内容，所以需要重新加载,此操作不会直接增加gfwlist条目数，只会在解析网址时动态增加</span>
-    /etc/init.d/dnsmasq reload 1&gt;/dev/null 2&gt;&amp;1
-    <span class="nb">echo</span> <span class="s2">"    gfwlist 已载入 </span><span class="si">$(</span>nft list <span class="nb">set </span>inet v2ray gfwlist | <span class="nb">grep</span> <span class="nt">-oE</span> <span class="s1">'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(/[0-9]+)?'</span> | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span><span class="s2"> 条目"</span>
-
+enable_gfwip_firewall_rules<span class="o">(){</span>
     <span class="c"># 创建 nat 类型链</span>
-    nft list chain inet v2ray prerouting 1&gt;/dev/null 2&gt;&amp;1 <span class="o">||</span> nft add chain inet v2ray prerouting <span class="o">{</span> <span class="nb">type </span>nat hook prerouting priority dstnat<span class="se">\;</span> <span class="o">}</span>
-    nft list chain inet v2ray output 1&gt;/dev/null 2&gt;&amp;1 <span class="o">||</span> nft add chain inet v2ray output <span class="o">{</span> <span class="nb">type </span>nat hook output priority <span class="nt">-100</span><span class="se">\;</span> <span class="o">}</span>
-<span class="o">}</span>
-
-enable_bypasslist_firewall_rules<span class="o">(){</span>
-    nft add rule inet v2ray prerouting ip daddr <span class="o">!=</span> @bypasslist tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
-    nft add rule inet v2ray output ip daddr <span class="o">!=</span> @bypasslist tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
-    nft add rule inet v2ray prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft add rule inet v2ray prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft add rule inet v2ray output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft add rule inet v2ray output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-<span class="o">}</span>
-
-disable_bypasslist_firewall_rules<span class="o">(){</span>
-    nft delete rule inet v2ray prerouting ip daddr <span class="o">!=</span> @bypasslist tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
-    nft delete rule inet v2ray output ip daddr <span class="o">!=</span> @bypasslist tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
-    nft delete rule inet v2ray prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft delete rule inet v2ray prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft delete rule inet v2ray output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft delete rule inet v2ray output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-
-<span class="o">}</span>
-
-enable_gfwlist_firewall_rules<span class="o">(){</span>
-    nft add rule inet v2ray prerouting ip daddr @gfwlist tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
-    nft add rule inet v2ray output ip daddr @gfwlist tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
-    nft add rule inet v2ray prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft add rule inet v2ray prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft add rule inet v2ray output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft add rule inet v2ray output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-
-<span class="o">}</span>
-
-disable_gfwlist_firewall_rules<span class="o">(){</span>
-    nft delete rule inet v2ray prerouting ip daddr @gfwlist tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
-    nft delete rule inet v2ray output ip daddr @gfwlist tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
-    nft delete rule inet v2ray prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft delete rule inet v2ray prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft delete rule inet v2ray output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
-    nft delete rule inet v2ray output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
+    nft list chain inet global prerouting 1&gt;/dev/null 2&gt;&amp;1 <span class="o">||</span> nft add chain inet global prerouting <span class="o">{</span> <span class="nb">type </span>nat hook prerouting priority dstnat<span class="se">\;</span> <span class="o">}</span>
+    nft list chain inet global output 1&gt;/dev/null 2&gt;&amp;1 <span class="o">||</span> nft add chain inet global output <span class="o">{</span> <span class="nb">type </span>nat hook output priority <span class="nt">-100</span><span class="se">\;</span> <span class="o">}</span>
+    nft flush chain inet global prerouting 2&gt;/dev/null
+    nft flush chain inet global output 2&gt;/dev/null
+    nft add rule inet global prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
+    nft add rule inet global prerouting ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
+    nft add rule inet global output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> tcp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
+    nft add rule inet global output ip daddr <span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span> udp dport <span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>-<span class="k">${</span><span class="nv">V2RAY_MAX_DNS_PORT</span><span class="k">}</span> <span class="k">return </span>2&gt;/dev/null
+    nft add rule inet global prerouting ip daddr @gfwip tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
+    nft add rule inet global output ip daddr @gfwip tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
 
 <span class="o">}</span>
 
 disable_v2ray_rules<span class="o">()</span> <span class="o">{</span>
-    <span class="k">if </span>nft list table inet v2ray 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
-        </span>nft flush table inet v2ray
-    <span class="k">else
-        </span>nft add table inet v2ray
-    <span class="k">fi</span>
-    
-    <span class="c"># 创建或清空 set：gfwlist</span>
-    <span class="k">if </span>nft list <span class="nb">set </span>inet v2ray gfwlist 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
-        </span>nft delete <span class="nb">set </span>inet v2ray gfwlist
-    <span class="k">fi</span>
-
-    <span class="c"># 创建 gfwlist 集合</span>
-    nft add <span class="nb">set </span>inet v2ray gfwlist <span class="o">{</span> <span class="nb">type </span>ipv4_addr<span class="se">\;</span><span class="o">}</span>
+    nft flush chain inet global prerouting 2&gt;/dev/null
+    nft flush chain inet global output 2&gt;/dev/null
     set_multi_domestic_dns
     <span class="nb">echo</span> <span class="s2">"ingfw"</span> <span class="o">&gt;</span> /tmp/v2raymode.txt   
 <span class="o">}</span>
@@ -623,15 +540,15 @@ enable_v2ray_rules<span class="o">(){</span>
         </span><span class="nb">echo</span> <span class="s2">"[+] v2ray模式已变化"</span>
         <span class="nb">echo</span> <span class="s2">"[+] 设置</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">模式中"</span>
         <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"outlands"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-            </span>disable_gfwlist_firewall_rules
-            create_bypasslist
-            enable_bypasslist_firewall_rules
+            </span>disable_v2ray_rules
+            create_chnroute
+            enable_chnroute_firewall_rules
             set_multi_foreign_dns
         
         <span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"gfwlist"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-            </span>disable_bypasslist_firewall_rules
-            create_gfwlist
-            enable_gfwlist_firewall_rules
+            </span>disable_v2ray_rules
+            create_gfwip
+            enable_gfwip_firewall_rules
             set_multi_foreign_dns
         
         <span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"ingfw"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
@@ -659,6 +576,7 @@ start_service<span class="o">()</span>  <span class="o">{</span>
 service_triggers<span class="o">()</span> <span class="o">{</span>
     procd_add_reload_trigger <span class="s2">"advancedconfig"</span>
 <span class="o">}</span>
+
 
 </code></pre></div></div>
 
