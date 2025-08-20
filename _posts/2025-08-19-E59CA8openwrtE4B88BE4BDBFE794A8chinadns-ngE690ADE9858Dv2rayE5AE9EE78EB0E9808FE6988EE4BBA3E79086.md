@@ -54,7 +54,7 @@ set -o pipefail
 
 # exit if curl failed
 data="$(curl -4fsSkL https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt)"
-
+echo "" >chnroute_v2ray.txt
 echo "$data" | awk '{printf("%s\n", $0)}' >>chnroute_v2ray.txt
 ```
 其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。
