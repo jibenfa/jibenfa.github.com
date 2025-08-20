@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-20T09:24:37+00:00</updated>
+ <updated>2025-08-20T09:27:08+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -186,7 +186,7 @@ start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quo
 
 stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 停止 chinadns-ng 服务&quot;&lt;/span&gt;
-    disable_nft_rules
+    &lt;span class=&quot;c&quot;&gt;#disable_nft_rules&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;然后执行：&lt;/p&gt;
