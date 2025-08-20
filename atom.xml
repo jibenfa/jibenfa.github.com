@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-20T09:17:36+00:00</updated>
+ <updated>2025-08-20T09:19:00+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -39,7 +39,16 @@ chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               chnroute6
 chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset            chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset          disable_chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset   disable_gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset     gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;v2ray&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
 chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset           chnroute_v2ray&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt        disable_chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset  gfwip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset              &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt,disable_chnroute.nftset,disable_chnroute6.nftset,gfwip.nftset,gfwip6.nftset,,disable_gfwip.nftset,disable_gfwip6.nftset是我创建的。&lt;/p&gt;
+&lt;p&gt;注意：
+direct.txt,
+update-chnroute-v2ray.sh,
+chnroute_v2ray.txt,
+disable_chnroute.nftset,
+disable_chnroute6.nftset,
+gfwip.nftset,
+gfwip6.nftset,
+disable_gfwip.nftset,
+disable_gfwip6.nftset是我创建的。&lt;/p&gt;
 
 &lt;p&gt;a)其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：&lt;/p&gt;
 
