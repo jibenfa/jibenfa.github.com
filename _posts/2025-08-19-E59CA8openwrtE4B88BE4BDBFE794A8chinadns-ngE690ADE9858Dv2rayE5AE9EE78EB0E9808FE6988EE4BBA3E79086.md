@@ -196,7 +196,7 @@ start_service() {
 
 stop_service()  {
     echo "[+] 停止 chinadns-ng 服务"
-    disable_nft_rules
+    #disable_nft_rules
 }
 ```
 然后执行：
