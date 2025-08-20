@@ -18,7 +18,9 @@ tags:
 
 1.下载chinadns-ng
 
-1）从https://github.com/zfl9/chinadns-ng/releases/tag/2025.08.09 下载的现成的（自己编译openwrt下的chinadns-ng版本未成功。。。）。拷贝到/usr/bin下，并改名为chinadns-ng，
+1）从https://github.com/zfl9/chinadns-ng/releases/tag/2025.08.09 下载的现成的（自己编译openwrt下的chinadns-ng版本未成功。。。）。
+
+拷贝到/usr/bin下，并改名为chinadns-ng，
 然后：
 ```bash
 chmod +x /usr/bin/chinadns-ng
