@@ -170,15 +170,19 @@ chnroute<span class="p">.</span>nftset           chnroute_v2ray<span class="p">.
 <p>注意：
 direct.txt,
 update-chnroute-v2ray.sh,
-chnroute_v2ray.txt,
-disable_chnroute.nftset,
-disable_chnroute6.nftset,
-gfwip.nftset,
-gfwip6.nftset,
-disable_gfwip.nftset,
-disable_gfwip6.nftset是我创建的。</p>
+chnroute_v2ray.txt,</p>
 
-<p>a)其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：</p>
+<p>disable_chnroute.nftset,
+disable_chnroute6.nftset,
+gfwip.nftset,</p>
+
+<p>gfwip6.nftset,
+disable_gfwip.nftset,
+disable_gfwip6.nftset</p>
+
+<p>是我创建的。</p>
+
+<p>a)其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：</p>
 
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xxx<span class="p">.</span><span class="k">com</span>
 ntp<span class="p">.</span>org
@@ -626,9 +630,11 @@ service_triggers<span class="o">()</span> <span class="o">{</span>
 
 <p>然后在luci界面中，把“网络-&gt;dhcp/dns-&gt;转发”菜单下的dns转发改成“127.0.0.1#5353”，保存后重启openwrt。</p>
 
-<p>参考：
-1.https://github.com/zfl9/chinadns-ng
-2.chatgpt</p>
+<p>参考：</p>
+
+<p>1.https://github.com/zfl9/chinadns-ng</p>
+
+<p>2.chatgpt</p>
   
 	</div>
 	<footer class="article-footer clearfix">
