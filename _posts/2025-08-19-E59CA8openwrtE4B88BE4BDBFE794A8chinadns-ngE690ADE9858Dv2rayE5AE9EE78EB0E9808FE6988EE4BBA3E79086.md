@@ -37,7 +37,7 @@ chnlist.txt               chnroute6.ipset           direct.txt                di
 chnroute.ipset            chnroute6.nftset          disable_chnroute.nftset   disable_gfwip6.nftset     gfwlist.txt               update-chnroute-v2ray.sh  update-chnroute6.sh
 chnroute.nftset           chnroute_v2ray.txt        disable_chnroute6.nftset  gfwip.nftset              update-chnlist.sh         update-chnroute.sh        update-gfwlist.sh
 ```
-注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt,disable_chnroute.nftset,gfwip.nftset,gfwip6.nftset,,disable_chnroute.nftset,disable_chnroute6.nftset是我创建的。
+注意：direct.txt,update-chnroute-v2ray.sh,chnroute_v2ray.txt,disable_chnroute.nftset,disable_chnroute6.nftset,gfwip.nftset,gfwip6.nftset,,disable_gfwip.nftset,disable_gfwip6.nftset是我创建的。
 
 a)其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray的域名！这一点非常重要，v2ray域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：
 
@@ -67,6 +67,27 @@ flush set inet global chnroute
 d)disable_chnroute6.nftset内容为：
 ```bash
 flush set inet global chnroute6
+```
+e)gfwip.nftset内容为：
+```bash
+add table inet global
+add set inet global gfwip { type ipv4_addr;flags interval; }
+```
+
+f)gfwip6.nftset内容为：
+```bash
+add table inet global
+add set inet global gfwip8 { type ipv4_addr;flags interval; }
+```
+
+g)disable_chnroute.nftset内容为：
+```bash
+flush set inet global gfwip
+```
+
+h)disable_chnroute6.nftset内容为：
+```bash
+flush set inet global gfwip6
 ```
 
 2.配置chinadns-ng
