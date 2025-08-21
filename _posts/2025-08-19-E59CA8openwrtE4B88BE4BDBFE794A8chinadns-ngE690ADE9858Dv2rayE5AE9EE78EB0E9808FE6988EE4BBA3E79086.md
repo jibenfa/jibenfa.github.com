@@ -51,7 +51,7 @@ disable_gfwip6.nftset
 
 是我创建的。
 
-a)其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：
+a) 其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：
 
 ```vim
 xxx.com
@@ -59,33 +59,33 @@ ntp.org
 vultur.com
 ```
 
-c)disable_chnroute.nftset内容为：
+b) disable_chnroute.nftset内容为：
 ```bash
 flush set inet global chnroute
 ```
 
-d)disable_chnroute6.nftset内容为：
+c) disable_chnroute6.nftset内容为：
 ```bash
 flush set inet global chnroute6
 ```
-e)gfwip.nftset内容为：
+d) gfwip.nftset内容为：
 ```bash
 add table inet global
 add set inet global gfwip { type ipv4_addr;flags interval; }
 ```
 
-f)gfwip6.nftset内容为：
+e) gfwip6.nftset内容为：
 ```bash
 add table inet global
 add set inet global gfwip8 { type ipv4_addr;flags interval; }
 ```
 
-g)disable_chnroute.nftset内容为：
+f) disable_chnroute.nftset内容为：
 ```bash
 flush set inet global gfwip
 ```
 
-h)disable_chnroute6.nftset内容为：
+g) disable_chnroute6.nftset内容为：
 ```bash
 flush set inet global gfwip6
 ```
