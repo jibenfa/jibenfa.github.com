@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-21T03:40:45+00:00</updated>
+ <updated>2025-08-21T03:44:29+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -114,6 +114,7 @@ group&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;upstream &lt;span class=&quot
 
 # 收集 &lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;chn、&lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gfw&lt;/span&gt; 域名的 IP &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;可选&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 # 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
+# 我这里只动态收集gfwlist（&lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gfw&lt;/span&gt;）里网址解析出来的gfwip和gfwip6，应用于v&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;ray的gfwlist模式中
 #&lt;span class=&quot;nb&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;tagchn&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ip inet@global@chnip&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;inet@global@chnip6
 &lt;span class=&quot;nb&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;taggfw&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ip inet@global@gfwip&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;inet@global@gfwip6
 

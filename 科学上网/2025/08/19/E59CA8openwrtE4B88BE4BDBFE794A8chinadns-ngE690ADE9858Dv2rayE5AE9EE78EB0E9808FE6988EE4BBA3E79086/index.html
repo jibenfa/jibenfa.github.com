@@ -242,6 +242,7 @@ group<span class="p">-</span>upstream <span class="m">114</span><span class="p">
 
 # 收集 <span class="k">tag</span><span class="p">:</span>chn、<span class="k">tag</span><span class="p">:</span><span class="nb">gfw</span> 域名的 IP <span class="p">(</span>可选<span class="p">)</span>
 # 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
+# 我这里只动态收集gfwlist（<span class="k">tag</span><span class="p">:</span><span class="nb">gfw</span>）里网址解析出来的gfwip和gfwip6，应用于v<span class="m">2</span>ray的gfwlist模式中
 #<span class="nb">add</span><span class="p">-</span>tagchn<span class="p">-</span>ip inet@global@chnip<span class="p">,</span>inet@global@chnip6
 <span class="nb">add</span><span class="p">-</span>taggfw<span class="p">-</span>ip inet@global@gfwip<span class="p">,</span>inet@global@gfwip6
 
