@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-21T02:48:21+00:00</updated>
+ <updated>2025-08-21T02:48:53+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -23,7 +23,7 @@
 
 &lt;p&gt;1.下载chinadns-ng&lt;/p&gt;
 
-&lt;p&gt;1）从&lt;a href=&quot;https://github.com/zfl9/chinadns-ng/releases/tag/2025.08.09&quot;&gt;github&lt;/a&gt;&amp;lt;/p&amp;gt;下载的现成的（之前自己编译openwrt下的chinadns-ng版本未成功。。。）。&lt;/p&gt;
+&lt;p&gt;1）从&lt;a href=&quot;https://github.com/zfl9/chinadns-ng/releases/tag/2025.08.09&quot;&gt;github&lt;/a&gt;下载的现成的（之前自己编译openwrt下的chinadns-ng版本未成功。。。）。&lt;/p&gt;
 
 &lt;p&gt;拷贝到/usr/bin下，并改名为chinadns-ng，
 然后：&lt;/p&gt;
@@ -34,7 +34,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;如果显示正常就ok了&lt;/p&gt;
 
-&lt;p&gt;2）从&lt;a href=&quot;https://github.com/zfl9/chinadns-ng&quot;&gt;github&lt;/a&gt;&amp;lt;/p&amp;gt; 下载source，提取其中的res文件夹下的文件，拷贝到/etc/chinadns-ng文件夹下，没有的话就创建一个，主要有以下几个文件：&lt;/p&gt;
+&lt;p&gt;2）从&lt;a href=&quot;https://github.com/zfl9/chinadns-ng&quot;&gt;github&lt;/a&gt;下载source，提取其中的res文件夹下的文件，拷贝到/etc/chinadns-ng文件夹下，没有的话就创建一个，主要有以下几个文件：&lt;/p&gt;
 
 &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # &lt;span class=&quot;k&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/etc/&lt;/span&gt;chinadns&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ng
 chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset           disable_chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset   disable_gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset     gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
