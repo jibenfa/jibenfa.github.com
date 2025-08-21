@@ -181,35 +181,35 @@ disable_gfwip6.nftset</p>
 
 <p>是我创建的。</p>
 
-<p>a)其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：</p>
+<p>a) 其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：</p>
 
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xxx<span class="p">.</span><span class="k">com</span>
 ntp<span class="p">.</span>org
 vultur<span class="p">.</span><span class="k">com</span>
 </code></pre></div></div>
 
-<p>c)disable_chnroute.nftset内容为：</p>
+<p>b) disable_chnroute.nftset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush <span class="nb">set </span>inet global chnroute
 </code></pre></div></div>
 
-<p>d)disable_chnroute6.nftset内容为：</p>
+<p>c) disable_chnroute6.nftset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush <span class="nb">set </span>inet global chnroute6
 </code></pre></div></div>
-<p>e)gfwip.nftset内容为：</p>
+<p>d) gfwip.nftset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>add table inet global
 add <span class="nb">set </span>inet global gfwip <span class="o">{</span> <span class="nb">type </span>ipv4_addr<span class="p">;</span>flags interval<span class="p">;</span> <span class="o">}</span>
 </code></pre></div></div>
 
-<p>f)gfwip6.nftset内容为：</p>
+<p>e) gfwip6.nftset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>add table inet global
 add <span class="nb">set </span>inet global gfwip8 <span class="o">{</span> <span class="nb">type </span>ipv4_addr<span class="p">;</span>flags interval<span class="p">;</span> <span class="o">}</span>
 </code></pre></div></div>
 
-<p>g)disable_chnroute.nftset内容为：</p>
+<p>f) disable_chnroute.nftset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush <span class="nb">set </span>inet global gfwip
 </code></pre></div></div>
 
-<p>h)disable_chnroute6.nftset内容为：</p>
+<p>g) disable_chnroute6.nftset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush <span class="nb">set </span>inet global gfwip6
 </code></pre></div></div>
 
