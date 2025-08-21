@@ -41,13 +41,10 @@ chnroute.nftset           chnroute_v2ray.txt        disable_chnroute6.nftset  gf
 ```
 注意：
 direct.txt,
-update-chnroute-v2ray.sh,
-chnroute_v2ray.txt,
-
 disable_chnroute.nftset,
 disable_chnroute6.nftset,
-gfwip.nftset,
 
+gfwip.nftset,
 gfwip6.nftset,
 disable_gfwip.nftset,
 disable_gfwip6.nftset
@@ -61,18 +58,6 @@ xxx.com
 ntp.org
 vultur.com
 ```
-b)update-chnroute-v2ray.sh主要用于拉取国内ip段，生成chnroute_v2ray.txt，内容为：
-```bash
-#!/bin/bash
-set -o errexit
-set -o pipefail
-
-# exit if curl failed
-data="$(curl -4fsSkL https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt)"
-echo "" >chnroute_v2ray.txt
-echo "$data" | awk '{printf("%s\n", $0)}' >>chnroute_v2ray.txt
-```
-其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。
 
 c)disable_chnroute.nftset内容为：
 ```bash
@@ -191,12 +176,18 @@ start_service() {
     procd_set_param command $PROG -C $CONF
     procd_set_param respawn
     enable_nft_rules
+    # 检查 v2ray 是否在运行，如果在运行，需要重启
+    if  pgrep -f v2ray >/dev/null 2>&1; then
+        echo "[+] v2ray 正在运行, 需要重启..."
+        /etc/init.d/v2ray restart
+        sleep 5   # 等几秒确保 v2ray 完全启动
+    fi
     procd_close_instance
 }
 
 stop_service()  {
     echo "[+] 停止 chinadns-ng 服务"
-    #disable_nft_rules
+    disable_nft_rules
 }
 ```
 然后执行：
@@ -360,7 +351,6 @@ set_multi_domestic_dns() {
         uci commit dhcp
         echo "[+] 重启dnsmasq服务"
         /etc/init.d/dnsmasq restart 1>/dev/null 2>&1
-        echo "[✓] 完成"
     fi
 }
 
@@ -376,15 +366,20 @@ set_multi_foreign_dns() {
         uci commit dhcp
         echo "[+] 重启dnsmasq服务"
         /etc/init.d/dnsmasq restart 1>/dev/null 2>&1
-        echo "[✓] 完成"
     fi
 }
 
-create_chnroute() {   
-    echo "[*] 创建 inet global 表和 chnroute 和 chnroute6 集合" 
-
-    nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE_NFT_NAME}
-    nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE6_NFT_NAME}
+append_chnroute_list() {
+    # 检查和创建 set：chnroute
+    if ! nft list set inet global chnroute 2>/dev/null >/dev/null; then
+        echo "[*] 创建 inet global 表和 chnroute 集合"
+        nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE_NFT_NAME} 
+    fi   
+    # 检查和创建 set：chnroute6
+    if ! nft list set inet global chnroute6 2>/dev/null >/dev/null; then
+        echo "[*] 创建 inet global 表和 chnroute6 集合"
+        nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE6_NFT_NAME} 
+    fi   
 
     # 添加私有地址段
     echo "[+] 添加内网地址段到 chnroute"
@@ -404,12 +399,17 @@ create_chnroute() {
 
 }
 
-create_gfwip(){
-    echo "[*] 创建 inet global 表和 gfwip 和 gfwip6 集合"
-
-    nft -f ${CHINADNSNG_FILES_PATH}${GFWIP_NFT_NAME}
-    nft -f ${CHINADNSNG_FILES_PATH}${GFWIP6_NFT_NAME}
-
+append_gfwip_list(){
+    # 检查和创建 set：gfwip
+    if ! nft list set inet global gfwip 2>/dev/null >/dev/null; then
+        echo "[*] 创建 inet global 表和 gfwip 集合"
+        nft -f ${CHINADNSNG_FILES_PATH}${GFWIP_NFT_NAME} 
+    fi
+    # 检查和创建 set：gfwip6
+    if ! nft list set inet global gfwip6 2>/dev/null >/dev/null; then
+        echo "[*] 创建 inet global 表和 gfwip6 集合"
+        nft -f ${CHINADNSNG_FILES_PATH}${GFWIP6_NFT_NAME} 
+    fi
 }
 
 create_empty_chain(){
@@ -471,12 +471,12 @@ enable_v2ray_rules(){
         echo "[+] 设置${v2ray_mode}模式中"
         disable_v2ray_rules
         if [ "${v2ray_mode}" = "outlands" ]; then
-            create_chnroute
+            append_chnroute_list
             enable_chnroute_firewall_rules
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "gfwlist" ]; then
-            create_gfwip
+            append_gfwip_list
             enable_gfwip_firewall_rules
             set_multi_foreign_dns
         
@@ -488,6 +488,12 @@ enable_v2ray_rules(){
 }
 
 start_service()  {
+    # 检查 chinadns-ng 是否在运行
+    if ! pgrep -f chinadns-ng >/dev/null 2>&1; then
+        echo "[+] chinadns-ng 未运行, 启动中..."
+        /etc/init.d/chinadns-ng start
+        sleep 2   # 等几秒确保 chinadns-ng 完全启动
+    fi
     echo "[+] 启动 v2ray 服务"
     mkdir -p /var/log/v2ray
     ulimit -n 65535
