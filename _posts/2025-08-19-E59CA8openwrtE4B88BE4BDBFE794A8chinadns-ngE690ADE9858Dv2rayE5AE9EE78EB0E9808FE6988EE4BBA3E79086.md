@@ -18,7 +18,7 @@ tags:
 
 1.下载chinadns-ng
 
-1）从<a href="https://github.com/zfl9/chinadns-ng/releases/tag/2025.08.09">github</a>下载的现成的二进制文件，需注意CPU架构要匹配（我之前自己编译openwrt下的chinadns-ng版本未成功。。。联机编译网络环境太差了）。把二进制文件拷贝到/usr/bin下。
+1）从<a href="https://github.com/zfl9/chinadns-ng/releases/tag/2025.08.09">github</a>下载的现成的二进制文件，需注意CPU架构要匹配（之前自己编译openwrt下的chinadns-ng版本未成功。。。联机编译网络环境太差了，另外openwrt下的源码版本有点老，不支持很多新特性，所以还是用原版的靠谱）。把二进制文件拷贝到/usr/bin下。
 
 改名为chinadns-ng，并附加执行权限：
 ```bash
