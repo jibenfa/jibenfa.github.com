@@ -34,22 +34,22 @@ chmod +x /usr/bin/chinadns-ng
 2）从https://github.com/zfl9/chinadns-ng 中下载source，提取其中的res文件夹下的文件，拷贝到/etc/chinadns-ng文件夹下，没有的话就创建一个，主要有以下几个文件：
 
 ```vim
-# ls /etc/chinadns-ng/
-chnlist.txt               chnroute6.ipset           direct.txt                disable_gfwip.nftset      gfwip6.nftset             update-chnroute-nft.sh    update-chnroute6-nft.sh
-chnroute.ipset            chnroute6.nftset          disable_chnroute.nftset   disable_gfwip6.nftset     gfwlist.txt               update-chnroute-v2ray.sh  update-chnroute6.sh
-chnroute.nftset           chnroute_v2ray.txt        disable_chnroute6.nftset  gfwip.nftset              update-chnlist.sh         update-chnroute.sh        update-gfwlist.sh
+ # ls /etc/chinadns-ng
+chnlist.txt               chnroute6.ipset           disable_chnroute.nftset   disable_gfwip6.nftset     gfwlist.txt               update-chnroute-nft.sh    update-chnroute6.sh
+chnroute.ipset            chnroute6.nftset          disable_chnroute6.nftset  gfwip.nftset              update-all.sh             update-chnroute.sh        update-gfwlist.sh
+chnroute.nftset           direct.txt                disable_gfwip.nftset      gfwip6.nftset             update-chnlist.sh         update-chnroute6-nft.sh
 ```
 注意：
 direct.txt,
 disable_chnroute.nftset,
 disable_chnroute6.nftset,
-
 gfwip.nftset,
 gfwip6.nftset,
 disable_gfwip.nftset,
 disable_gfwip6.nftset
+是我创建的，后面细说。
 
-是我创建的。
+建议启用前通过update*.sh进行更新
 
 a) 其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：
 
