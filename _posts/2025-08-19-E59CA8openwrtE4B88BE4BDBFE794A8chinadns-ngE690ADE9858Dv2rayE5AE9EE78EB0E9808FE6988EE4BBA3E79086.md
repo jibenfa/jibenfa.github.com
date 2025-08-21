@@ -467,15 +467,15 @@ enable_v2ray_rules(){
     if [ x${v2ray_mode} = x${running_v2ray_mode} ]; then
         echo "[+] v2ray模式未变化"
     else
-        echo "[+] v2ray模式已变化"
-        echo "[+] 设置${v2ray_mode}模式中"
         disable_v2ray_rules
         if [ "${v2ray_mode}" = "outlands" ]; then
+            echo "[+] 设置${v2ray_mode}（境外全局代理模式）模式中"
             append_chnroute_list
             enable_chnroute_firewall_rules
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "gfwlist" ]; then
+            echo "[+] 设置${v2ray_mode}（白名单代理模式）模式中"
             append_gfwip_list
             enable_gfwip_firewall_rules
             set_multi_foreign_dns
