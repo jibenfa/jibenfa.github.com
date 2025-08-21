@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-21T02:37:32+00:00</updated>
+ <updated>2025-08-21T02:43:51+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -36,22 +36,22 @@
 
 &lt;p&gt;2）从https://github.com/zfl9/chinadns-ng 中下载source，提取其中的res文件夹下的文件，拷贝到/etc/chinadns-ng文件夹下，没有的话就创建一个，主要有以下几个文件：&lt;/p&gt;
 
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# &lt;span class=&quot;k&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/etc/&lt;/span&gt;chinadns&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ng/
-chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset           direct&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt                disable_gfwip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset      gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset             &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
-chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset            chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset          disable_chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset   disable_gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset     gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;v2ray&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
-chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset           chnroute_v2ray&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt        disable_chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset  gfwip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset              &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # &lt;span class=&quot;k&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/etc/&lt;/span&gt;chinadns&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ng
+chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset           disable_chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset   disable_gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset     gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
+chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset            chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset          disable_chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset  gfwip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset              &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
+chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset           direct&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt                disable_gfwip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset      gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset             &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;注意：
 direct.txt,
 disable_chnroute.nftset,
-disable_chnroute6.nftset,&lt;/p&gt;
-
-&lt;p&gt;gfwip.nftset,
+disable_chnroute6.nftset,
+gfwip.nftset,
 gfwip6.nftset,
 disable_gfwip.nftset,
-disable_gfwip6.nftset&lt;/p&gt;
+disable_gfwip6.nftset
+是我创建的，后面细说。&lt;/p&gt;
 
-&lt;p&gt;是我创建的。&lt;/p&gt;
+&lt;p&gt;建议启用前通过update*.sh进行更新&lt;/p&gt;
 
 &lt;p&gt;a) 其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：&lt;/p&gt;
 
