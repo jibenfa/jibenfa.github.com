@@ -120,6 +120,7 @@ group-upstream 114.114.114.114
 
 # 收集 tag:chn、tag:gfw 域名的 IP (可选)
 # 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
+# 我这里只动态收集gfwlist（tag:gfw）里网址解析出来的gfwip和gfwip6，应用于v2ray的gfwlist模式中
 #add-tagchn-ip inet@global@chnip,inet@global@chnip6
 add-taggfw-ip inet@global@gfwip,inet@global@gfwip6
 
