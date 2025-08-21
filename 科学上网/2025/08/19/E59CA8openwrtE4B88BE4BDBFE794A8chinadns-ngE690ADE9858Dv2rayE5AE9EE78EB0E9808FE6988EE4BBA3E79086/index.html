@@ -583,16 +583,16 @@ enable_v2ray_rules<span class="o">(){</span>
     <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span> <span class="o">=</span> x<span class="k">${</span><span class="nv">running_v2ray_mode</span><span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
         </span><span class="nb">echo</span> <span class="s2">"[+] v2ray模式未变化"</span>
     <span class="k">else
-        </span><span class="nb">echo</span> <span class="s2">"[+] v2ray模式已变化"</span>
-        <span class="nb">echo</span> <span class="s2">"[+] 设置</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">模式中"</span>
-        disable_v2ray_rules
+        </span>disable_v2ray_rules
         <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"outlands"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-            </span>append_chnroute_list
+            </span><span class="nb">echo</span> <span class="s2">"[+] 设置</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">（境外全局代理模式）模式中"</span>
+            append_chnroute_list
             enable_chnroute_firewall_rules
             set_multi_foreign_dns
         
         <span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"gfwlist"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-            </span>append_gfwip_list
+            </span><span class="nb">echo</span> <span class="s2">"[+] 设置</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">（白名单代理模式）模式中"</span>
+            append_gfwip_list
             enable_gfwip_firewall_rules
             set_multi_foreign_dns
         
