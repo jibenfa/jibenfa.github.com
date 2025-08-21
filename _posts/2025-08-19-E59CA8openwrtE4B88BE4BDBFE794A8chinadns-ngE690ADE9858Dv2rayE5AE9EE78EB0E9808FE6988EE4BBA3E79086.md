@@ -481,7 +481,7 @@ enable_v2ray_rules(){
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "ingfw" ]; then
-            echo “[+] 启动墙内访问模式”
+            echo "[+] 启动墙内访问模式"
         fi
         echo "${v2ray_mode}" > /tmp/v2raymode.txt
     fi
