@@ -18,7 +18,7 @@ tags:
 
 1.下载chinadns-ng
 
-1）从<a href="https://github.com/zfl9/chinadns-ng/releases/tag/2025.08.09">github</a></p>下载的现成的（之前自己编译openwrt下的chinadns-ng版本未成功。。。）。
+1）从<a href="https://github.com/zfl9/chinadns-ng/releases/tag/2025.08.09">github</a>下载的现成的（之前自己编译openwrt下的chinadns-ng版本未成功。。。）。
 
 拷贝到/usr/bin下，并改名为chinadns-ng，
 然后：
@@ -31,7 +31,7 @@ chmod +x /usr/bin/chinadns-ng
 ```
 如果显示正常就ok了
 
-2）从<a href="https://github.com/zfl9/chinadns-ng">github</a></p> 下载source，提取其中的res文件夹下的文件，拷贝到/etc/chinadns-ng文件夹下，没有的话就创建一个，主要有以下几个文件：
+2）从<a href="https://github.com/zfl9/chinadns-ng">github</a>下载source，提取其中的res文件夹下的文件，拷贝到/etc/chinadns-ng文件夹下，没有的话就创建一个，主要有以下几个文件：
 
 ```vim
  # ls /etc/chinadns-ng
