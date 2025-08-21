@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-21T03:10:54+00:00</updated>
+ <updated>2025-08-21T03:40:45+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -74,7 +74,7 @@ add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global gfwip &lt;span
 
 &lt;p&gt;e) gfwip6.nftset内容为：&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;add table inet global
-add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global gfwip8 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;ipv4_addr&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;flags interval&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global gfwip6 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;ipv4_addr&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;flags interval&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;f) disable_chnroute.nftset内容为：&lt;/p&gt;
