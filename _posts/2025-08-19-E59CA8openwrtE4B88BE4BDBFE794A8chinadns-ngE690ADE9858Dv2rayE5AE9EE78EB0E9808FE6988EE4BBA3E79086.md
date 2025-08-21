@@ -77,7 +77,7 @@ add set inet global gfwip { type ipv4_addr;flags interval; }
 e) gfwip6.nftset内容为：
 ```bash
 add table inet global
-add set inet global gfwip8 { type ipv4_addr;flags interval; }
+add set inet global gfwip6 { type ipv4_addr;flags interval; }
 ```
 
 f) disable_chnroute.nftset内容为：
