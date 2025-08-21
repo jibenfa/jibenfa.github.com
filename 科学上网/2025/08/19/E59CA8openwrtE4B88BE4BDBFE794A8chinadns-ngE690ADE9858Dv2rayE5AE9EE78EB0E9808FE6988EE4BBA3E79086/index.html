@@ -171,14 +171,11 @@ chnroute<span class="p">.</span>nftset           chnroute_v2ray<span class="p">.
 </code></pre></div></div>
 <p>注意：
 direct.txt,
-update-chnroute-v2ray.sh,
-chnroute_v2ray.txt,</p>
+disable_chnroute.nftset,
+disable_chnroute6.nftset,</p>
 
-<p>disable_chnroute.nftset,
-disable_chnroute6.nftset,
-gfwip.nftset,</p>
-
-<p>gfwip6.nftset,
+<p>gfwip.nftset,
+gfwip6.nftset,
 disable_gfwip.nftset,
 disable_gfwip6.nftset</p>
 
@@ -190,17 +187,6 @@ disable_gfwip6.nftset</p>
 ntp<span class="p">.</span>org
 vultur<span class="p">.</span><span class="k">com</span>
 </code></pre></div></div>
-<p>b)update-chnroute-v2ray.sh主要用于拉取国内ip段，生成chnroute_v2ray.txt，内容为：</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
-<span class="nb">set</span> <span class="nt">-o</span> errexit
-<span class="nb">set</span> <span class="nt">-o</span> pipefail
-
-<span class="c"># exit if curl failed</span>
-<span class="nv">data</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-4fsSkL</span> https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt<span class="si">)</span><span class="s2">"</span>
-<span class="nb">echo</span> <span class="s2">""</span> <span class="o">&gt;</span>chnroute_v2ray.txt
-<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$data</span><span class="s2">"</span> | <span class="nb">awk</span> <span class="s1">'{printf("%s\n", $0)}'</span> <span class="o">&gt;&gt;</span>chnroute_v2ray.txt
-</code></pre></div></div>
-<p>其实chnroute_v2ray.txt内容和之前chinadns的chinadns_chnroute.txt是一毛一样的，主要用于v2ray。</p>
 
 <p>c)disable_chnroute.nftset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush <span class="nb">set </span>inet global chnroute
@@ -309,12 +295,18 @@ start_service<span class="o">()</span> <span class="o">{</span>
     procd_set_param <span class="nb">command</span> <span class="nv">$PROG</span> <span class="nt">-C</span> <span class="nv">$CONF</span>
     procd_set_param respawn
     enable_nft_rules
-    procd_close_instance
+    <span class="c"># 检查 v2ray 是否在运行，如果在运行，需要重启</span>
+    <span class="k">if  </span>pgrep <span class="nt">-f</span> v2ray <span class="o">&gt;</span>/dev/null 2&gt;&amp;1<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[+] v2ray 正在运行, 需要重启..."</span>
+        /etc/init.d/v2ray restart
+        <span class="nb">sleep </span>5   <span class="c"># 等几秒确保 v2ray 完全启动</span>
+    <span class="k">fi
+    </span>procd_close_instance
 <span class="o">}</span>
 
 stop_service<span class="o">()</span>  <span class="o">{</span>
     <span class="nb">echo</span> <span class="s2">"[+] 停止 chinadns-ng 服务"</span>
-    <span class="c">#disable_nft_rules</span>
+    disable_nft_rules
 <span class="o">}</span>
 </code></pre></div></div>
 <p>然后执行：</p>
@@ -475,7 +467,6 @@ set_multi_domestic_dns<span class="o">()</span> <span class="o">{</span>
         uci commit dhcp
         <span class="nb">echo</span> <span class="s2">"[+] 重启dnsmasq服务"</span>
         /etc/init.d/dnsmasq restart 1&gt;/dev/null 2&gt;&amp;1
-        <span class="nb">echo</span> <span class="s2">"[✓] 完成"</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
@@ -491,15 +482,20 @@ set_multi_foreign_dns<span class="o">()</span> <span class="o">{</span>
         uci commit dhcp
         <span class="nb">echo</span> <span class="s2">"[+] 重启dnsmasq服务"</span>
         /etc/init.d/dnsmasq restart 1&gt;/dev/null 2&gt;&amp;1
-        <span class="nb">echo</span> <span class="s2">"[✓] 完成"</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
-create_chnroute<span class="o">()</span> <span class="o">{</span>   
-    <span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 chnroute 和 chnroute6 集合"</span> 
-
-    nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE_NFT_NAME</span><span class="k">}</span>
-    nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE6_NFT_NAME</span><span class="k">}</span>
+append_chnroute_list<span class="o">()</span> <span class="o">{</span>
+    <span class="c"># 检查和创建 set：chnroute</span>
+    <span class="k">if</span> <span class="o">!</span> nft list <span class="nb">set </span>inet global chnroute 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 chnroute 集合"</span>
+        nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE_NFT_NAME</span><span class="k">}</span> 
+    <span class="k">fi</span>   
+    <span class="c"># 检查和创建 set：chnroute6</span>
+    <span class="k">if</span> <span class="o">!</span> nft list <span class="nb">set </span>inet global chnroute6 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 chnroute6 集合"</span>
+        nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE6_NFT_NAME</span><span class="k">}</span> 
+    <span class="k">fi</span>   
 
     <span class="c"># 添加私有地址段</span>
     <span class="nb">echo</span> <span class="s2">"[+] 添加内网地址段到 chnroute"</span>
@@ -519,12 +515,17 @@ create_chnroute<span class="o">()</span> <span class="o">{</span>
 
 <span class="o">}</span>
 
-create_gfwip<span class="o">(){</span>
-    <span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 gfwip 和 gfwip6 集合"</span>
-
-    nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">GFWIP_NFT_NAME</span><span class="k">}</span>
-    nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">GFWIP6_NFT_NAME</span><span class="k">}</span>
-
+append_gfwip_list<span class="o">(){</span>
+    <span class="c"># 检查和创建 set：gfwip</span>
+    <span class="k">if</span> <span class="o">!</span> nft list <span class="nb">set </span>inet global gfwip 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 gfwip 集合"</span>
+        nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">GFWIP_NFT_NAME</span><span class="k">}</span> 
+    <span class="k">fi</span>
+    <span class="c"># 检查和创建 set：gfwip6</span>
+    <span class="k">if</span> <span class="o">!</span> nft list <span class="nb">set </span>inet global gfwip6 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 gfwip6 集合"</span>
+        nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">GFWIP6_NFT_NAME</span><span class="k">}</span> 
+    <span class="k">fi</span>
 <span class="o">}</span>
 
 create_empty_chain<span class="o">(){</span>
@@ -586,12 +587,12 @@ enable_v2ray_rules<span class="o">(){</span>
         <span class="nb">echo</span> <span class="s2">"[+] 设置</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">模式中"</span>
         disable_v2ray_rules
         <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"outlands"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-            </span>create_chnroute
+            </span>append_chnroute_list
             enable_chnroute_firewall_rules
             set_multi_foreign_dns
         
         <span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"gfwlist"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
-            </span>create_gfwip
+            </span>append_gfwip_list
             enable_gfwip_firewall_rules
             set_multi_foreign_dns
         
@@ -603,7 +604,13 @@ enable_v2ray_rules<span class="o">(){</span>
 <span class="o">}</span>
 
 start_service<span class="o">()</span>  <span class="o">{</span>
-    <span class="nb">echo</span> <span class="s2">"[+] 启动 v2ray 服务"</span>
+    <span class="c"># 检查 chinadns-ng 是否在运行</span>
+    <span class="k">if</span> <span class="o">!</span> pgrep <span class="nt">-f</span> chinadns-ng <span class="o">&gt;</span>/dev/null 2&gt;&amp;1<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[+] chinadns-ng 未运行, 启动中..."</span>
+        /etc/init.d/chinadns-ng start
+        <span class="nb">sleep </span>2   <span class="c"># 等几秒确保 chinadns-ng 完全启动</span>
+    <span class="k">fi
+    </span><span class="nb">echo</span> <span class="s2">"[+] 启动 v2ray 服务"</span>
     <span class="nb">mkdir</span> <span class="nt">-p</span> /var/log/v2ray
     <span class="nb">ulimit</span> <span class="nt">-n</span> 65535
     procd_open_instance
