@@ -313,8 +313,8 @@ START=90
 USE_PROCD=1
 
 DOMAIN="xxx.com"
-DNS_SERVER="114.114.114.114"
-BACKUP_DNS_SERVER="119.29.29.29 223.5.5.5 180.76.76.76"
+DEFAULT_DNS_SERVER="114.114.114.114"
+DOMESTIC_DNS_SERVERS="119.29.29.29 223.5.5.5 180.76.76.76"
 LOCAL_IP="127.0.0.1"
 CHINADNSNG_PORT="5353"
 CHINADNSNG_FILES_PATH="/etc/chinadns-ng/"
@@ -338,13 +338,13 @@ V2RAY_BIN="/usr/bin/v2ray"
 V2RAY_CONF="/etc/config/v2ray.json"
 
 set_multi_domestic_dns() {
-    current_dns_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
-    if [ x${DNS_SERVER:0:15} != x${current_dns_list:0:15} ]; then
+    current_dns_servers_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
+    if [ x${DEFAULT_DNS_SERVER:0:15} != x${current_dns_servers_list:0:15} ]; then
         echo "[+] 设置使用国内DNS服务器"
         uci -q delete dhcp.@dnsmasq[0].server
-        uci add_list dhcp.@dnsmasq[0].server=${DNS_SERVER}
-        for dns in $BACKUP_DNS_SERVER; do
-            uci add_list dhcp.@dnsmasq[0].server="${dns}"
+        uci add_list dhcp.@dnsmasq[0].server=${DEFAULT_DNS_SERVER}
+        for dns_server in $DOMESTIC_DNS_SERVERS; do
+            uci add_list dhcp.@dnsmasq[0].server="${dns_server}"
         done
         uci set dhcp.@dnsmasq[0].noresolv=0
         uci set dhcp.@dnsmasq[0].nohosts=0
@@ -355,12 +355,12 @@ set_multi_domestic_dns() {
 }
 
 set_multi_foreign_dns() {
-    current_dns_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
-    if [ x${LOCAL_IP:0:9} != x${current_dns_list:0:9} ]; then
+    current_dns_servers_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
+    if [ x${LOCAL_IP:0:9} != x${current_dns_servers_list:0:9} ]; then
         echo "[+] 设置使用ChinaDNSNG DNS服务器"
-        chinadnsng_listen_ipport=${LOCAL_IP}"#"${CHINADNSNG_PORT}
+        chinadnsng_addr_port=${LOCAL_IP}"#"${CHINADNSNG_PORT}
         uci -q delete dhcp.@dnsmasq[0].server
-        uci add_list dhcp.@dnsmasq[0].server=${chinadnsng_listen_ipport}
+        uci add_list dhcp.@dnsmasq[0].server=${chinadnsng_addr_port}
         uci set dhcp.@dnsmasq[0].noresolv=1
         uci set dhcp.@dnsmasq[0].nohosts=1
         uci commit dhcp
@@ -391,7 +391,7 @@ append_chnroute_list() {
 
     # 加载 VPS 域名解析结果
     echo "[+] 解析 $DOMAIN 并加入 chnroute"
-    for ip in $(dig +short "$DOMAIN" @"$DNS_SERVER" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}'); do
+    for ip in $(dig +short "$DOMAIN" @"$DEFAULT_DNS_SERVER" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}'); do
         nft add element inet global chnroute { $ip }
         echo "    加入 $ip"
     done
