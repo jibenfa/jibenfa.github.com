@@ -95,7 +95,7 @@ flush set inet global gfwip6
 1）创建并修改配置文件/etc/config/chinadns-ng:
 ```vim
 # 监听地址和端口
-bind-addr 127.0.0.1
+bind-addr 0.0.0.0
 bind-port 5353
 
 # 国内 DNS
@@ -391,11 +391,33 @@ append_chnroute_list() {
     }
 
     # 加载 VPS 域名解析结果
-    echo "[+] 解析 $DOMAIN 并加入 chnroute"
-    for ip in $(dig +short "$DOMAIN" @"$DEFAULT_DNS_SERVER" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}'); do
-        nft add element inet global chnroute { $ip }
-        echo "    加入 $ip"
-    done
+    echo "[+] 解析 $DOMAIN 并加入 chnroute/chnroute6"
+    # 处理 IPv4
+    dig +short A "$DOMAIN" @"${DEFAULT_DNS_SERVER}" \
+    |   grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' \
+    |   sort -u \
+    |   while read -r ip; do
+            if [ "$ip" != "$DEFAULT_DNS_SERVER" ] && [ "$ip" != "0.0.0.0" ]; then
+                nft add element inet global chnroute { $ip } 2>/dev/null
+                echo "已经加入 IPv4: $ip"
+            else
+                echo "忽略无效 IPv4: $ip"
+            fi
+        done
+
+    # 处理 IPv6
+    dig +short AAAA "$DOMAIN" @"${DEFAULT_DNS_SERVER}" \
+        | grep -Eo '([0-9a-fA-F:]{2,})' \
+        | sort -u \
+        | while read -r ip6; do
+            if [ -n "$ip6" ] && [ "$ip6" != "::" ]; then
+                nft add element inet global chnroute6 { $ip6 } 2>/dev/null
+                echo "已经加入 IPv6: $ip6"
+            else
+                echo "忽略无效 IPv6: $ip6"
+            fi
+        done
+
     echo "    chnroute 已载入 $(nft list set inet global chnroute | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(/[0-9]+)?' | wc -l) 条目"
 
 }
