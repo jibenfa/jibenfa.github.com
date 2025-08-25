@@ -307,7 +307,7 @@ chmod +x /etc/init.d/chinadns-ng
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
 #
-# To use this file, install chinadns-ng,v2ray,coreutils-nohup,coreutils-paste first
+# To use this file, install chinadns-ng,v2ray,bind-dig first
 #
 
 START=90
