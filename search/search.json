@@ -554,7 +554,7 @@
       {
         "title": "v2ray使用tproxy代理udp流量",
         "date": "2025 年 08 月",
-        "excerpt": "\n",
+        "excerpt": "v2ray代理可以使用redirec和tproxy两种模式，前者只能代理tcp流量，但是速度快，路由开销小，后者可以代理tcp和udp流量，但是速度慢，路由开销较高。\n",
         
         "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/25/v2rayE4BDBFE794A8tproxyE4BBA3E79086udpE6B581E9878F/"
       },

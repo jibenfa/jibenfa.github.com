@@ -145,7 +145,385 @@ document.addEventListener("DOMContentLoaded", () => {
 		
 		</div>
 		
-		
+		<p>v2ray代理可以使用redirec和tproxy两种模式，前者只能代理tcp流量，但是速度快，路由开销小，后者可以代理tcp和udp流量，但是速度慢，路由开销较高。</p>
+
+<p>1.修改/etc/config/v2ray.json</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"inbounds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">    
+      </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dokodemo-door"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">1060</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"listen"</span><span class="p">:</span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"sniffing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"destOverride"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"http"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tls"</span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+       </span><span class="nl">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+         </span><span class="nl">"network"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tcp,udp"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"followRedirect"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> 
+       </span><span class="p">},</span><span class="w">
+       </span><span class="nl">"streamSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+         </span><span class="nl">"sockopt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="nl">"tproxy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tproxy"</span><span class="w">
+         </span><span class="p">}</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dokodemo-door"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"listen"</span><span class="p">:</span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">5354</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.8.8.8"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"network"</span><span class="p">:</span><span class="w"> </span><span class="s2">"udp"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"followRedirect"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dokodemo-door"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"listen"</span><span class="p">:</span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">5356</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.8.8.8"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"network"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tcp"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"followRedirect"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dokodemo-door"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"listen"</span><span class="p">:</span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">5358</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.1.1"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"network"</span><span class="p">:</span><span class="w"> </span><span class="s2">"udp"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"followRedirect"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dokodemo-door"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"listen"</span><span class="p">:</span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">5360</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.8.4.4"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"network"</span><span class="p">:</span><span class="w"> </span><span class="s2">"udp"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"followRedirect"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"outbounds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vless"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"proxy"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"vnext"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxx.com"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">443</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"users"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"***************uuid******************"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"encryption"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"streamSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"network"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ws"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"security"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tls"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"wsSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/mypath"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"tcpSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"allowInsecureCiphers"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>2.修改/etc/init.d/v2ray</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh /etc/rc.common</span>
+<span class="c">#</span>
+<span class="c"># This is free software, licensed under the GNU General Public License v3.</span>
+<span class="c"># See /LICENSE for more information.</span>
+<span class="c">#</span>
+<span class="c"># To use this file, install chinadns-ng,v2ray,bind-dig first</span>
+<span class="c">#</span>
+<span class="c">#</span>
+
+<span class="nv">START</span><span class="o">=</span>90
+<span class="nv">USE_PROCD</span><span class="o">=</span>1
+
+<span class="nv">DOMAIN</span><span class="o">=</span><span class="s2">"xxx.com"</span>
+<span class="nv">DEFAULT_DNS_SERVER</span><span class="o">=</span><span class="s2">"114.114.114.114"</span>
+<span class="nv">DOMESTIC_DNS_SERVERS</span><span class="o">=</span><span class="s2">"119.29.29.29 223.5.5.5 180.76.76.76"</span>
+<span class="nv">LOCAL_IP</span><span class="o">=</span><span class="s2">"127.0.0.1"</span>
+<span class="nv">CHINADNSNG_PORT</span><span class="o">=</span><span class="s2">"5353"</span>
+<span class="nv">CHINADNSNG_FILES_PATH</span><span class="o">=</span><span class="s2">"/etc/chinadns-ng/"</span>
+<span class="c"># 本配置文件中NFT默认参数为：</span>
+<span class="c"># family:inet</span>
+<span class="c"># table:global</span>
+<span class="c"># set:chnroute,chnroute6,gfwip,gfwip6</span>
+<span class="c"># 上述值需与chinadnsng配置文件中的一致，否则无法生效：</span>
+<span class="c"># add-taggfw-ip inet@global@gfwip,inet@global@gfwip6</span>
+<span class="c"># ipset-name4 inet@global@chnroute</span>
+<span class="c"># ipset-name6 inet@global@chnroute6</span>
+<span class="c"># 且下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效</span>
+<span class="nv">CHNROUTE_NFT_NAME</span><span class="o">=</span><span class="s2">"chnroute.nftset"</span>
+<span class="nv">CHNROUTE6_NFT_NAME</span><span class="o">=</span><span class="s2">"chnroute6.nftset"</span>
+<span class="nv">GFWIP_NFT_NAME</span><span class="o">=</span><span class="s2">"gfwip.nftset"</span>
+<span class="nv">GFWIP6_NFT_NAME</span><span class="o">=</span><span class="s2">"gfwip6.nftset"</span>
+
+<span class="nv">V2RAY_PORT</span><span class="o">=</span><span class="s2">"1060"</span>
+<span class="nv">V2RAY_DNS_PORTS</span><span class="o">=</span><span class="s2">"5354 5356 5358 5360"</span>
+<span class="nv">V2RAY_BIN</span><span class="o">=</span><span class="s2">"/usr/bin/v2ray"</span>
+<span class="nv">V2RAY_CONF</span><span class="o">=</span><span class="s2">"/etc/config/v2ray.json"</span>
+
+set_multi_domestic_dns<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">current_dns_servers_list</span><span class="o">=</span><span class="sb">`</span>uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null<span class="sb">`</span>
+    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">DEFAULT_DNS_SERVER</span>:0:15<span class="k">}</span> <span class="o">!=</span> x<span class="k">${</span><span class="nv">current_dns_servers_list</span>:0:15<span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[+] 设置使用国内DNS服务器"</span>
+        uci <span class="nt">-q</span> delete dhcp.@dnsmasq[0].server
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="k">${</span><span class="nv">DEFAULT_DNS_SERVER</span><span class="k">}</span>
+        <span class="k">for </span>dns_server <span class="k">in</span> <span class="nv">$DOMESTIC_DNS_SERVERS</span><span class="p">;</span> <span class="k">do
+            </span>uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">dns_server</span><span class="k">}</span><span class="s2">"</span>
+        <span class="k">done
+        </span>uci <span class="nb">set </span>dhcp.@dnsmasq[0].noresolv<span class="o">=</span>0
+        uci <span class="nb">set </span>dhcp.@dnsmasq[0].nohosts<span class="o">=</span>0
+        uci commit dhcp
+        <span class="nb">echo</span> <span class="s2">"[+] 重启dnsmasq服务"</span>
+        /etc/init.d/dnsmasq restart 1&gt;/dev/null 2&gt;&amp;1
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+set_multi_foreign_dns<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">current_dns_servers_list</span><span class="o">=</span><span class="sb">`</span>uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null<span class="sb">`</span>
+    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">LOCAL_IP</span>:0:9<span class="k">}</span> <span class="o">!=</span> x<span class="k">${</span><span class="nv">current_dns_servers_list</span>:0:9<span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[+] 设置使用ChinaDNSNG DNS服务器"</span>
+        <span class="nv">chinadnsng_addr_port</span><span class="o">=</span><span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span><span class="s2">"#"</span><span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>
+        uci <span class="nt">-q</span> delete dhcp.@dnsmasq[0].server
+        uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="k">${</span><span class="nv">chinadnsng_addr_port</span><span class="k">}</span>
+        uci <span class="nb">set </span>dhcp.@dnsmasq[0].noresolv<span class="o">=</span>1
+        uci <span class="nb">set </span>dhcp.@dnsmasq[0].nohosts<span class="o">=</span>1
+        uci commit dhcp
+        <span class="nb">echo</span> <span class="s2">"[+] 重启dnsmasq服务"</span>
+        /etc/init.d/dnsmasq restart 1&gt;/dev/null 2&gt;&amp;1
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+append_chnroute_list<span class="o">()</span> <span class="o">{</span>
+    <span class="c"># 检查和创建 set：chnroute</span>
+    <span class="k">if</span> <span class="o">!</span> nft list <span class="nb">set </span>inet global chnroute 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 chnroute 集合"</span>
+        nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE_NFT_NAME</span><span class="k">}</span> 
+    <span class="k">fi</span>   
+    <span class="c"># 检查和创建 set：chnroute6</span>
+    <span class="k">if</span> <span class="o">!</span> nft list <span class="nb">set </span>inet global chnroute6 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 chnroute6 集合"</span>
+        nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">CHNROUTE6_NFT_NAME</span><span class="k">}</span> 
+    <span class="k">fi</span>   
+
+    <span class="c"># 添加私有地址段，tproxy模式下要删除</span>
+    <span class="c">#echo "[+] 添加内网地址段到 chnroute"</span>
+    <span class="c">#nft add element inet global chnroute  { \</span>
+    <span class="c">#    0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8, \</span>
+    <span class="c">#    169.254.0.0/16, 172.16.0.0/12, \</span>
+    <span class="c">#    192.168.0.0/16, 224.0.0.0/4, 240.0.0.0/4 \</span>
+    <span class="c">#}</span>
+
+    <span class="c"># 加载 VPS 域名解析结果</span>
+    <span class="nb">echo</span> <span class="s2">"[+] 解析 </span><span class="nv">$DOMAIN</span><span class="s2"> 并加入 chnroute"</span>
+    <span class="k">for </span>ip <span class="k">in</span> <span class="si">$(</span>dig +short <span class="s2">"</span><span class="nv">$DOMAIN</span><span class="s2">"</span> @<span class="s2">"</span><span class="nv">$DEFAULT_DNS_SERVER</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-Eo</span> <span class="s1">'([0-9]{1,3}\.){3}[0-9]{1,3}'</span><span class="si">)</span><span class="p">;</span> <span class="k">do
+        </span>nft add element inet global chnroute <span class="o">{</span> <span class="nv">$ip</span> <span class="o">}</span>
+        <span class="nb">echo</span> <span class="s2">"    加入 </span><span class="nv">$ip</span><span class="s2">"</span>
+    <span class="k">done
+    </span><span class="nb">echo</span> <span class="s2">"    chnroute 已载入 </span><span class="si">$(</span>nft list <span class="nb">set </span>inet global chnroute | <span class="nb">grep</span> <span class="nt">-oE</span> <span class="s1">'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(/[0-9]+)?'</span> | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span><span class="s2"> 条目"</span>
+
+<span class="o">}</span>
+
+append_gfwip_list<span class="o">(){</span>
+    <span class="c"># 检查和创建 set：gfwip</span>
+    <span class="k">if</span> <span class="o">!</span> nft list <span class="nb">set </span>inet global gfwip 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 gfwip 集合"</span>
+        nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">GFWIP_NFT_NAME</span><span class="k">}</span> 
+    <span class="k">fi</span>
+    <span class="c"># 检查和创建 set：gfwip6</span>
+    <span class="k">if</span> <span class="o">!</span> nft list <span class="nb">set </span>inet global gfwip6 2&gt;/dev/null <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[*] 创建 inet global 表和 gfwip6 集合"</span>
+        nft <span class="nt">-f</span> <span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">GFWIP6_NFT_NAME</span><span class="k">}</span> 
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+prepare_work<span class="o">(){</span>
+    <span class="c"># —— 策略路由：fwmark=1 走本地路由表 100 —— </span>
+    <span class="nb">echo</span> <span class="s2">"[+] 创建策略路由：fwmark=1 走本地路由表 100 "</span>
+    ip route flush table 100
+    ip rule add fwmark 1 lookup 100 2&gt;/dev/null
+    ip route add <span class="nb">local </span>0.0.0.0/0 dev lo table 100 2&gt;/dev/null
+    ip <span class="nt">-6</span> route flush table 100
+    ip <span class="nt">-6</span> rule add fwmark 1 lookup 100 2&gt;/dev/null
+    ip <span class="nt">-6</span> route add <span class="nb">local</span> ::/0 dev lo table 100 2&gt;/dev/null
+
+    <span class="c"># —— 建议的内核参数（OpenWrt 可放 /etc/sysctl.d/*.conf）——</span>
+    sysctl <span class="nt">-w</span> net.ipv4.ip_forward<span class="o">=</span>1 1&gt;/dev/null
+    sysctl <span class="nt">-w</span> net.ipv4.conf.all.rp_filter<span class="o">=</span>0 1&gt;/dev/null
+    sysctl <span class="nt">-w</span> net.ipv4.conf.default.rp_filter<span class="o">=</span>0 1&gt;/dev/null
+    <span class="c"># LAN 口是 br-lan：</span>
+    sysctl <span class="nt">-w</span> net.ipv4.conf.br-lan.rp_filter<span class="o">=</span>0 1&gt;/dev/null
+<span class="o">}</span>
+
+create_empty_chain<span class="o">(){</span>
+    <span class="c"># 确保 table 存在</span>
+    nft create table inet global 2&gt;/dev/null
+
+    nft add chain inet global prerouting <span class="o">{</span> <span class="nb">type </span>filter hook prerouting priority mangle<span class="se">\;</span> policy accept<span class="se">\;</span> <span class="o">}</span> 2&gt;/dev/null
+    nft add chain inet global output    <span class="o">{</span> <span class="nb">type </span>route  hook output    priority mangle<span class="se">\;</span> policy accept<span class="se">\;</span> <span class="o">}</span> 2&gt;/dev/null
+
+    <span class="c"># 清空链</span>
+    nft flush chain inet global prerouting
+    nft flush chain inet global output
+<span class="o">}</span>
+
+create_chain_rules<span class="o">(){</span>
+    create_empty_chain
+    <span class="c"># 1) 已打标的不再处理，避免递归</span>
+    nft add rule inet global prerouting meta mark 1 <span class="k">return</span>
+
+    <span class="c"># 2) 目的为本机的流量放行（LAN 访问路由器服务）</span>
+    nft add rule inet global prerouting fib daddr <span class="nb">type local </span><span class="k">return</span>
+
+    <span class="c"># 3) 跳过常见的保留/内网地址（IPv4）_127.0.0.1网段除外</span>
+    nft add rule inet global prerouting ip daddr <span class="o">{</span> 0.0.0.0/8, 10.0.0.0/8,169.254.0.0/16, 172.16.0.0/12,192.168.0.0/16, 224.0.0.0/4, 240.0.0.0/4, 255.255.255.255/32 <span class="o">}</span> <span class="k">return</span>
+
+    <span class="c"># 4) 跳过常见的保留/内网地址（IPv6）</span>
+    nft add rule inet global prerouting ip6 daddr <span class="o">{</span> ::1/128, ::/128, fc00::/7, fe80::/10, ff00::/8, ::ffff:0:0/96, 2001:db8::/32, 2002::/16, 64:ff9b::/96, 64:ff9b:1::/48 <span class="o">}</span> <span class="k">return</span>
+
+    <span class="c"># 1) 已打标的不再处理</span>
+    nft add rule inet global output meta mark 1 <span class="k">return</span>
+
+    <span class="c"># 2) 跳过目的为本机/本地服务，为了本机能opkg update（直连），要把443 return</span>
+    nft add rule inet global output ip daddr 127.0.0.1 <span class="k">return
+    </span>nft add rule inet global output tcp dport 443 <span class="k">return</span>
+
+    <span class="c"># 3) 跳过保留/内网地址（IPv4）_127.0.0.1网段除外</span>
+    nft add rule inet global output ip daddr <span class="o">{</span> 0.0.0.0/8, 10.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12,192.168.0.0/16, 224.0.0.0/4, 240.0.0.0/4, 255.255.255.255/32 <span class="o">}</span> <span class="k">return</span>
+
+    <span class="c"># 4) 跳过保留/内网地址（IPv6）</span>
+    nft add rule inet global output ip6 daddr <span class="o">{</span> ::1/128, ::/128, fc00::/7, fe80::/10, ff00::/8, ::ffff:0:0/96, 2001:db8::/32, 2002::/16, 64:ff9b::/96, 64:ff9b:1::/48  <span class="o">}</span> <span class="k">return</span>
+
+<span class="o">}</span>
+
+enable_chnroute_firewall_rules<span class="o">(){</span>
+    create_chain_rules
+    <span class="c"># IPv4 TCP/UDP 目标不在 @chnroute 才 TPROXY 到 V2Ray</span>
+    nft add rule inet global prerouting ip daddr <span class="o">!=</span> @chnroute tcp dport 0-65535 tproxy ip to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> meta mark <span class="nb">set </span>1
+    nft add rule inet global prerouting ip daddr <span class="o">!=</span> @chnroute udp dport 0-65535 tproxy ip to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> meta mark <span class="nb">set </span>1
+
+    <span class="c"># IPv6 TCP/UDP 目标不在 @chnroute6 才 TPROXY 到 V2Ray</span>
+    nft add rule inet global prerouting ip6 daddr <span class="o">!=</span> @chnroute6 tcp dport 0-65535 tproxy ip6 to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> meta mark <span class="nb">set </span>1
+    nft add rule inet global prerouting ip6 daddr <span class="o">!=</span> @chnroute6 udp dport 0-65535 tproxy ip6 to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> meta mark <span class="nb">set </span>1
+
+    <span class="c"># IPv4 TCP/UDP 目标不在 @chnroute 才打标</span>
+    nft add rule inet global output ip daddr <span class="o">!=</span> @chnroute tcp dport 0-65535 meta mark <span class="nb">set </span>1
+    nft add rule inet global output ip daddr <span class="o">!=</span> @chnroute udp dport 0-65535 meta mark <span class="nb">set </span>1
+
+    <span class="c"># IPv6 TCP/UDP 目标不在 @chnroute6 才打标</span>
+    nft add rule inet global output ip6 daddr <span class="o">!=</span> @chnroute6 tcp dport 0-65535 meta mark <span class="nb">set </span>1
+    nft add rule inet global output ip6 daddr <span class="o">!=</span> @chnroute6 udp dport 0-65535 meta mark <span class="nb">set </span>1
+<span class="o">}</span>
+
+enable_gfwip_firewall_rules<span class="o">(){</span>
+    create_chain_rules
+    <span class="c"># IPv4 TCP/UDP 目标在 @gfwip 才 TPROXY 到 V2Ray</span>
+    nft add rule inet global prerouting ip daddr @gfwip tcp dport 0-65535 tproxy ip to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> meta mark <span class="nb">set </span>1
+    nft add rule inet global prerouting ip daddr @gfwip udp dport 0-65535 tproxy ip to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> meta mark <span class="nb">set </span>1
+
+    <span class="c"># IPv6 TCP/UDP 目标在 @gfwip6 才 TPROXY 到 V2Ray</span>
+    nft add rule inet global prerouting ip6 daddr @gfwip6 tcp dport 0-65535 tproxy ip6 to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> meta mark <span class="nb">set </span>1
+    nft add rule inet global prerouting ip6 daddr @gfwip6 udp dport 0-65535 tproxy ip6 to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> meta mark <span class="nb">set </span>1
+
+    <span class="c"># IPv4 TCP/UDP 目标在 @gfwip 才打标</span>
+    nft add rule inet global output ip daddr @gfwip tcp dport 0-65535 meta mark <span class="nb">set </span>1
+    nft add rule inet global output ip daddr @gfwip udp dport 0-65535 meta mark <span class="nb">set </span>1
+
+    <span class="c"># IPv6 TCP/UDP 目标在 @gfwip6 才打标</span>
+    nft add rule inet global output ip6 daddr @gfwip6 tcp dport 0-65535 meta mark <span class="nb">set </span>1
+    nft add rule inet global output ip6 daddr @gfwip6 udp dport 0-65535 meta mark <span class="nb">set </span>1
+<span class="o">}</span>
+
+disable_v2ray_rules<span class="o">()</span> <span class="o">{</span>
+    create_empty_chain
+    set_multi_domestic_dns
+    <span class="nb">echo</span> <span class="s2">"ingfw"</span> <span class="o">&gt;</span> /tmp/v2raymode.txt   
+<span class="o">}</span>
+
+stop_service<span class="o">()</span>  <span class="o">{</span>
+    <span class="nb">echo</span> <span class="s2">"[+] 停止 v2ray 服务"</span>
+    disable_v2ray_rules
+<span class="o">}</span>
+
+enable_v2ray_rules<span class="o">(){</span>
+    <span class="nv">running_v2ray_mode</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> /tmp/v2raymode.txt 2&gt;/dev/null | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\r'</span><span class="si">)</span>
+    <span class="nv">v2ray_mode</span><span class="o">=</span><span class="sb">`</span>uci get advancedconfig.@rules[0].v2raymode 2&gt;/dev/null<span class="sb">`</span>
+
+    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span> <span class="o">=</span> x<span class="k">${</span><span class="nv">running_v2ray_mode</span><span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[+] v2ray模式未变化"</span>
+    <span class="k">else
+        </span>disable_v2ray_rules
+        prepare_work
+        <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"outlands"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+            </span><span class="nb">echo</span> <span class="s2">"[+] 设置</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">（境外全局代理模式）模式中"</span>
+            append_chnroute_list
+            enable_chnroute_firewall_rules
+            set_multi_foreign_dns
+        
+        <span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"gfwlist"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+            </span><span class="nb">echo</span> <span class="s2">"[+] 设置</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">（白名单代理模式）模式中"</span>
+            append_gfwip_list
+            enable_gfwip_firewall_rules
+            set_multi_foreign_dns
+        
+        <span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"ingfw"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+            </span><span class="nb">echo</span> <span class="s2">"[+] 设置墙内访问模式"</span>
+        <span class="k">fi
+        </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> /tmp/v2raymode.txt
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+start_service<span class="o">()</span>  <span class="o">{</span>
+    <span class="c"># 检查 chinadns-ng 是否在运行</span>
+    <span class="k">if</span> <span class="o">!</span> pgrep <span class="nt">-f</span> chinadns-ng <span class="o">&gt;</span>/dev/null 2&gt;&amp;1<span class="p">;</span> <span class="k">then
+        </span><span class="nb">echo</span> <span class="s2">"[+] chinadns-ng 未运行, 启动中..."</span>
+        /etc/init.d/chinadns-ng start
+        <span class="nb">sleep </span>2   <span class="c"># 等几秒确保 chinadns-ng 完全启动</span>
+    <span class="k">fi
+    </span><span class="nb">echo</span> <span class="s2">"[+] 启动 v2ray 服务"</span>
+    <span class="nb">mkdir</span> <span class="nt">-p</span> /var/log/v2ray
+    <span class="nb">ulimit</span> <span class="nt">-n</span> 65535
+    procd_open_instance
+    procd_set_param <span class="nb">command</span> <span class="nv">$V2RAY_BIN</span> run <span class="nt">-config</span> <span class="nv">$V2RAY_CONF</span>
+    procd_set_param file <span class="nv">$V2RAY_CONF</span>
+    procd_set_param respawn
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_set_param pidfile /var/run/v2ray.pid
+    enable_v2ray_rules
+    procd_close_instance
+<span class="o">}</span>
+
+service_triggers<span class="o">()</span> <span class="o">{</span>
+    procd_add_reload_trigger <span class="s2">"advancedconfig"</span>
+<span class="o">}</span>
+</code></pre></div></div>
   
 	</div>
 	<footer class="article-footer clearfix">
