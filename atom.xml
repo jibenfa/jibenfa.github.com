@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-25T03:27:45+00:00</updated>
+ <updated>2025-08-25T03:28:45+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -28,6 +28,8 @@
 &lt;p&gt;多网卡/策略路由&lt;/p&gt;
 
 &lt;p&gt;不希望客户端察觉被代理&lt;/p&gt;
+
+&lt;p&gt;如果应用场景只是 HTTP/HTTPS TCP 流量，redirect 性能最好；如果有大量 UDP 或需要透明保留原始目标 IP，TPROXY 更可靠，但消耗略高。&lt;/p&gt;
 
 &lt;p&gt;下面是相关配置（注意，这个配置中openwrt路由本机未走v2ray的代理，只有经过路由的局域网设备走了v2ray代理。）&lt;/p&gt;
 
