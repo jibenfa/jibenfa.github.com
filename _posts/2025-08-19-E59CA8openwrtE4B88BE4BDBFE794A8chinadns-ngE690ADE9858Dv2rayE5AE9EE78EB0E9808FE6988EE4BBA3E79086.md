@@ -102,6 +102,10 @@ bind-port 5353
 china-dns 114.114.114.114
 china-dns 223.5.5.5
 china-dns 119.29.29.29
+china-dns tls://223.6.6.6
+china-dns tls://1.12.12.12
+china-dns tls://120.53.53.53
+
 
 # 国外 DNS
 trust-dns 127.0.0.1#5354
