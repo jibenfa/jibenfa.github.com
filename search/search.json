@@ -554,7 +554,7 @@
       {
         "title": "v2ray使用tproxy代理udp流量",
         "date": "2025 年 08 月",
-        "excerpt": "v2ray代理可以使用redirec和tproxy两种模式，前者只能代理tcp流量，但是速度快，路由开销小，后者可以代理tcp和udp流量，但是速度慢，路由开销较高。而且redirect 会修改目标 IP，对于一些应用或 UDP 协议（比如游戏、VoIP、某些 P2P）可能无法正确工作。TPROXY 能保持原始目标地址，适合复杂的分流场景，比如：UDP 透明代理、多网卡/策略路由。\n",
+        "excerpt": "openwrt下的v2ray透明代理有redirect和tproxy两种模式，前者只能代理tcp流量，但是速度快，路由开销小，后者可以代理tcp和udp流量，但是速度慢，路由开销较高。而且redirect 会修改目标 IP，对于一些应用或 UDP 协议（比如游戏、VoIP、某些 P2P）可能无法正确工作。tproxy 能保持原始目标地址，适合复杂的分流场景，比如：UDP 透明代理、多网卡/策略路由。\n",
         
         "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/25/v2rayE4BDBFE794A8tproxyE4BBA3E79086udpE6B581E9878F/"
       },
