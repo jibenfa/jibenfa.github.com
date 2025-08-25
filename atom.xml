@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-25T03:28:45+00:00</updated>
+ <updated>2025-08-25T03:29:30+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -17,17 +17,7 @@
    <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/25/v2rayE4BDBFE794A8tproxyE4BBA3E79086udpE6B581E9878F/"/>
    <updated>2025-08-25T00:12:13+00:00</updated>
    <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/25/v2rayE4BDBFE794A8tproxyE4BBA3E79086udpE6B581E9878F</id>
-   <content type="html">&lt;p&gt;v2ray代理可以使用redirec和tproxy两种模式，前者只能代理tcp流量，但是速度快，路由开销小，后者可以代理tcp和udp流量，但是速度慢，路由开销较高。而且&lt;/p&gt;
-
-&lt;p&gt;redirect 会修改目标 IP，对于一些应用或 UDP 协议（比如游戏、VoIP、某些 P2P）可能无法正确工作。&lt;/p&gt;
-
-&lt;p&gt;TPROXY 能保持原始目标地址，透明代理更“干净”，适合复杂的分流场景，比如：&lt;/p&gt;
-
-&lt;p&gt;UDP 透明代理&lt;/p&gt;
-
-&lt;p&gt;多网卡/策略路由&lt;/p&gt;
-
-&lt;p&gt;不希望客户端察觉被代理&lt;/p&gt;
+   <content type="html">&lt;p&gt;v2ray代理可以使用redirec和tproxy两种模式，前者只能代理tcp流量，但是速度快，路由开销小，后者可以代理tcp和udp流量，但是速度慢，路由开销较高。而且redirect 会修改目标 IP，对于一些应用或 UDP 协议（比如游戏、VoIP、某些 P2P）可能无法正确工作。TPROXY 能保持原始目标地址，透明代理更“干净”，适合复杂的分流场景，比如：UDP 透明代理、多网卡/策略路由、不希望客户端察觉被代理。&lt;/p&gt;
 
 &lt;p&gt;如果应用场景只是 HTTP/HTTPS TCP 流量，redirect 性能最好；如果有大量 UDP 或需要透明保留原始目标 IP，TPROXY 更可靠，但消耗略高。&lt;/p&gt;
 
