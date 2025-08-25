@@ -145,11 +145,11 @@ document.addEventListener("DOMContentLoaded", () => {
 		
 		</div>
 		
-		<p>v2ray代理可以使用redirec和tproxy两种模式，前者只能代理tcp流量，但是速度快，路由开销小，后者可以代理tcp和udp流量，但是速度慢，路由开销较高。而且redirect 会修改目标 IP，对于一些应用或 UDP 协议（比如游戏、VoIP、某些 P2P）可能无法正确工作。TPROXY 能保持原始目标地址，透明代理更“干净”，适合复杂的分流场景，比如：UDP 透明代理、多网卡/策略路由、不希望客户端察觉被代理。</p>
+		<p>v2ray代理可以使用redirec和tproxy两种模式，前者只能代理tcp流量，但是速度快，路由开销小，后者可以代理tcp和udp流量，但是速度慢，路由开销较高。而且redirect 会修改目标 IP，对于一些应用或 UDP 协议（比如游戏、VoIP、某些 P2P）可能无法正确工作。TPROXY 能保持原始目标地址，适合复杂的分流场景，比如：UDP 透明代理、多网卡/策略路由。</p>
 
 <p>如果应用场景只是 HTTP/HTTPS TCP 流量，redirect 性能最好；如果有大量 UDP 或需要透明保留原始目标 IP，TPROXY 更可靠，但消耗略高。</p>
 
-<p>下面是相关配置（注意，这个配置中openwrt路由本机未走v2ray的代理，只有经过路由的局域网设备走了v2ray代理。）</p>
+<p>下面是相关配置（注意，这个配置中openwrt路由本机未走v2ray的代理，只有经过openwrt路由的局域网设备走了v2ray代理。）</p>
 
 <p>1.修改/etc/config/v2ray.json</p>
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
