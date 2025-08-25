@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-25T03:41:55+00:00</updated>
+ <updated>2025-08-25T03:48:28+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -686,7 +686,7 @@ stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quo
 &lt;span class=&quot;c&quot;&gt;# This is free software, licensed under the GNU General Public License v3.&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# See /LICENSE for more information.&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# To use this file, install chinadns-ng,v2ray,coreutils-nohup,coreutils-paste first&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# To use this file, install chinadns-ng,v2ray,bind-dig first&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;START&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;90
