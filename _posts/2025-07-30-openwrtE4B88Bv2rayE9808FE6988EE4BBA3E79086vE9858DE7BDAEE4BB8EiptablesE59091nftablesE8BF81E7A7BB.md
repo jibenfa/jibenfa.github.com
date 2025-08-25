@@ -25,7 +25,7 @@ tags:
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
 #
-# To use this file, install chinadns,v2ray,dnsmasq-full,coreutils-nohup,coreutils-paste first
+# To use this file, install chinadns,v2ray,dnsmasq-full,bind-dig,coreutils-nohup,coreutils-paste first
 #
 #!/bin/sh /etc/rc.common
 
