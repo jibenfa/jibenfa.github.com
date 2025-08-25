@@ -127,6 +127,87 @@ document.addEventListener("DOMContentLoaded", () => {
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2017/03/07/e588a9e794a8openwrte8b7afe794b1e983a8e7bdb2openvpne8bf9be8a18ce4b8a4e59cb0e7bb84e7bd91/" title="利用Openwrt路由部署Openvpn进行两地组网" itemprop="url">利用Openwrt路由部署Openvpn进行两地组网</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2017-03-07 08:42:43 +0000" itemprop="datePublished">  2017-03-07</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>最近实践了一下利用Openwrt路由部署Openvpn进行两地组网，目标是实现两个局域网互相访问。<br />
+配置：<br />
+1.Openvpn服务端（内部局域网段172.24.1.0/24）：<br />
+首先/etc/config/network配置加一个interface：</p>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2017/03/07/e588a9e794a8openwrte8b7afe794b1e983a8e7bdb2openvpne8bf9be8a18ce4b8a4e59cb0e7bb84e7bd91/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+  
+    <div class="article-categories">
+      <span></span>
+      
+        
+        <a href="/categories/openwrt/">openwrt</a>
+      
+        
+        <a href="/categories/科学上网/">科学上网</a>
+      
+    </div>
+  
+
+  
+    <div class="article-tags">
+      <span></span>
+      
+        
+        <a href="/tags/openwrt/">openwrt</a>
+      
+        
+        <a href="/tags/科学上网/">科学上网</a>
+      
+    </div>
+  
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/openwrt/2017/02/18/e4bdbfe794a8uclibc-toolchaine7bc96e8af91ledee7b3bbe7bb9fefbc8ce98082e9858de8bf85e99bb7xwaree8bf9ce7a88be4b88be8bdbd/" title="使用uClibc Toolchain编译LEDE系统，适配迅雷xware远程下载" itemprop="url">使用uClibc Toolchain编译LEDE系统，适配迅雷xware远程下载</a>
   </h1>
   <p class="article-author">By
@@ -1515,88 +1596,6 @@ ssh进入openwrt：</p>
 
 
 
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/linux/openwrt/2015/07/25/e887aae7bc96e8af91openwrt-x86e694afe68c81e5a49ae6a0b8e38081e5a4a7e58685e5ad98e38081e8bf85e99bb7e8bf9ce7a88be5928ce8bf87e6bba4e5b9bfe5918a/" title="自编译Openwrt X86支持多核、大内存、迅雷远程和过滤广告 （debootstrap+debian+adbyby）" itemprop="url">自编译Openwrt X86支持多核、大内存、迅雷远程和过滤广告 （debootstrap+debian+adbyby）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-25 18:26:01 +0000" itemprop="datePublished">  2015-07-25</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>最近迷上了OP的X86，一直在捣鼓，官方编译的generic版本虽然packages很全，但是kernel仍然是没有支持多核和大内存，装了以后只支持1个核心和1GB内存，超级不爽。X64版本虽然支持了多核和大内存（2GB/2GB user/kernel），但是迅雷远程也就是xware木有支持64位的，只有32位的glibc或者uclibc，所以忍痛放弃。还是自己编译吧。。。<br />
-trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友好。。。虽然可以在make menuconfig的时候通过advanced configuration options (for developers) &gt; Toolchain Options &gt; c library 可以改成uclibc，编译时候还是一堆错。。。等稳定以后再说了。。。浪费我几十个小时。。。各种问题。。。<br />
-最后还是选了稳定的barrier_breaker和r46287的feed,开工：<br />
-1.编译OP X86 32位版本：<br />
-<!--more--></p>
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/linux/openwrt/2015/07/25/e887aae7bc96e8af91openwrt-x86e694afe68c81e5a49ae6a0b8e38081e5a4a7e58685e5ad98e38081e8bf85e99bb7e8bf9ce7a88be5928ce8bf87e6bba4e5b9bfe5918a/#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-  
-    <div class="article-categories">
-      <span></span>
-      
-        
-        <a href="/categories/linux/">linux</a>
-      
-        
-        <a href="/categories/openwrt/">openwrt</a>
-      
-    </div>
-  
-
-  
-    <div class="article-tags">
-      <span></span>
-      
-        
-        <a href="/tags/linux/">linux</a>
-      
-        
-        <a href="/tags/openwrt/">openwrt</a>
-      
-    </div>
-  
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
@@ -1671,7 +1670,7 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
         
         <li>
           <a href="/categories/科学上网/" title="科学上网">
-            科学上网<sup>17</sup>
+            科学上网<sup>18</sup>
           </a>
         </li>
       
@@ -1753,7 +1752,7 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
         
         <li>
           <a href="/tags/openwrt/" title="openwrt">
-            openwrt<sup>46</sup>
+            openwrt<sup>47</sup>
           </a>
         </li>
       
@@ -1843,7 +1842,7 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
         
         <li>
           <a href="/tags/v2ray/" title="v2ray">
-            v2ray<sup>2</sup>
+            v2ray<sup>3</sup>
           </a>
         </li>
       
@@ -1853,6 +1852,15 @@ trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友
         <li>
           <a href="/tags/chinadns-ng/" title="chinadns-ng">
             chinadns-ng<sup>1</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/tproxy/" title="tproxy">
+            tproxy<sup>1</sup>
           </a>
         </li>
       
@@ -2010,7 +2018,7 @@ $(document).ready(function() {
     
     { "name": "插件", "path": "/tags/插件/", "length": 1 },
     
-    { "name": "openwrt", "path": "/tags/openwrt/", "length": 46 },
+    { "name": "openwrt", "path": "/tags/openwrt/", "length": 47 },
     
     { "name": "Microsoft", "path": "/tags/microsoft/", "length": 1 },
     
@@ -2030,9 +2038,11 @@ $(document).ready(function() {
     
     { "name": "cloudflare", "path": "/tags/cloudflare/", "length": 1 },
     
-    { "name": "v2ray", "path": "/tags/v2ray/", "length": 2 },
+    { "name": "v2ray", "path": "/tags/v2ray/", "length": 3 },
     
     { "name": "chinadns-ng", "path": "/tags/chinadns-ng/", "length": 1 },
+    
+    { "name": "tproxy", "path": "/tags/tproxy/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));

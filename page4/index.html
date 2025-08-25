@@ -127,6 +127,85 @@ document.addEventListener("DOMContentLoaded", () => {
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/03/04/tp-link-wr720n-openwrte7a791e5ada6e4b88ae7bd91e694b9e980a0efbc8ce4bdbfe794a8chinadns-shadowsocks-e694bbe795a5/" title="TP-Link wr720n Openwrt 科学上网改造，使用ChinaDNS + Shadowsocks 攻略" itemprop="url">TP-Link wr720n Openwrt 科学上网改造，使用ChinaDNS + Shadowsocks 攻略</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-04 21:36:09 +0000" itemprop="datePublished">  2015-03-04</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>最近又在研究openwrt科学上网，正好手头有个TP-link wr720n v4 版本超便携路由，查阅资料以后发现，该机跟v3版本的配置一样，也就是说可以用v3版本的op的rom，由于这个路由内置存储仅有4M，完全不够用，目前有2个解决办法，1.淘宝有大神硬改，把4M flash换成了8或16M，过于彪悍了，2.软改，利用extroot让路由器从u盘启动，我是后者，使用了超mini的sandisk 16G usb3.0（向下兼容2.0）的u盘作为系统盘。一周折腾期间前前后后刷了不少大神的rom，但是都不能正常使用chinadns和shadowsocks，所有努力均以失败告终，最终使用官方rom成功。之前失败的根本原因是openwrt的kernel和软件关联性（dependence）太严格，导致就算是一个版本的kernel，编译版本不同，其很多软件都不能通用，特别是kmod开头的内核相关软件。<br />
+如果强行安装，就会报错，一个典型的错误内容如下：</p>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/03/04/tp-link-wr720n-openwrte7a791e5ada6e4b88ae7bd91e694b9e980a0efbc8ce4bdbfe794a8chinadns-shadowsocks-e694bbe795a5/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+  
+    <div class="article-categories">
+      <span></span>
+      
+        
+        <a href="/categories/openwrt/">openwrt</a>
+      
+        
+        <a href="/categories/科学上网/">科学上网</a>
+      
+    </div>
+  
+
+  
+    <div class="article-tags">
+      <span></span>
+      
+        
+        <a href="/tags/openwrt/">openwrt</a>
+      
+        
+        <a href="/tags/科学上网/">科学上网</a>
+      
+    </div>
+  
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/linux/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/02/22/debian-7e4b88be690ade5bbbae7baafipsec-xauth-pskikev1ikev2-e5908ce697b6e59091e4b88be585bce5aeb9l2tp-vpn/" title="Debian 7 下搭建纯IPSEC XAUTH PSK/IKEv1/IKEv2 同时向下兼容L2TP VPN" itemprop="url">Debian 7 下搭建纯IPSEC XAUTH PSK/IKEv1/IKEv2 同时向下兼容L2TP VPN</a>
   </h1>
   <p class="article-author">By
@@ -804,7 +883,7 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         
         <li>
           <a href="/categories/科学上网/" title="科学上网">
-            科学上网<sup>17</sup>
+            科学上网<sup>18</sup>
           </a>
         </li>
       
@@ -886,7 +965,7 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         
         <li>
           <a href="/tags/openwrt/" title="openwrt">
-            openwrt<sup>46</sup>
+            openwrt<sup>47</sup>
           </a>
         </li>
       
@@ -976,7 +1055,7 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         
         <li>
           <a href="/tags/v2ray/" title="v2ray">
-            v2ray<sup>2</sup>
+            v2ray<sup>3</sup>
           </a>
         </li>
       
@@ -986,6 +1065,15 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         <li>
           <a href="/tags/chinadns-ng/" title="chinadns-ng">
             chinadns-ng<sup>1</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/tproxy/" title="tproxy">
+            tproxy<sup>1</sup>
           </a>
         </li>
       
@@ -1143,7 +1231,7 @@ $(document).ready(function() {
     
     { "name": "插件", "path": "/tags/插件/", "length": 1 },
     
-    { "name": "openwrt", "path": "/tags/openwrt/", "length": 46 },
+    { "name": "openwrt", "path": "/tags/openwrt/", "length": 47 },
     
     { "name": "Microsoft", "path": "/tags/microsoft/", "length": 1 },
     
@@ -1163,9 +1251,11 @@ $(document).ready(function() {
     
     { "name": "cloudflare", "path": "/tags/cloudflare/", "length": 1 },
     
-    { "name": "v2ray", "path": "/tags/v2ray/", "length": 2 },
+    { "name": "v2ray", "path": "/tags/v2ray/", "length": 3 },
     
     { "name": "chinadns-ng", "path": "/tags/chinadns-ng/", "length": 1 },
+    
+    { "name": "tproxy", "path": "/tags/tproxy/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));

@@ -4,13 +4,22 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-23T08:24:23+00:00</updated>
+ <updated>2025-08-25T03:05:41+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>v2ray使用tproxy代理udp流量</title>
+   <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/25/v2rayE4BDBFE794A8tproxyE4BBA3E79086udpE6B581E9878F/"/>
+   <updated>2025-08-25T00:12:13+00:00</updated>
+   <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/25/v2rayE4BDBFE794A8tproxyE4BBA3E79086udpE6B581E9878F</id>
+   <content type="html">
+</content>
+ </entry>
  
  <entry>
    <title>在openwrt下使用chinadns-ng搭配v2ray实现透明代理</title>
@@ -3670,119 +3679,6 @@ git checkout v17.01.0
 1.http://lists.infradead.org/pipermail/lede-commits/2016-September/000876.html&lt;br /&gt;
 2.https://lists.openwrt.org/pipermail/openwrt-devel/2015-March/032268.html&lt;br /&gt;
 3.http://lxr.free-electrons.com/source/drivers/net/usb/qmi_wwan.c&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>利用Openwrt路由部署Openvpn进行两地组网</title>
-   <link href="https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2017/03/07/e588a9e794a8openwrte8b7afe794b1e983a8e7bdb2openvpne8bf9be8a18ce4b8a4e59cb0e7bb84e7bd91/"/>
-   <updated>2017-03-07T08:42:43+00:00</updated>
-   <id>https://jibenfa.github.io/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2017/03/07/e588a9e794a8openwrte8b7afe794b1e983a8e7bdb2openvpne8bf9be8a18ce4b8a4e59cb0e7bb84e7bd91</id>
-   <content type="html">&lt;p&gt;最近实践了一下利用Openwrt路由部署Openvpn进行两地组网，目标是实现两个局域网互相访问。&lt;br /&gt;
-配置：&lt;br /&gt;
-1.Openvpn服务端（内部局域网段172.24.1.0/24）：&lt;br /&gt;
-首先/etc/config/network配置加一个interface：&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config interface &lt;span class=&quot;s1&quot;&gt;&apos;vpn1&apos;&lt;/span&gt;
-    option proto &lt;span class=&quot;s1&quot;&gt;&apos;none&apos;&lt;/span&gt;
-    option ifname &lt;span class=&quot;s1&quot;&gt;&apos;tun1&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;/etc/config/openvpn文件增加内容：&lt;br /&gt;
-&lt;!--more--&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 
-config openvpn &lt;span class=&quot;s1&quot;&gt;&apos;tun_router&apos;&lt;/span&gt;
-        option port &lt;span class=&quot;s1&quot;&gt;&apos;3377&apos;&lt;/span&gt;
-        option proto &lt;span class=&quot;s1&quot;&gt;&apos;tcp&apos;&lt;/span&gt;
-        option dev &lt;span class=&quot;s1&quot;&gt;&apos;tun1&apos;&lt;/span&gt;
-        option &lt;span class=&quot;k&quot;&gt;ca&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/ca.crt&apos;&lt;/span&gt;
-        option cert &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/server.crt&apos;&lt;/span&gt;
-        option &lt;span class=&quot;nb&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/server.key&apos;&lt;/span&gt;
-        option dh &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/dh2048.pem&apos;&lt;/span&gt;
-        option server &lt;span class=&quot;s1&quot;&gt;&apos;10.0.1.0 255.255.255.0&apos;&lt;/span&gt;
-        option client_config_dir &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/ccd&apos;&lt;/span&gt;
-        option ccd_exclusive &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option ifconfig_pool_persist &lt;span class=&quot;s1&quot;&gt;&apos;/tmp/ipp3.txt&apos;&lt;/span&gt;
-        option client_to_client &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option keepalive &lt;span class=&quot;s1&quot;&gt;&apos;10 120&apos;&lt;/span&gt;
-        option compress &lt;span class=&quot;s1&quot;&gt;&apos;lzo&apos;&lt;/span&gt;
-        option persist_key &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option persist_tun &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option status &lt;span class=&quot;s1&quot;&gt;&apos;/tmp/openvpn-status3.log&apos;&lt;/span&gt;
-        option &lt;span class=&quot;k&quot;&gt;verb&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;3&apos;&lt;/span&gt;
-        option enabled &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option topology &lt;span class=&quot;s1&quot;&gt;&apos;subnet&apos;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; push &lt;span class=&quot;s1&quot;&gt;&apos;route 172.24.1.0 255.255.255.0&apos;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; route &lt;span class=&quot;s1&quot;&gt;&apos;172.24.8.0 255.255.255.0&apos;&lt;/span&gt;
-
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;/etc/openvpn/ccd文件夹内增加一个文件，文件名为客户端证书的common name，例如tbjj，内容为：&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ifconfig&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;push &lt;span class=&quot;s2&quot;&gt;&quot;10.0.1.6 255.255.255.0&quot;&lt;/span&gt;
-iroute &lt;span class=&quot;m&quot;&gt;172&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;然后在防火墙自定义规则里面添加：&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;iptables &lt;span class=&quot;nt&quot;&gt;-I&lt;/span&gt; INPUT 1 &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; tcp &lt;span class=&quot;nt&quot;&gt;--dport&lt;/span&gt; 3377 &lt;span class=&quot;nt&quot;&gt;-j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;nt&quot;&gt;-I&lt;/span&gt; INPUT 1 &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; udp &lt;span class=&quot;nt&quot;&gt;--dport&lt;/span&gt; 3377 &lt;span class=&quot;nt&quot;&gt;-j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;nt&quot;&gt;-A&lt;/span&gt; FORWARD &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; tun1 &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; 10.0.1.0/24 &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; 172.24.1.0/24 &lt;span class=&quot;nt&quot;&gt;-j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;nt&quot;&gt;-A&lt;/span&gt; FORWARD &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; tun1 &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; 172.24.8.0/24 &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; 172.24.1.0/24 &lt;span class=&quot;nt&quot;&gt;-j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;nt&quot;&gt;-I&lt;/span&gt; INPUT &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; tun1 &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; 172.24.8.0/24 &lt;span class=&quot;nt&quot;&gt;-j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;nt&quot;&gt;-A&lt;/span&gt; FORWARD &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; tun1 &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; 172.24.1.0/24 &lt;span class=&quot;nt&quot;&gt;-j&lt;/span&gt; ACCEPT
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;2.Openvpn客户端（内部局域网段172.24.8.0/24）：&lt;br /&gt;
-首先/etc/config/network配置加一个interface：&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config interface &lt;span class=&quot;s1&quot;&gt;&apos;vpn1&apos;&lt;/span&gt;
-    option proto &lt;span class=&quot;s1&quot;&gt;&apos;none&apos;&lt;/span&gt;
-    option ifname &lt;span class=&quot;s1&quot;&gt;&apos;tun1&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;/etc/config/openvpn文件增加内容：&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-config openvpn &lt;span class=&quot;s1&quot;&gt;&apos;vpn_client&apos;&lt;/span&gt;
-        option client &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option dev &lt;span class=&quot;s1&quot;&gt;&apos;tun1&apos;&lt;/span&gt;
-        option proto &lt;span class=&quot;s1&quot;&gt;&apos;tcp&apos;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; remote &lt;span class=&quot;s1&quot;&gt;&apos;远端地址 3377&apos;&lt;/span&gt;
-        option remote_cert_tls &lt;span class=&quot;s1&quot;&gt;&apos;server&apos;&lt;/span&gt;
-        option remote_random &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option resolv_retry &lt;span class=&quot;s1&quot;&gt;&apos;infinite&apos;&lt;/span&gt;
-        option persist_key &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option persist_tun &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option &lt;span class=&quot;k&quot;&gt;ca&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/ca.crt&apos;&lt;/span&gt;
-        option cert &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/tbjj.crt&apos;&lt;/span&gt;
-        option &lt;span class=&quot;nb&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/tbjj.key&apos;&lt;/span&gt;
-        option compress &lt;span class=&quot;s1&quot;&gt;&apos;lzo&apos;&lt;/span&gt;
-        option &lt;span class=&quot;k&quot;&gt;verb&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;3&apos;&lt;/span&gt;
-        option enabled &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option nobind &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-        option auth_nocache &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
-
-        
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;然后防火墙自定义规则添加：&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;iptables &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;I INPUT &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;p&lt;/span&gt; tcp &lt;span class=&quot;p&quot;&gt;--&lt;/span&gt;dport &lt;span class=&quot;m&quot;&gt;1195&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;I INPUT &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;p&lt;/span&gt; udp &lt;span class=&quot;p&quot;&gt;--&lt;/span&gt;dport &lt;span class=&quot;m&quot;&gt;1195&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;A FORWARD &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt; tun1 &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;s &lt;span class=&quot;m&quot;&gt;172&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/24 -d 172.24.8.0/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;I INPUT &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt; tun1 &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;s &lt;span class=&quot;m&quot;&gt;172&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;/&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;A FORWARD &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt; tun1 &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;s &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/24 -d 172.24.8.0/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;j&lt;/span&gt; ACCEPT
-iptables &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;A FORWARD &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;o&lt;/span&gt; tun1 &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;s &lt;span class=&quot;m&quot;&gt;172&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;/&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;j&lt;/span&gt; ACCEPT
- 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;3.最后重启两个路由，2个局域网就可以互相访问了。&lt;/p&gt;
-
-&lt;p&gt;参考资料：&lt;br /&gt;
-1.http://blog.ltns.info/linux/connect_two_home_networks_using_openvpn_and_openwrt/&lt;/p&gt;
 </content>
  </entry>
  

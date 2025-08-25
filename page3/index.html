@@ -127,6 +127,88 @@ document.addEventListener("DOMContentLoaded", () => {
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/linux/openwrt/2015/07/25/e887aae7bc96e8af91openwrt-x86e694afe68c81e5a49ae6a0b8e38081e5a4a7e58685e5ad98e38081e8bf85e99bb7e8bf9ce7a88be5928ce8bf87e6bba4e5b9bfe5918a/" title="自编译Openwrt X86支持多核、大内存、迅雷远程和过滤广告 （debootstrap+debian+adbyby）" itemprop="url">自编译Openwrt X86支持多核、大内存、迅雷远程和过滤广告 （debootstrap+debian+adbyby）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2015-07-25 18:26:01 +0000" itemprop="datePublished">  2015-07-25</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>最近迷上了OP的X86，一直在捣鼓，官方编译的generic版本虽然packages很全，但是kernel仍然是没有支持多核和大内存，装了以后只支持1个核心和1GB内存，超级不爽。X64版本虽然支持了多核和大内存（2GB/2GB user/kernel），但是迅雷远程也就是xware木有支持64位的，只有32位的glibc或者uclibc，所以忍痛放弃。还是自己编译吧。。。<br />
+trunk版是大坑，自从r45995改成了musl libc以后，对uclibc非常不友好。。。虽然可以在make menuconfig的时候通过advanced configuration options (for developers) &gt; Toolchain Options &gt; c library 可以改成uclibc，编译时候还是一堆错。。。等稳定以后再说了。。。浪费我几十个小时。。。各种问题。。。<br />
+最后还是选了稳定的barrier_breaker和r46287的feed,开工：<br />
+1.编译OP X86 32位版本：<br />
+<!--more--></p>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/linux/openwrt/2015/07/25/e887aae7bc96e8af91openwrt-x86e694afe68c81e5a49ae6a0b8e38081e5a4a7e58685e5ad98e38081e8bf85e99bb7e8bf9ce7a88be5928ce8bf87e6bba4e5b9bfe5918a/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+  
+    <div class="article-categories">
+      <span></span>
+      
+        
+        <a href="/categories/linux/">linux</a>
+      
+        
+        <a href="/categories/openwrt/">openwrt</a>
+      
+    </div>
+  
+
+  
+    <div class="article-tags">
+      <span></span>
+      
+        
+        <a href="/tags/linux/">linux</a>
+      
+        
+        <a href="/tags/openwrt/">openwrt</a>
+      
+    </div>
+  
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/openwrt/2015/07/21/openwrt-x86-32e4bd8de5ae98e696b9e78988e69cace79c9fe698afe59d91e788b9efbc8ce5b185e784b6e5b091kmod-e1000ee8bf99e4b8aae58c85e5aeb3e79a84e68891/" title="Openwrt X86 32位官方版本真是坑爹，居然少kmod-e1000e这个包,害的我只有自己编译了。。。。" itemprop="url">Openwrt X86 32位官方版本真是坑爹，居然少kmod-e1000e这个包,害的我只有自己编译了。。。。</a>
   </h1>
   <p class="article-author">By
@@ -1515,85 +1597,6 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
 
 
 
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/03/04/tp-link-wr720n-openwrte7a791e5ada6e4b88ae7bd91e694b9e980a0efbc8ce4bdbfe794a8chinadns-shadowsocks-e694bbe795a5/" title="TP-Link wr720n Openwrt 科学上网改造，使用ChinaDNS + Shadowsocks 攻略" itemprop="url">TP-Link wr720n Openwrt 科学上网改造，使用ChinaDNS + Shadowsocks 攻略</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-04 21:36:09 +0000" itemprop="datePublished">  2015-03-04</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>最近又在研究openwrt科学上网，正好手头有个TP-link wr720n v4 版本超便携路由，查阅资料以后发现，该机跟v3版本的配置一样，也就是说可以用v3版本的op的rom，由于这个路由内置存储仅有4M，完全不够用，目前有2个解决办法，1.淘宝有大神硬改，把4M flash换成了8或16M，过于彪悍了，2.软改，利用extroot让路由器从u盘启动，我是后者，使用了超mini的sandisk 16G usb3.0（向下兼容2.0）的u盘作为系统盘。一周折腾期间前前后后刷了不少大神的rom，但是都不能正常使用chinadns和shadowsocks，所有努力均以失败告终，最终使用官方rom成功。之前失败的根本原因是openwrt的kernel和软件关联性（dependence）太严格，导致就算是一个版本的kernel，编译版本不同，其很多软件都不能通用，特别是kmod开头的内核相关软件。<br />
-如果强行安装，就会报错，一个典型的错误内容如下：</p>
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/03/04/tp-link-wr720n-openwrte7a791e5ada6e4b88ae7bd91e694b9e980a0efbc8ce4bdbfe794a8chinadns-shadowsocks-e694bbe795a5/#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-  
-    <div class="article-categories">
-      <span></span>
-      
-        
-        <a href="/categories/openwrt/">openwrt</a>
-      
-        
-        <a href="/categories/科学上网/">科学上网</a>
-      
-    </div>
-  
-
-  
-    <div class="article-tags">
-      <span></span>
-      
-        
-        <a href="/tags/openwrt/">openwrt</a>
-      
-        
-        <a href="/tags/科学上网/">科学上网</a>
-      
-    </div>
-  
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
@@ -1668,7 +1671,7 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
         
         <li>
           <a href="/categories/科学上网/" title="科学上网">
-            科学上网<sup>17</sup>
+            科学上网<sup>18</sup>
           </a>
         </li>
       
@@ -1750,7 +1753,7 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
         
         <li>
           <a href="/tags/openwrt/" title="openwrt">
-            openwrt<sup>46</sup>
+            openwrt<sup>47</sup>
           </a>
         </li>
       
@@ -1840,7 +1843,7 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
         
         <li>
           <a href="/tags/v2ray/" title="v2ray">
-            v2ray<sup>2</sup>
+            v2ray<sup>3</sup>
           </a>
         </li>
       
@@ -1850,6 +1853,15 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
         <li>
           <a href="/tags/chinadns-ng/" title="chinadns-ng">
             chinadns-ng<sup>1</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/tproxy/" title="tproxy">
+            tproxy<sup>1</sup>
           </a>
         </li>
       
@@ -2007,7 +2019,7 @@ $(document).ready(function() {
     
     { "name": "插件", "path": "/tags/插件/", "length": 1 },
     
-    { "name": "openwrt", "path": "/tags/openwrt/", "length": 46 },
+    { "name": "openwrt", "path": "/tags/openwrt/", "length": 47 },
     
     { "name": "Microsoft", "path": "/tags/microsoft/", "length": 1 },
     
@@ -2027,9 +2039,11 @@ $(document).ready(function() {
     
     { "name": "cloudflare", "path": "/tags/cloudflare/", "length": 1 },
     
-    { "name": "v2ray", "path": "/tags/v2ray/", "length": 2 },
+    { "name": "v2ray", "path": "/tags/v2ray/", "length": 3 },
     
     { "name": "chinadns-ng", "path": "/tags/chinadns-ng/", "length": 1 },
+    
+    { "name": "tproxy", "path": "/tags/tproxy/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));
