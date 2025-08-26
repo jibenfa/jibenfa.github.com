@@ -154,18 +154,116 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="sr">/usr/</span>lib<span class="sr">/lua/</span>luci<span class="sr">/view/</span>
 </code></pre></div></div>
 <p>新版 (22.03 / 23.05 / 24.x)</p>
-<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/usr/</span>libexec<span class="sr">/rpcd/</span>                ← rpcd 插件（C/ucode 写的）
-<span class="sr">/www/</span>luci<span class="p">-</span>static<span class="sr">/resources/</span>       ← 前端 JS<span class="sr">/HTML/</span>CSS 资源
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/www/</span>luci<span class="p">-</span>static<span class="sr">/resources/</span>       ← 前端 JS<span class="sr">/HTML/</span>CSS 资源
 <span class="sr">/usr/</span>share<span class="sr">/luci/</span>menu<span class="p">.</span><span class="k">d</span>/           ← 网页菜单
-<span class="sr">/usr/</span>share<span class="sr">/rpcd/</span>acl<span class="p">.</span><span class="k">d</span>/            ← ACL 权限 JSON 定义
+<span class="sr">/usr/</span>share<span class="sr">/rpcd/</span>acl<span class="p">.</span><span class="k">d</span>/            ← ACL 菜单访问权限 JSON 定义
 </code></pre></div></div>
 <p>所以很多luci-app-xxx的图形界面软件包都失效了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。
-1)创建菜单页面
-vi /usr/share/luci/menu.d/luci-app-advancedconfig.json
-2)创建网页脚本
-vi /www/luci-static/resources/view/advancedconfig.js
-3)创建权限json
-vi /usr/share/rpcd/acl.d/luci-app-advancedconfig.json</p>
+0)我在/etc/config/advancedconfig文件中定义了v2ray的三种运行模式：</p>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config rules
+	option v2raymode <span class="s1">'outlands'</span>
+</code></pre></div></div>
+<p>其中：</p>
+
+<p>a）境外全局代理模式，即所有国外网站（非国内ip段）都走代理，对应值：outlands</p>
+
+<p>b）白名单代理模式，即所有被墙的网站（白名单中的网站）都走代理，对应值：gfwlist</p>
+
+<p>c）无代理模式，即跟平常没有代理上网一样，对应值：ingfw</p>
+
+<p>为了能通过菜单进行模式切换，就需要创建菜单。</p>
+
+<p>1)创建菜单页面（/usr/share/luci/menu.d/luci-app-advancedconfig.json）</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"admin/services/advancedconfig"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v2ray"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"view"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"advancedconfig"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"depends"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+      </span><span class="nl">"acl"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"luci-app-advancedconfig"</span><span class="w"> </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"uci"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"advancedconfig"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span><span class="w"> 
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>2)创建网页脚本（/www/luci-static/resources/view/advancedconfig.js）</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="dl">'</span><span class="s1">require view</span><span class="dl">'</span><span class="p">;</span>
+<span class="dl">'</span><span class="s1">require form</span><span class="dl">'</span><span class="p">;</span>
+<span class="dl">'</span><span class="s1">require uci</span><span class="dl">'</span><span class="p">;</span>
+<span class="dl">'</span><span class="s1">require rpc</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// 定义一个 RPC 调用，用来执行 /etc/init.d/v2ray restart</span>
+<span class="kd">var</span> <span class="nx">callExec</span> <span class="o">=</span> <span class="nx">rpc</span><span class="p">.</span><span class="nx">declare</span><span class="p">({</span>
+    <span class="na">object</span><span class="p">:</span> <span class="dl">'</span><span class="s1">file</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">exec</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">params</span><span class="p">:</span> <span class="p">[</span> <span class="dl">'</span><span class="s1">command</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">params</span><span class="dl">'</span> <span class="p">],</span>
+    <span class="na">expect</span><span class="p">:</span> <span class="p">{</span> <span class="na">code</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="k">return</span> <span class="nx">view</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="na">render</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Map 对象名称必须和 UCI 文件名一致</span>
+        <span class="kd">var</span> <span class="nx">m</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">form</span><span class="p">.</span><span class="nb">Map</span><span class="p">(</span><span class="dl">'</span><span class="s1">advancedconfig</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">v2ray</span><span class="dl">'</span><span class="p">),</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">Advanced config for v2ray</span><span class="dl">'</span><span class="p">));</span>
+
+        <span class="c1">// 对应 config rules</span>
+        <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">section</span><span class="p">(</span><span class="nx">form</span><span class="p">.</span><span class="nx">TypedSection</span><span class="p">,</span> <span class="dl">'</span><span class="s1">rules</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">Rules</span><span class="dl">'</span><span class="p">));</span>
+        <span class="nx">s</span><span class="p">.</span><span class="nx">anonymous</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+        <span class="c1">// 下拉选项</span>
+        <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="nx">form</span><span class="p">.</span><span class="nx">ListValue</span><span class="p">,</span> <span class="dl">'</span><span class="s1">v2raymode</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">代理模式</span><span class="dl">'</span><span class="p">));</span>
+        <span class="nx">o</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="dl">'</span><span class="s1">gfwlist</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">白名单代理模式 (Gfwist Mode)</span><span class="dl">'</span><span class="p">));</span>
+        <span class="nx">o</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="dl">'</span><span class="s1">outlands</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">境外全局代理模式(Outlands Mode)</span><span class="dl">'</span><span class="p">));</span>
+        <span class="nx">o</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="dl">'</span><span class="s1">ingfw</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">墙内无代理模式 (China Mode)</span><span class="dl">'</span><span class="p">));</span>
+        <span class="nx">o</span><span class="p">.</span><span class="kd">class</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">cbi-input-select wide</span><span class="dl">'</span><span class="p">;</span>
+        <span class="nx">o</span><span class="p">.</span><span class="nx">style</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">min-width: 1500em;</span><span class="dl">'</span><span class="p">;</span>
+
+        <span class="c1">// write 函数：只有值变化才写入 UCI 内存</span>
+        <span class="nx">o</span><span class="p">.</span><span class="nx">write</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">section_id</span><span class="p">,</span> <span class="nx">formvalue</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">oldVal</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">cfgvalue</span><span class="p">(</span><span class="nx">section_id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">oldVal</span> <span class="o">===</span> <span class="nx">formvalue</span><span class="p">)</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nx">uci</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="dl">'</span><span class="s1">advancedconfig</span><span class="dl">'</span><span class="p">,</span> <span class="nx">section_id</span><span class="p">,</span> <span class="dl">'</span><span class="s1">v2raymode</span><span class="dl">'</span><span class="p">,</span> <span class="nx">formvalue</span><span class="p">);</span>
+        <span class="p">};</span>
+
+        <span class="c1">// 保存时执行 uci commit + restart</span>
+        <span class="nx">m</span><span class="p">.</span><span class="nx">oncommit</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">callExec</span><span class="p">(</span><span class="dl">'</span><span class="s1">/etc/init.d/v2ray</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">restart</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">force</span><span class="dl">'</span><span class="p">]);</span>
+        <span class="p">};</span>
+
+        <span class="k">return</span> <span class="nx">m</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>
+    <span class="p">}</span>
+
+<span class="p">});</span>
+
+</code></pre></div></div>
+<p>此步完成以后需要重启rpcd服务：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/init.d/rpcd restart
+</code></pre></div></div>
+
+<p>3)创建权限json（/usr/share/rpcd/acl.d/luci-app-advancedconfig.json）</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"luci-app-advancedconfig"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Grant UCI access for luci-app-advancedconfig"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"read"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"file"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"/etc/config/advancedconfig"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"read"</span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"uci"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"advancedconfig"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"write"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"file"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"/etc/config/advancedconfig"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"write"</span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"uci"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"advancedconfig"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"exec"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"file"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"/etc/init.d/v2ray"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"exec"</span><span class="w"> </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
 
   
 	</div>
