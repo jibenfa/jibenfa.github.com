@@ -35,6 +35,7 @@
 /tags/tproxy/
 /tags/luci/
 /tags/lua/
+/tags/js/
 /page2/
 /page3/
 /page4/

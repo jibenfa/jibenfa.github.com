@@ -154,8 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="sr">/usr/</span>lib<span class="sr">/lua/</span>luci<span class="sr">/view/</span>
 </code></pre></div></div>
 <p>新版 (22.03 / 23.05 / 24.x)</p>
-<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/www/</span>luci<span class="p">-</span>static<span class="sr">/resources/</span>       ← 前端 JS<span class="sr">/HTML/</span>CSS 资源
-<span class="sr">/usr/</span>share<span class="sr">/luci/</span>menu<span class="p">.</span><span class="k">d</span>/           ← 网页菜单
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/www/</span>luci<span class="p">-</span>static<span class="sr">/resources/</span>       ← 前端 JS<span class="sr">/HTML/</span>CSS 资源，用于生成网页菜单
+<span class="sr">/usr/</span>share<span class="sr">/luci/</span>menu<span class="p">.</span><span class="k">d</span>/           ← 网页菜单项，即菜单入口
 <span class="sr">/usr/</span>share<span class="sr">/rpcd/</span>acl<span class="p">.</span><span class="k">d</span>/            ← ACL 菜单访问权限 JSON 定义
 </code></pre></div></div>
 <p>所以很多形如luci-app-xxx的图形界面软件包都失效了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <p>为了能通过菜单进行模式切换，就需要创建菜单。</p>
 
-<p>1)创建菜单页面（/usr/share/luci/menu.d/luci-app-advancedconfig.json）</p>
+<p>1)创建菜单项json（/usr/share/luci/menu.d/luci-app-advancedconfig.json）</p>
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"admin/services/advancedconfig"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v2ray"</span><span class="p">,</span><span class="w">
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<p>2)创建网页脚本（/www/luci-static/resources/view/advancedconfig.js）</p>
+<p>2)创建菜单页面js（/www/luci-static/resources/view/advancedconfig.js）</p>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
 <span class="dl">'</span><span class="s1">require view</span><span class="dl">'</span><span class="p">;</span>
 <span class="dl">'</span><span class="s1">require form</span><span class="dl">'</span><span class="p">;</span>
@@ -292,6 +292,9 @@ document.addEventListener("DOMContentLoaded", () => {
       
         
         <a href="/tags/lua/">lua</a>
+      
+        
+        <a href="/tags/js/">js</a>
       
         
         <a href="/tags/openwrt/">openwrt</a>
@@ -595,6 +598,15 @@ document.addEventListener("DOMContentLoaded", () => {
         </li>
       
     
+      
+        
+        <li>
+          <a href="/tags/js/" title="js">
+            js<sup>1</sup>
+          </a>
+        </li>
+      
+    
   </ul>
 </div>
 
@@ -779,6 +791,8 @@ $(document).ready(function() {
     { "name": "luci", "path": "/tags/luci/", "length": 1 },
     
     { "name": "lua", "path": "/tags/lua/", "length": 1 },
+    
+    { "name": "js", "path": "/tags/js/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));
