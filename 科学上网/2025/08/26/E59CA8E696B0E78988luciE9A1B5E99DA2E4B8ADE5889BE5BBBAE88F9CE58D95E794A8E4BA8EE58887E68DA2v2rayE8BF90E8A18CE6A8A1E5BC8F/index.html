@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="sr">/usr/</span>share<span class="sr">/luci/</span>menu<span class="p">.</span><span class="k">d</span>/           ← 网页菜单
 <span class="sr">/usr/</span>share<span class="sr">/rpcd/</span>acl<span class="p">.</span><span class="k">d</span>/            ← ACL 菜单访问权限 JSON 定义
 </code></pre></div></div>
-<p>所以很多luci-app-xxx的图形界面软件包都失效了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。
+<p>所以很多形如luci-app-xxx的图形界面软件包都失效了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。
 0)我在/etc/config/advancedconfig文件中定义了v2ray的三种运行模式：</p>
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config rules
 	option v2raymode <span class="s1">'outlands'</span>
@@ -264,6 +264,10 @@ document.addEventListener("DOMContentLoaded", () => {
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
+
+<p>参考：
+1）chatgpt
+2）luci-app-samba4的配置文件</p>
 
   
 	</div>

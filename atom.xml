@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-26T07:41:47+00:00</updated>
+ <updated>2025-08-26T07:43:42+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -30,7 +30,7 @@
 &lt;span class=&quot;sr&quot;&gt;/usr/&lt;/span&gt;share&lt;span class=&quot;sr&quot;&gt;/luci/&lt;/span&gt;menu&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;d&lt;/span&gt;/           ← 网页菜单
 &lt;span class=&quot;sr&quot;&gt;/usr/&lt;/span&gt;share&lt;span class=&quot;sr&quot;&gt;/rpcd/&lt;/span&gt;acl&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;d&lt;/span&gt;/            ← ACL 菜单访问权限 JSON 定义
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;所以很多luci-app-xxx的图形界面软件包都失效了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。
+&lt;p&gt;所以很多形如luci-app-xxx的图形界面软件包都失效了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。
 0)我在/etc/config/advancedconfig文件中定义了v2ray的三种运行模式：&lt;/p&gt;
 &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config rules
 	option v2raymode &lt;span class=&quot;s1&quot;&gt;&apos;outlands&apos;&lt;/span&gt;
@@ -136,6 +136,10 @@
   &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;参考：
+1）chatgpt
+2）luci-app-samba4的配置文件&lt;/p&gt;
 
 </content>
  </entry>
