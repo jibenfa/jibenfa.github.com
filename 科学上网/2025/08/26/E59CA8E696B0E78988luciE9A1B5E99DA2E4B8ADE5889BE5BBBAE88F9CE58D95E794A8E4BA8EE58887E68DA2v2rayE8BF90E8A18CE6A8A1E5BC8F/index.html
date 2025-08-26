@@ -158,8 +158,9 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="sr">/usr/</span>share<span class="sr">/luci/</span>menu<span class="p">.</span><span class="k">d</span>/           ← 网页菜单项，即菜单入口
 <span class="sr">/usr/</span>share<span class="sr">/rpcd/</span>acl<span class="p">.</span><span class="k">d</span>/            ← ACL 菜单访问权限 JSON 定义
 </code></pre></div></div>
-<p>所以很多形如luci-app-xxx的图形界面软件包都失效了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。
-0)我在/etc/config/advancedconfig文件中定义了v2ray的三种运行模式：</p>
+<p>所以很多形如luci-app-xxx的图形界面软件包都失效了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。</p>
+
+<p>0)我在/etc/config/advancedconfig文件中定义了v2ray的三种运行模式：</p>
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config rules
 	option v2raymode <span class="s1">'outlands'</span>
 </code></pre></div></div>
@@ -171,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <p>c）无代理模式，即跟平常没有代理上网一样，对应值：ingfw</p>
 
-<p>为了能通过菜单进行模式切换，就需要创建菜单。</p>
+<p>这三种模式对应了/etc/init.d/v2ray中的配置，详见<a href="https://jibenfa.github.io/科学上网/2025/08/19/E59CA8openwrtE4B88BE4BDBFE794A8chinadns-ngE690ADE9858Dv2rayE5AE9EE78EB0E9808FE6988EE4BBA3E79086/">这里</a>,为了能通过菜单进行模式切换，就需要创建菜单。</p>
 
 <p>1)创建菜单项json（/usr/share/luci/menu.d/luci-app-advancedconfig.json）</p>
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
