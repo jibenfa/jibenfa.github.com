@@ -145,7 +145,28 @@ document.addEventListener("DOMContentLoaded", () => {
 		
 		</div>
 		
-		
+		<p>从 OpenWrt 22.x 开始，LuCI 的实现逐渐从 Lua 迁移到 ubus + ucode + JavaScript (client-side JS)：</p>
+
+<p>旧版 (≤21.02)</p>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/usr/</span>lib<span class="sr">/lua/</span>luci/      ← 主要的 Lua MVC 框架代码
+<span class="sr">/usr/</span>lib<span class="sr">/lua/</span>luci<span class="sr">/controller/</span>
+<span class="sr">/usr/</span>lib<span class="sr">/lua/</span>luci<span class="sr">/model/</span>
+<span class="sr">/usr/</span>lib<span class="sr">/lua/</span>luci<span class="sr">/view/</span>
+</code></pre></div></div>
+<p>新版 (22.03 / 23.05 / 24.x)</p>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/usr/</span>libexec<span class="sr">/rpcd/</span>                ← rpcd 插件（C/ucode 写的）
+<span class="sr">/www/</span>luci<span class="p">-</span>static<span class="sr">/resources/</span>       ← 前端 JS<span class="sr">/HTML/</span>CSS 资源
+<span class="sr">/usr/</span>share<span class="sr">/luci/</span>menu<span class="p">.</span><span class="k">d</span>/           ← 网页菜单
+<span class="sr">/usr/</span>share<span class="sr">/rpcd/</span>acl<span class="p">.</span><span class="k">d</span>/            ← ACL 权限 JSON 定义
+</code></pre></div></div>
+<p>所以很多luci-app-xxx的图形界面软件包都失效了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。
+1)创建菜单页面
+vi /usr/share/luci/menu.d/luci-app-advancedconfig.json
+2)创建网页脚本
+vi /www/luci-static/resources/view/advancedconfig.js
+3)创建权限json
+vi /usr/share/rpcd/acl.d/luci-app-advancedconfig.json</p>
+
   
 	</div>
 	<footer class="article-footer clearfix">

@@ -562,7 +562,7 @@
       {
         "title": "在新版luci页面中创建菜单用于切换v2ray运行模式",
         "date": "2025 年 08 月",
-        "excerpt": "\n",
+        "excerpt": "从 OpenWrt 22.x 开始，LuCI 的实现逐渐从 Lua 迁移到 ubus + ucode + JavaScript (client-side JS)：\n",
         
         "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E59CA8E696B0E78988luciE9A1B5E99DA2E4B8ADE5889BE5BBBAE88F9CE58D95E794A8E4BA8EE58887E68DA2v2rayE8BF90E8A18CE6A8A1E5BC8F/"
       },
