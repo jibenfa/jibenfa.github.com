@@ -127,6 +127,80 @@ document.addEventListener("DOMContentLoaded", () => {
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/linux/2015/03/06/debian-7-linode-vpse79a84e58685e6a0b8e5beaee8b083-e5a29ee58aa0hybla/" title="Debian 7 Linode VPS的内核微调——增加Hybla选项和加速调整" itemprop="url">Debian 7 Linode VPS的内核微调——增加Hybla选项和加速调整</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-06 14:02:38 +0000" itemprop="datePublished">  2015-03-06</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>按照linode官网的内核编译教程，最后在make install的时候总会失败，后来只好放弃，但是因为linode内核不带hybla（hybla可以对高延迟高丢包的网络环境进行加速，特别对于下载等应用比较有效），所以只好另辟蹊径，用相同的内核编译模块加载进去，于是找到了如下教程，我的内核是<br />
+3.18.5-x86_64-linode52<br />
+按教程操作ok。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/linux/2015/03/06/debian-7-linode-vpse79a84e58685e6a0b8e5beaee8b083-e5a29ee58aa0hybla/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+  
+    <div class="article-categories">
+      <span></span>
+      
+        
+        <a href="/categories/linux/">linux</a>
+      
+    </div>
+  
+
+  
+    <div class="article-tags">
+      <span></span>
+      
+        
+        <a href="/tags/linux/">linux</a>
+      
+    </div>
+  
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2015/03/04/tp-link-wr720n-openwrte7a791e5ada6e4b88ae7bd91e694b9e980a0efbc8ce4bdbfe794a8chinadns-shadowsocks-e694bbe795a5/" title="TP-Link wr720n Openwrt 科学上网改造，使用ChinaDNS + Shadowsocks 攻略" itemprop="url">TP-Link wr720n Openwrt 科学上网改造，使用ChinaDNS + Shadowsocks 攻略</a>
   </h1>
   <p class="article-author">By
@@ -883,7 +957,7 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         
         <li>
           <a href="/categories/科学上网/" title="科学上网">
-            科学上网<sup>18</sup>
+            科学上网<sup>19</sup>
           </a>
         </li>
       
@@ -965,7 +1039,7 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         
         <li>
           <a href="/tags/openwrt/" title="openwrt">
-            openwrt<sup>47</sup>
+            openwrt<sup>48</sup>
           </a>
         </li>
       
@@ -1074,6 +1148,24 @@ Linode 1024 plan包括： E5-2680 v2 @ 2.80GHz 1 Core，1 G Ram，24 G SSD，每
         <li>
           <a href="/tags/tproxy/" title="tproxy">
             tproxy<sup>1</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/luci/" title="luci">
+            luci<sup>1</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/lua/" title="lua">
+            lua<sup>1</sup>
           </a>
         </li>
       
@@ -1231,7 +1323,7 @@ $(document).ready(function() {
     
     { "name": "插件", "path": "/tags/插件/", "length": 1 },
     
-    { "name": "openwrt", "path": "/tags/openwrt/", "length": 47 },
+    { "name": "openwrt", "path": "/tags/openwrt/", "length": 48 },
     
     { "name": "Microsoft", "path": "/tags/microsoft/", "length": 1 },
     
@@ -1256,6 +1348,10 @@ $(document).ready(function() {
     { "name": "chinadns-ng", "path": "/tags/chinadns-ng/", "length": 1 },
     
     { "name": "tproxy", "path": "/tags/tproxy/", "length": 1 },
+    
+    { "name": "luci", "path": "/tags/luci/", "length": 1 },
+    
+    { "name": "lua", "path": "/tags/lua/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));

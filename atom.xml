@@ -4,13 +4,22 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-25T09:00:52+00:00</updated>
+ <updated>2025-08-26T07:19:14+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>在新版luci页面中创建菜单用于切换v2ray运行模式</title>
+   <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E59CA8E696B0E78988luciE9A1B5E99DA2E4B8ADE5889BE5BBBAE88F9CE58D95E794A8E4BA8EE58887E68DA2v2rayE8BF90E8A18CE6A8A1E5BC8F/"/>
+   <updated>2025-08-26T00:12:13+00:00</updated>
+   <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E59CA8E696B0E78988luciE9A1B5E99DA2E4B8ADE5889BE5BBBAE88F9CE58D95E794A8E4BA8EE58887E68DA2v2rayE8BF90E8A18CE6A8A1E5BC8F</id>
+   <content type="html">
+</content>
+ </entry>
  
  <entry>
    <title>v2ray使用tproxy代理udp流量</title>
@@ -3873,223 +3882,6 @@ X东购买tplink tl-wn725n v2.0 rtl8188eu （0x0bda:0x8179）安装驱动后直�
 X宝购买RT3070 杂牌网卡，安装驱动后直接无法开启ap模式，只能使用client模式。。。网上查询据说是最新的几版的驱动有问题，op老版本据说没问题，未测试。&lt;br /&gt;
 X东购买磊科（netcore）NW362，rtl8192cu，安装驱动后完美ap模式。&lt;br /&gt;
 以前买的tplink tl-wn821n v2.0，ar9170，安装kmod-carl9170驱动后，完美ap模式。&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>直插SIM卡全网五模便携LEDE路由（5200mAh）</title>
-   <link href="https://jibenfa.github.io/openwrt/2017/03/19/e79bb4e68f92sime58da1e585a8e7bd91e4ba94e6a8a1e4bebfe690baledee8b7afe794b1efbc885200mahefbc89/"/>
-   <updated>2017-03-19T11:42:02+00:00</updated>
-   <id>https://jibenfa.github.io/openwrt/2017/03/19/e79bb4e68f92sime58da1e585a8e7bd91e4ba94e6a8a1e4bebfe690baledee8b7afe794b1efbc885200mahefbc89</id>
-   <content type="html">&lt;p&gt;之前买了个ZTE Q7便携路由，也可以刷op，但是不能直接插sim卡，携带不是很方便，最近在网上逛了逛，发现了一个神器，配置为 mt7620a ROM 16M/RAM 128M 5200mAh，花了一周时间，适配了LEDE 17.07.0 正式版本系统，目前实现了几个功能：&lt;br /&gt;
-1.直插sim卡上网，目前测试了移动3g和联通3g，使用的是上海移远EC20-C 4g mini pcie模块（注意经研究该模块有很多个批次，需要芯片为高通MDM9215才行，pid 05c6 vid 9215），参数为：&lt;br /&gt;
-EC20-C&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FDD LTE&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; B1&lt;span class=&quot;sr&quot;&gt;/B3/&lt;/span&gt;B8
-TDD LTE&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; B38&lt;span class=&quot;sr&quot;&gt;/B39/&lt;/span&gt;B40/B41
-TDSCDMA&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; B34/B39
-UMTS&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; B1/B8
-GSM&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;900&lt;/span&gt;/&lt;span class=&quot;m&quot;&gt;1800&lt;/span&gt;MHz
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;&lt;br /&gt;
- &lt;img src=&quot;https://jibenfa.github.io/uploads/2017/03/IMG_20170319_104102.jpg&quot; width=&quot;1000&quot; height=&quot;618&quot; alt=&quot;AltText&quot; /&gt;
- &lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;参数是支持（移动4g 3g 2g，联通4g 3g 2g，电信4g）&lt;br /&gt;
-原厂OP可以支持EC20-CE（高通MDM9215，pid 05c6 vid 9215，注意此CE支持电信3g）但不支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125）&lt;br /&gt;
-EC20-CE&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FDD LTE&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; B1/B3 
-TDD LTE&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; B38&lt;span class=&quot;sr&quot;&gt;/B39/&lt;/span&gt;B40/B41 
-TDSCDMA&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; B34/B39 
-WCDMA&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; B1 
-CDMA2000 &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;x&lt;/span&gt;/EVDO&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; BC0 
-GSM&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;900&lt;/span&gt;/&lt;span class=&quot;m&quot;&gt;1800&lt;/span&gt;MHz 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;目前LEDE 17.07是4.4的kernel，开源驱动仅支持EC20-C 4g模块（芯片为高通MDM9215，pid 05c6 vid 9215），查阅linux kernel qmi_wwan.c源代码，4.10可以支持EC20-CE（高通MDM9x07，pid 2c7c vid 0125），但目前LEDE还不行。&lt;br /&gt;
-2.直插SD卡，但是根据原厂说明，usb仅限对外充电，不支持外挂U盘&lt;br /&gt;
-3.LEDE/OPENWRT的其他功能，例如ss等&lt;/p&gt;
-
-&lt;p&gt;适配采用修改ZTE-Q7代码来实现（led在系统启动的时候是不亮的，启动成功后显示蓝色，囧）：&lt;br /&gt;
-1.修改target/linux/ramips/base-files/etc/board.d/01_leds&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;zte&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;q7&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-	ucidef_set_led_default &lt;span class=&quot;s2&quot;&gt;&quot;power&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;power&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;$board:green:sys&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0&quot;&lt;/span&gt;
-	;;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;2.修改target/linux/ramips/base-files/etc/diag.sh&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;zte&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;q7&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		status_led&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;$board:green:wifi&quot;&lt;/span&gt;
-		;;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;3.修改target/linux/ramips/dts/ZTE-Q7.dts&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;sr&quot;&gt;/dts-v1/&lt;/span&gt;;
-
-#&lt;span class=&quot;nb&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;mt7620a.dtsi&quot;&lt;/span&gt;
-
-#&lt;span class=&quot;nb&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;dt&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;bindings&lt;span class=&quot;sr&quot;&gt;/input/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
-
-/ &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;nb&quot;&gt;compatible&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ZTE-Q7&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ralink,mt7620a-soc&quot;&lt;/span&gt;;
-	model &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ZTE Q7&quot;&lt;/span&gt;;
-
-	gpio&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;leds &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;nb&quot;&gt;compatible&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;gpio-leds&quot;&lt;/span&gt;;
-
-		usb &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			label &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;zte-q7:usb&quot;&lt;/span&gt;;
-			gpios &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;gpio0 &lt;span class=&quot;m&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-		sys &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			label &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;zte-q7:sys&quot;&lt;/span&gt;;
-			gpios &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;gpio1 &lt;span class=&quot;m&quot;&gt;14&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-		wlan &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			label &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;zte-q7:wlan&quot;&lt;/span&gt;;
-			gpios &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;gpio3 &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-		wps &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			label &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;zte-q7:wps&quot;&lt;/span&gt;;
-			gpios &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;gpio1 &lt;span class=&quot;m&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-	gpio&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;polled &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;nb&quot;&gt;compatible&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;gpio-keys-polled&quot;&lt;/span&gt;;
-		#address&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cells &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		#size&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cells &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		poll&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;interval &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-
-		reset &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			label &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;reset&quot;&lt;/span&gt;;
-			gpios &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;gpio0 &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-			linux&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;code &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x198&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;gpio0 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	status &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;okay&quot;&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;gpio1 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	status &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;okay&quot;&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;gpio3 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	status &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;okay&quot;&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;spi0 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	status &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;okay&quot;&lt;/span&gt;;
-
-	en25q128@&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		#address&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cells &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		#size&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cells &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		&lt;span class=&quot;nb&quot;&gt;compatible&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;w25q128&quot;&lt;/span&gt;;
-		&lt;span class=&quot;k&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		linux&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;modalias &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;m25p80&quot;&lt;/span&gt;;
-		spi&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;frequency &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-
-		partition@&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			label &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;u-boot&quot;&lt;/span&gt;;
-			&lt;span class=&quot;k&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x0 &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x30000&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-			&lt;span class=&quot;k&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;only&lt;/span&gt;;
-		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-		partition@&lt;span class=&quot;m&quot;&gt;30000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			label &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;u-boot-env&quot;&lt;/span&gt;;
-			&lt;span class=&quot;k&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x30000 &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x10000&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-			&lt;span class=&quot;k&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;only&lt;/span&gt;;
-		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-		factory&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; partition@&lt;span class=&quot;m&quot;&gt;40000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			label &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;factory&quot;&lt;/span&gt;;
-			&lt;span class=&quot;k&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x40000 &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x10000&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-			&lt;span class=&quot;k&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;only&lt;/span&gt;;
-		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-		partition@&lt;span class=&quot;m&quot;&gt;50000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-			label &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;firmware&quot;&lt;/span&gt;;
-			&lt;span class=&quot;k&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x50000 &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;xfb0000&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;pinctrl &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	state_default&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; pinctrl0 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		gpio &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-				ralink&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;group &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;i2c&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;uartf&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;wled&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;spi refclk&quot;&lt;/span&gt;;
-				ralink&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;gpio&quot;&lt;/span&gt;;
-			&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-                        &lt;span class=&quot;k&quot;&gt;pa&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                                ralink&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;group &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;pa&quot;&lt;/span&gt;;
-                                ralink&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;pa&quot;&lt;/span&gt;;
-                        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;ethernet &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	pinctrl&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;names &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;default&quot;&lt;/span&gt;;
-	pinctrl&lt;span class=&quot;m&quot;&gt;-0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;ephy_pins&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-	mtd&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;mac&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;address &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;factory &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x4&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-	mediatek&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;portmap &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;wllll&quot;&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;wmac &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	ralink&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;mtd&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;eeprom &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;factory &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;sdhci &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	status &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;okay&quot;&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;ehci &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	status &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;okay&quot;&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;ohci &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	status &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;okay&quot;&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-&amp;amp;pcie &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	status &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;okay&quot;&lt;/span&gt;;
-
-	&lt;span class=&quot;nb&quot;&gt;compatible&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ralink,mt7620a-pci&quot;&lt;/span&gt;;
-		&lt;span class=&quot;k&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x10140000 &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x100
-			&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x10142000 &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;x100&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-
-		resets &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;rstctrl &lt;span class=&quot;m&quot;&gt;26&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		reset&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;names &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;pcie0&quot;&lt;/span&gt;;
-
-		&lt;span class=&quot;nb&quot;&gt;interrupt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;parent &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&amp;amp;cpuintc&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-		interrupts &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;;
-
-
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;最后编译的时候，选择&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://git.lede-project.org/source.git
-git fetch &lt;span class=&quot;nt&quot;&gt;--tags&lt;/span&gt;
-git tag &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
-git checkout v17.01.0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;参考：&lt;br /&gt;
-1.http://lists.infradead.org/pipermail/lede-commits/2016-September/000876.html&lt;br /&gt;
-2.https://lists.openwrt.org/pipermail/openwrt-devel/2015-March/032268.html&lt;br /&gt;
-3.http://lxr.free-electrons.com/source/drivers/net/usb/qmi_wwan.c&lt;/p&gt;
 </content>
  </entry>
  
