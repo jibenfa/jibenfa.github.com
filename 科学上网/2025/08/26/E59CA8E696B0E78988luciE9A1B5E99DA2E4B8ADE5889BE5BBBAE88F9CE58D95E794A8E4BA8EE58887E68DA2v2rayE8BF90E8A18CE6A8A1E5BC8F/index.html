@@ -157,6 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/www/</span>luci<span class="p">-</span>static<span class="sr">/resources/</span>       ← 前端 JS<span class="sr">/HTML/</span>CSS 资源，用于生成网页菜单
 <span class="sr">/usr/</span>share<span class="sr">/luci/</span>menu<span class="p">.</span><span class="k">d</span>/           ← 网页菜单项，即菜单入口
 <span class="sr">/usr/</span>share<span class="sr">/rpcd/</span>acl<span class="p">.</span><span class="k">d</span>/            ← ACL 菜单访问权限 JSON 定义
+<span class="sr">/usr/</span>share<span class="sr">/rpcd/</span>ucode/            → rpcd 插件<span class="p">(</span>系统后端 RPC 接口（比如 UCI、文件操作、iwinfo 等），供所有 RPC 客户端（包括 LuCI）调用<span class="p">)</span>
+<span class="sr">/usr/</span>share<span class="sr">/ucode/</span>luci/            → LuCI 专用 ucode 模块<span class="p">(</span>提供 UI 配置页面所需的功能，比如：表单生成、数据校验、调用 rpcd 接口等<span class="p">)</span>
 </code></pre></div></div>
 <p>所以opkg软件源中很多luci-app-xxx的界面软件包都没了，为了能够在菜单中灵活切换v2ray的运行模式，进行了相关研究。</p>
 
