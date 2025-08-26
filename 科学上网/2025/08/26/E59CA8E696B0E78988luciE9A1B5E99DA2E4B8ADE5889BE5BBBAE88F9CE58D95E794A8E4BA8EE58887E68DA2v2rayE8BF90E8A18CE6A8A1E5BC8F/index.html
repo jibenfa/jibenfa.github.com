@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <p>b）白名单代理模式，即所有被墙的网站（白名单中的网站）都走代理，对应值：gfwlist</p>
 
-<p>c）无代理模式，即跟平常没有代理上网一样，对应值：ingfw</p>
+<p>c）墙内无代理模式，即跟平常没有代理上网一样，对应值：ingfw</p>
 
 <p>这三种模式对应了/etc/init.d/v2ray中的配置，详见<a href="https://jibenfa.github.io/科学上网/2025/08/19/E59CA8openwrtE4B88BE4BDBFE794A8chinadns-ngE690ADE9858Dv2rayE5AE9EE78EB0E9808FE6988EE4BBA3E79086/">这里</a>,为了能通过菜单进行模式切换，就需要创建菜单。</p>
 
@@ -216,8 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <span class="c1">// 下拉选项</span>
         <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">option</span><span class="p">(</span><span class="nx">form</span><span class="p">.</span><span class="nx">ListValue</span><span class="p">,</span> <span class="dl">'</span><span class="s1">v2raymode</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">代理模式</span><span class="dl">'</span><span class="p">));</span>
-        <span class="nx">o</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="dl">'</span><span class="s1">gfwlist</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">白名单代理模式 (Gfwist Mode)</span><span class="dl">'</span><span class="p">));</span>
         <span class="nx">o</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="dl">'</span><span class="s1">outlands</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">境外全局代理模式(Outlands Mode)</span><span class="dl">'</span><span class="p">));</span>
+        <span class="nx">o</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="dl">'</span><span class="s1">gfwlist</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">白名单代理模式 (Gfwist Mode)</span><span class="dl">'</span><span class="p">));</span>
         <span class="nx">o</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="dl">'</span><span class="s1">ingfw</span><span class="dl">'</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="dl">'</span><span class="s1">墙内无代理模式 (China Mode)</span><span class="dl">'</span><span class="p">));</span>
 
         <span class="c1">// write 函数：只有值变化才写入 UCI 内存</span>
@@ -266,11 +266,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <p>最终菜单界面如下：</p>
 
-<p><img src="https://jibenfa.github.io/uploads/2025/08/v2menu.png" width="1454" height="415" alt="AltText" /></p>
+<p><img src="https://jibenfa.github.io/uploads/2025/08/v2menu.png" width="1437" height="406" alt="AltText" /></p>
 
-<p>参考：
-1）chatgpt
-2）luci-app-samba4的配置文件</p>
+<p>参考：</p>
+
+<p>1）chatgpt</p>
+
+<p>2）luci-app-samba4的配置文件</p>
 
   
 	</div>
