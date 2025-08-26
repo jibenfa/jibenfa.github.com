@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-26T08:04:08+00:00</updated>
+ <updated>2025-08-26T08:09:05+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -135,6 +135,10 @@
   &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;最终菜单界面如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://jibenfa.github.io/uploads/2025/08/v2menu.png&quot; width=&quot;1454&quot; height=&quot;415&quot; alt=&quot;AltText&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;参考：
 1）chatgpt
