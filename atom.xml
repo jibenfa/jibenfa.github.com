@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-26T08:22:25+00:00</updated>
+ <updated>2025-08-26T08:23:28+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -44,7 +44,7 @@
 
 &lt;p&gt;c）墙内无代理模式，即跟平常没有代理上网一样，对应值：ingfw&lt;/p&gt;
 
-&lt;p&gt;这三种模式对应了/etc/init.d/v2ray中的配置，详见&lt;a href=&quot;https://jibenfa.github.io/科学上网/2025/08/19/E59CA8openwrtE4B88BE4BDBFE794A8chinadns-ngE690ADE9858Dv2rayE5AE9EE78EB0E9808FE6988EE4BBA3E79086/&quot;&gt;这里&lt;/a&gt;,为了能通过菜单进行模式切换，就需要创建菜单。&lt;/p&gt;
+&lt;p&gt;这三种模式对应了/etc/init.d/v2ray中的配置，详见&lt;a href=&quot;https://jibenfa.github.io/科学上网/2025/08/19/E59CA8openwrtE4B88BE4BDBFE794A8chinadns-ngE690ADE9858Dv2rayE5AE9EE78EB0E9808FE6988EE4BBA3E79086/&quot;&gt;这里&lt;/a&gt;，为了能通过菜单进行模式切换，就需要创建菜单。&lt;/p&gt;
 
 &lt;p&gt;1)创建菜单项json（/usr/share/luci/menu.d/luci-app-advancedconfig.json）&lt;/p&gt;
 &lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
