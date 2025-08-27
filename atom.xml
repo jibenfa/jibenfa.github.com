@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-27T06:54:40+00:00</updated>
+ <updated>2025-08-27T06:55:53+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -920,7 +920,7 @@ stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quo
 &lt;span class=&quot;nv&quot;&gt;GFWIP6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gfwip6.nftset&quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1060&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5354 5356 5358 5360&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5354 5356 5358 5360&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#5356走tcp&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;V2RAY_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/v2ray&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;V2RAY_CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/config/v2ray.json&quot;&lt;/span&gt;
 
