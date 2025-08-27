@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-27T06:52:22+00:00</updated>
+ <updated>2025-08-27T06:54:40+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -297,7 +297,7 @@
 &lt;span class=&quot;c&quot;&gt;# This is free software, licensed under the GNU General Public License v3.&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# See /LICENSE for more information.&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# To use this file, install chinadns-ng,v2ray,bind-dig first&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# To use this file, install chinadns-ng,v2ray,knot-dig first&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 
@@ -305,7 +305,7 @@
 &lt;span class=&quot;nv&quot;&gt;USE_PROCD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
 
 &lt;span class=&quot;nv&quot;&gt;DOMAIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;xxx.com&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;114.114.114.114&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;223.6.6.6&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#需要是支持dot的dns服务器&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;DOMESTIC_DNS_SERVERS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;119.29.29.29 223.5.5.5 180.76.76.76&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;LAN_IPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;10.0.0.1/16&quot;&lt;/span&gt;
@@ -334,7 +334,8 @@
 
 set_multi_domestic_dns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;uci get dhcp.@dnsmasq[0].server 2&amp;gt;/dev/null&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;:0:15&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;:0:15&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+    &lt;span class=&quot;nv&quot;&gt;min_len&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$((&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &amp;lt; &lt;span class=&quot;k&quot;&gt;${#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; ? &lt;span class=&quot;k&quot;&gt;${#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; : &lt;span class=&quot;k&quot;&gt;${#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;:0:&lt;span class=&quot;nv&quot;&gt;$min_len&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;:0:&lt;span class=&quot;nv&quot;&gt;$min_len&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
         &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置使用国内DNS服务器&quot;&lt;/span&gt;
         uci &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; delete dhcp.@dnsmasq[0].server
         uci add_list dhcp.@dnsmasq[0].server&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
@@ -351,7 +352,8 @@ set_multi_domestic_dns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span c
 
 set_multi_foreign_dns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;uci get dhcp.@dnsmasq[0].server 2&amp;gt;/dev/null&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;:0:9&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;:0:9&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+    &lt;span class=&quot;nv&quot;&gt;min_len&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$((&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &amp;lt; &lt;span class=&quot;k&quot;&gt;${#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; ? &lt;span class=&quot;k&quot;&gt;${#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; : &lt;span class=&quot;k&quot;&gt;${#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;:0:&lt;span class=&quot;nv&quot;&gt;$min_len&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;:0:&lt;span class=&quot;nv&quot;&gt;$min_len&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
         &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置使用ChinaDNSNG DNS服务器&quot;&lt;/span&gt;
         &lt;span class=&quot;nv&quot;&gt;chinadnsng_addr_port&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;#&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
         uci &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; delete dhcp.@dnsmasq[0].server

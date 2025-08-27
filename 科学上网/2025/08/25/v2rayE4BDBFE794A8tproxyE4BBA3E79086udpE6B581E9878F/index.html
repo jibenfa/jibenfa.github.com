@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="c"># This is free software, licensed under the GNU General Public License v3.</span>
 <span class="c"># See /LICENSE for more information.</span>
 <span class="c">#</span>
-<span class="c"># To use this file, install chinadns-ng,v2ray,bind-dig first</span>
+<span class="c"># To use this file, install chinadns-ng,v2ray,knot-dig first</span>
 <span class="c">#</span>
 <span class="c">#</span>
 
@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="nv">USE_PROCD</span><span class="o">=</span>1
 
 <span class="nv">DOMAIN</span><span class="o">=</span><span class="s2">"xxx.com"</span>
-<span class="nv">DEFAULT_DNS_SERVER</span><span class="o">=</span><span class="s2">"114.114.114.114"</span>
+<span class="nv">DEFAULT_DNS_SERVER</span><span class="o">=</span><span class="s2">"223.6.6.6"</span> <span class="c">#需要是支持dot的dns服务器</span>
 <span class="nv">DOMESTIC_DNS_SERVERS</span><span class="o">=</span><span class="s2">"119.29.29.29 223.5.5.5 180.76.76.76"</span>
 <span class="nv">LOCAL_IP</span><span class="o">=</span><span class="s2">"127.0.0.1"</span>
 <span class="nv">LAN_IPS</span><span class="o">=</span><span class="s2">"10.0.0.1/16"</span>
@@ -323,7 +323,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 set_multi_domestic_dns<span class="o">()</span> <span class="o">{</span>
     <span class="nv">current_dns_servers_list</span><span class="o">=</span><span class="sb">`</span>uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null<span class="sb">`</span>
-    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">DEFAULT_DNS_SERVER</span>:0:15<span class="k">}</span> <span class="o">!=</span> x<span class="k">${</span><span class="nv">current_dns_servers_list</span>:0:15<span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    <span class="nv">min_len</span><span class="o">=</span><span class="k">$((</span> <span class="k">${#</span><span class="nv">DEFAULT_DNS_SERVER</span><span class="k">}</span> &lt; <span class="k">${#</span><span class="nv">current_dns_servers_list</span><span class="k">}</span> ? <span class="k">${#</span><span class="nv">DEFAULT_DNS_SERVER</span><span class="k">}</span> : <span class="k">${#</span><span class="nv">current_dns_servers_list</span><span class="k">}</span> <span class="k">))</span>
+    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">DEFAULT_DNS_SERVER</span>:0:<span class="nv">$min_len</span><span class="k">}</span> <span class="o">!=</span> x<span class="k">${</span><span class="nv">current_dns_servers_list</span>:0:<span class="nv">$min_len</span><span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
         </span><span class="nb">echo</span> <span class="s2">"[+] 设置使用国内DNS服务器"</span>
         uci <span class="nt">-q</span> delete dhcp.@dnsmasq[0].server
         uci add_list dhcp.@dnsmasq[0].server<span class="o">=</span><span class="k">${</span><span class="nv">DEFAULT_DNS_SERVER</span><span class="k">}</span>
@@ -340,7 +341,8 @@ set_multi_domestic_dns<span class="o">()</span> <span class="o">{</span>
 
 set_multi_foreign_dns<span class="o">()</span> <span class="o">{</span>
     <span class="nv">current_dns_servers_list</span><span class="o">=</span><span class="sb">`</span>uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null<span class="sb">`</span>
-    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">LOCAL_IP</span>:0:9<span class="k">}</span> <span class="o">!=</span> x<span class="k">${</span><span class="nv">current_dns_servers_list</span>:0:9<span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    <span class="nv">min_len</span><span class="o">=</span><span class="k">$((</span> <span class="k">${#</span><span class="nv">LOCAL_IP</span><span class="k">}</span> &lt; <span class="k">${#</span><span class="nv">current_dns_servers_list</span><span class="k">}</span> ? <span class="k">${#</span><span class="nv">LOCAL_IP</span><span class="k">}</span> : <span class="k">${#</span><span class="nv">current_dns_servers_list</span><span class="k">}</span> <span class="k">))</span>
+    <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">LOCAL_IP</span>:0:<span class="nv">$min_len</span><span class="k">}</span> <span class="o">!=</span> x<span class="k">${</span><span class="nv">current_dns_servers_list</span>:0:<span class="nv">$min_len</span><span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
         </span><span class="nb">echo</span> <span class="s2">"[+] 设置使用ChinaDNSNG DNS服务器"</span>
         <span class="nv">chinadnsng_addr_port</span><span class="o">=</span><span class="k">${</span><span class="nv">LOCAL_IP</span><span class="k">}</span><span class="s2">"#"</span><span class="k">${</span><span class="nv">CHINADNSNG_PORT</span><span class="k">}</span>
         uci <span class="nt">-q</span> delete dhcp.@dnsmasq[0].server
