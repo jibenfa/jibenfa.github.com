@@ -338,7 +338,7 @@ GFWIP_NFT_NAME="gfwip.nftset"
 GFWIP6_NFT_NAME="gfwip6.nftset"
 
 V2RAY_PORT="1060"
-V2RAY_DNS_PORTS="5354 5356 5358 5360"
+V2RAY_DNS_PORTS="5354 5356 5358 5360" #5356走tcp
 V2RAY_BIN="/usr/bin/v2ray"
 V2RAY_CONF="/etc/config/v2ray.json"
 
