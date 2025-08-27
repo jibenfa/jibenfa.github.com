@@ -120,7 +120,7 @@ gfwlist-file /etc/chinadns-ng/gfwlist.txt
 # group文件
 group direct
 group-dnl /etc/chinadns-ng/direct.txt
-group-upstream 114.114.114.114
+group-upstream tls://223.5.5.5
 
 # 收集 tag:chn、tag:gfw 域名的 IP (可选)
 # 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
