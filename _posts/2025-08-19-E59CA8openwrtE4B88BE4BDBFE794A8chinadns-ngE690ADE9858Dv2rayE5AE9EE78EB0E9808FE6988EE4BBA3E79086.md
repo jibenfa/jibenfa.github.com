@@ -311,14 +311,14 @@ chmod +x /etc/init.d/chinadns-ng
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
 #
-# To use this file, install chinadns-ng,v2ray,bind-dig first
+# To use this file, install chinadns-ng,v2ray,knot-dig first
 #
 
 START=90
 USE_PROCD=1
 
 DOMAIN="xxx.com"
-DEFAULT_DNS_SERVER="114.114.114.114"
+DEFAULT_DNS_SERVER="223.6.6.6" #需要是支持dot的dns服务器
 DOMESTIC_DNS_SERVERS="119.29.29.29 223.5.5.5 180.76.76.76"
 LOCAL_IP="127.0.0.1"
 CHINADNSNG_PORT="5353"
@@ -344,7 +344,8 @@ V2RAY_CONF="/etc/config/v2ray.json"
 
 set_multi_domestic_dns() {
     current_dns_servers_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
-    if [ x${DEFAULT_DNS_SERVER:0:15} != x${current_dns_servers_list:0:15} ]; then
+    min_len=$(( ${#DEFAULT_DNS_SERVER} < ${#current_dns_servers_list} ? ${#DEFAULT_DNS_SERVER} : ${#current_dns_servers_list} ))
+    if [ x${DEFAULT_DNS_SERVER:0:$min_len} != x${current_dns_servers_list:0:$min_len} ]; then
         echo "[+] 设置使用国内DNS服务器"
         uci -q delete dhcp.@dnsmasq[0].server
         uci add_list dhcp.@dnsmasq[0].server=${DEFAULT_DNS_SERVER}
@@ -361,7 +362,8 @@ set_multi_domestic_dns() {
 
 set_multi_foreign_dns() {
     current_dns_servers_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
-    if [ x${LOCAL_IP:0:9} != x${current_dns_servers_list:0:9} ]; then
+    min_len=$(( ${#LOCAL_IP} < ${#current_dns_servers_list} ? ${#LOCAL_IP} : ${#current_dns_servers_list} ))
+    if [ x${LOCAL_IP:0:$min_len} != x${current_dns_servers_list:0:$min_len} ]; then
         echo "[+] 设置使用ChinaDNSNG DNS服务器"
         chinadnsng_addr_port=${LOCAL_IP}"#"${CHINADNSNG_PORT}
         uci -q delete dhcp.@dnsmasq[0].server
