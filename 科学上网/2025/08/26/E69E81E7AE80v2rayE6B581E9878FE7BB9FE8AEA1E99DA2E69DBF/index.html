@@ -297,16 +297,15 @@ Total: 75.45MB
   <li>在nginx页面根目录下创建index.html，我这里是ubuntu，路径是：/usr/share/nginx/html/ ，内容如下：</li>
 </ol>
 
-<pre><code class="language-html"> 
-
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 &lt;!DOCTYPE html&gt;
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>登录</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-<style>
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;title&gt;登录&lt;/title&gt;
+&lt;link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"&gt;
+&lt;style&gt;
 * { box-sizing: border-box; }
 body {
     font-family: 'Arial', sans-serif;
@@ -398,27 +397,27 @@ button:hover {
 }
 .stats-content tr:nth-child(even) { background: #f9f9f9; }
 .stats-content tr:hover { background: #e9f5ff; }
-</style>
-</head>
-<body>
-<div class="login-container" id="loginBox">
-    <h2><i class="fas fa-shield-alt"></i> 登录</h2>
-    <div class="input-group">
-        <i class="fas fa-key"></i>
-        <input type="password" id="key" placeholder="请输入口令" />
-    </div>
-    <button onclick="decrypt()">验证</button>
-    <div class="footer">请输入口令</div>
-</div>
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="login-container" id="loginBox"&gt;
+    &lt;h2&gt;&lt;i class="fas fa-shield-alt"&gt;&lt;/i&gt; 登录&lt;/h2&gt;
+    &lt;div class="input-group"&gt;
+        &lt;i class="fas fa-key"&gt;&lt;/i&gt;
+        &lt;input type="password" id="key" placeholder="请输入口令"&gt;
+    &lt;/div&gt;
+    &lt;button onclick="decrypt()"&gt;验证&lt;/button&gt;
+    &lt;div class="footer"&gt;请输入口令&lt;/div&gt;
+&lt;/div&gt;
 
-<div class="stats-container" id="statsBox" style="display:none;">
-    <div class="stats-content" id="statsContent">
-        <!-- 解密后的内容会显示在这里 -->
-    </div>
-</div>
+&lt;div class="stats-container" id="statsBox" style="display:none;"&gt;
+    &lt;div class="stats-content" id="statsContent"&gt;
+        &lt;!-- 解密后的内容会显示在这里 --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script>
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
 document.getElementById("key").addEventListener("keyup", function(event) {
     if (event.key === "Enter") {
         decrypt();
@@ -464,11 +463,11 @@ async function decrypt() {
         alert("验证失败，口令错误");
     }
 }
-</script>
-</body>
-</html>
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 
-</code></pre>
+</code></pre></div></div>
 
 <ol>
   <li>创建python文件v2ray-stats.py，放在/root下，文件中的key就是访问口令（默认123456），可以改成自己的：
