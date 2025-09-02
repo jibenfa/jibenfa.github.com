@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T01:57:13+00:00</updated>
+ <updated>2025-09-02T01:59:16+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -342,40 +342,40 @@ async function decrypt() {
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;创建python文件v2ray-stats.py，放在/root下，文件中的key就是访问口令（默认123456），可以改成自己的：
-```
-#!/usr/bin/env python3
-    &lt;h1 id=&quot;---coding-utf-8---&quot;&gt;-&lt;em&gt;- coding: utf-8 -&lt;/em&gt;-&lt;/h1&gt;
-  &lt;/li&gt;
+  &lt;li&gt;创建python文件v2ray-stats.py，放在/root下，文件中的key就是访问口令（默认123456），可以改成自己的：&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;from Cryptodome.Cipher import AES
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from Cryptodome.Cipher import AES
 from Cryptodome.Util.Padding import pad, unpad
 from Cryptodome.Random import get_random_bytes
 import base64
 import subprocess
 import datetime
-import os&lt;/p&gt;
+import os
 
-&lt;p&gt;API_CMD = [“/usr/bin/v2ray/v2ray”, “api”, “stats”, “–server=127.0.0.1:10085”]
-DATA_FILE = “/var/lib/v2ray-stats/data.db”
-HTML_FILE = “/root/plaintext.html”
-OUTPUT_FILE = “/usr/share/nginx/html/encrypt.txt”
+API_CMD = [&quot;/usr/bin/v2ray/v2ray&quot;, &quot;api&quot;, &quot;stats&quot;, &quot;--server=127.0.0.1:10085&quot;]
+DATA_FILE = &quot;/var/lib/v2ray-stats/data.db&quot;
+HTML_FILE = &quot;/root/plaintext.html&quot;
+OUTPUT_FILE = &quot;/usr/share/nginx/html/encrypt.txt&quot;
 #登录密钥
-key = b”123456”&lt;/p&gt;
+key = b&quot;123456&quot;
 
-&lt;p&gt;os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
-now = datetime.datetime.now()&lt;/p&gt;
+os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+now = datetime.datetime.now()
 
-&lt;h1 id=&quot;每月1日0点清零-datadb&quot;&gt;每月1日0点清零 data.db&lt;/h1&gt;
-&lt;p&gt;if now.day == 1 and now.hour == 0:
-    open(DATA_FILE, “w”).close()
-    subprocess.run([“systemctl”, “restart”, “v2ray”], check=True)&lt;/p&gt;
+# 每月1日0点清零 data.db
+if now.day == 1 and now.hour == 0:
+    open(DATA_FILE, &quot;w&quot;).close()
+    subprocess.run([&quot;systemctl&quot;, &quot;restart&quot;, &quot;v2ray&quot;], check=True)
 
-&lt;h1 id=&quot;读取旧数据&quot;&gt;读取旧数据&lt;/h1&gt;
-&lt;p&gt;OLD = {}  # name -&amp;gt; (total_bytes, last_api_bytes)
+# 读取旧数据
+OLD = {}  # name -&amp;gt; (total_bytes, last_api_bytes)
 if os.path.exists(DATA_FILE):
-    with open(DATA_FILE, “r”) as f:
+    with open(DATA_FILE, &quot;r&quot;) as f:
         for line in f:
             parts = line.strip().split()
             if len(parts) == 3:
@@ -383,73 +383,72 @@ if os.path.exists(DATA_FILE):
                 try:
                     OLD[name] = (int(total_str), int(last_str))
                 except:
-                    OLD[name] = (0, 0)&lt;/p&gt;
+                    OLD[name] = (0, 0)
 
-&lt;h1 id=&quot;调用-v2ray-api-获取本次累计流量&quot;&gt;调用 V2Ray API 获取本次累计流量&lt;/h1&gt;
-&lt;p&gt;result = subprocess.run(API_CMD, capture_output=True, text=True)
+# 调用 V2Ray API 获取本次累计流量
+result = subprocess.run(API_CMD, capture_output=True, text=True)
 lines = result.stdout.strip().splitlines()
-stats_lines = lines[1:]  # 跳过标题&lt;/p&gt;
+stats_lines = lines[1:]  # 跳过标题
 
-&lt;p&gt;for line in stats_lines:
+for line in stats_lines:
     line = line.strip()
-    if line.startswith(“Total:”):
+    if line.startswith(&quot;Total:&quot;):
         continue
     parts = line.split()
     if len(parts) &amp;lt; 2:
         continue
     value = parts[1]
-    name = “ “.join(parts[2:]) if len(parts) &amp;gt; 2 else “”
-    name = name.replace(“&amp;gt;”, “-“)&lt;/p&gt;
+    name = &quot; &quot;.join(parts[2:]) if len(parts) &amp;gt; 2 else &quot;&quot;
+    name = name.replace(&quot;&amp;gt;&quot;, &quot;-&quot;)
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 转换为字节
-try:
-    num = float(value[:-2])
-    unit = value[-2:]
-except:
-    continue
+    # 转换为字节
+    try:
+        num = float(value[:-2])
+        unit = value[-2:]
+    except:
+        continue
 
-if unit == &quot;B&quot;:
-    current_bytes = int(num)
-elif unit == &quot;KB&quot;:
-    current_bytes = int(num * 1024)
-elif unit == &quot;MB&quot;:
-    current_bytes = int(num * 1024 * 1024)
-elif unit == &quot;GB&quot;:
-    current_bytes = int(num * 1024 * 1024 * 1024)
-else:
-    current_bytes = 0
-
-total_prev, last_api_prev = OLD.get(name, (0, 0))
-delta = current_bytes - last_api_prev
-if delta &amp;lt; 0:  # V2Ray 重启，API 累计从0开始
-    delta = current_bytes
-total_new = total_prev + delta
-OLD[name] = (total_new, current_bytes)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;保存最新累计到-datadb&quot;&gt;保存最新累计到 data.db&lt;/h1&gt;
-&lt;p&gt;with open(DATA_FILE, “w”) as f:
-    for name, (total_bytes, last_api_bytes) in OLD.items():
-        f.write(f”{name} {total_bytes} {last_api_bytes}\n”)&lt;/p&gt;
-
-&lt;h1 id=&quot;自动单位显示函数&quot;&gt;自动单位显示函数&lt;/h1&gt;
-&lt;p&gt;def format_bytes(b):
-    if b &amp;lt; 102.4:  # 小于0.1 KB
-        return f”{b:.2f} B”
-    elif b &amp;lt; 1024&lt;em&gt;102.4:  # 小于0.1 MB
-        return f”{b/1024:.2f} KB”
-    elif b &amp;lt; 1024&lt;/em&gt;1024*102.4:  # 小于0.1 GB
-        return f”{b/1024/1024:.2f} MB”
+    if unit == &quot;B&quot;:
+        current_bytes = int(num)
+    elif unit == &quot;KB&quot;:
+        current_bytes = int(num * 1024)
+    elif unit == &quot;MB&quot;:
+        current_bytes = int(num * 1024 * 1024)
+    elif unit == &quot;GB&quot;:
+        current_bytes = int(num * 1024 * 1024 * 1024)
     else:
-        return f”{b/1024/1024/1024:.2f} GB”&lt;/p&gt;
+        current_bytes = 0
 
-&lt;h1 id=&quot;生成-html&quot;&gt;生成 HTML&lt;/h1&gt;
-&lt;p&gt;html = “””&lt;/p&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot; /&gt;
-&lt;title&gt;本月流量统计&lt;/title&gt;
-&lt;style&gt;
+    total_prev, last_api_prev = OLD.get(name, (0, 0))
+    delta = current_bytes - last_api_prev
+    if delta &amp;lt; 0:  # V2Ray 重启，API 累计从0开始
+        delta = current_bytes
+    total_new = total_prev + delta
+    OLD[name] = (total_new, current_bytes)
+
+# 保存最新累计到 data.db
+with open(DATA_FILE, &quot;w&quot;) as f:
+    for name, (total_bytes, last_api_bytes) in OLD.items():
+        f.write(f&quot;{name} {total_bytes} {last_api_bytes}\n&quot;)
+
+# 自动单位显示函数
+def format_bytes(b):
+    if b &amp;lt; 102.4:  # 小于0.1 KB
+        return f&quot;{b:.2f} B&quot;
+    elif b &amp;lt; 1024*102.4:  # 小于0.1 MB
+        return f&quot;{b/1024:.2f} KB&quot;
+    elif b &amp;lt; 1024*1024*102.4:  # 小于0.1 GB
+        return f&quot;{b/1024/1024:.2f} MB&quot;
+    else:
+        return f&quot;{b/1024/1024/1024:.2f} GB&quot;
+
+# 生成 HTML
+html = &quot;&quot;&quot;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+&amp;lt;meta charset=&quot;utf-8&quot;&amp;gt;
+&amp;lt;title&amp;gt;本月流量统计&amp;lt;/title&amp;gt;
+&amp;lt;style&amp;gt;
 body { font-family: Arial, sans-serif; background:#f4f6f9; color:#333; margin:40px; }
 h2 { color:#007BFF; }
 table { border-collapse: collapse; width: 60%; margin-top:20px; background:#fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -458,60 +457,63 @@ th { background:#007BFF; color:white; }
 tr:nth-child(even) { background:#f9f9f9; }
 tr:hover { background:#e9f5ff; }
 .footer { margin-top:20px; font-size: 0.9em; color:#666; }
-&lt;/style&gt;
-&lt;meta http-equiv=&quot;refresh&quot; content=&quot;60&quot; /&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h2&gt;📊 本月流量统计&lt;/h2&gt;
-&lt;table&gt;
-&lt;tr&gt;&lt;th&gt;名称&lt;/th&gt;&lt;th&gt;累计流量&lt;/th&gt;&lt;/tr&gt;
+&amp;lt;/style&amp;gt;
+&amp;lt;meta http-equiv=&quot;refresh&quot; content=&quot;60&quot;&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;h2&amp;gt;📊 本月流量统计&amp;lt;/h2&amp;gt;
+&amp;lt;table&amp;gt;
+&amp;lt;tr&amp;gt;&amp;lt;th&amp;gt;名称&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;累计流量&amp;lt;/th&amp;gt;&amp;lt;/tr&amp;gt;
 &quot;&quot;&quot;
 
 total_all = 0
 for name in sorted(OLD.keys()):
     total_bytes, _ = OLD[name]
-    html += f&quot;&lt;tr&gt;&lt;td&gt;{name}&lt;/td&gt;&lt;td&gt;{format_bytes(total_bytes)}&lt;/td&gt;&lt;/tr&gt;\n&quot;
+    html += f&quot;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;{name}&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;{format_bytes(total_bytes)}&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;\n&quot;
     total_all += total_bytes
 
-html += f&quot;&lt;tr&gt;&lt;td&gt;总计&lt;/td&gt;&lt;td&gt;{format_bytes(total_all)}&lt;/td&gt;&lt;/tr&gt;\n&quot;
+html += f&quot;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;总计&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;{format_bytes(total_all)}&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;\n&quot;
 html += f&quot;&quot;&quot;
-&lt;/table&gt;
-&lt;div class=&quot;footer&quot;&gt;更新时间（UTC）: {now.strftime(&apos;%Y-%m-%d %H:%M:%S&apos;)} （页面每60秒自动刷新）&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-&lt;p&gt;”””&lt;/p&gt;
+&amp;lt;/table&amp;gt;
+&amp;lt;div class=&quot;footer&quot;&amp;gt;更新时间（UTC）: {now.strftime(&apos;%Y-%m-%d %H:%M:%S&apos;)} （页面每60秒自动刷新）&amp;lt;/div&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&quot;&quot;&quot;
 
-&lt;p&gt;with open(HTML_FILE, “w”, encoding=”utf-8”) as f:
-    f.write(html)&lt;/p&gt;
+with open(HTML_FILE, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(html)
 
-&lt;h1 id=&quot;输出密文&quot;&gt;输出密文&lt;/h1&gt;
-&lt;p&gt;ENC_FILE = OUTPUT_FILE&lt;/p&gt;
+# 输出密文
+ENC_FILE = OUTPUT_FILE
 
-&lt;h1 id=&quot;-&quot;&gt;———————-&lt;/h1&gt;
-&lt;h1 id=&quot;aes-cbc-加密&quot;&gt;AES-CBC 加密&lt;/h1&gt;
-&lt;h1 id=&quot;--1&quot;&gt;———————-&lt;/h1&gt;
-&lt;h1 id=&quot;key-长度-16-字节不足补零&quot;&gt;key 长度 16 字节，不足补零&lt;/h1&gt;
-&lt;p&gt;key_bytes = key.ljust(16, b’\0’)
+# ----------------------
+# AES-CBC 加密
+# ----------------------
+# key 长度 16 字节，不足补零
+key_bytes = key.ljust(16, b&apos;\0&apos;)
 iv = get_random_bytes(16)
 cipher = AES.new(key_bytes, AES.MODE_CBC, iv)
-ct = cipher.encrypt(pad(html.encode(“utf-8”), AES.block_size))&lt;/p&gt;
+ct = cipher.encrypt(pad(html.encode(&quot;utf-8&quot;), AES.block_size))
 
-&lt;h1 id=&quot;iv--密文-base64-保存&quot;&gt;IV + 密文 Base64 保存&lt;/h1&gt;
-&lt;p&gt;with open(ENC_FILE, “w”) as f:
-    f.write(base64.b64encode(iv + ct).decode())&lt;/p&gt;
+# IV + 密文 Base64 保存
+with open(ENC_FILE, &quot;w&quot;) as f:
+    f.write(base64.b64encode(iv + ct).decode())
 
-&lt;p&gt;print(“生成并加密完成 -&amp;gt; encrypt.txt”)&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-5. 安装及配置自动运行，以ubuntu为例
-```bash
-touch /var/lib/v2ray-stats/data.db
-sudo apt-get update
-sudo apt-get install python3 python3-pycryptodome
+print(&quot;生成并加密完成 -&amp;gt; encrypt.txt&quot;)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;另外执行crontab -e，最后一行添加自动运行：&lt;/p&gt;
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* * * * * &lt;span class=&quot;k&quot;&gt;python3&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/root/&lt;/span&gt;v2ray&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;stats&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;py&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;最后打开网页就是这样了：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;安装及配置自动运行，以ubuntu为例
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /var/lib/v2ray-stats/data.db
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get update
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;python3 python3-pycryptodome
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;另外执行crontab -e，最后一行添加自动运行：&lt;/p&gt;
+    &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* * * * * &lt;span class=&quot;k&quot;&gt;python3&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/root/&lt;/span&gt;v2ray&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;stats&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;py&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;最后打开网页就是这样了：&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;登陆前：&lt;/p&gt;
 

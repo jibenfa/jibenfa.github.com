@@ -470,40 +470,40 @@ async function decrypt() {
 </code></pre></div></div>
 
 <ol>
-  <li>创建python文件v2ray-stats.py，放在/root下，文件中的key就是访问口令（默认123456），可以改成自己的：
-```
-#!/usr/bin/env python3
-    <h1 id="---coding-utf-8---">-<em>- coding: utf-8 -</em>-</h1>
-  </li>
+  <li>创建python文件v2ray-stats.py，放在/root下，文件中的key就是访问口令（默认123456），可以改成自己的：</li>
 </ol>
 
-<p>from Cryptodome.Cipher import AES
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from Cryptodome.Cipher import AES
 from Cryptodome.Util.Padding import pad, unpad
 from Cryptodome.Random import get_random_bytes
 import base64
 import subprocess
 import datetime
-import os</p>
+import os
 
-<p>API_CMD = [“/usr/bin/v2ray/v2ray”, “api”, “stats”, “–server=127.0.0.1:10085”]
-DATA_FILE = “/var/lib/v2ray-stats/data.db”
-HTML_FILE = “/root/plaintext.html”
-OUTPUT_FILE = “/usr/share/nginx/html/encrypt.txt”
+API_CMD = ["/usr/bin/v2ray/v2ray", "api", "stats", "--server=127.0.0.1:10085"]
+DATA_FILE = "/var/lib/v2ray-stats/data.db"
+HTML_FILE = "/root/plaintext.html"
+OUTPUT_FILE = "/usr/share/nginx/html/encrypt.txt"
 #登录密钥
-key = b”123456”</p>
+key = b"123456"
 
-<p>os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
-now = datetime.datetime.now()</p>
+os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+now = datetime.datetime.now()
 
-<h1 id="每月1日0点清零-datadb">每月1日0点清零 data.db</h1>
-<p>if now.day == 1 and now.hour == 0:
-    open(DATA_FILE, “w”).close()
-    subprocess.run([“systemctl”, “restart”, “v2ray”], check=True)</p>
+# 每月1日0点清零 data.db
+if now.day == 1 and now.hour == 0:
+    open(DATA_FILE, "w").close()
+    subprocess.run(["systemctl", "restart", "v2ray"], check=True)
 
-<h1 id="读取旧数据">读取旧数据</h1>
-<p>OLD = {}  # name -&gt; (total_bytes, last_api_bytes)
+# 读取旧数据
+OLD = {}  # name -&gt; (total_bytes, last_api_bytes)
 if os.path.exists(DATA_FILE):
-    with open(DATA_FILE, “r”) as f:
+    with open(DATA_FILE, "r") as f:
         for line in f:
             parts = line.strip().split()
             if len(parts) == 3:
@@ -511,73 +511,72 @@ if os.path.exists(DATA_FILE):
                 try:
                     OLD[name] = (int(total_str), int(last_str))
                 except:
-                    OLD[name] = (0, 0)</p>
+                    OLD[name] = (0, 0)
 
-<h1 id="调用-v2ray-api-获取本次累计流量">调用 V2Ray API 获取本次累计流量</h1>
-<p>result = subprocess.run(API_CMD, capture_output=True, text=True)
+# 调用 V2Ray API 获取本次累计流量
+result = subprocess.run(API_CMD, capture_output=True, text=True)
 lines = result.stdout.strip().splitlines()
-stats_lines = lines[1:]  # 跳过标题</p>
+stats_lines = lines[1:]  # 跳过标题
 
-<p>for line in stats_lines:
+for line in stats_lines:
     line = line.strip()
-    if line.startswith(“Total:”):
+    if line.startswith("Total:"):
         continue
     parts = line.split()
     if len(parts) &lt; 2:
         continue
     value = parts[1]
-    name = “ “.join(parts[2:]) if len(parts) &gt; 2 else “”
-    name = name.replace(“&gt;”, “-“)</p>
+    name = " ".join(parts[2:]) if len(parts) &gt; 2 else ""
+    name = name.replace("&gt;", "-")
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 转换为字节
-try:
-    num = float(value[:-2])
-    unit = value[-2:]
-except:
-    continue
+    # 转换为字节
+    try:
+        num = float(value[:-2])
+        unit = value[-2:]
+    except:
+        continue
 
-if unit == "B":
-    current_bytes = int(num)
-elif unit == "KB":
-    current_bytes = int(num * 1024)
-elif unit == "MB":
-    current_bytes = int(num * 1024 * 1024)
-elif unit == "GB":
-    current_bytes = int(num * 1024 * 1024 * 1024)
-else:
-    current_bytes = 0
-
-total_prev, last_api_prev = OLD.get(name, (0, 0))
-delta = current_bytes - last_api_prev
-if delta &lt; 0:  # V2Ray 重启，API 累计从0开始
-    delta = current_bytes
-total_new = total_prev + delta
-OLD[name] = (total_new, current_bytes)
-</code></pre></div></div>
-
-<h1 id="保存最新累计到-datadb">保存最新累计到 data.db</h1>
-<p>with open(DATA_FILE, “w”) as f:
-    for name, (total_bytes, last_api_bytes) in OLD.items():
-        f.write(f”{name} {total_bytes} {last_api_bytes}\n”)</p>
-
-<h1 id="自动单位显示函数">自动单位显示函数</h1>
-<p>def format_bytes(b):
-    if b &lt; 102.4:  # 小于0.1 KB
-        return f”{b:.2f} B”
-    elif b &lt; 1024<em>102.4:  # 小于0.1 MB
-        return f”{b/1024:.2f} KB”
-    elif b &lt; 1024</em>1024*102.4:  # 小于0.1 GB
-        return f”{b/1024/1024:.2f} MB”
+    if unit == "B":
+        current_bytes = int(num)
+    elif unit == "KB":
+        current_bytes = int(num * 1024)
+    elif unit == "MB":
+        current_bytes = int(num * 1024 * 1024)
+    elif unit == "GB":
+        current_bytes = int(num * 1024 * 1024 * 1024)
     else:
-        return f”{b/1024/1024/1024:.2f} GB”</p>
+        current_bytes = 0
 
-<h1 id="生成-html">生成 HTML</h1>
-<p>html = “””</p>
-<html>
-<head>
-<meta charset="utf-8" />
-<title>本月流量统计</title>
-<style>
+    total_prev, last_api_prev = OLD.get(name, (0, 0))
+    delta = current_bytes - last_api_prev
+    if delta &lt; 0:  # V2Ray 重启，API 累计从0开始
+        delta = current_bytes
+    total_new = total_prev + delta
+    OLD[name] = (total_new, current_bytes)
+
+# 保存最新累计到 data.db
+with open(DATA_FILE, "w") as f:
+    for name, (total_bytes, last_api_bytes) in OLD.items():
+        f.write(f"{name} {total_bytes} {last_api_bytes}\n")
+
+# 自动单位显示函数
+def format_bytes(b):
+    if b &lt; 102.4:  # 小于0.1 KB
+        return f"{b:.2f} B"
+    elif b &lt; 1024*102.4:  # 小于0.1 MB
+        return f"{b/1024:.2f} KB"
+    elif b &lt; 1024*1024*102.4:  # 小于0.1 GB
+        return f"{b/1024/1024:.2f} MB"
+    else:
+        return f"{b/1024/1024/1024:.2f} GB"
+
+# 生成 HTML
+html = """
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;title&gt;本月流量统计&lt;/title&gt;
+&lt;style&gt;
 body { font-family: Arial, sans-serif; background:#f4f6f9; color:#333; margin:40px; }
 h2 { color:#007BFF; }
 table { border-collapse: collapse; width: 60%; margin-top:20px; background:#fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -586,60 +585,63 @@ th { background:#007BFF; color:white; }
 tr:nth-child(even) { background:#f9f9f9; }
 tr:hover { background:#e9f5ff; }
 .footer { margin-top:20px; font-size: 0.9em; color:#666; }
-</style>
-<meta http-equiv="refresh" content="60" />
-</head>
-<body>
-<h2>📊 本月流量统计</h2>
-<table>
-<tr><th>名称</th><th>累计流量</th></tr>
+&lt;/style&gt;
+&lt;meta http-equiv="refresh" content="60"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;📊 本月流量统计&lt;/h2&gt;
+&lt;table&gt;
+&lt;tr&gt;&lt;th&gt;名称&lt;/th&gt;&lt;th&gt;累计流量&lt;/th&gt;&lt;/tr&gt;
 """
 
 total_all = 0
 for name in sorted(OLD.keys()):
     total_bytes, _ = OLD[name]
-    html += f"<tr><td>{name}</td><td>{format_bytes(total_bytes)}</td></tr>\n"
+    html += f"&lt;tr&gt;&lt;td&gt;{name}&lt;/td&gt;&lt;td&gt;{format_bytes(total_bytes)}&lt;/td&gt;&lt;/tr&gt;\n"
     total_all += total_bytes
 
-html += f"<tr><td>总计</td><td>{format_bytes(total_all)}</td></tr>\n"
+html += f"&lt;tr&gt;&lt;td&gt;总计&lt;/td&gt;&lt;td&gt;{format_bytes(total_all)}&lt;/td&gt;&lt;/tr&gt;\n"
 html += f"""
-</table>
-<div class="footer">更新时间（UTC）: {now.strftime('%Y-%m-%d %H:%M:%S')} （页面每60秒自动刷新）</div>
-</body>
-</html>
-<p>”””</p>
+&lt;/table&gt;
+&lt;div class="footer"&gt;更新时间（UTC）: {now.strftime('%Y-%m-%d %H:%M:%S')} （页面每60秒自动刷新）&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"""
 
-<p>with open(HTML_FILE, “w”, encoding=”utf-8”) as f:
-    f.write(html)</p>
+with open(HTML_FILE, "w", encoding="utf-8") as f:
+    f.write(html)
 
-<h1 id="输出密文">输出密文</h1>
-<p>ENC_FILE = OUTPUT_FILE</p>
+# 输出密文
+ENC_FILE = OUTPUT_FILE
 
-<h1 id="-">———————-</h1>
-<h1 id="aes-cbc-加密">AES-CBC 加密</h1>
-<h1 id="--1">———————-</h1>
-<h1 id="key-长度-16-字节不足补零">key 长度 16 字节，不足补零</h1>
-<p>key_bytes = key.ljust(16, b’\0’)
+# ----------------------
+# AES-CBC 加密
+# ----------------------
+# key 长度 16 字节，不足补零
+key_bytes = key.ljust(16, b'\0')
 iv = get_random_bytes(16)
 cipher = AES.new(key_bytes, AES.MODE_CBC, iv)
-ct = cipher.encrypt(pad(html.encode(“utf-8”), AES.block_size))</p>
+ct = cipher.encrypt(pad(html.encode("utf-8"), AES.block_size))
 
-<h1 id="iv--密文-base64-保存">IV + 密文 Base64 保存</h1>
-<p>with open(ENC_FILE, “w”) as f:
-    f.write(base64.b64encode(iv + ct).decode())</p>
+# IV + 密文 Base64 保存
+with open(ENC_FILE, "w") as f:
+    f.write(base64.b64encode(iv + ct).decode())
 
-<p>print(“生成并加密完成 -&gt; encrypt.txt”)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-5. 安装及配置自动运行，以ubuntu为例
-```bash
-touch /var/lib/v2ray-stats/data.db
-sudo apt-get update
-sudo apt-get install python3 python3-pycryptodome
+print("生成并加密完成 -&gt; encrypt.txt")
 </code></pre></div></div>
-<p>另外执行crontab -e，最后一行添加自动运行：</p>
-<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * * * * <span class="k">python3</span> <span class="sr">/root/</span>v2ray<span class="p">-</span>stats<span class="p">.</span><span class="k">py</span>
-</code></pre></div></div>
-<p>最后打开网页就是这样了：</p>
+
+<ol>
+  <li>安装及配置自动运行，以ubuntu为例
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch</span> /var/lib/v2ray-stats/data.db
+<span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>python3 python3-pycryptodome
+</code></pre></div>    </div>
+    <p>另外执行crontab -e，最后一行添加自动运行：</p>
+    <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * * * * <span class="k">python3</span> <span class="sr">/root/</span>v2ray<span class="p">-</span>stats<span class="p">.</span><span class="k">py</span>
+</code></pre></div>    </div>
+    <p>最后打开网页就是这样了：</p>
+  </li>
+</ol>
 
 <p>登陆前：</p>
 
