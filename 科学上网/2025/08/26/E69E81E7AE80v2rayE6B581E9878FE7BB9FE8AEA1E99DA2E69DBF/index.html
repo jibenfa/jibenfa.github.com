@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		<p>v2ray自带流量统计功能，执行如下语句就能获得实时累计流量：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/v2ray/v2ray api stats <span class="nt">--server</span><span class="o">=</span>127.0.0.1:10085
 </code></pre></div></div>
-<p>但是重启服务以后，流量就清零了，为了持久化，我做了一个简单的流量统计的web面板，并通过口令控制访问权限。只需要安装python3和任一一个web服务端即可，我这里用的是nginx。</p>
+<p>但是重启服务以后，流量就清零了，为了持久化，我做了一个极简的按月统计流量的web面板，并通过口令控制访问权限。只需要安装python3和任一一个web服务端即可，我这里用的是nginx。</p>
 
 <p>步骤如下：</p>
 
@@ -617,6 +617,7 @@ sudo apt-get install python3 python3-pycryptodome
 <p>另外执行crontab -e，最后一行添加自动运行：</p>
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * * * * <span class="k">python3</span> <span class="sr">/root/</span>v2ray<span class="p">-</span>stats<span class="p">.</span><span class="k">py</span>
 </code></pre></div></div>
+<p>最后打开网页基本上就是这样了：</p>
 
   
 	</div>
