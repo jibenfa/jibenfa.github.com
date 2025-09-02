@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T02:10:56+00:00</updated>
+ <updated>2025-09-02T02:13:32+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -159,9 +159,7 @@ Total: 75.45MB
       },
       {
         &quot;type&quot;: &quot;field&quot;,
-        &quot;inboundTag&quot;: [
-          &quot;api&quot;
-        ],
+        &quot;inboundTag&quot;: [&quot;api&quot;],
         &quot;outboundTag&quot;: &quot;api&quot;
       }
     ]
