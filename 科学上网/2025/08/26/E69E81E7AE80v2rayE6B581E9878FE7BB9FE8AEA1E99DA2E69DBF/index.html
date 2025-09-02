@@ -169,131 +169,135 @@ Total: 75.45MB
 <p>步骤如下：</p>
 
 <ol>
-  <li>修改v2ray配置文件，增加流量统计（注意：配置文件中的email是必须的，用于区分不同用户的流量）：
-    <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
-  <span class="c">"stats": {},</span>
-  <span class="c">"api": {</span>
- <span class="c">"tag": "api",</span>
- <span class="c">"services": [</span>
-   <span class="c">"StatsService"</span>
- <span class="p">]</span>
-  <span class="p">},</span>
-  <span class="c">"policy": {</span>
- <span class="c">"levels": {</span>
-   <span class="c">"0": {</span>
-     <span class="c">"statsUserUplink": true,</span>
-     <span class="c">"statsUserDownlink": true</span>
-   <span class="p">}</span>
- <span class="p">},</span>
- <span class="c">"system": {</span>
-   <span class="c">"statsInboundUplink": true,</span>
-   <span class="c">"statsInboundDownlink": true</span>
- <span class="p">}</span>
-  <span class="p">},</span>
-  <span class="c">"inbounds": [</span>
- <span class="p">{</span>
-   <span class="c">"port": 23456,</span>
-   <span class="c">"listen":"127.0.0.1",</span>
-   <span class="c">"protocol": "vless",</span>
-   <span class="c">"settings": {</span>
-     <span class="c">"clients": [</span>
-       <span class="p">{</span>
-         <span class="c">"email": "user1",</span>
-         <span class="c">"id": "****************uuid1****************"</span>
-       <span class="p">},</span>
-       <span class="p">{</span>
-         <span class="c">"email": "user2",</span>
-         <span class="c">"id": "****************uuid2****************"</span>
-       <span class="p">},</span>
-         <span class="p">{</span>
-         <span class="c">"email": "user3",</span>
-           <span class="c">"id": "****************uuid3****************"</span>
-         <span class="p">}</span>
-       <span class="p">],</span>
-     <span class="c">"decryption": "none"</span>
-   <span class="p">},</span>
-   <span class="c">"streamSettings": {</span>
-     <span class="c">"network": "ws",</span>
-     <span class="c">"wsSettings": {</span>
-     <span class="c">"path": "/mypath"</span>
-     <span class="p">}</span>
-   <span class="p">},</span>
-   <span class="c">"tag": "main"</span>
- <span class="p">},</span>
- <span class="p">{</span>
-   <span class="c">"tag": "api",</span>
-   <span class="c">"protocol": "dokodemo-door",</span>
-   <span class="c">"listen": "127.0.0.1",</span>
-   <span class="c">"port": 10085,</span>
-   <span class="c">"settings": {</span>
-     <span class="c">"address": "127.0.0.1"</span>
-   <span class="p">}</span>
- <span class="p">}</span>
-  <span class="p">],</span>
-  <span class="c">"outbounds": [</span>
- <span class="p">{</span>
-   <span class="c">"protocol": "socks",</span>
-   <span class="c">"settings": {</span>
-     <span class="c">"servers": [</span>
-       <span class="p">{</span>
-         <span class="c">"address": "127.0.0.1",</span>
-         <span class="c">"port": 40000</span>
-       <span class="p">}</span>
-     <span class="p">]</span>
-   <span class="p">},</span>
-   <span class="c">"tag": "warp"</span>
- <span class="p">},</span>
- <span class="p">{</span>
-   <span class="c">"protocol": "freedom",</span>
-   <span class="c">"tag": "direct"</span>
- <span class="p">}</span>
-  <span class="p">],</span>
-  <span class="c">"routing": {</span>
- <span class="c">"domainStrategy": "AsIs",</span>
- <span class="c">"rules": [</span>
-   <span class="p">{</span>
-     <span class="c">"type": "field",</span>
-     <span class="c">"inboundTag":["main"],</span>
-     <span class="c">"outboundTag": "direct",</span>
-     <span class="c">"domain": [</span>
-       <span class="c">"geosite:netflix",</span>
-       <span class="c">"geosite:youtube",</span>
-         <span class="c">"openai.com",</span>
-         <span class="c">"*.openai.com",</span>
-         <span class="c">"chatgpt.com",</span>
-         <span class="c">"*.chatgpt.com"</span>
-     <span class="p">]</span>
-   <span class="p">},</span>
-   <span class="p">{</span>
-     <span class="c">"type": "field",</span>
-     <span class="c">"inboundTag":["main"],</span>
-     <span class="c">"outboundTag": "direct",</span>
-     <span class="c">"ip": [</span>
-         <span class="c">"127.0.0.1", </span>
-         <span class="c">"::1",</span>
-         <span class="c">"8.8.8.8",</span>
-         <span class="c">"8.8.4.4",</span>
-         <span class="c">"1.1.1.1"</span>
-     <span class="p">]</span>
-   <span class="p">},</span>
-   <span class="p">{</span>
-       <span class="c">"type":"field",</span>
-     <span class="c">"inboundTag":["main"],</span>
-       <span class="c">"outboundTag":"warp",</span>
-       <span class="c">"network":"tcp,udp"</span>
-   <span class="p">},</span>
-   <span class="p">{</span>
-     <span class="c">"type": "field",</span>
-     <span class="c">"inboundTag": [</span>
-       <span class="c">"api"</span>
-     <span class="p">],</span>
-     <span class="c">"outboundTag": "api"</span>
-   <span class="p">}</span>
- <span class="p">]</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>    </div>
-  </li>
+  <li>修改v2ray配置文件，增加流量统计（注意：配置文件中的email是必须的，用于区分不同用户的流量）：</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+{
+  "stats": {},
+  "api": {
+    "tag": "api",
+    "services": [
+      "StatsService"
+    ]
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserUplink": true,
+        "statsUserDownlink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsInboundDownlink": true
+    }
+  },
+  "inbounds": [
+    {
+      "port": 23456,
+      "listen":"127.0.0.1",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "email": "user1",
+            "id": "****************uuid1****************"
+          },
+          {
+            "email": "user2",
+            "id": "****************uuid2****************"
+          },
+	        {
+            "email": "user3",
+	          "id": "****************uuid3****************"
+	        }
+	      ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+        "path": "/mypath"
+        }
+      },
+      "tag": "main"
+    },
+    {
+      "tag": "api",
+      "protocol": "dokodemo-door",
+      "listen": "127.0.0.1",
+      "port": 10085,
+      "settings": {
+        "address": "127.0.0.1"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 40000
+          }
+        ]
+      },
+      "tag": "warp"
+    },
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag":["main"],
+        "outboundTag": "direct",
+        "domain": [
+          "geosite:netflix",
+          "geosite:youtube",
+	        "openai.com",
+	        "*.openai.com",
+	        "chatgpt.com",
+	        "*.chatgpt.com"
+        ]
+      },
+      {
+        "type": "field",
+        "inboundTag":["main"],
+        "outboundTag": "direct",
+        "ip": [
+            "127.0.0.1", 
+            "::1",
+            "8.8.8.8",
+            "8.8.4.4",
+            "1.1.1.1"
+        ]
+      },
+      {
+	      "type":"field",
+        "inboundTag":["main"],
+	      "outboundTag":"warp",
+	      "network":"tcp,udp"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api"
+      }
+    ]
+  }
+}
+</code></pre></div></div>
+
+<ol>
   <li>在nginx页面根目录下创建index.html，我这里是ubuntu，路径是：/usr/share/nginx/html/ ，内容如下：</li>
 </ol>
 
@@ -631,16 +635,22 @@ print("生成并加密完成 -&gt; encrypt.txt")
 </code></pre></div></div>
 
 <ol>
-  <li>安装及配置自动运行，以ubuntu为例
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch</span> /var/lib/v2ray-stats/data.db
+  <li>安装及配置自动运行，以ubuntu为例</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">touch</span> /var/lib/v2ray-stats/data.db
 <span class="nb">sudo </span>apt-get update
 <span class="nb">sudo </span>apt-get <span class="nb">install </span>python3 python3-pycryptodome
-</code></pre></div>    </div>
-    <p>另外执行crontab -e，最后一行添加自动运行：</p>
-    <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * * * * <span class="k">python3</span> <span class="sr">/root/</span>v2ray<span class="p">-</span>stats<span class="p">.</span><span class="k">py</span>
-</code></pre></div>    </div>
-    <p>最后打开网页就是这样了：</p>
-  </li>
+</code></pre></div></div>
+<p>另外执行crontab -e，最后一行添加自动运行：</p>
+
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+* * * * * <span class="k">python3</span> <span class="sr">/root/</span>v2ray<span class="p">-</span>stats<span class="p">.</span><span class="k">py</span>
+
+</code></pre></div></div>
+<ol>
+  <li>最后打开网页就是这样了：</li>
 </ol>
 
 <p>登陆前：</p>

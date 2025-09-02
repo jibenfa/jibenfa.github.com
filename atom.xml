@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T01:59:16+00:00</updated>
+ <updated>2025-09-02T02:06:02+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -41,131 +41,135 @@ Total: 75.45MB
 &lt;p&gt;步骤如下：&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;修改v2ray配置文件，增加流量统计（注意：配置文件中的email是必须的，用于区分不同用户的流量）：
-    &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;c&quot;&gt;&quot;stats&quot;: {},&lt;/span&gt;
-  &lt;span class=&quot;c&quot;&gt;&quot;api&quot;: {&lt;/span&gt;
- &lt;span class=&quot;c&quot;&gt;&quot;tag&quot;: &quot;api&quot;,&lt;/span&gt;
- &lt;span class=&quot;c&quot;&gt;&quot;services&quot;: [&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;StatsService&quot;&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;c&quot;&gt;&quot;policy&quot;: {&lt;/span&gt;
- &lt;span class=&quot;c&quot;&gt;&quot;levels&quot;: {&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;0&quot;: {&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;statsUserUplink&quot;: true,&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;statsUserDownlink&quot;: true&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
- &lt;span class=&quot;c&quot;&gt;&quot;system&quot;: {&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;statsInboundUplink&quot;: true,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;statsInboundDownlink&quot;: true&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;c&quot;&gt;&quot;inbounds&quot;: [&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 23456,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;listen&quot;:&quot;127.0.0.1&quot;,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;vless&quot;,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;settings&quot;: {&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;clients&quot;: [&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;email&quot;: &quot;user1&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;id&quot;: &quot;****************uuid1****************&quot;&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;email&quot;: &quot;user2&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;id&quot;: &quot;****************uuid2****************&quot;&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-         &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;email&quot;: &quot;user3&quot;,&lt;/span&gt;
-           &lt;span class=&quot;c&quot;&gt;&quot;id&quot;: &quot;****************uuid3****************&quot;&lt;/span&gt;
-         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;decryption&quot;: &quot;none&quot;&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;streamSettings&quot;: {&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;network&quot;: &quot;ws&quot;,&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;wsSettings&quot;: {&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;path&quot;: &quot;/mypath&quot;&lt;/span&gt;
-     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;tag&quot;: &quot;main&quot;&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;tag&quot;: &quot;api&quot;,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;dokodemo-door&quot;,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;listen&quot;: &quot;127.0.0.1&quot;,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 10085,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;settings&quot;: {&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;address&quot;: &quot;127.0.0.1&quot;&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-  &lt;span class=&quot;c&quot;&gt;&quot;outbounds&quot;: [&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;socks&quot;,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;settings&quot;: {&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;servers&quot;: [&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;address&quot;: &quot;127.0.0.1&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;port&quot;: 40000&lt;/span&gt;
-       &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-     &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;tag&quot;: &quot;warp&quot;&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;freedom&quot;,&lt;/span&gt;
-   &lt;span class=&quot;c&quot;&gt;&quot;tag&quot;: &quot;direct&quot;&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-  &lt;span class=&quot;c&quot;&gt;&quot;routing&quot;: {&lt;/span&gt;
- &lt;span class=&quot;c&quot;&gt;&quot;domainStrategy&quot;: &quot;AsIs&quot;,&lt;/span&gt;
- &lt;span class=&quot;c&quot;&gt;&quot;rules&quot;: [&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;type&quot;: &quot;field&quot;,&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;inboundTag&quot;:[&quot;main&quot;],&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;outboundTag&quot;: &quot;direct&quot;,&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;domain&quot;: [&lt;/span&gt;
-       &lt;span class=&quot;c&quot;&gt;&quot;geosite:netflix&quot;,&lt;/span&gt;
-       &lt;span class=&quot;c&quot;&gt;&quot;geosite:youtube&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;openai.com&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;*.openai.com&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;chatgpt.com&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;*.chatgpt.com&quot;&lt;/span&gt;
-     &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;type&quot;: &quot;field&quot;,&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;inboundTag&quot;:[&quot;main&quot;],&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;outboundTag&quot;: &quot;direct&quot;,&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;ip&quot;: [&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;127.0.0.1&quot;, &lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;::1&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;8.8.8.8&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;8.8.4.4&quot;,&lt;/span&gt;
-         &lt;span class=&quot;c&quot;&gt;&quot;1.1.1.1&quot;&lt;/span&gt;
-     &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-       &lt;span class=&quot;c&quot;&gt;&quot;type&quot;:&quot;field&quot;,&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;inboundTag&quot;:[&quot;main&quot;],&lt;/span&gt;
-       &lt;span class=&quot;c&quot;&gt;&quot;outboundTag&quot;:&quot;warp&quot;,&lt;/span&gt;
-       &lt;span class=&quot;c&quot;&gt;&quot;network&quot;:&quot;tcp,udp&quot;&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;type&quot;: &quot;field&quot;,&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;inboundTag&quot;: [&lt;/span&gt;
-       &lt;span class=&quot;c&quot;&gt;&quot;api&quot;&lt;/span&gt;
-     &lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-     &lt;span class=&quot;c&quot;&gt;&quot;outboundTag&quot;: &quot;api&quot;&lt;/span&gt;
-   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
+  &lt;li&gt;修改v2ray配置文件，增加流量统计（注意：配置文件中的email是必须的，用于区分不同用户的流量）：&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+{
+  &quot;stats&quot;: {},
+  &quot;api&quot;: {
+    &quot;tag&quot;: &quot;api&quot;,
+    &quot;services&quot;: [
+      &quot;StatsService&quot;
+    ]
+  },
+  &quot;policy&quot;: {
+    &quot;levels&quot;: {
+      &quot;0&quot;: {
+        &quot;statsUserUplink&quot;: true,
+        &quot;statsUserDownlink&quot;: true
+      }
+    },
+    &quot;system&quot;: {
+      &quot;statsInboundUplink&quot;: true,
+      &quot;statsInboundDownlink&quot;: true
+    }
+  },
+  &quot;inbounds&quot;: [
+    {
+      &quot;port&quot;: 23456,
+      &quot;listen&quot;:&quot;127.0.0.1&quot;,
+      &quot;protocol&quot;: &quot;vless&quot;,
+      &quot;settings&quot;: {
+        &quot;clients&quot;: [
+          {
+            &quot;email&quot;: &quot;user1&quot;,
+            &quot;id&quot;: &quot;****************uuid1****************&quot;
+          },
+          {
+            &quot;email&quot;: &quot;user2&quot;,
+            &quot;id&quot;: &quot;****************uuid2****************&quot;
+          },
+	        {
+            &quot;email&quot;: &quot;user3&quot;,
+	          &quot;id&quot;: &quot;****************uuid3****************&quot;
+	        }
+	      ],
+        &quot;decryption&quot;: &quot;none&quot;
+      },
+      &quot;streamSettings&quot;: {
+        &quot;network&quot;: &quot;ws&quot;,
+        &quot;wsSettings&quot;: {
+        &quot;path&quot;: &quot;/mypath&quot;
+        }
+      },
+      &quot;tag&quot;: &quot;main&quot;
+    },
+    {
+      &quot;tag&quot;: &quot;api&quot;,
+      &quot;protocol&quot;: &quot;dokodemo-door&quot;,
+      &quot;listen&quot;: &quot;127.0.0.1&quot;,
+      &quot;port&quot;: 10085,
+      &quot;settings&quot;: {
+        &quot;address&quot;: &quot;127.0.0.1&quot;
+      }
+    }
+  ],
+  &quot;outbounds&quot;: [
+    {
+      &quot;protocol&quot;: &quot;socks&quot;,
+      &quot;settings&quot;: {
+        &quot;servers&quot;: [
+          {
+            &quot;address&quot;: &quot;127.0.0.1&quot;,
+            &quot;port&quot;: 40000
+          }
+        ]
+      },
+      &quot;tag&quot;: &quot;warp&quot;
+    },
+    {
+      &quot;protocol&quot;: &quot;freedom&quot;,
+      &quot;tag&quot;: &quot;direct&quot;
+    }
+  ],
+  &quot;routing&quot;: {
+    &quot;domainStrategy&quot;: &quot;AsIs&quot;,
+    &quot;rules&quot;: [
+      {
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;inboundTag&quot;:[&quot;main&quot;],
+        &quot;outboundTag&quot;: &quot;direct&quot;,
+        &quot;domain&quot;: [
+          &quot;geosite:netflix&quot;,
+          &quot;geosite:youtube&quot;,
+	        &quot;openai.com&quot;,
+	        &quot;*.openai.com&quot;,
+	        &quot;chatgpt.com&quot;,
+	        &quot;*.chatgpt.com&quot;
+        ]
+      },
+      {
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;inboundTag&quot;:[&quot;main&quot;],
+        &quot;outboundTag&quot;: &quot;direct&quot;,
+        &quot;ip&quot;: [
+            &quot;127.0.0.1&quot;, 
+            &quot;::1&quot;,
+            &quot;8.8.8.8&quot;,
+            &quot;8.8.4.4&quot;,
+            &quot;1.1.1.1&quot;
+        ]
+      },
+      {
+	      &quot;type&quot;:&quot;field&quot;,
+        &quot;inboundTag&quot;:[&quot;main&quot;],
+	      &quot;outboundTag&quot;:&quot;warp&quot;,
+	      &quot;network&quot;:&quot;tcp,udp&quot;
+      },
+      {
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;inboundTag&quot;: [
+          &quot;api&quot;
+        ],
+        &quot;outboundTag&quot;: &quot;api&quot;
+      }
+    ]
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
   &lt;li&gt;在nginx页面根目录下创建index.html，我这里是ubuntu，路径是：/usr/share/nginx/html/ ，内容如下：&lt;/li&gt;
 &lt;/ol&gt;
 
@@ -503,16 +507,22 @@ print(&quot;生成并加密完成 -&amp;gt; encrypt.txt&quot;)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;安装及配置自动运行，以ubuntu为例
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /var/lib/v2ray-stats/data.db
+  &lt;li&gt;安装及配置自动运行，以ubuntu为例&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /var/lib/v2ray-stats/data.db
 &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get update
 &lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;python3 python3-pycryptodome
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;另外执行crontab -e，最后一行添加自动运行：&lt;/p&gt;
-    &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;* * * * * &lt;span class=&quot;k&quot;&gt;python3&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/root/&lt;/span&gt;v2ray&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;stats&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;py&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-    &lt;p&gt;最后打开网页就是这样了：&lt;/p&gt;
-  &lt;/li&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;另外执行crontab -e，最后一行添加自动运行：&lt;/p&gt;
+
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+* * * * * &lt;span class=&quot;k&quot;&gt;python3&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/root/&lt;/span&gt;v2ray&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;stats&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;py&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ol&gt;
+  &lt;li&gt;最后打开网页就是这样了：&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;登陆前：&lt;/p&gt;
