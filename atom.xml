@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T03:15:19+00:00</updated>
+ <updated>2025-09-02T03:18:13+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -17,7 +17,7 @@
    <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/09/02/E69E81E7AE80v2rayE6B581E9878FE7BB9FE8AEA1E99DA2E69DBF/"/>
    <updated>2025-09-02T00:12:13+00:00</updated>
    <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/09/02/E69E81E7AE80v2rayE6B581E9878FE7BB9FE8AEA1E99DA2E69DBF</id>
-   <content type="html">&lt;p&gt;v2ray自带流量统计功能，执行如下语句就能获得实时累计流量(需打开流量统计配置，详见下面步骤1)：&lt;/p&gt;
+   <content type="html">&lt;p&gt;v2ray自带流量统计功能，执行如下语句就能获得实时累计流量（需打开流量统计配置，详见下面步骤1）：&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 /usr/bin/v2ray/v2ray api stats &lt;span class=&quot;nt&quot;&gt;--server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;127.0.0.1:10085
