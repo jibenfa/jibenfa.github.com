@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T03:18:13+00:00</updated>
+ <updated>2025-09-02T08:02:28+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -169,6 +169,7 @@ Total: 75.45MB
 &lt;p&gt;2.在nginx页面根目录下创建index.html，我这里是ubuntu，路径是：/usr/share/nginx/html/ ，内容如下：&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+
 &amp;lt;!DOCTYPE html&amp;gt;
 &amp;lt;html lang=&quot;zh-CN&quot;&amp;gt;
 &amp;lt;head&amp;gt;
@@ -289,6 +290,13 @@ button:hover {
 
 &amp;lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
 &amp;lt;script&amp;gt;
+let lastAttempt = 0;          // 上次解密尝试时间（毫秒）
+let attemptTimes = [];        // 最近尝试时间戳数组
+
+const MAX_ATTEMPTS = 5;       // 1 分钟内最大尝试次数
+const TIME_WINDOW = 60000;    // 1 分钟窗口（毫秒）
+const MIN_INTERVAL = 2000;    // 最小间隔 2 秒
+
 document.getElementById(&quot;key&quot;).addEventListener(&quot;keyup&quot;, function(event) {
     if (event.key === &quot;Enter&quot;) {
         decrypt();
@@ -296,6 +304,25 @@ document.getElementById(&quot;key&quot;).addEventListener(&quot;keyup&quot;, fun
 });
 
 async function decrypt() {
+    const now = Date.now();
+
+    // 限制连续点击间隔
+    if (now - lastAttempt &amp;lt; MIN_INTERVAL) {
+        alert(&quot;操作太频繁，请稍候再试&quot;);
+        return;
+    }
+    lastAttempt = now;
+
+    // 清理 1 分钟前的记录
+    attemptTimes = attemptTimes.filter(t =&amp;gt; now - t &amp;lt; TIME_WINDOW);
+
+    // 检查 1 分钟内尝试次数
+    if (attemptTimes.length &amp;gt;= MAX_ATTEMPTS) {
+        alert(&quot;尝试次数过多，请稍候再试&quot;);
+        return;
+    }
+    attemptTimes.push(now);
+
     const keyInput = document.getElementById(&quot;key&quot;).value;
     if (!keyInput) return alert(&quot;请输入口令&quot;);
 
@@ -324,7 +351,7 @@ async function decrypt() {
         const statsBox = document.getElementById(&quot;statsBox&quot;);
         statsBox.style.display = &quot;block&quot;;
 
-        // 解析解密后的 HTML，只取 body 内部内容，防止覆盖背景
+        // 解析解密后的 HTML，只取 body 内部内容
         const parser = new DOMParser();
         const doc = parser.parseFromString(decoded, &quot;text/html&quot;);
         const inner = doc.body ? doc.body.innerHTML : decoded;
