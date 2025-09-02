@@ -294,210 +294,216 @@ Total: 75.45MB
 <span class="p">}</span>
 </code></pre></div>    </div>
   </li>
-  <li>在nginx页面根目录下创建index.html，我这里是ubuntu，路径是：/usr/share/nginx/html/ ，内容如下：
-```html
-&lt;!DOCTYPE html&gt;</li>
+  <li>在nginx页面根目录下创建index.html，我这里是ubuntu，路径是：/usr/share/nginx/html/ ，内容如下：</li>
 </ol>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>登录</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-<style>
-* { box-sizing: border-box; }
-body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #6fb1fc, #4364f7);
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-.login-container, .stats-container {
-    background: #fff;
-    padding: 40px 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
-}
-h2 {
-    margin-bottom: 25px;
-    color: #4364f7;
-    font-size: 24px;
-}
-.input-group {
-    position: relative;
-    margin-bottom: 20px;
-    width: 100%;
-}
-.input-group i {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-    pointer-events: none;
-}
-input[type="password"] {
-    width: 100%;
-    padding: 12px 12px 12px 36px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    transition: border 0.3s, box-shadow 0.3s;
-}
-input[type="password"]:focus {
-    outline: none;
-    border-color: #4364f7;
-    box-shadow: 0 0 5px rgba(67,100,247,0.5);
-}
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #4364f7;
-    border: none;
-    border-radius: 6px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-}
-button:hover {
-    background-color: #6fb1fc;
-    transform: translateY(-2px);
-}
-.footer {
-    margin-top: 15px;
-    font-size: 13px;
-    color: #888;
-}
-.stats-content {
-    text-align: left;
-    max-height: 70vh;
-    overflow: auto;
-}
-.stats-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-.stats-content th, .stats-content td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-.stats-content th {
-    background: #4364f7;
-    color: white;
-}
-.stats-content tr:nth-child(even) { background: #f9f9f9; }
-.stats-content tr:hover { background: #e9f5ff; }
-</style>
-</head>
-<body>
-<div class="login-container" id="loginBox">
-    <h2><i class="fas fa-shield-alt"></i> 登录</h2>
-    <div class="input-group">
-        <i class="fas fa-key"></i>
-        <input type="password" id="key" placeholder="请输入口令" />
-    </div>
-    <button onclick="decrypt()">验证</button>
-    <div class="footer">请输入口令</div>
-</div>
 
-<div class="stats-container" id="statsBox" style="display:none;">
-    <div class="stats-content" id="statsContent">
-        <!-- 解密后的内容会显示在这里 -->
-    </div>
-</div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"zh-CN"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>登录<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;style&gt;</span>
+<span class="o">*</span> <span class="p">{</span> <span class="nl">box-sizing</span><span class="p">:</span> <span class="n">border-box</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">body</span> <span class="p">{</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Arial'</span><span class="p">,</span> <span class="nb">sans-serif</span><span class="p">;</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="n">linear-gradient</span><span class="p">(</span><span class="m">135deg</span><span class="p">,</span> <span class="m">#6fb1fc</span><span class="p">,</span> <span class="m">#4364f7</span><span class="p">);</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="nl">min-height</span><span class="p">:</span> <span class="m">100vh</span><span class="p">;</span>
+    <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
+    <span class="nl">justify-content</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="nl">align-items</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.login-container</span><span class="o">,</span> <span class="nc">.stats-container</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">40px</span> <span class="m">30px</span><span class="p">;</span>
+    <span class="nl">border-radius</span><span class="p">:</span> <span class="m">12px</span><span class="p">;</span>
+    <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">8px</span> <span class="m">20px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0.2</span><span class="p">);</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="nl">max-width</span><span class="p">:</span> <span class="m">600px</span><span class="p">;</span>
+    <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">h2</span> <span class="p">{</span>
+    <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">25px</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="m">#4364f7</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">24px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.input-group</span> <span class="p">{</span>
+    <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+    <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.input-group</span> <span class="nt">i</span> <span class="p">{</span>
+    <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+    <span class="nl">left</span><span class="p">:</span> <span class="m">12px</span><span class="p">;</span>
+    <span class="nl">top</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+    <span class="nl">transform</span><span class="p">:</span> <span class="n">translateY</span><span class="p">(</span><span class="m">-50%</span><span class="p">);</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="m">#888</span><span class="p">;</span>
+    <span class="nl">pointer-events</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s1">"password"</span><span class="o">]</span> <span class="p">{</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">12px</span> <span class="m">12px</span> <span class="m">12px</span> <span class="m">36px</span><span class="p">;</span>
+    <span class="nl">border-radius</span><span class="p">:</span> <span class="m">6px</span><span class="p">;</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="m">#ccc</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">16px</span><span class="p">;</span>
+    <span class="nl">transition</span><span class="p">:</span> <span class="n">border</span> <span class="m">0.3s</span><span class="p">,</span> <span class="n">box-shadow</span> <span class="m">0.3s</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s1">"password"</span><span class="o">]</span><span class="nd">:focus</span> <span class="p">{</span>
+    <span class="nl">outline</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+    <span class="nl">border-color</span><span class="p">:</span> <span class="m">#4364f7</span><span class="p">;</span>
+    <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">5px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">67</span><span class="p">,</span><span class="m">100</span><span class="p">,</span><span class="m">247</span><span class="p">,</span><span class="m">0.5</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nt">button</span> <span class="p">{</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">12px</span><span class="p">;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#4364f7</span><span class="p">;</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+    <span class="nl">border-radius</span><span class="p">:</span> <span class="m">6px</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">16px</span><span class="p">;</span>
+    <span class="nl">cursor</span><span class="p">:</span> <span class="nb">pointer</span><span class="p">;</span>
+    <span class="nl">transition</span><span class="p">:</span> <span class="n">background</span> <span class="m">0.3s</span><span class="p">,</span> <span class="n">transform</span> <span class="m">0.2s</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">button</span><span class="nd">:hover</span> <span class="p">{</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#6fb1fc</span><span class="p">;</span>
+    <span class="nl">transform</span><span class="p">:</span> <span class="n">translateY</span><span class="p">(</span><span class="m">-2px</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nc">.footer</span> <span class="p">{</span>
+    <span class="nl">margin-top</span><span class="p">:</span> <span class="m">15px</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">13px</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="m">#888</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.stats-content</span> <span class="p">{</span>
+    <span class="nl">text-align</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
+    <span class="nl">max-height</span><span class="p">:</span> <span class="m">70vh</span><span class="p">;</span>
+    <span class="nl">overflow</span><span class="p">:</span> <span class="nb">auto</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.stats-content</span> <span class="nt">table</span> <span class="p">{</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+    <span class="nl">border-collapse</span><span class="p">:</span> <span class="nb">collapse</span><span class="p">;</span>
+    <span class="nl">margin-top</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.stats-content</span> <span class="nt">th</span><span class="o">,</span> <span class="nc">.stats-content</span> <span class="nt">td</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="m">#ddd</span><span class="p">;</span>
+    <span class="nl">padding</span><span class="p">:</span> <span class="m">8px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.stats-content</span> <span class="nt">th</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="m">#4364f7</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.stats-content</span> <span class="nt">tr</span><span class="nd">:nth-child</span><span class="o">(</span><span class="nt">even</span><span class="o">)</span> <span class="p">{</span> <span class="nl">background</span><span class="p">:</span> <span class="m">#f9f9f9</span><span class="p">;</span> <span class="p">}</span>
+<span class="nc">.stats-content</span> <span class="nt">tr</span><span class="nd">:hover</span> <span class="p">{</span> <span class="nl">background</span><span class="p">:</span> <span class="m">#e9f5ff</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"login-container"</span> <span class="na">id=</span><span class="s">"loginBox"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h2&gt;&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-shield-alt"</span><span class="nt">&gt;&lt;/i&gt;</span> 登录<span class="nt">&lt;/h2&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"input-group"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"fas fa-key"</span><span class="nt">&gt;&lt;/i&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">id=</span><span class="s">"key"</span> <span class="na">placeholder=</span><span class="s">"请输入口令"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">onclick=</span><span class="s">"decrypt()"</span><span class="nt">&gt;</span>验证<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"footer"</span><span class="nt">&gt;</span>请输入口令<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script>
-document.getElementById("key").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-        decrypt();
-    }
-});
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"stats-container"</span> <span class="na">id=</span><span class="s">"statsBox"</span> <span class="na">style=</span><span class="s">"display:none;"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"stats-content"</span> <span class="na">id=</span><span class="s">"statsContent"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- 解密后的内容会显示在这里 --&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
 
-async function decrypt() {
-    const keyInput = document.getElementById("key").value;
-    if (!keyInput) return alert("请输入口令");
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">key</span><span class="dl">"</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">keyup</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">Enter</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">decrypt</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
 
-    try {
-        const resp = await fetch("encrypt.txt");
-        const b64 = await resp.text();
-        const raw = CryptoJS.enc.Base64.parse(b64);
-        const rawHex = raw.toString(CryptoJS.enc.Hex);
+<span class="k">async</span> <span class="kd">function</span> <span class="nx">decrypt</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">keyInput</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">key</span><span class="dl">"</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">keyInput</span><span class="p">)</span> <span class="k">return</span> <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">请输入口令</span><span class="dl">"</span><span class="p">);</span>
 
-        const iv = CryptoJS.enc.Hex.parse(rawHex.slice(0, 32));
-        const ct = CryptoJS.enc.Hex.parse(rawHex.slice(32));
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">"</span><span class="s2">encrypt.txt</span><span class="dl">"</span><span class="p">);</span>
+        <span class="kd">const</span> <span class="nx">b64</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">resp</span><span class="p">.</span><span class="nx">text</span><span class="p">();</span>
+        <span class="kd">const</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">enc</span><span class="p">.</span><span class="nx">Base64</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">b64</span><span class="p">);</span>
+        <span class="kd">const</span> <span class="nx">rawHex</span> <span class="o">=</span> <span class="nx">raw</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">enc</span><span class="p">.</span><span class="nx">Hex</span><span class="p">);</span>
 
-        const keyStr = keyInput.padEnd(16, "\0").slice(0,16);
-        const key = CryptoJS.enc.Utf8.parse(keyStr);
+        <span class="kd">const</span> <span class="nx">iv</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">enc</span><span class="p">.</span><span class="nx">Hex</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">rawHex</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">));</span>
+        <span class="kd">const</span> <span class="nx">ct</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">enc</span><span class="p">.</span><span class="nx">Hex</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">rawHex</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">32</span><span class="p">));</span>
 
-        const decrypted = CryptoJS.AES.decrypt({ciphertext: ct}, key, {
-            iv: iv,
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7
-        });
-        const decoded = decrypted.toString(CryptoJS.enc.Utf8);
-        if (!decoded) throw "验证失败";
+        <span class="kd">const</span> <span class="nx">keyStr</span> <span class="o">=</span> <span class="nx">keyInput</span><span class="p">.</span><span class="nx">padEnd</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="dl">"</span><span class="se">\</span><span class="s2">0</span><span class="dl">"</span><span class="p">).</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">16</span><span class="p">);</span>
+        <span class="kd">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">enc</span><span class="p">.</span><span class="nx">Utf8</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">keyStr</span><span class="p">);</span>
 
-        // 隐藏登录框，显示统计容器
-        document.getElementById("loginBox").style.display = "none";
-        const statsBox = document.getElementById("statsBox");
-        statsBox.style.display = "block";
+        <span class="kd">const</span> <span class="nx">decrypted</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">AES</span><span class="p">.</span><span class="nx">decrypt</span><span class="p">({</span><span class="na">ciphertext</span><span class="p">:</span> <span class="nx">ct</span><span class="p">},</span> <span class="nx">key</span><span class="p">,</span> <span class="p">{</span>
+            <span class="na">iv</span><span class="p">:</span> <span class="nx">iv</span><span class="p">,</span>
+            <span class="na">mode</span><span class="p">:</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">mode</span><span class="p">.</span><span class="nx">CBC</span><span class="p">,</span>
+            <span class="na">padding</span><span class="p">:</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">pad</span><span class="p">.</span><span class="nx">Pkcs7</span>
+        <span class="p">});</span>
+        <span class="kd">const</span> <span class="nx">decoded</span> <span class="o">=</span> <span class="nx">decrypted</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">enc</span><span class="p">.</span><span class="nx">Utf8</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">decoded</span><span class="p">)</span> <span class="k">throw</span> <span class="dl">"</span><span class="s2">验证失败</span><span class="dl">"</span><span class="p">;</span>
 
-        // 解析解密后的 HTML，只取 body 内部内容，防止覆盖背景
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(decoded, "text/html");
-        const inner = doc.body ? doc.body.innerHTML : decoded;
-        document.getElementById("statsContent").innerHTML = inner;
+        <span class="c1">// 隐藏登录框，显示统计容器</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">loginBox</span><span class="dl">"</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">none</span><span class="dl">"</span><span class="p">;</span>
+        <span class="kd">const</span> <span class="nx">statsBox</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">statsBox</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">statsBox</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">block</span><span class="dl">"</span><span class="p">;</span>
 
-    } catch(e) {
-        alert("验证失败，口令错误");
-    }
-}
-</script>
-</body>
-</html>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-3. 创建python文件v2ray-stats.py，放在/root下，文件中的key就是访问口令（默认123456），可以改成自己的：
+        <span class="c1">// 解析解密后的 HTML，只取 body 内部内容，防止覆盖背景</span>
+        <span class="kd">const</span> <span class="nx">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DOMParser</span><span class="p">();</span>
+        <span class="kd">const</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">parser</span><span class="p">.</span><span class="nx">parseFromString</span><span class="p">(</span><span class="nx">decoded</span><span class="p">,</span> <span class="dl">"</span><span class="s2">text/html</span><span class="dl">"</span><span class="p">);</span>
+        <span class="kd">const</span> <span class="nx">inner</span> <span class="o">=</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">body</span> <span class="p">?</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="p">:</span> <span class="nx">decoded</span><span class="p">;</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">statsContent</span><span class="dl">"</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">inner</span><span class="p">;</span>
+
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">验证失败，口令错误</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+</code></pre></div></div>
+
+<ol>
+  <li>创建python文件v2ray-stats.py，放在/root下，文件中的key就是访问口令（默认123456），可以改成自己的：
 ```python
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+    <h1 id="---coding-utf-8---">-<em>- coding: utf-8 -</em>-</h1>
+  </li>
+</ol>
 
-from Cryptodome.Cipher import AES
+<p>from Cryptodome.Cipher import AES
 from Cryptodome.Util.Padding import pad, unpad
 from Cryptodome.Random import get_random_bytes
 import base64
 import subprocess
 import datetime
-import os
+import os</p>
 
-API_CMD = ["/usr/bin/v2ray/v2ray", "api", "stats", "--server=127.0.0.1:10085"]
-DATA_FILE = "/var/lib/v2ray-stats/data.db"
-HTML_FILE = "/root/plaintext.html"
-OUTPUT_FILE = "/usr/share/nginx/html/encrypt.txt"
+<p>API_CMD = [“/usr/bin/v2ray/v2ray”, “api”, “stats”, “–server=127.0.0.1:10085”]
+DATA_FILE = “/var/lib/v2ray-stats/data.db”
+HTML_FILE = “/root/plaintext.html”
+OUTPUT_FILE = “/usr/share/nginx/html/encrypt.txt”
 #登录密钥
-key = b"123456"
+key = b”123456”</p>
 
-os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
-now = datetime.datetime.now()
+<p>os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+now = datetime.datetime.now()</p>
 
-# 每月1日0点清零 data.db
-if now.day == 1 and now.hour == 0:
-    open(DATA_FILE, "w").close()
-    subprocess.run(["systemctl", "restart", "v2ray"], check=True)
+<h1 id="每月1日0点清零-datadb">每月1日0点清零 data.db</h1>
+<p>if now.day == 1 and now.hour == 0:
+    open(DATA_FILE, “w”).close()
+    subprocess.run([“systemctl”, “restart”, “v2ray”], check=True)</p>
 
-# 读取旧数据
-OLD = {}  # name -&gt; (total_bytes, last_api_bytes)
+<h1 id="读取旧数据">读取旧数据</h1>
+<p>OLD = {}  # name -&gt; (total_bytes, last_api_bytes)
 if os.path.exists(DATA_FILE):
-    with open(DATA_FILE, "r") as f:
+    with open(DATA_FILE, “r”) as f:
         for line in f:
             parts = line.strip().split()
             if len(parts) == 3:
@@ -505,72 +511,73 @@ if os.path.exists(DATA_FILE):
                 try:
                     OLD[name] = (int(total_str), int(last_str))
                 except:
-                    OLD[name] = (0, 0)
+                    OLD[name] = (0, 0)</p>
 
-# 调用 V2Ray API 获取本次累计流量
-result = subprocess.run(API_CMD, capture_output=True, text=True)
+<h1 id="调用-v2ray-api-获取本次累计流量">调用 V2Ray API 获取本次累计流量</h1>
+<p>result = subprocess.run(API_CMD, capture_output=True, text=True)
 lines = result.stdout.strip().splitlines()
-stats_lines = lines[1:]  # 跳过标题
+stats_lines = lines[1:]  # 跳过标题</p>
 
-for line in stats_lines:
+<p>for line in stats_lines:
     line = line.strip()
-    if line.startswith("Total:"):
+    if line.startswith(“Total:”):
         continue
     parts = line.split()
     if len(parts) &lt; 2:
         continue
     value = parts[1]
-    name = " ".join(parts[2:]) if len(parts) &gt; 2 else ""
-    name = name.replace("&gt;", "-")
+    name = “ “.join(parts[2:]) if len(parts) &gt; 2 else “”
+    name = name.replace(“&gt;”, “-“)</p>
 
-    # 转换为字节
-    try:
-        num = float(value[:-2])
-        unit = value[-2:]
-    except:
-        continue
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 转换为字节
+try:
+    num = float(value[:-2])
+    unit = value[-2:]
+except:
+    continue
 
-    if unit == "B":
-        current_bytes = int(num)
-    elif unit == "KB":
-        current_bytes = int(num * 1024)
-    elif unit == "MB":
-        current_bytes = int(num * 1024 * 1024)
-    elif unit == "GB":
-        current_bytes = int(num * 1024 * 1024 * 1024)
-    else:
-        current_bytes = 0
+if unit == "B":
+    current_bytes = int(num)
+elif unit == "KB":
+    current_bytes = int(num * 1024)
+elif unit == "MB":
+    current_bytes = int(num * 1024 * 1024)
+elif unit == "GB":
+    current_bytes = int(num * 1024 * 1024 * 1024)
+else:
+    current_bytes = 0
 
-    total_prev, last_api_prev = OLD.get(name, (0, 0))
-    delta = current_bytes - last_api_prev
-    if delta &lt; 0:  # V2Ray 重启，API 累计从0开始
-        delta = current_bytes
-    total_new = total_prev + delta
-    OLD[name] = (total_new, current_bytes)
+total_prev, last_api_prev = OLD.get(name, (0, 0))
+delta = current_bytes - last_api_prev
+if delta &lt; 0:  # V2Ray 重启，API 累计从0开始
+    delta = current_bytes
+total_new = total_prev + delta
+OLD[name] = (total_new, current_bytes)
+</code></pre></div></div>
 
-# 保存最新累计到 data.db
-with open(DATA_FILE, "w") as f:
+<h1 id="保存最新累计到-datadb">保存最新累计到 data.db</h1>
+<p>with open(DATA_FILE, “w”) as f:
     for name, (total_bytes, last_api_bytes) in OLD.items():
-        f.write(f"{name} {total_bytes} {last_api_bytes}\n")
+        f.write(f”{name} {total_bytes} {last_api_bytes}\n”)</p>
 
-# 自动单位显示函数
-def format_bytes(b):
+<h1 id="自动单位显示函数">自动单位显示函数</h1>
+<p>def format_bytes(b):
     if b &lt; 102.4:  # 小于0.1 KB
-        return f"{b:.2f} B"
-    elif b &lt; 1024*102.4:  # 小于0.1 MB
-        return f"{b/1024:.2f} KB"
-    elif b &lt; 1024*1024*102.4:  # 小于0.1 GB
-        return f"{b/1024/1024:.2f} MB"
+        return f”{b:.2f} B”
+    elif b &lt; 1024<em>102.4:  # 小于0.1 MB
+        return f”{b/1024:.2f} KB”
+    elif b &lt; 1024</em>1024*102.4:  # 小于0.1 GB
+        return f”{b/1024/1024:.2f} MB”
     else:
-        return f"{b/1024/1024/1024:.2f} GB"
+        return f”{b/1024/1024/1024:.2f} GB”</p>
 
-# 生成 HTML
-html = """
-&lt;html&gt;
-&lt;head&gt;
-&lt;meta charset="utf-8"&gt;
-&lt;title&gt;本月流量统计&lt;/title&gt;
-&lt;style&gt;
+<h1 id="生成-html">生成 HTML</h1>
+<p>html = “””</p>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>本月流量统计</title>
+<style>
 body { font-family: Arial, sans-serif; background:#f4f6f9; color:#333; margin:40px; }
 h2 { color:#007BFF; }
 table { border-collapse: collapse; width: 60%; margin-top:20px; background:#fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
@@ -579,62 +586,59 @@ th { background:#007BFF; color:white; }
 tr:nth-child(even) { background:#f9f9f9; }
 tr:hover { background:#e9f5ff; }
 .footer { margin-top:20px; font-size: 0.9em; color:#666; }
-&lt;/style&gt;
-&lt;meta http-equiv="refresh" content="60"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h2&gt;📊 本月流量统计&lt;/h2&gt;
-&lt;table&gt;
-&lt;tr&gt;&lt;th&gt;名称&lt;/th&gt;&lt;th&gt;累计流量&lt;/th&gt;&lt;/tr&gt;
+</style>
+<meta http-equiv="refresh" content="60" />
+</head>
+<body>
+<h2>📊 本月流量统计</h2>
+<table>
+<tr><th>名称</th><th>累计流量</th></tr>
 """
 
 total_all = 0
 for name in sorted(OLD.keys()):
     total_bytes, _ = OLD[name]
-    html += f"&lt;tr&gt;&lt;td&gt;{name}&lt;/td&gt;&lt;td&gt;{format_bytes(total_bytes)}&lt;/td&gt;&lt;/tr&gt;\n"
+    html += f"<tr><td>{name}</td><td>{format_bytes(total_bytes)}</td></tr>\n"
     total_all += total_bytes
 
-html += f"&lt;tr&gt;&lt;td&gt;总计&lt;/td&gt;&lt;td&gt;{format_bytes(total_all)}&lt;/td&gt;&lt;/tr&gt;\n"
+html += f"<tr><td>总计</td><td>{format_bytes(total_all)}</td></tr>\n"
 html += f"""
-&lt;/table&gt;
-&lt;div class="footer"&gt;更新时间（UTC）: {now.strftime('%Y-%m-%d %H:%M:%S')} （页面每60秒自动刷新）&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-"""
+</table>
+<div class="footer">更新时间（UTC）: {now.strftime('%Y-%m-%d %H:%M:%S')} （页面每60秒自动刷新）</div>
+</body>
+</html>
+<p>”””</p>
 
-with open(HTML_FILE, "w", encoding="utf-8") as f:
-    f.write(html)
+<p>with open(HTML_FILE, “w”, encoding=”utf-8”) as f:
+    f.write(html)</p>
 
-# 输出密文
-ENC_FILE = OUTPUT_FILE
+<h1 id="输出密文">输出密文</h1>
+<p>ENC_FILE = OUTPUT_FILE</p>
 
-# ----------------------
-# AES-CBC 加密
-# ----------------------
-# key 长度 16 字节，不足补零
-key_bytes = key.ljust(16, b'\0')
+<h1 id="-">———————-</h1>
+<h1 id="aes-cbc-加密">AES-CBC 加密</h1>
+<h1 id="--1">———————-</h1>
+<h1 id="key-长度-16-字节不足补零">key 长度 16 字节，不足补零</h1>
+<p>key_bytes = key.ljust(16, b’\0’)
 iv = get_random_bytes(16)
 cipher = AES.new(key_bytes, AES.MODE_CBC, iv)
-ct = cipher.encrypt(pad(html.encode("utf-8"), AES.block_size))
+ct = cipher.encrypt(pad(html.encode(“utf-8”), AES.block_size))</p>
 
-# IV + 密文 Base64 保存
-with open(ENC_FILE, "w") as f:
-    f.write(base64.b64encode(iv + ct).decode())
+<h1 id="iv--密文-base64-保存">IV + 密文 Base64 保存</h1>
+<p>with open(ENC_FILE, “w”) as f:
+    f.write(base64.b64encode(iv + ct).decode())</p>
 
-print("生成并加密完成 -&gt; encrypt.txt")
+<p>print(“生成并加密完成 -&gt; encrypt.txt”)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5. 安装及配置自动运行，以ubuntu为例
+```bash
+touch /var/lib/v2ray-stats/data.db
+sudo apt-get update
+sudo apt-get install python3 python3-pycryptodome
 </code></pre></div></div>
-<ol>
-  <li>安装及配置自动运行，以ubuntu为例
-    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch</span> /var/lib/v2ray-stats/data.db
-<span class="nb">sudo </span>apt-get update
-<span class="nb">sudo </span>apt-get <span class="nb">install </span>python3 python3-pycryptodome
-</code></pre></div>    </div>
-    <p>另外执行crontab -e，最后一行添加自动运行：</p>
-    <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * * * * <span class="k">python3</span> <span class="sr">/root/</span>v2ray<span class="p">-</span>stats<span class="p">.</span><span class="k">py</span>
-</code></pre></div>    </div>
-    <p>最后打开网页就是这样了：</p>
-  </li>
-</ol>
+<p>另外执行crontab -e，最后一行添加自动运行：</p>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* * * * * <span class="k">python3</span> <span class="sr">/root/</span>v2ray<span class="p">-</span>stats<span class="p">.</span><span class="k">py</span>
+</code></pre></div></div>
+<p>最后打开网页就是这样了：</p>
 
 <p>登陆前：</p>
 
