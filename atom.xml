@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T08:36:48+00:00</updated>
+ <updated>2025-09-02T08:58:46+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -169,7 +169,6 @@ Total: 75.45MB
 &lt;p&gt;2.在nginx页面根目录下创建index.html，我这里是ubuntu，路径是：/usr/share/nginx/html/ ，内容如下：&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-
 &amp;lt;!DOCTYPE html&amp;gt;
 &amp;lt;html lang=&quot;zh-CN&quot;&amp;gt;
 &amp;lt;head&amp;gt;
@@ -298,9 +297,7 @@ const TIME_WINDOW = 60000;    // 1 分钟窗口（毫秒）
 const MIN_INTERVAL = 2000;    // 最小间隔 2 秒
 
 document.getElementById(&quot;key&quot;).addEventListener(&quot;keyup&quot;, function(event) {
-    if (event.key === &quot;Enter&quot;) {
-        decrypt();
-    }
+    if (event.key === &quot;Enter&quot;) decrypt();
 });
 
 async function decrypt() {
@@ -351,14 +348,20 @@ async function decrypt() {
         const statsBox = document.getElementById(&quot;statsBox&quot;);
         statsBox.style.display = &quot;block&quot;;
 
-        // 解析解密后的 HTML，只取 body 内部内容
+        // 防 XSS：只插入文本内容，不执行 HTML
+        const statsContent = document.getElementById(&quot;statsContent&quot;);
+        statsContent.textContent = decoded;
+
+        // 使用 DOMParser + 创建元素方式，确保安全
         const parser = new DOMParser();
         const doc = parser.parseFromString(decoded, &quot;text/html&quot;);
-        const inner = doc.body ? doc.body.innerHTML : decoded;
-        document.getElementById(&quot;statsContent&quot;).innerHTML = inner;
+        const bodyElems = doc.body ? Array.from(doc.body.children) : [];
+        statsContent.innerHTML = &apos;&apos;; // 清空
+        bodyElems.forEach(el =&amp;gt; statsContent.appendChild(el.cloneNode(true)));
 
     } catch(e) {
         alert(&quot;验证失败，口令错误&quot;);
+        console.error(e);
     }
 }
 &amp;lt;/script&amp;gt;

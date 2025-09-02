@@ -297,7 +297,6 @@ Total: 75.45MB
 <p>2.在nginx页面根目录下创建index.html，我这里是ubuntu，路径是：/usr/share/nginx/html/ ，内容如下：</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-
 &lt;!DOCTYPE html&gt;
 &lt;html lang="zh-CN"&gt;
 &lt;head&gt;
@@ -426,9 +425,7 @@ const TIME_WINDOW = 60000;    // 1 分钟窗口（毫秒）
 const MIN_INTERVAL = 2000;    // 最小间隔 2 秒
 
 document.getElementById("key").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-        decrypt();
-    }
+    if (event.key === "Enter") decrypt();
 });
 
 async function decrypt() {
@@ -479,14 +476,20 @@ async function decrypt() {
         const statsBox = document.getElementById("statsBox");
         statsBox.style.display = "block";
 
-        // 解析解密后的 HTML，只取 body 内部内容
+        // 防 XSS：只插入文本内容，不执行 HTML
+        const statsContent = document.getElementById("statsContent");
+        statsContent.textContent = decoded;
+
+        // 使用 DOMParser + 创建元素方式，确保安全
         const parser = new DOMParser();
         const doc = parser.parseFromString(decoded, "text/html");
-        const inner = doc.body ? doc.body.innerHTML : decoded;
-        document.getElementById("statsContent").innerHTML = inner;
+        const bodyElems = doc.body ? Array.from(doc.body.children) : [];
+        statsContent.innerHTML = ''; // 清空
+        bodyElems.forEach(el =&gt; statsContent.appendChild(el.cloneNode(true)));
 
     } catch(e) {
         alert("验证失败，口令错误");
+        console.error(e);
     }
 }
 &lt;/script&gt;
