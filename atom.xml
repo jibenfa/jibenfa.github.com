@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T01:32:25+00:00</updated>
+ <updated>2025-09-02T01:38:10+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -437,7 +437,8 @@ def format_bytes(b):
         return f&quot;{b/1024/1024/1024:.2f} GB&quot;
 
 # 生成 HTML
-html = &apos;&apos;&apos;&amp;lt;html&amp;gt;
+html = &quot;&quot;&quot;
+&amp;lt;html&amp;gt;
 &amp;lt;head&amp;gt;
 &amp;lt;meta charset=&quot;utf-8&quot;&amp;gt;
 &amp;lt;title&amp;gt;本月流量统计&amp;lt;/title&amp;gt;
@@ -457,7 +458,7 @@ tr:hover { background:#e9f5ff; }
 &amp;lt;h2&amp;gt;📊 本月流量统计&amp;lt;/h2&amp;gt;
 &amp;lt;table&amp;gt;
 &amp;lt;tr&amp;gt;&amp;lt;th&amp;gt;名称&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;累计流量&amp;lt;/th&amp;gt;&amp;lt;/tr&amp;gt;
-&apos;&apos;&apos;
+&quot;&quot;&quot;
 
 total_all = 0
 for name in sorted(OLD.keys()):
@@ -466,10 +467,12 @@ for name in sorted(OLD.keys()):
     total_all += total_bytes
 
 html += f&quot;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;总计&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;{format_bytes(total_all)}&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;\n&quot;
-html += f&apos;&apos;&apos;&amp;lt;/table&amp;gt;
+html += f&quot;&quot;&quot;
+&amp;lt;/table&amp;gt;
 &amp;lt;div class=&quot;footer&quot;&amp;gt;更新时间（UTC）: {now.strftime(&apos;%Y-%m-%d %H:%M:%S&apos;)} （页面每60秒自动刷新）&amp;lt;/div&amp;gt;
 &amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;&apos;&apos;&apos;
+&amp;lt;/html&amp;gt;
+&quot;&quot;&quot;
 
 with open(HTML_FILE, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
     f.write(html)

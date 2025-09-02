@@ -565,7 +565,8 @@ def format_bytes(b):
         return f"{b/1024/1024/1024:.2f} GB"
 
 # 生成 HTML
-html = '''&lt;html&gt;
+html = """
+&lt;html&gt;
 &lt;head&gt;
 &lt;meta charset="utf-8"&gt;
 &lt;title&gt;本月流量统计&lt;/title&gt;
@@ -585,7 +586,7 @@ tr:hover { background:#e9f5ff; }
 &lt;h2&gt;📊 本月流量统计&lt;/h2&gt;
 &lt;table&gt;
 &lt;tr&gt;&lt;th&gt;名称&lt;/th&gt;&lt;th&gt;累计流量&lt;/th&gt;&lt;/tr&gt;
-'''
+"""
 
 total_all = 0
 for name in sorted(OLD.keys()):
@@ -594,10 +595,12 @@ for name in sorted(OLD.keys()):
     total_all += total_bytes
 
 html += f"&lt;tr&gt;&lt;td&gt;总计&lt;/td&gt;&lt;td&gt;{format_bytes(total_all)}&lt;/td&gt;&lt;/tr&gt;\n"
-html += f'''&lt;/table&gt;
+html += f"""
+&lt;/table&gt;
 &lt;div class="footer"&gt;更新时间（UTC）: {now.strftime('%Y-%m-%d %H:%M:%S')} （页面每60秒自动刷新）&lt;/div&gt;
 &lt;/body&gt;
-&lt;/html&gt;'''
+&lt;/html&gt;
+"""
 
 with open(HTML_FILE, "w", encoding="utf-8") as f:
     f.write(html)
