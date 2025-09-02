@@ -471,7 +471,7 @@ async function decrypt() {
 
 <ol>
   <li>创建python文件v2ray-stats.py，放在/root下，文件中的key就是访问口令（默认123456），可以改成自己的：
-```python
+```
 #!/usr/bin/env python3
     <h1 id="---coding-utf-8---">-<em>- coding: utf-8 -</em>-</h1>
   </li>
@@ -629,7 +629,8 @@ ct = cipher.encrypt(pad(html.encode(“utf-8”), AES.block_size))</p>
     f.write(base64.b64encode(iv + ct).decode())</p>
 
 <p>print(“生成并加密完成 -&gt; encrypt.txt”)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5. 安装及配置自动运行，以ubuntu为例
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+5. 安装及配置自动运行，以ubuntu为例
 ```bash
 touch /var/lib/v2ray-stats/data.db
 sudo apt-get update

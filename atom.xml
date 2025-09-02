@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T01:54:10+00:00</updated>
+ <updated>2025-09-02T01:57:13+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -343,7 +343,7 @@ async function decrypt() {
 
 &lt;ol&gt;
   &lt;li&gt;创建python文件v2ray-stats.py，放在/root下，文件中的key就是访问口令（默认123456），可以改成自己的：
-```python
+```
 #!/usr/bin/env python3
     &lt;h1 id=&quot;---coding-utf-8---&quot;&gt;-&lt;em&gt;- coding: utf-8 -&lt;/em&gt;-&lt;/h1&gt;
   &lt;/li&gt;
@@ -501,7 +501,8 @@ ct = cipher.encrypt(pad(html.encode(“utf-8”), AES.block_size))&lt;/p&gt;
     f.write(base64.b64encode(iv + ct).decode())&lt;/p&gt;
 
 &lt;p&gt;print(“生成并加密完成 -&amp;gt; encrypt.txt”)&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;5. 安装及配置自动运行，以ubuntu为例
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+5. 安装及配置自动运行，以ubuntu为例
 ```bash
 touch /var/lib/v2ray-stats/data.db
 sudo apt-get update
