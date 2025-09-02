@@ -4,13 +4,22 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-08-27T07:46:56+00:00</updated>
+ <updated>2025-09-02T00:48:35+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>极简v2ray流量统计面板</title>
+   <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E69E81E7AE80v2rayE6B581E9878FE7BB9FE8AEA1E99DA2E69DBF/"/>
+   <updated>2025-08-26T00:12:13+00:00</updated>
+   <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E69E81E7AE80v2rayE6B581E9878FE7BB9FE8AEA1E99DA2E69DBF</id>
+   <content type="html">
+</content>
+ </entry>
  
  <entry>
    <title>在新版luci页面中创建菜单用于切换v2ray运行模式</title>
@@ -4042,20 +4051,6 @@ echo 0 &amp;gt; /sys/class/gpio/usb3power/value&lt;/p&gt;
 
 &lt;p&gt;参考资料：&lt;br /&gt;
 https://wiki.openwrt.org/doc/howto/usb.overview&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>LEDE/Openwrt 挂载USB无线网卡当AP</title>
-   <link href="https://jibenfa.github.io/openwrt/2017/08/20/ledeopenwrt-e68c82e8bdbdusbe697a0e7babfe7bd91e58da1e5bd93ap/"/>
-   <updated>2017-08-20T12:42:57+00:00</updated>
-   <id>https://jibenfa.github.io/openwrt/2017/08/20/ledeopenwrt-e68c82e8bdbdusbe697a0e7babfe7bd91e58da1e5bd93ap</id>
-   <content type="html">&lt;p&gt;由于mt7621方案中mt7603e的2.4G lede驱动非常不稳定，导致我买的newifi d1、zbt wg3526、极路由4（HC5962）刷机后的2.4G基本都成了摆设。没办法只能通过挂载USB无线网卡当AP。&lt;br /&gt;
-测试的USB网卡有：&lt;br /&gt;
-X东购买tplink tl-wn725n v2.0 rtl8188eu （0x0bda:0x8179）安装驱动后直接无法启动路由器。。。跟作者发了邮件，回复说不支持。&lt;br /&gt;
-X宝购买RT3070 杂牌网卡，安装驱动后直接无法开启ap模式，只能使用client模式。。。网上查询据说是最新的几版的驱动有问题，op老版本据说没问题，未测试。&lt;br /&gt;
-X东购买磊科（netcore）NW362，rtl8192cu，安装驱动后完美ap模式。&lt;br /&gt;
-以前买的tplink tl-wn821n v2.0，ar9170，安装kmod-carl9170驱动后，完美ap模式。&lt;/p&gt;
 </content>
  </entry>
  

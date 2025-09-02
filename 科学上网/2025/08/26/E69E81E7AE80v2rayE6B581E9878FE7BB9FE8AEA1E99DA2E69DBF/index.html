@@ -8,7 +8,7 @@
     
     
     
-    <title>解决Openwrt Readonly file system文件系统只读的问题 | Welcome to Coffeecat‘s Blog</title>
+    <title>极简v2ray流量统计面板 | Welcome to Coffeecat‘s Blog</title>
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
@@ -23,12 +23,12 @@
     
     <meta property="og:type" content="article">
     
-    <meta property="og:title" content="解决Openwrt Readonly file system文件系统只读的问题">
-    <meta property="og:url" content="/openwrt/2015/11/30/e8a7a3e586b3openwrt-readonly-file-systeme69687e4bbb6e7b3bbe7bb9fe58faae8afbbe79a84e997aee9a298/">
+    <meta property="og:title" content="极简v2ray流量统计面板">
+    <meta property="og:url" content="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E69E81E7AE80v2rayE6B581E9878FE7BB9FE8AEA1E99DA2E69DBF/">
     <meta property="og:site_name" content="Welcome to Coffeecat‘s Blog">
     <meta property="og:description" content="">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="解决Openwrt Readonly file system文件系统只读的问题">
+    <meta name="twitter:title" content="极简v2ray流量统计面板">
     <meta name="twitter:description" content="page.description">
     <meta name="twitter:creator" content="@">
     <link rel="publisher" href="">
@@ -126,14 +126,14 @@ document.addEventListener("DOMContentLoaded", () => {
 	<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/openwrt/2015/11/30/e8a7a3e586b3openwrt-readonly-file-systeme69687e4bbb6e7b3bbe7bb9fe58faae8afbbe79a84e997aee9a298/" title="解决Openwrt Readonly file system文件系统只读的问题" itemprop="url">解决Openwrt Readonly file system文件系统只读的问题</a>
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E69E81E7AE80v2rayE6B581E9878FE7BB9FE8AEA1E99DA2E69DBF/" title="极简v2ray流量统计面板" itemprop="url">极简v2ray流量统计面板</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
 		
   <p class="article-time">
-    <time datetime="2015-11-30 21:29:59 +0000" itemprop="datePublished"> 发表于 2015-11-30</time>
+    <time datetime="2025-08-26 00:12:13 +0000" itemprop="datePublished"> 发表于 2025-08-26</time>
     
   </p>
 </header>
@@ -145,33 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		
 		</div>
 		
-		<p>由于Openwrt关闭不好的问题，重启进入openwrt，发现luci 配置无法写入，进入ssh发现remounting file system is read only…但是又不想重装。。。由于这是根文件系统已挂载，所以e2fs无法在该系统里面修复文件系统错误。<br />
-于是机智的我在esxi里面又开了个openwrt虚拟机，其实用linux发行版也行啦，挂载上述出问题的openwrt的盘，但不要mount，进入系统后，因为出问题的盘是sdb的sdb2,运行：</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e2fsck /dev/sdb2
-</code></pre></div></div>
-
-<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e2fsck <span class="m">1</span><span class="p">.</span><span class="m">42</span><span class="p">.</span><span class="m">12</span> <span class="p">(</span><span class="m">29</span><span class="p">-</span>Aug<span class="m">-2014</span><span class="p">)</span>
-<span class="sr">/dev/</span>sdb2 was not cleanly unmounted<span class="p">,</span> check forced<span class="p">.</span>
-Pass <span class="m">1</span><span class="p">:</span> Checking inodes<span class="p">,</span> blocks<span class="p">,</span> <span class="nb">and</span> sizes
-Pass <span class="m">2</span><span class="p">:</span> Checking <span class="nb">directory</span> structure
-Pass <span class="m">3</span><span class="p">:</span> Checking <span class="nb">directory</span> connectivity
-Pass <span class="m">4</span><span class="p">:</span> Checking reference counts
-Pass <span class="m">5</span><span class="p">:</span> Checking group summary information
-Block bitmap differences<span class="p">:</span>  <span class="p">+(</span><span class="m">368</span><span class="p">-</span><span class="m">-376</span><span class="p">)</span>
-Fix<span class="p">&lt;</span><span class="k">y</span><span class="p">&gt;</span>? yes
-Free blocks <span class="nb">count</span> wrong <span class="k">for</span> group #<span class="m">0</span> <span class="p">(</span><span class="m">2660</span><span class="p">,</span> counted<span class="p">=</span><span class="m">2651</span><span class="p">).</span>
-Fix<span class="p">&lt;</span><span class="k">y</span><span class="p">&gt;</span>? yes
-Free blocks <span class="nb">count</span> wrong <span class="k">for</span> group #<span class="m">1</span> <span class="p">(</span><span class="m">1807</span><span class="p">,</span> counted<span class="p">=</span><span class="m">1803</span><span class="p">).</span>
-Fix<span class="p">&lt;</span><span class="k">y</span><span class="p">&gt;</span>? yes
-Free blocks <span class="nb">count</span> wrong <span class="p">(</span><span class="m">764951</span><span class="p">,</span> counted<span class="p">=</span><span class="m">764938</span><span class="p">).</span>
-Fix<span class="p">&lt;</span><span class="k">y</span><span class="p">&gt;</span>? yes
-yyy
-<span class="sr">/dev/</span>sdb2<span class="p">:</span> ***** FILE SYSTEM WAS MODIFIED *****
-<span class="sr">/dev/</span>sdb2<span class="p">:</span> <span class="m">2061</span><span class="sr">/385024 files (0.0% non-contiguous), 21494/</span><span class="m">786432</span> blocks
-</code></pre></div></div>
-
-<p>修复成功后，关闭该虚拟机，然后移除盘，重启原来坏掉的openwrt虚拟机，当当当，成功了~~</p>
+		
   
 	</div>
 	<footer class="article-footer clearfix">
@@ -181,7 +155,7 @@ yyy
       <span></span>
       
         
-        <a href="/categories/openwrt/">openwrt</a>
+        <a href="/categories/科学上网/">科学上网</a>
       
     </div>
   
@@ -191,7 +165,13 @@ yyy
       <span></span>
       
         
-        <a href="/tags/openwrt/">openwrt</a>
+        <a href="/tags/python/">python</a>
+      
+        
+        <a href="/tags/html/">html</a>
+      
+        
+        <a href="/tags/nginx/">nginx</a>
       
     </div>
   
@@ -201,7 +181,7 @@ yyy
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="https://jibenfa.github.io/openwrt/2015/11/30/e8a7a3e586b3openwrt-readonly-file-systeme69687e4bbb6e7b3bbe7bb9fe58faae8afbbe79a84e997aee9a298/" data-title="解决Openwrt Readonly file system文件系统只读的问题 | Welcome to Coffeecat‘s Blog" data-tsina="" class="share clearfix">
+	  <div data-url="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E69E81E7AE80v2rayE6B581E9878FE7BB9FE8AEA1E99DA2E69DBF/" data-title="极简v2ray流量统计面板 | Welcome to Coffeecat‘s Blog" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -214,21 +194,13 @@ yyy
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/openwrt/2015/11/29/e59ca8esxie4b88ae5ae89e8a385openwrtefbc8ce5ae9ee78eb0e8b7afe794b1e8999ae68b9fe58c96/" title="在HP GEN8上安装openwrt，实现“万兆”虚拟路由器。。。">
+ <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E59CA8E696B0E78988luciE9A1B5E99DA2E4B8ADE5889BE5BBBAE88F9CE58D95E794A8E4BA8EE58887E68DA2v2rayE8BF90E8A18CE6A8A1E5BC8F/" title="在新版luci页面中创建菜单用于切换v2ray运行模式">
   <strong>上一篇：</strong><br/>
   <span>
-  在HP GEN8上安装openwrt，实现“万兆”虚拟路由器。。。</span>
+  在新版luci页面中创建菜单用于切换v2ray运行模式</span>
 </a>
 </div>
 
-
-<div class="next">
-<a href="/%E5%85%B6%E4%BB%96/2015/12/31/in-memoriam-ian-murdock/"  title="In Memoriam: Ian Murdock">
- <strong>下一篇：</strong><br/> 
- <span>In Memoriam: Ian Murdock
-</span>
-</a>
-</div>
 
 </nav>
 
