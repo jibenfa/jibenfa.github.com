@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T08:02:28+00:00</updated>
+ <updated>2025-09-02T08:36:48+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -519,9 +519,9 @@ iv = get_random_bytes(16)
 cipher = AES.new(key_bytes, AES.MODE_CBC, iv)
 ct = cipher.encrypt(pad(html.encode(&quot;utf-8&quot;), AES.block_size))
 
-# IV + 密文 Base64 保存
-with open(ENC_FILE, &quot;w&quot;) as f:
-    f.write(base64.b64encode(iv + ct).decode())
+# IV + 密文 Base64 编码并以二进制写入文件（跨平台一致）
+with open(ENC_FILE, &quot;wb&quot;) as f:
+    f.write(base64.b64encode(iv + ct))
 
 print(&quot;生成并加密完成 -&amp;gt; encrypt.txt&quot;)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;

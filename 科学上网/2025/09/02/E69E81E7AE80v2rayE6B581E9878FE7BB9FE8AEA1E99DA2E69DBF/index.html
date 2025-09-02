@@ -647,9 +647,9 @@ iv = get_random_bytes(16)
 cipher = AES.new(key_bytes, AES.MODE_CBC, iv)
 ct = cipher.encrypt(pad(html.encode("utf-8"), AES.block_size))
 
-# IV + 密文 Base64 保存
-with open(ENC_FILE, "w") as f:
-    f.write(base64.b64encode(iv + ct).decode())
+# IV + 密文 Base64 编码并以二进制写入文件（跨平台一致）
+with open(ENC_FILE, "wb") as f:
+    f.write(base64.b64encode(iv + ct))
 
 print("生成并加密完成 -&gt; encrypt.txt")
 </code></pre></div></div>
