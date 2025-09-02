@@ -146,7 +146,21 @@ document.addEventListener("DOMContentLoaded", () => {
 		</div>
 		
 		<p>v2ray自带流量统计功能，执行如下语句就能获得实时累计流量：</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/v2ray/v2ray api stats <span class="nt">--server</span><span class="o">=</span>127.0.0.1:10085
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+/usr/bin/v2ray/v2ray api stats <span class="nt">--server</span><span class="o">=</span>127.0.0.1:10085
+
+    Value       Name
+1   22.62KB     inbound&gt;&gt;&gt;api&gt;&gt;&gt;traffic&gt;&gt;&gt;downlink
+2   13.01KB     inbound&gt;&gt;&gt;api&gt;&gt;&gt;traffic&gt;&gt;&gt;uplink
+3   26.40MB     inbound&gt;&gt;&gt;main&gt;&gt;&gt;traffic&gt;&gt;&gt;downlink
+4   11.36MB     inbound&gt;&gt;&gt;main&gt;&gt;&gt;traffic&gt;&gt;&gt;uplink
+5   10.92MB     user&gt;&gt;&gt;home&gt;&gt;&gt;traffic&gt;&gt;&gt;downlink
+6   4.51MB      user&gt;&gt;&gt;home&gt;&gt;&gt;traffic&gt;&gt;&gt;uplink
+7   15.47MB     user&gt;&gt;&gt;mobile&gt;&gt;&gt;traffic&gt;&gt;&gt;downlink
+8   6.76MB      user&gt;&gt;&gt;mobile&gt;&gt;&gt;traffic&gt;&gt;&gt;uplink
+
+Total: 75.45MB
+
 </code></pre></div></div>
 <p>但是重启服务以后，流量就清零了，为了持久化，我做了一个极简的统计v2ray流量的web面板，支持按用户统计，每月初清零，并通过口令控制访问权限。</p>
 

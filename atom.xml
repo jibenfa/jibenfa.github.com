@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T01:29:50+00:00</updated>
+ <updated>2025-09-02T01:32:25+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -18,7 +18,21 @@
    <updated>2025-08-26T00:12:13+00:00</updated>
    <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/08/26/E69E81E7AE80v2rayE6B581E9878FE7BB9FE8AEA1E99DA2E69DBF</id>
    <content type="html">&lt;p&gt;v2ray自带流量统计功能，执行如下语句就能获得实时累计流量：&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/usr/bin/v2ray/v2ray api stats &lt;span class=&quot;nt&quot;&gt;--server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;127.0.0.1:10085
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+/usr/bin/v2ray/v2ray api stats &lt;span class=&quot;nt&quot;&gt;--server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;127.0.0.1:10085
+
+    Value       Name
+1   22.62KB     inbound&amp;gt;&amp;gt;&amp;gt;api&amp;gt;&amp;gt;&amp;gt;traffic&amp;gt;&amp;gt;&amp;gt;downlink
+2   13.01KB     inbound&amp;gt;&amp;gt;&amp;gt;api&amp;gt;&amp;gt;&amp;gt;traffic&amp;gt;&amp;gt;&amp;gt;uplink
+3   26.40MB     inbound&amp;gt;&amp;gt;&amp;gt;main&amp;gt;&amp;gt;&amp;gt;traffic&amp;gt;&amp;gt;&amp;gt;downlink
+4   11.36MB     inbound&amp;gt;&amp;gt;&amp;gt;main&amp;gt;&amp;gt;&amp;gt;traffic&amp;gt;&amp;gt;&amp;gt;uplink
+5   10.92MB     user&amp;gt;&amp;gt;&amp;gt;home&amp;gt;&amp;gt;&amp;gt;traffic&amp;gt;&amp;gt;&amp;gt;downlink
+6   4.51MB      user&amp;gt;&amp;gt;&amp;gt;home&amp;gt;&amp;gt;&amp;gt;traffic&amp;gt;&amp;gt;&amp;gt;uplink
+7   15.47MB     user&amp;gt;&amp;gt;&amp;gt;mobile&amp;gt;&amp;gt;&amp;gt;traffic&amp;gt;&amp;gt;&amp;gt;downlink
+8   6.76MB      user&amp;gt;&amp;gt;&amp;gt;mobile&amp;gt;&amp;gt;&amp;gt;traffic&amp;gt;&amp;gt;&amp;gt;uplink
+
+Total: 75.45MB
+
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;但是重启服务以后，流量就清零了，为了持久化，我做了一个极简的统计v2ray流量的web面板，支持按用户统计，每月初清零，并通过口令控制访问权限。&lt;/p&gt;
 
