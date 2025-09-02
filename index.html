@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>v2ray自带流量统计功能，执行如下语句就能获得实时累计流量：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/v2ray/v2ray api stats <span class="nt">--server</span><span class="o">=</span>127.0.0.1:10085
 </code></pre></div></div>
-<p>但是重启服务以后，流量就清零了，为了持久化，我做了一个极简的按月统计流量的web面板，并通过口令控制访问权限。只需要安装python3和任一一个web服务端即可，我这里用的是nginx。</p>
+<p>但是重启服务以后，流量就清零了，为了持久化，我做了一个极简的统计v2ray流量的web面板，支持按用户统计，每月初清零，并通过口令控制访问权限。</p>
 
         
         
