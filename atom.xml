@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-02T08:58:46+00:00</updated>
+ <updated>2025-09-03T05:44:03+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -552,6 +552,9 @@ print(&quot;生成并加密完成 -&amp;gt; encrypt.txt&quot;)
 
 &lt;p&gt;&lt;img src=&quot;https://jibenfa.github.io/uploads/2025/09/web2.png&quot; width=&quot;1368&quot; height=&quot;933&quot; alt=&quot;统计页面&quot; /&gt;&lt;/p&gt;
 
+&lt;p&gt;参考：&lt;/p&gt;
+
+&lt;p&gt;1.chatgpt&lt;/p&gt;
 </content>
  </entry>
  
