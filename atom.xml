@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-03T05:44:03+00:00</updated>
+ <updated>2025-09-05T08:24:53+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -1180,9 +1180,10 @@ service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&
 &lt;p&gt;2）从&lt;a href=&quot;https://github.com/zfl9/chinadns-ng&quot;&gt;github&lt;/a&gt;下载source，提取其中的res文件夹下的文件，拷贝到/etc/chinadns-ng文件夹下，没有的话就创建一个，主要有以下几个文件：&lt;/p&gt;
 
 &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; # &lt;span class=&quot;k&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/etc/&lt;/span&gt;chinadns&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ng
-chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset           disable_chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset   disable_gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset     gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
-chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset            chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset          disable_chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset  gfwip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset              &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
-chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset           direct&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt                disable_gfwip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset      gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset             &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
+chains&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset             chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset           direct&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt                disable_gfwip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset      gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset             reservedip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset        &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
+chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset           disable_chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset   disable_gfwip6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset     gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt               &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;gfwlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
+chnroute&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;ipset            chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset          disable_chnroute6&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset  gfwip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset              reservedip&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;nftset         &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnlist&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;         &lt;span class=&quot;k&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;chnroute6&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nft&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
+
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;注意：
 direct.txt,
@@ -1192,6 +1193,9 @@ gfwip.nftset,
 gfwip6.nftset,
 disable_gfwip.nftset,
 disable_gfwip6.nftset
+chains.nftset
+reservedip.nftset
+reservedip6.nftset
 是我创建的，后面细说。&lt;/p&gt;
 
 &lt;p&gt;建议启用前通过update*.sh进行更新&lt;/p&gt;
@@ -1228,21 +1232,75 @@ add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global gfwip6 &lt;spa
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;flush &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global gfwip6
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;h) chains.nftset内容为：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;add table inet global
+
+add chain inet global prerouting &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;nat hook prerouting priority dstnat&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+add chain inet global output &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;nat hook output priority &lt;span class=&quot;nt&quot;&gt;-100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+flush chain inet global prerouting
+flush chain inet global output
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;i) reservedip.nftset内容为：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;add table inet global
+
+&lt;span class=&quot;c&quot;&gt;# 定义 IPv4 本地/保留网段&lt;/span&gt;
+define ipv4_localnet &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    0.0.0.0/8,          &lt;span class=&quot;c&quot;&gt;# 本网络/未指定&lt;/span&gt;
+    10.0.0.0/8,         &lt;span class=&quot;c&quot;&gt;# 私有网络&lt;/span&gt;
+    100.64.0.0/10,      &lt;span class=&quot;c&quot;&gt;# CGNAT / Carrier-grade NAT&lt;/span&gt;
+    127.0.0.0/8,        &lt;span class=&quot;c&quot;&gt;# 回环地址&lt;/span&gt;
+    169.254.0.0/16,     &lt;span class=&quot;c&quot;&gt;# 链路本地 / APIPA&lt;/span&gt;
+    172.16.0.0/12,      &lt;span class=&quot;c&quot;&gt;# 私有网络&lt;/span&gt;
+    192.0.0.0/24,       &lt;span class=&quot;c&quot;&gt;# IETF 协议保留&lt;/span&gt;
+    192.0.2.0/24,       &lt;span class=&quot;c&quot;&gt;# 文档/示例地址 (TEST-NET-1)&lt;/span&gt;
+    192.88.99.0/24,     &lt;span class=&quot;c&quot;&gt;# 6to4 中继（已废弃）&lt;/span&gt;
+    192.168.0.0/16,     &lt;span class=&quot;c&quot;&gt;# 私有网络&lt;/span&gt;
+    198.18.0.0/15,      &lt;span class=&quot;c&quot;&gt;# 测试网络&lt;/span&gt;
+    198.51.100.0/24,    &lt;span class=&quot;c&quot;&gt;# 文档/示例地址 (TEST-NET-2)&lt;/span&gt;
+    203.0.113.0/24,     &lt;span class=&quot;c&quot;&gt;# 文档/示例地址 (TEST-NET-3)&lt;/span&gt;
+    224.0.0.0/4,        &lt;span class=&quot;c&quot;&gt;# 多播&lt;/span&gt;
+    240.0.0.0/4         &lt;span class=&quot;c&quot;&gt;# 未来保留 已经包含 255.255.255.255&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global localnet &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;ipv4_addr&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; flags interval&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; elements &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ipv4_localnet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;j) reservedip6.nftset内容为：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;add table inet global
+
+&lt;span class=&quot;c&quot;&gt;# 定义 IPv6 本地/保留网段&lt;/span&gt;
+define ipv6_localnet &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    ::/128,             &lt;span class=&quot;c&quot;&gt;# 未指定地址&lt;/span&gt;
+    ::1/128,            &lt;span class=&quot;c&quot;&gt;# 回环地址&lt;/span&gt;
+    ::ffff:0:0/96,      &lt;span class=&quot;c&quot;&gt;# IPv4 映射&lt;/span&gt;
+    64:ff9b::/96,       &lt;span class=&quot;c&quot;&gt;# IPv4/IPv6 NAT64&lt;/span&gt;
+    100::/64,           &lt;span class=&quot;c&quot;&gt;# 丢弃用途&lt;/span&gt;
+    fc00::/7,           &lt;span class=&quot;c&quot;&gt;# 唯一本地地址 (ULA)&lt;/span&gt;
+    fe80::/10,          &lt;span class=&quot;c&quot;&gt;# 链路本地&lt;/span&gt;
+    ff00::/8            &lt;span class=&quot;c&quot;&gt;# 多播&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global localnet6 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;ipv6_addr&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; flags interval&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; elements &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ipv6_localnet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
 &lt;p&gt;2.配置chinadns-ng&lt;/p&gt;
 
 &lt;p&gt;1）创建并修改配置文件/etc/config/chinadns-ng:&lt;/p&gt;
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 监听地址和端口
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+# 监听地址和端口
 bind&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;addr &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
 bind&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;port &lt;span class=&quot;m&quot;&gt;5353&lt;/span&gt;
 
 # 国内 DNS
-china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;114&lt;/span&gt;
-china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;223&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;
-china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;119&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;29&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;29&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;29&lt;/span&gt;
+china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns tls&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;101&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;226&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;6&lt;/span&gt;
+china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns tls&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;223&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;
 china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns tls&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;223&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;6&lt;/span&gt;
 china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns tls&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;12&lt;/span&gt;
 china&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns tls&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;120&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;53&lt;/span&gt;
-
 
 # 国外 DNS
 trust&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dns &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;#&lt;span class=&quot;m&quot;&gt;5354&lt;/span&gt;
@@ -1257,7 +1315,8 @@ gfwlist&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot
 # group文件
 group direct
 group&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;dnl &lt;span class=&quot;sr&quot;&gt;/etc/&lt;/span&gt;chinadns&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ng/direct&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;txt
-group&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;upstream tls&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;223&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;
+group&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;upstream tls&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;223&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;tls&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;12&lt;/span&gt;
+group&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ipset inet@global@chnroute&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;inet@global@chnroute6
 
 # 收集 &lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;chn、&lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;gfw&lt;/span&gt; 域名的 IP &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;可选&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 # 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
@@ -1279,63 +1338,7 @@ cache&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;refresh &lt;span class=&quot;
 verdict&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cache &lt;span class=&quot;m&quot;&gt;4096&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;2）注册为系统服务&lt;/p&gt;
-
-&lt;p&gt;创建并编辑/etc/init.d/chinadns-ng&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# init script for chinadns-ng&lt;/span&gt;
-
-&lt;span class=&quot;nv&quot;&gt;START&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;85
-&lt;span class=&quot;nv&quot;&gt;STOP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10
-
-&lt;span class=&quot;nv&quot;&gt;USE_PROCD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
-&lt;span class=&quot;nv&quot;&gt;PROG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/bin/chinadns-ng
-&lt;span class=&quot;nv&quot;&gt;CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/etc/config/chinadns-ng
-
-&lt;span class=&quot;c&quot;&gt;#下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效&lt;/span&gt;
-enable_nft_rules &lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/chnroute.nftset
-    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/chnroute6.nftset
-    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/gfwip.nftset
-    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/gfwip6.nftset
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-disable_nft_rules &lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/disable_chnroute.nftset
-    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/disable_chnroute6.nftset
-    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/disable_gfwip.nftset
-    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/chinadns-ng/disable_gfwip6.nftset
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-x&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PROG&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1
-    &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$CONF&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1
-    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 启动 chinadns-ng 服务&quot;&lt;/span&gt;
-    procd_open_instance
-    procd_set_param &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$PROG&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CONF&lt;/span&gt;
-    procd_set_param respawn
-    enable_nft_rules
-    &lt;span class=&quot;c&quot;&gt;# 检查 v2ray 是否在运行，如果在运行，需要重启&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if  &lt;/span&gt;pgrep &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; v2ray &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null 2&amp;gt;&amp;amp;1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] v2ray 正在运行, 需要重启...&quot;&lt;/span&gt;
-        /etc/init.d/v2ray restart
-        &lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;5   &lt;span class=&quot;c&quot;&gt;# 等几秒确保 v2ray 完全启动&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;fi
-    &lt;/span&gt;procd_close_instance
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 停止 chinadns-ng 服务&quot;&lt;/span&gt;
-    disable_nft_rules
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;然后执行：&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x /etc/init.d/chinadns-ng
-/etc/init.d/chinadns-ng &lt;span class=&quot;nb&quot;&gt;enable&lt;/span&gt;
-/etc/init.d/chinadns-ng start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;3.配置v2ray&lt;/p&gt;
+&lt;p&gt;2.配置v2ray&lt;/p&gt;
 
 &lt;p&gt;1）修改配置文件（/etc/config/v2ray.json）&lt;/p&gt;
 &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -1436,7 +1439,7 @@ stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quo
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;2）调整启动脚本（/etc/init.d/v2ray）&lt;/p&gt;
+&lt;p&gt;2）调整启动脚本（/etc/init.d/v2ray_chinadns_ng）&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# This is free software, licensed under the GNU General Public License v3.&lt;/span&gt;
@@ -1444,16 +1447,22 @@ stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quo
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# To use this file, install chinadns-ng,v2ray,knot-dig first&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;START&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;90
 &lt;span class=&quot;nv&quot;&gt;USE_PROCD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
 
-&lt;span class=&quot;nv&quot;&gt;DOMAIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;xxx.com&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;223.6.6.6&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#需要是支持dot的dns服务器&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;DOMESTIC_DNS_SERVERS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;119.29.29.29 223.5.5.5 180.76.76.76&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;DOMAIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;www.xxx.com&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/v2ray&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/config/v2ray.json&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/bin/chinadns-ng
+&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/etc/config/chinadns-ng
+
+&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;223.6.6.6&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5353&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/chinadns-ng/&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1060&quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# 本配置文件中NFT默认参数为：&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# family:inet&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# table:global&lt;/span&gt;
@@ -1465,13 +1474,15 @@ stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quo
 &lt;span class=&quot;c&quot;&gt;# 且下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHNROUTE_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;chnroute.nftset&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHNROUTE6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;chnroute6.nftset&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CHAINS_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;chains.nftset&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;RESERVEDIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;reservedip.nftset&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;RESERVEDIP6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;reservedip6.nftset&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;GFWIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gfwip.nftset&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;GFWIP6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gfwip6.nftset&quot;&lt;/span&gt;
-
-&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1060&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5354 5356 5358 5360&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#5356走tcp&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;V2RAY_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/v2ray&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;V2RAY_CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/config/v2ray.json&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;DISABLE_CHNROUTE_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;disable_chnroute.nftset&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;DISABLE_CHNROUTE6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;disable_chnroute6.nftset&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;DISABLE_GFWIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;disable_gfwip.nftset&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;DISABLE_GFWIP6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;disable_gfwip6.nftset&quot;&lt;/span&gt;
 
 set_multi_domestic_dns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nv&quot;&gt;current_dns_servers_list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;uci get dhcp.@dnsmasq[0].server 2&amp;gt;/dev/null&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
@@ -1480,10 +1491,7 @@ set_multi_domestic_dns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span c
         &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置使用国内DNS服务器&quot;&lt;/span&gt;
         uci &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; delete dhcp.@dnsmasq[0].server
         uci add_list dhcp.@dnsmasq[0].server&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;dns_server &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$DOMESTIC_DNS_SERVERS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do
-            &lt;/span&gt;uci add_list dhcp.@dnsmasq[0].server&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dns_server&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;done
-        &lt;/span&gt;uci &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;dhcp.@dnsmasq[0].noresolv&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+        uci &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;dhcp.@dnsmasq[0].noresolv&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
         uci &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;dhcp.@dnsmasq[0].nohosts&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
         uci commit dhcp
         &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 重启dnsmasq服务&quot;&lt;/span&gt;
@@ -1508,100 +1516,58 @@ set_multi_foreign_dns&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span cl
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 append_chnroute_list&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 检查和创建 set：chnroute&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global chnroute 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 chnroute 集合&quot;&lt;/span&gt;
-        nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHNROUTE_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 
-    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;   
-    &lt;span class=&quot;c&quot;&gt;# 检查和创建 set：chnroute6&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global chnroute6 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 chnroute6 集合&quot;&lt;/span&gt;
-        nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHNROUTE6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 
-    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;   
+    &lt;span class=&quot;c&quot;&gt;# 创建 set：chnroute&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 chnroute 集合&quot;&lt;/span&gt;
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHNROUTE_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
 
-    &lt;span class=&quot;c&quot;&gt;# 添加私有地址段&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 添加内网地址段到 chnroute&quot;&lt;/span&gt;
-    nft add element inet global chnroute  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-        0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8, &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-        169.254.0.0/16, 172.16.0.0/12, &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-        192.168.0.0/16, 224.0.0.0/4, 240.0.0.0/4 &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;# 加载 VPS 域名解析结果&lt;/span&gt;
-    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 解析 &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$DOMAIN&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 并加入 chnroute/chnroute6&quot;&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 处理 IPv4&lt;/span&gt;
-    dig +short A &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$DOMAIN&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; @&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    |   &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Eo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;([0-9]{1,3}\.){3}[0-9]{1,3}&apos;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    |   &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-    |   &lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; ip&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do
-            if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0.0.0.0&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-                &lt;/span&gt;nft add element inet global chnroute &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
-                &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;已经加入 IPv4: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;else
-                &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;忽略无效 IPv4: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;fi
-        done&lt;/span&gt;
-
-    &lt;span class=&quot;c&quot;&gt;# 处理 IPv6&lt;/span&gt;
-    dig +short AAAA &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$DOMAIN&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; @&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-        | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Eo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;([0-9a-fA-F:]{2,})&apos;&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-        | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
-        | &lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; ip6&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do
-            if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip6&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip6&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;::&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-                &lt;/span&gt;nft add element inet global chnroute6 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ip6&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
-                &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;已经加入 IPv6: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip6&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;else
-                &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;忽略无效 IPv6: &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ip6&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;fi
-        done
-
-    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;    chnroute 已载入 &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global chnroute | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-oE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(/[0-9]+)?&apos;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; 条目&quot;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# 创建 set：chnroute6&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 chnroute6 集合&quot;&lt;/span&gt;
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHNROUTE6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
 
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 append_gfwip_list&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 检查和创建 set：gfwip&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global gfwip 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 gfwip 集合&quot;&lt;/span&gt;
-        nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GFWIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 
-    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 检查和创建 set：gfwip6&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; nft list &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global gfwip6 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 gfwip6 集合&quot;&lt;/span&gt;
-        nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GFWIP6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 
-    &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# 创建 set：gfwip&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 gfwip 集合&quot;&lt;/span&gt;
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GFWIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+
+    &lt;span class=&quot;c&quot;&gt;# 创建 set：gfwip6&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 gfwip6 集合&quot;&lt;/span&gt;
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GFWIP6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 create_empty_chain&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 确保 table 存在&lt;/span&gt;
-    nft create table inet global 2&amp;gt;/dev/null
-
-    &lt;span class=&quot;c&quot;&gt;# 确保 prerouting/output 链存在&lt;/span&gt;
-    nft create chain inet global prerouting &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;nat hook prerouting priority dstnat&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
-    nft create chain inet global output &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;nat hook output priority &lt;span class=&quot;nt&quot;&gt;-100&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
-
-    &lt;span class=&quot;c&quot;&gt;# 清空链&lt;/span&gt;
-    nft flush chain inet global prerouting
-    nft flush chain inet global output
+    &lt;span class=&quot;c&quot;&gt;# 创建 prerouting output 链&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 prerouting output 链&quot;&lt;/span&gt;
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHAINS_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 create_chain_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
     create_empty_chain
-    nft add rule inet global prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;se&quot;&gt;\{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;// /,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
-    nft add rule inet global prerouting ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;se&quot;&gt;\{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;// /,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
-    nft add rule inet global output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; tcp dport &lt;span class=&quot;se&quot;&gt;\{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;// /,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
-    nft add rule inet global output ip daddr &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; udp dport &lt;span class=&quot;se&quot;&gt;\{&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;,&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;// /,&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;2&amp;gt;/dev/null
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[*] 创建 inet global 表和 保留地址 @localnet @localnet6 集&quot;&lt;/span&gt;
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RESERVEDIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RESERVEDIP6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 
+    nft add rule inet global prerouting ip daddr @localnet &lt;span class=&quot;k&quot;&gt;return
+    &lt;/span&gt;nft add rule inet global prerouting ip6 daddr @localnet6 &lt;span class=&quot;k&quot;&gt;return
+    &lt;/span&gt;nft add rule inet global output ip daddr @localnet &lt;span class=&quot;k&quot;&gt;return
+    &lt;/span&gt;nft add rule inet global output ip6 daddr @localnet6 &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-enable_chnroute_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+enable_chnroute_nft_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
     create_chain_rules
-    nft add rule inet global prerouting ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    &lt;span class=&quot;c&quot;&gt;#抽检，如果表中没有添加保留地址，则退出，避免无法连接路由器本机&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; nft list table inet global | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0.0.0.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[!] 致命错误，保留地址集添加失败，设置失败，请检查&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RESERVEDIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;0
+    &lt;span class=&quot;k&quot;&gt;fi
+    &lt;/span&gt;nft add rule inet global prerouting ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     nft add rule inet global output ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     nft add rule inet global prerouting ip6 daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute6 tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     nft add rule inet global output ip6 daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute6 tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-enable_gfwip_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+enable_gfwip_nft_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
     create_chain_rules
     nft add rule inet global prerouting ip daddr @gfwip tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     nft add rule inet global output ip daddr @gfwip tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
@@ -1609,15 +1575,19 @@ enable_gfwip_firewall_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
     nft add rule inet global output ip6 daddr @gfwip6 tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-disable_v2ray_rules&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+disable_nft_rules&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     create_empty_chain
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DISABLE_CHNROUTE_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DISABLE_CHNROUTE6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DISABLE_GFWIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
+    nft &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DISABLE_GFWIP6_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     set_multi_domestic_dns
     &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ingfw&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /tmp/v2raymode.txt   
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 停止 v2ray 服务&quot;&lt;/span&gt;
-    disable_v2ray_rules
+    disable_nft_rules
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 enable_v2ray_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
@@ -1627,34 +1597,38 @@ enable_v2ray_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; x&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;running_v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
         &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] v2ray模式未变化&quot;&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;else
-        &lt;/span&gt;disable_v2ray_rules
+        &lt;/span&gt;disable_nft_rules
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;outlands&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
             &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;（境外全局代理模式）模式中&quot;&lt;/span&gt;
             append_chnroute_list
-            enable_chnroute_firewall_rules
+            enable_chnroute_nft_rules
             set_multi_foreign_dns
         
         &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;gfwlist&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
             &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;（白名单代理模式）模式中&quot;&lt;/span&gt;
             append_gfwip_list
-            enable_gfwip_firewall_rules
+            enable_gfwip_nft_rules
             set_multi_foreign_dns
         
         &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ingfw&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-            &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 启动墙内访问模式&quot;&lt;/span&gt;
+            &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置墙内访问模式&quot;&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;fi
         &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /tmp/v2raymode.txt
     &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# 检查 chinadns-ng 是否在运行&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; pgrep &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; chinadns-ng &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/dev/null 2&amp;gt;&amp;amp;1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
-        &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] chinadns-ng 未运行, 启动中...&quot;&lt;/span&gt;
-        /etc/init.d/chinadns-ng start
-        &lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;2   &lt;span class=&quot;c&quot;&gt;# 等几秒确保 chinadns-ng 完全启动&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;fi
-    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 启动 v2ray 服务&quot;&lt;/span&gt;
+    enable_v2ray_rules
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 启动 chinadns-ng 服务&quot;&lt;/span&gt;
+    procd_open_instance
+    procd_set_param &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CHINADNSNG_BIN&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CHINADNSNG_CONF&lt;/span&gt;
+    procd_set_param respawn
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_close_instance
+    &lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;2
+
+    &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 启动 v2ray 服务&quot;&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /var/log/v2ray
     &lt;span class=&quot;nb&quot;&gt;ulimit&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 65535
     procd_open_instance
@@ -1664,20 +1638,25 @@ start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&qu
     procd_set_param stdout 1
     procd_set_param stderr 1
     procd_set_param pidfile /var/run/v2ray.pid
-    enable_v2ray_rules
     procd_close_instance
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     procd_add_reload_trigger &lt;span class=&quot;s2&quot;&gt;&quot;advancedconfig&quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;4.调整dnsmasq，chinadns等配置，避免冲突。&lt;/p&gt;
+&lt;p&gt;然后执行：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x /etc/init.d/v2ray_chinadns_ng
+/etc/init.d/v2ray_chinadns_ng &lt;span class=&quot;nb&quot;&gt;enable&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;3.调整dnsmasq，chinadns等配置，避免冲突。&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /etc/dnsmasq.conf
 /etc/init.d/chinadns disable
-/etc/init.d/chinadns stop
+/etc/init.d/v2ray disable
 &lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; /root/start_multi_chinadns.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
