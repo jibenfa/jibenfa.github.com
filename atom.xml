@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-05T09:29:06+00:00</updated>
+ <updated>2025-09-05T09:36:39+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -837,7 +837,7 @@ print(&quot;生成并加密完成 -&amp;gt; encrypt.txt&quot;)
 &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;2.修改/etc/init.d/v2ray&lt;/p&gt;
+&lt;p&gt;2.修改/etc/init.d/v2ray_chinadns_ng&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# This is free software, licensed under the GNU General Public License v3.&lt;/span&gt;
@@ -1109,7 +1109,7 @@ service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&
     procd_add_reload_trigger &lt;span class=&quot;s2&quot;&gt;&quot;advancedconfig&quot;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;3.修改/etc/chinadns-ng/chains.nftset&lt;/p&gt;
+&lt;p&gt;3.修改/etc/chinadns-ng/chains.nftset，相对于redirect，主要是增加了divert&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;add table inet global 
 
 add chain inet global prerouting &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;filter hook prerouting priority mangle&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; policy accept&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; 
@@ -1121,7 +1121,7 @@ flush chain inet global output
 flush chain inet global divert
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;4.修改/etc/chinadns-ng/&lt;/p&gt;
+&lt;p&gt;4.修改/etc/chinadns-ng/，相对于redirect，主要是删除：127.0.0.0/8&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;add table inet global
 
 &lt;span class=&quot;c&quot;&gt;# 定义 IPv4 本地/保留网段&lt;/span&gt;
@@ -1146,7 +1146,7 @@ define ipv4_localnet &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span cla
 add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global localnet_without_127 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;ipv4_addr&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; flags interval&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; elements &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ipv4_localnet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;其他内容参考上一篇在openwrt下使用chinadns-ng搭配v2ray实现透明代理的&lt;/p&gt;
+&lt;p&gt;其他配置参考上一篇《在openwrt下使用chinadns-ng搭配v2ray实现透明代理》&lt;/p&gt;
 
 &lt;p&gt;参考：&lt;/p&gt;
 

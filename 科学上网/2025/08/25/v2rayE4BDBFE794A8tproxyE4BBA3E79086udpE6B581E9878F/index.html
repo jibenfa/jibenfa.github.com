@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<p>2.修改/etc/init.d/v2ray</p>
+<p>2.修改/etc/init.d/v2ray_chinadns_ng</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh /etc/rc.common</span>
 <span class="c">#</span>
 <span class="c"># This is free software, licensed under the GNU General Public License v3.</span>
@@ -552,7 +552,7 @@ service_triggers<span class="o">()</span> <span class="o">{</span>
     procd_add_reload_trigger <span class="s2">"advancedconfig"</span>
 <span class="o">}</span>
 </code></pre></div></div>
-<p>3.修改/etc/chinadns-ng/chains.nftset</p>
+<p>3.修改/etc/chinadns-ng/chains.nftset，相对于redirect，主要是增加了divert</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>add table inet global 
 
 add chain inet global prerouting <span class="o">{</span> <span class="nb">type </span>filter hook prerouting priority mangle<span class="p">;</span> policy accept<span class="p">;</span> <span class="o">}</span> 
@@ -564,7 +564,7 @@ flush chain inet global output
 flush chain inet global divert
 </code></pre></div></div>
 
-<p>4.修改/etc/chinadns-ng/</p>
+<p>4.修改/etc/chinadns-ng/，相对于redirect，主要是删除：127.0.0.0/8</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>add table inet global
 
 <span class="c"># 定义 IPv4 本地/保留网段</span>
@@ -589,7 +589,7 @@ define ipv4_localnet <span class="o">=</span> <span class="o">{</span>
 add <span class="nb">set </span>inet global localnet_without_127 <span class="o">{</span> <span class="nb">type </span>ipv4_addr<span class="p">;</span> flags interval<span class="p">;</span> elements <span class="o">=</span> <span class="nv">$ipv4_localnet</span><span class="p">;</span> <span class="o">}</span>
 </code></pre></div></div>
 
-<p>其他内容参考上一篇在openwrt下使用chinadns-ng搭配v2ray实现透明代理的</p>
+<p>其他配置参考上一篇《在openwrt下使用chinadns-ng搭配v2ray实现透明代理》</p>
 
 <p>参考：</p>
 
