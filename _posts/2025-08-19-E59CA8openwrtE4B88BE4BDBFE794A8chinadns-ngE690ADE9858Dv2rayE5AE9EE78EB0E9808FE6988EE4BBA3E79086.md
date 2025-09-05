@@ -35,9 +35,10 @@ chmod +x /usr/bin/chinadns-ng
 
 ```vim
  # ls /etc/chinadns-ng
-chnlist.txt               chnroute6.ipset           disable_chnroute.nftset   disable_gfwip6.nftset     gfwlist.txt               update-chnroute-nft.sh    update-chnroute6.sh
-chnroute.ipset            chnroute6.nftset          disable_chnroute6.nftset  gfwip.nftset              update-all.sh             update-chnroute.sh        update-gfwlist.sh
-chnroute.nftset           direct.txt                disable_gfwip.nftset      gfwip6.nftset             update-chnlist.sh         update-chnroute6-nft.sh
+chains.nftset             chnroute.nftset           direct.txt                disable_gfwip.nftset      gfwip6.nftset             reservedip6.nftset        update-chnroute-nft.sh    update-chnroute6.sh
+chnlist.txt               chnroute6.ipset           disable_chnroute.nftset   disable_gfwip6.nftset     gfwlist.txt               update-all.sh             update-chnroute.sh        update-gfwlist.sh
+chnroute.ipset            chnroute6.nftset          disable_chnroute6.nftset  gfwip.nftset              reservedip.nftset         update-chnlist.sh         update-chnroute6-nft.sh
+
 ```
 注意：
 direct.txt,
@@ -47,6 +48,9 @@ gfwip.nftset,
 gfwip6.nftset,
 disable_gfwip.nftset,
 disable_gfwip6.nftset
+chains.nftset
+reservedip.nftset
+reservedip6.nftset
 是我创建的，后面细说。
 
 建议启用前通过update*.sh进行更新
@@ -90,22 +94,79 @@ g) disable_chnroute6.nftset内容为：
 flush set inet global gfwip6
 ```
 
+h) chains.nftset内容为：
+```bash
+add table inet global
+
+add chain inet global prerouting { type nat hook prerouting priority dstnat; }
+add chain inet global output { type nat hook output priority -100; }
+
+flush chain inet global prerouting
+flush chain inet global output
+```
+
+i) reservedip.nftset内容为：
+```bash
+add table inet global
+
+# 定义 IPv4 本地/保留网段
+define ipv4_localnet = {
+    0.0.0.0/8,          # 本网络/未指定
+    10.0.0.0/8,         # 私有网络
+    100.64.0.0/10,      # CGNAT / Carrier-grade NAT
+    127.0.0.0/8,        # 回环地址
+    169.254.0.0/16,     # 链路本地 / APIPA
+    172.16.0.0/12,      # 私有网络
+    192.0.0.0/24,       # IETF 协议保留
+    192.0.2.0/24,       # 文档/示例地址 (TEST-NET-1)
+    192.88.99.0/24,     # 6to4 中继（已废弃）
+    192.168.0.0/16,     # 私有网络
+    198.18.0.0/15,      # 测试网络
+    198.51.100.0/24,    # 文档/示例地址 (TEST-NET-2)
+    203.0.113.0/24,     # 文档/示例地址 (TEST-NET-3)
+    224.0.0.0/4,        # 多播
+    240.0.0.0/4         # 未来保留 已经包含 255.255.255.255
+}
+
+add set inet global localnet { type ipv4_addr; flags interval; elements = $ipv4_localnet; }
+
+```
+
+j) reservedip6.nftset内容为：
+```bash
+add table inet global
+
+# 定义 IPv6 本地/保留网段
+define ipv6_localnet = {
+    ::/128,             # 未指定地址
+    ::1/128,            # 回环地址
+    ::ffff:0:0/96,      # IPv4 映射
+    64:ff9b::/96,       # IPv4/IPv6 NAT64
+    100::/64,           # 丢弃用途
+    fc00::/7,           # 唯一本地地址 (ULA)
+    fe80::/10,          # 链路本地
+    ff00::/8            # 多播
+}
+
+add set inet global localnet6 { type ipv6_addr; flags interval; elements = $ipv6_localnet; }
+
+```
+
 2.配置chinadns-ng
 
 1）创建并修改配置文件/etc/config/chinadns-ng:
 ```vim
+
 # 监听地址和端口
 bind-addr 0.0.0.0
 bind-port 5353
 
 # 国内 DNS
-china-dns 114.114.114.114
-china-dns 223.5.5.5
-china-dns 119.29.29.29
+china-dns tls://101.226.4.6
+china-dns tls://223.5.5.5
 china-dns tls://223.6.6.6
 china-dns tls://1.12.12.12
 china-dns tls://120.53.53.53
-
 
 # 国外 DNS
 trust-dns 127.0.0.1#5354
@@ -120,7 +181,8 @@ gfwlist-file /etc/chinadns-ng/gfwlist.txt
 # group文件
 group direct
 group-dnl /etc/chinadns-ng/direct.txt
-group-upstream tls://223.5.5.5
+group-upstream tls://223.5.5.5,tls://1.12.12.12
+group-ipset inet@global@chnroute,inet@global@chnroute6
 
 # 收集 tag:chn、tag:gfw 域名的 IP (可选)
 # 相关 family，table，set名称要与nftset文件中的一致，否则无法生效
@@ -142,67 +204,7 @@ cache-refresh 20
 verdict-cache 4096
 ```
 
-
-
-2）注册为系统服务
-
-创建并编辑/etc/init.d/chinadns-ng
-```bash
-#!/bin/sh /etc/rc.common
-# init script for chinadns-ng
-
-START=85
-STOP=10
-
-USE_PROCD=1
-PROG=/usr/bin/chinadns-ng
-CONF=/etc/config/chinadns-ng
-
-#下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效
-enable_nft_rules (){
-    nft -f /etc/chinadns-ng/chnroute.nftset
-    nft -f /etc/chinadns-ng/chnroute6.nftset
-    nft -f /etc/chinadns-ng/gfwip.nftset
-    nft -f /etc/chinadns-ng/gfwip6.nftset
-}
-
-disable_nft_rules (){
-    nft -f /etc/chinadns-ng/disable_chnroute.nftset
-    nft -f /etc/chinadns-ng/disable_chnroute6.nftset
-    nft -f /etc/chinadns-ng/disable_gfwip.nftset
-    nft -f /etc/chinadns-ng/disable_gfwip6.nftset
-}
-
-start_service() {
-    [ -x "$PROG" ] || exit 1
-    [ -f "$CONF" ] || exit 1
-    echo "[+] 启动 chinadns-ng 服务"
-    procd_open_instance
-    procd_set_param command $PROG -C $CONF
-    procd_set_param respawn
-    enable_nft_rules
-    # 检查 v2ray 是否在运行，如果在运行，需要重启
-    if  pgrep -f v2ray >/dev/null 2>&1; then
-        echo "[+] v2ray 正在运行, 需要重启..."
-        /etc/init.d/v2ray restart
-        sleep 5   # 等几秒确保 v2ray 完全启动
-    fi
-    procd_close_instance
-}
-
-stop_service()  {
-    echo "[+] 停止 chinadns-ng 服务"
-    disable_nft_rules
-}
-```
-然后执行：
-```bash
-chmod +x /etc/init.d/chinadns-ng
-/etc/init.d/chinadns-ng enable
-/etc/init.d/chinadns-ng start
-```
-
-3.配置v2ray
+2.配置v2ray
 
 1）修改配置文件（/etc/config/v2ray.json）
 ```vim
@@ -304,7 +306,7 @@ chmod +x /etc/init.d/chinadns-ng
 
 ```
 
-2）调整启动脚本（/etc/init.d/v2ray）
+2）调整启动脚本（/etc/init.d/v2ray_chinadns_ng）
 ```bash
 #!/bin/sh /etc/rc.common
 #
@@ -313,16 +315,22 @@ chmod +x /etc/init.d/chinadns-ng
 #
 # To use this file, install chinadns-ng,v2ray,knot-dig first
 #
+#
 
 START=90
 USE_PROCD=1
 
-DOMAIN="xxx.com"
-DEFAULT_DNS_SERVER="223.6.6.6" #需要是支持dot的dns服务器
-DOMESTIC_DNS_SERVERS="119.29.29.29 223.5.5.5 180.76.76.76"
+DOMAIN="www.xxx.com"
+V2RAY_BIN="/usr/bin/v2ray"
+V2RAY_CONF="/etc/config/v2ray.json"
+CHINADNSNG_BIN=/usr/bin/chinadns-ng
+CHINADNSNG_CONF=/etc/config/chinadns-ng
+
+DEFAULT_DNS_SERVER="223.6.6.6"
 LOCAL_IP="127.0.0.1"
 CHINADNSNG_PORT="5353"
 CHINADNSNG_FILES_PATH="/etc/chinadns-ng/"
+V2RAY_PORT="1060"
 # 本配置文件中NFT默认参数为：
 # family:inet
 # table:global
@@ -334,13 +342,15 @@ CHINADNSNG_FILES_PATH="/etc/chinadns-ng/"
 # 且下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效
 CHNROUTE_NFT_NAME="chnroute.nftset"
 CHNROUTE6_NFT_NAME="chnroute6.nftset"
+CHAINS_NFT_NAME="chains.nftset"
+RESERVEDIP_NFT_NAME="reservedip.nftset"
+RESERVEDIP6_NFT_NAME="reservedip6.nftset"
 GFWIP_NFT_NAME="gfwip.nftset"
 GFWIP6_NFT_NAME="gfwip6.nftset"
-
-V2RAY_PORT="1060"
-V2RAY_DNS_PORTS="5354 5356 5358 5360" #5356走tcp
-V2RAY_BIN="/usr/bin/v2ray"
-V2RAY_CONF="/etc/config/v2ray.json"
+DISABLE_CHNROUTE_NFT_NAME="disable_chnroute.nftset"
+DISABLE_CHNROUTE6_NFT_NAME="disable_chnroute6.nftset"
+DISABLE_GFWIP_NFT_NAME="disable_gfwip.nftset"
+DISABLE_GFWIP6_NFT_NAME="disable_gfwip6.nftset"
 
 set_multi_domestic_dns() {
     current_dns_servers_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
@@ -349,9 +359,6 @@ set_multi_domestic_dns() {
         echo "[+] 设置使用国内DNS服务器"
         uci -q delete dhcp.@dnsmasq[0].server
         uci add_list dhcp.@dnsmasq[0].server=${DEFAULT_DNS_SERVER}
-        for dns_server in $DOMESTIC_DNS_SERVERS; do
-            uci add_list dhcp.@dnsmasq[0].server="${dns_server}"
-        done
         uci set dhcp.@dnsmasq[0].noresolv=0
         uci set dhcp.@dnsmasq[0].nohosts=0
         uci commit dhcp
@@ -377,100 +384,58 @@ set_multi_foreign_dns() {
 }
 
 append_chnroute_list() {
-    # 检查和创建 set：chnroute
-    if ! nft list set inet global chnroute 2>/dev/null >/dev/null; then
-        echo "[*] 创建 inet global 表和 chnroute 集合"
-        nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE_NFT_NAME} 
-    fi   
-    # 检查和创建 set：chnroute6
-    if ! nft list set inet global chnroute6 2>/dev/null >/dev/null; then
-        echo "[*] 创建 inet global 表和 chnroute6 集合"
-        nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE6_NFT_NAME} 
-    fi   
+    # 创建 set：chnroute
+    echo "[*] 创建 inet global 表和 chnroute 集合"
+    nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE_NFT_NAME} 2>/dev/null
 
-    # 添加私有地址段
-    echo "[+] 添加内网地址段到 chnroute"
-    nft add element inet global chnroute  { \
-        0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8, \
-        169.254.0.0/16, 172.16.0.0/12, \
-        192.168.0.0/16, 224.0.0.0/4, 240.0.0.0/4 \
-    }
-
-    # 加载 VPS 域名解析结果
-    echo "[+] 解析 $DOMAIN 并加入 chnroute/chnroute6"
-    # 处理 IPv4
-    dig +short A "$DOMAIN" @"${DEFAULT_DNS_SERVER}" \
-    |   grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' \
-    |   sort -u \
-    |   while read -r ip; do
-            if [ "$ip" != "$DEFAULT_DNS_SERVER" ] && [ "$ip" != "0.0.0.0" ]; then
-                nft add element inet global chnroute { $ip } 2>/dev/null
-                echo "已经加入 IPv4: $ip"
-            else
-                echo "忽略无效 IPv4: $ip"
-            fi
-        done
-
-    # 处理 IPv6
-    dig +short AAAA "$DOMAIN" @"${DEFAULT_DNS_SERVER}" \
-        | grep -Eo '([0-9a-fA-F:]{2,})' \
-        | sort -u \
-        | while read -r ip6; do
-            if [ -n "$ip6" ] && [ "$ip6" != "::" ]; then
-                nft add element inet global chnroute6 { $ip6 } 2>/dev/null
-                echo "已经加入 IPv6: $ip6"
-            else
-                echo "忽略无效 IPv6: $ip6"
-            fi
-        done
-
-    echo "    chnroute 已载入 $(nft list set inet global chnroute | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(/[0-9]+)?' | wc -l) 条目"
+    # 创建 set：chnroute6
+    echo "[*] 创建 inet global 表和 chnroute6 集合"
+    nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE6_NFT_NAME} 2>/dev/null
 
 }
 
 append_gfwip_list(){
-    # 检查和创建 set：gfwip
-    if ! nft list set inet global gfwip 2>/dev/null >/dev/null; then
-        echo "[*] 创建 inet global 表和 gfwip 集合"
-        nft -f ${CHINADNSNG_FILES_PATH}${GFWIP_NFT_NAME} 
-    fi
-    # 检查和创建 set：gfwip6
-    if ! nft list set inet global gfwip6 2>/dev/null >/dev/null; then
-        echo "[*] 创建 inet global 表和 gfwip6 集合"
-        nft -f ${CHINADNSNG_FILES_PATH}${GFWIP6_NFT_NAME} 
-    fi
+    # 创建 set：gfwip
+    echo "[*] 创建 inet global 表和 gfwip 集合"
+    nft -f ${CHINADNSNG_FILES_PATH}${GFWIP_NFT_NAME} 2>/dev/null
+
+    # 创建 set：gfwip6
+    echo "[*] 创建 inet global 表和 gfwip6 集合"
+    nft -f ${CHINADNSNG_FILES_PATH}${GFWIP6_NFT_NAME} 2>/dev/null
+
 }
 
 create_empty_chain(){
-    # 确保 table 存在
-    nft create table inet global 2>/dev/null
-
-    # 确保 prerouting/output 链存在
-    nft create chain inet global prerouting { type nat hook prerouting priority dstnat\; } 2>/dev/null
-    nft create chain inet global output { type nat hook output priority -100\; } 2>/dev/null
-
-    # 清空链
-    nft flush chain inet global prerouting
-    nft flush chain inet global output
+    # 创建 prerouting output 链
+    echo "[*] 创建 inet global 表和 prerouting output 链"
+    nft -f ${CHINADNSNG_FILES_PATH}${CHAINS_NFT_NAME} 2>/dev/null
 }
 
 create_chain_rules(){
     create_empty_chain
-    nft add rule inet global prerouting ip daddr ${LOCAL_IP} tcp dport \{${CHINADNSNG_PORT},${V2RAY_DNS_PORTS// /,}\} return 2>/dev/null
-    nft add rule inet global prerouting ip daddr ${LOCAL_IP} udp dport \{${CHINADNSNG_PORT},${V2RAY_DNS_PORTS// /,}\} return 2>/dev/null
-    nft add rule inet global output ip daddr ${LOCAL_IP} tcp dport \{${CHINADNSNG_PORT},${V2RAY_DNS_PORTS// /,}\} return 2>/dev/null
-    nft add rule inet global output ip daddr ${LOCAL_IP} udp dport \{${CHINADNSNG_PORT},${V2RAY_DNS_PORTS// /,}\} return 2>/dev/null
+    echo "[*] 创建 inet global 表和 保留地址 @localnet @localnet6 集"
+    nft -f ${CHINADNSNG_FILES_PATH}${RESERVEDIP_NFT_NAME} 
+    nft -f ${CHINADNSNG_FILES_PATH}${RESERVEDIP6_NFT_NAME} 
+    nft add rule inet global prerouting ip daddr @localnet return
+    nft add rule inet global prerouting ip6 daddr @localnet6 return
+    nft add rule inet global output ip daddr @localnet return
+    nft add rule inet global output ip6 daddr @localnet6 return
 }
 
-enable_chnroute_firewall_rules(){
+enable_chnroute_nft_rules(){
     create_chain_rules
+    #抽检，如果表中没有添加保留地址，则退出，避免无法连接路由器本机
+    if ! nft list table inet global | grep -q "0.0.0.0"; then
+        echo "[!] 致命错误，保留地址集添加失败，设置失败，请检查${CHINADNSNG_FILES_PATH}${RESERVEDIP_NFT_NAME}"
+        return 0
+    fi
     nft add rule inet global prerouting ip daddr != @chnroute tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
     nft add rule inet global output ip daddr != @chnroute tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
     nft add rule inet global prerouting ip6 daddr != @chnroute6 tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
     nft add rule inet global output ip6 daddr != @chnroute6 tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
 }
 
-enable_gfwip_firewall_rules(){
+enable_gfwip_nft_rules(){
     create_chain_rules
     nft add rule inet global prerouting ip daddr @gfwip tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
     nft add rule inet global output ip daddr @gfwip tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
@@ -478,15 +443,19 @@ enable_gfwip_firewall_rules(){
     nft add rule inet global output ip6 daddr @gfwip6 tcp dport 0-65535 counter redirect to :${V2RAY_PORT} 2>/dev/null
 }
 
-disable_v2ray_rules() {
+disable_nft_rules() {
     create_empty_chain
+    nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_CHNROUTE_NFT_NAME} 2>/dev/null
+    nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_CHNROUTE6_NFT_NAME} 2>/dev/null
+    nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_GFWIP_NFT_NAME} 2>/dev/null
+    nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_GFWIP6_NFT_NAME} 2>/dev/null
     set_multi_domestic_dns
     echo "ingfw" > /tmp/v2raymode.txt   
 }
 
 stop_service()  {
     echo "[+] 停止 v2ray 服务"
-    disable_v2ray_rules
+    disable_nft_rules
 }
 
 enable_v2ray_rules(){
@@ -496,33 +465,37 @@ enable_v2ray_rules(){
     if [ x${v2ray_mode} = x${running_v2ray_mode} ]; then
         echo "[+] v2ray模式未变化"
     else
-        disable_v2ray_rules
+        disable_nft_rules
         if [ "${v2ray_mode}" = "outlands" ]; then
             echo "[+] 设置${v2ray_mode}（境外全局代理模式）模式中"
             append_chnroute_list
-            enable_chnroute_firewall_rules
+            enable_chnroute_nft_rules
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "gfwlist" ]; then
             echo "[+] 设置${v2ray_mode}（白名单代理模式）模式中"
             append_gfwip_list
-            enable_gfwip_firewall_rules
+            enable_gfwip_nft_rules
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "ingfw" ]; then
-            echo "[+] 启动墙内访问模式"
+            echo "[+] 设置墙内访问模式"
         fi
         echo "${v2ray_mode}" > /tmp/v2raymode.txt
     fi
 }
 
 start_service()  {
-    # 检查 chinadns-ng 是否在运行
-    if ! pgrep -f chinadns-ng >/dev/null 2>&1; then
-        echo "[+] chinadns-ng 未运行, 启动中..."
-        /etc/init.d/chinadns-ng start
-        sleep 2   # 等几秒确保 chinadns-ng 完全启动
-    fi
+    enable_v2ray_rules
+    echo "[+] 启动 chinadns-ng 服务"
+    procd_open_instance
+    procd_set_param command $CHINADNSNG_BIN -C $CHINADNSNG_CONF
+    procd_set_param respawn
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_close_instance
+    sleep 2
+
     echo "[+] 启动 v2ray 服务"
     mkdir -p /var/log/v2ray
     ulimit -n 65535
@@ -533,21 +506,27 @@ start_service()  {
     procd_set_param stdout 1
     procd_set_param stderr 1
     procd_set_param pidfile /var/run/v2ray.pid
-    enable_v2ray_rules
     procd_close_instance
 }
 
 service_triggers() {
     procd_add_reload_trigger "advancedconfig"
 }
+
 ```
 
-4.调整dnsmasq，chinadns等配置，避免冲突。
+然后执行：
+```bash
+chmod +x /etc/init.d/v2ray_chinadns_ng
+/etc/init.d/v2ray_chinadns_ng enable
+```
+
+3.调整dnsmasq，chinadns等配置，避免冲突。
 
 ```bash
 echo '' > /etc/dnsmasq.conf
 /etc/init.d/chinadns disable
-/etc/init.d/chinadns stop
+/etc/init.d/v2ray disable
 rm /root/start_multi_chinadns.sh
 ```
 
