@@ -320,7 +320,6 @@ verdict-cache 4096
 START=90
 USE_PROCD=1
 
-DOMAIN="www.xxx.com"
 V2RAY_BIN="/usr/bin/v2ray"
 V2RAY_CONF="/etc/config/v2ray.json"
 CHINADNSNG_BIN=/usr/bin/chinadns-ng
