@@ -55,7 +55,7 @@ reservedip6.nftset
 
 建议启用前通过update*.sh进行更新
 
-a) 其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名一定要由国内dns解析，否则无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：
+a) 其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名要直接由国内dns解析，否则可能无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：
 
 ```vim
 xxx.com
