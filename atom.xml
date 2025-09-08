@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-08T05:48:28+00:00</updated>
+ <updated>2025-09-08T05:56:43+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -853,16 +853,17 @@ print(&quot;生成并加密完成 -&amp;gt; encrypt.txt&quot;)
 &lt;span class=&quot;nv&quot;&gt;LAN_IPS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;10.0.0.1/16&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#局域网ip段&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;V2RAY_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/v2ray&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;V2RAY_CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/config/v2ray.json&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1060&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5354 5356 5358 5360&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#5356走tcp&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5353&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/chinadns-ng/&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#结尾必须带斜杠&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHINADNSNG_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/chinadns-ng&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHINADNSNG_CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/config/chinadns-ng&quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;223.6.6.6&quot;&lt;/span&gt; 
 &lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1060&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;V2RAY_DNS_PORTS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5354 5356 5358 5360&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#5356走tcp&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5353&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/chinadns-ng/&quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# 本配置文件中NFT默认参数为：&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# family:inet&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# table:global&lt;/span&gt;
@@ -1484,14 +1485,16 @@ verdict&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cache &lt;span class=&quot;
 
 &lt;span class=&quot;nv&quot;&gt;V2RAY_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/v2ray&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;V2RAY_CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/config/v2ray.json&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1060&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5353&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/chinadns-ng/&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHINADNSNG_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/bin/chinadns-ng&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;CHINADNSNG_CONF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/config/chinadns-ng&quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;DEFAULT_DNS_SERVER&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;223.6.6.6&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;LOCAL_IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;127.0.0.1&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;5353&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/chinadns-ng/&quot;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1060&quot;&lt;/span&gt;
+
 &lt;span class=&quot;c&quot;&gt;# 本配置文件中NFT默认参数为：&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# family:inet&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# table:global&lt;/span&gt;
