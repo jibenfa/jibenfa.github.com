@@ -322,14 +322,16 @@ USE_PROCD=1
 
 V2RAY_BIN="/usr/bin/v2ray"
 V2RAY_CONF="/etc/config/v2ray.json"
+V2RAY_PORT="1060"
+
+CHINADNSNG_PORT="5353"
+CHINADNSNG_FILES_PATH="/etc/chinadns-ng/"
 CHINADNSNG_BIN="/usr/bin/chinadns-ng"
 CHINADNSNG_CONF="/etc/config/chinadns-ng"
 
 DEFAULT_DNS_SERVER="223.6.6.6"
 LOCAL_IP="127.0.0.1"
-CHINADNSNG_PORT="5353"
-CHINADNSNG_FILES_PATH="/etc/chinadns-ng/"
-V2RAY_PORT="1060"
+
 # 本配置文件中NFT默认参数为：
 # family:inet
 # table:global
