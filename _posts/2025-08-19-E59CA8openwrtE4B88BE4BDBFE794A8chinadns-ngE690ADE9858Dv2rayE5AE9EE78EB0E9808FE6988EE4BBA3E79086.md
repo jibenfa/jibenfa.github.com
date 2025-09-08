@@ -64,7 +64,7 @@ vultur.com
 xxx.com
 
 ```
-这里可以不手工添加，因为后面v2ray的脚本也会自动添加的。
+这里可以不手工添加xxx.com，因为后面v2ray_chinadns_ng的脚本也会读取v2ray配置文件然后自动添加的。
 
 b) disable_chnroute.nftset内容为：
 ```bash
