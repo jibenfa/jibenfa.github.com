@@ -320,7 +320,6 @@ verdict-cache 4096
 START=90
 USE_PROCD=1
 
-DOMAIN="www.xxx.com"
 V2RAY_BIN="/usr/bin/v2ray"
 V2RAY_CONF="/etc/config/v2ray.json"
 CHINADNSNG_BIN=/usr/bin/chinadns-ng
@@ -351,6 +350,35 @@ DISABLE_CHNROUTE_NFT_NAME="disable_chnroute.nftset"
 DISABLE_CHNROUTE6_NFT_NAME="disable_chnroute6.nftset"
 DISABLE_GFWIP_NFT_NAME="disable_gfwip.nftset"
 DISABLE_GFWIP6_NFT_NAME="disable_gfwip6.nftset"
+DIRECT_GROUP_FILE="direct.txt"
+
+#从v2ray的配置文件中读取网址，放到chinadns-ng的直接解析文件中，避免因无法解析导致无法连接到服务端
+add_v2ray_domain_to_direct_group() {
+    direct_file=${CHINADNSNG_FILES_PATH}${DIRECT_GROUP_FILE}
+    . /usr/share/libubox/jshn.sh
+    json_load_file "${V2RAY_CONF}"
+    json_select outbounds
+    json_select 1
+    json_select settings
+    json_select vnext
+    json_select 1
+    json_get_var addr address
+    if [ -s "${direct_file}" ]; then 
+        if grep -q "${addr}" "${direct_file}"; then
+            echo "[+] v2ray域名已经存在于${direct_file}"
+        else
+            echo "[+] 将v2ray域名添加到${direct_file}"
+            if [ "$(tail -c 1 ${direct_file})" != "" ]; then
+                # 最后一行没有换行符，先补一个
+                printf '\n' >> ${direct_file}
+            fi
+            echo ${addr} >> ${direct_file}
+        fi
+    else
+        echo "[+] 创建${direct_file}，将v2ray域名添加到${direct_file}"
+        echo ${addr} > ${direct_file}
+    fi
+}
 
 set_multi_domestic_dns() {
     current_dns_servers_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
@@ -466,6 +494,7 @@ enable_nft_rules(){
         echo "[+] v2ray模式未变化"
     else
         disable_nft_rules
+        add_v2ray_domain_to_direct_group
         if [ "${v2ray_mode}" = "outlands" ]; then
             echo "[+] 设置${v2ray_mode}（境外全局代理模式）模式中"
             append_chnroute_list
