@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-09-08T05:56:43+00:00</updated>
+ <updated>2025-09-08T06:14:08+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -1620,7 +1620,7 @@ enable_chnroute_nft_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
     &lt;span class=&quot;c&quot;&gt;#抽检，如果表中没有添加保留地址，则退出，避免无法连接路由器本机&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; nft list table inet global | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-q&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0.0.0.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
         &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[!] 致命错误，保留地址集添加失败，设置失败，请检查&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CHINADNSNG_FILES_PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RESERVEDIP_NFT_NAME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;0
+        &lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;1
     &lt;span class=&quot;k&quot;&gt;fi
     &lt;/span&gt;nft add rule inet global prerouting ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null
     nft add rule inet global output ip daddr &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; @chnroute tcp dport 0-65535 counter redirect to :&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;V2RAY_PORT&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; 2&amp;gt;/dev/null

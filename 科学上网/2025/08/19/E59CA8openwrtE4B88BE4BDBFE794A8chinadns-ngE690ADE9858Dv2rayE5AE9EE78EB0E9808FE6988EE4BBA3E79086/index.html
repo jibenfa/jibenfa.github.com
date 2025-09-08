@@ -574,7 +574,7 @@ enable_chnroute_nft_rules<span class="o">(){</span>
     <span class="c">#抽检，如果表中没有添加保留地址，则退出，避免无法连接路由器本机</span>
     <span class="k">if</span> <span class="o">!</span> nft list table inet global | <span class="nb">grep</span> <span class="nt">-q</span> <span class="s2">"0.0.0.0"</span><span class="p">;</span> <span class="k">then
         </span><span class="nb">echo</span> <span class="s2">"[!] 致命错误，保留地址集添加失败，设置失败，请检查</span><span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">RESERVEDIP_NFT_NAME</span><span class="k">}</span><span class="s2">"</span>
-        <span class="k">return </span>0
+        <span class="k">return </span>1
     <span class="k">fi
     </span>nft add rule inet global prerouting ip daddr <span class="o">!=</span> @chnroute tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
     nft add rule inet global output ip daddr <span class="o">!=</span> @chnroute tcp dport 0-65535 counter redirect to :<span class="k">${</span><span class="nv">V2RAY_PORT</span><span class="k">}</span> 2&gt;/dev/null
