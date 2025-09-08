@@ -322,8 +322,8 @@ USE_PROCD=1
 
 V2RAY_BIN="/usr/bin/v2ray"
 V2RAY_CONF="/etc/config/v2ray.json"
-CHINADNSNG_BIN=/usr/bin/chinadns-ng
-CHINADNSNG_CONF=/etc/config/chinadns-ng
+CHINADNSNG_BIN="/usr/bin/chinadns-ng"
+CHINADNSNG_CONF="/etc/config/chinadns-ng"
 
 DEFAULT_DNS_SERVER="223.6.6.6"
 LOCAL_IP="127.0.0.1"
