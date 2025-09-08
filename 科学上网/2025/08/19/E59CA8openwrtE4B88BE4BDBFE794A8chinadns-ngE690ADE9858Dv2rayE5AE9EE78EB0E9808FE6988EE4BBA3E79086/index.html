@@ -467,6 +467,35 @@ verdict<span class="p">-</span>cache <span class="m">4096</span>
 <span class="nv">DISABLE_CHNROUTE6_NFT_NAME</span><span class="o">=</span><span class="s2">"disable_chnroute6.nftset"</span>
 <span class="nv">DISABLE_GFWIP_NFT_NAME</span><span class="o">=</span><span class="s2">"disable_gfwip.nftset"</span>
 <span class="nv">DISABLE_GFWIP6_NFT_NAME</span><span class="o">=</span><span class="s2">"disable_gfwip6.nftset"</span>
+<span class="nv">DIRECT_GROUP_FILE</span><span class="o">=</span><span class="s2">"direct.txt"</span>
+
+<span class="c">#从v2ray的配置文件中读取网址，放到chinadns-ng的直接解析文件中，避免因无法解析导致无法连接到服务端</span>
+add_v2ray_domain_to_direct_group<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">direct_file</span><span class="o">=</span><span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">DIRECT_GROUP_FILE</span><span class="k">}</span>
+    <span class="nb">.</span> /usr/share/libubox/jshn.sh
+    json_load_file <span class="s2">"</span><span class="k">${</span><span class="nv">V2RAY_CONF</span><span class="k">}</span><span class="s2">"</span>
+    json_select outbounds
+    json_select 1
+    json_select settings
+    json_select vnext
+    json_select 1
+    json_get_var addr address
+    <span class="k">if</span> <span class="o">[</span> <span class="nt">-s</span> <span class="s2">"</span><span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then 
+        if </span><span class="nb">grep</span> <span class="nt">-q</span> <span class="s2">"</span><span class="k">${</span><span class="nv">addr</span><span class="k">}</span><span class="s2">"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span><span class="s2">"</span><span class="p">;</span> <span class="k">then
+            </span><span class="nb">echo</span> <span class="s2">"[+] v2ray域名已经存在于</span><span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span><span class="s2">"</span>
+        <span class="k">else
+            </span><span class="nb">echo</span> <span class="s2">"[+] 将v2ray域名添加到</span><span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span><span class="s2">"</span>
+            <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="si">$(</span><span class="nb">tail</span> <span class="nt">-c</span> 1 <span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span><span class="si">)</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">""</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+                <span class="c"># 最后一行没有换行符，先补一个</span>
+                <span class="nb">printf</span> <span class="s1">'\n'</span> <span class="o">&gt;&gt;</span> <span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span>
+            <span class="k">fi
+            </span><span class="nb">echo</span> <span class="k">${</span><span class="nv">addr</span><span class="k">}</span> <span class="o">&gt;&gt;</span> <span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span>
+        <span class="k">fi
+    else
+        </span><span class="nb">echo</span> <span class="s2">"[+] 创建</span><span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span><span class="s2">，将v2ray域名添加到</span><span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span><span class="s2">"</span>
+        <span class="nb">echo</span> <span class="k">${</span><span class="nv">addr</span><span class="k">}</span> <span class="o">&gt;</span> <span class="k">${</span><span class="nv">direct_file</span><span class="k">}</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
 
 set_multi_domestic_dns<span class="o">()</span> <span class="o">{</span>
     <span class="nv">current_dns_servers_list</span><span class="o">=</span><span class="sb">`</span>uci get dhcp.@dnsmasq[0].server 2&gt;/dev/null<span class="sb">`</span>
@@ -574,7 +603,7 @@ stop_service<span class="o">()</span>  <span class="o">{</span>
     disable_nft_rules
 <span class="o">}</span>
 
-enable_v2ray_rules<span class="o">(){</span>
+enable_nft_rules<span class="o">(){</span>
     <span class="nv">running_v2ray_mode</span><span class="o">=</span><span class="si">$(</span><span class="nb">cat</span> /tmp/v2raymode.txt 2&gt;/dev/null | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\r'</span><span class="si">)</span>
     <span class="nv">v2ray_mode</span><span class="o">=</span><span class="sb">`</span>uci get advancedconfig.@rules[0].v2raymode 2&gt;/dev/null<span class="sb">`</span>
 
@@ -582,6 +611,7 @@ enable_v2ray_rules<span class="o">(){</span>
         </span><span class="nb">echo</span> <span class="s2">"[+] v2ray模式未变化"</span>
     <span class="k">else
         </span>disable_nft_rules
+        add_v2ray_domain_to_direct_group
         <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"outlands"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
             </span><span class="nb">echo</span> <span class="s2">"[+] 设置</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">（境外全局代理模式）模式中"</span>
             append_chnroute_list
@@ -602,7 +632,7 @@ enable_v2ray_rules<span class="o">(){</span>
 <span class="o">}</span>
 
 start_service<span class="o">()</span>  <span class="o">{</span>
-    enable_v2ray_rules
+    enable_nft_rules
     <span class="nb">echo</span> <span class="s2">"[+] 启动 chinadns-ng 服务"</span>
     procd_open_instance
     procd_set_param <span class="nb">command</span> <span class="nv">$CHINADNSNG_BIN</span> <span class="nt">-C</span> <span class="nv">$CHINADNSNG_CONF</span>
