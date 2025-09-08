@@ -185,12 +185,15 @@ reservedip6.nftset
 
 <p>建议启用前通过update*.sh进行更新</p>
 
-<p>a) 其中direct.txt中内容为需要通过国内114解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名要直接由国内dns解析，否则可能无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：</p>
+<p>a) 其中direct.txt中内容为需要通过国内dns解析的域名，主要是v2ray服务端域名！这一点非常重要，v2ray服务端域名要直接由国内dns解析，否则可能无法连接。例如v2ray服务端域名是xxx.com，则direct.txt内容可以为：</p>
 
-<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xxx<span class="p">.</span><span class="k">com</span>
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ntp<span class="p">.</span>org
 vultur<span class="p">.</span><span class="k">com</span>
+xxx<span class="p">.</span><span class="k">com</span>
+
 </code></pre></div></div>
+<p>这里可以不手工添加，因为后面v2ray的脚本也会自动添加的。</p>
 
 <p>b) disable_chnroute.nftset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush <span class="nb">set </span>inet global chnroute
