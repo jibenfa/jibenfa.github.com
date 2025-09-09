@@ -95,6 +95,7 @@ config route
         option metric '1'
 
 ```
+注意，如果路由A、B分别只有一个wan口，则route这条可以不写，否则两个路由都必须写！
 
 3.在路由B上设置网络接口（/etc/config/network），在最后增加：
 ```bash
@@ -121,6 +122,7 @@ config route
         option metric '1'
 
 ```
+注意，如果路由A、B分别只有一个wan口，则route这条可以不写，否则两个路由都必须写！
 
 4.最后重启路由A和路由B，两个路由间的局域网就可以互相访问了
 
