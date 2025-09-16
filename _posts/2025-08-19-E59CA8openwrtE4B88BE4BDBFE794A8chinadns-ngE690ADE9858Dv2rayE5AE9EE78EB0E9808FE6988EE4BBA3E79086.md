@@ -316,7 +316,7 @@ verdict-cache 4096
 # This is free software, licensed under the GNU General Public License v3.
 # See /LICENSE for more information.
 #
-# To use this file, install chinadns-ng,v2ray,knot-dig first
+# To use this file, install chinadns-ng,v2ray,knot-dig(only for test) first
 #
 #
 
