@@ -309,7 +309,7 @@ verdict-cache 4096
 
 ```
 
-2）调整启动脚本（/etc/init.d/v2ray_chinadns_ng）
+2）调整启动脚本（/etc/init.d/v2ray_chinadnsng）
 ```bash
 #!/bin/sh /etc/rc.common
 #
@@ -551,8 +551,8 @@ service_triggers() {
 
 然后执行：
 ```bash
-chmod +x /etc/init.d/v2ray_chinadns_ng
-/etc/init.d/v2ray_chinadns_ng enable
+chmod +x /etc/init.d/v2ray_chinadnsng
+/etc/init.d/v2ray_chinadnsng enable
 ```
 
 3.调整dnsmasq，chinadns等配置，避免冲突。
