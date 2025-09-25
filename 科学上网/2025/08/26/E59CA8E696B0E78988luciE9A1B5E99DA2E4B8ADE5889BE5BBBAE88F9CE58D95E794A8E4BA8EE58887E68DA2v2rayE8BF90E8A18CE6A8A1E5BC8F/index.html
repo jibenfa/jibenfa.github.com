@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <span class="c1">// 保存时执行 uci commit + restart</span>
         <span class="nx">m</span><span class="p">.</span><span class="nx">oncommit</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">callExec</span><span class="p">(</span><span class="dl">'</span><span class="s1">/etc/init.d/v2ray</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">restart</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">force</span><span class="dl">'</span><span class="p">]);</span>
+            <span class="k">return</span> <span class="nx">callExec</span><span class="p">(</span><span class="dl">'</span><span class="s1">/etc/init.d/v2ray_chinadnsng</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">restart</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">force</span><span class="dl">'</span><span class="p">]);</span>
         <span class="p">};</span>
 
         <span class="k">return</span> <span class="nx">m</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span>

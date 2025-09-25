@@ -427,7 +427,7 @@ verdict<span class="p">-</span>cache <span class="m">4096</span>
 
 </code></pre></div></div>
 
-<p>2）调整启动脚本（/etc/init.d/v2ray_chinadns_ng）</p>
+<p>2）调整启动脚本（/etc/init.d/v2ray_chinadnsng）</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh /etc/rc.common</span>
 <span class="c">#</span>
 <span class="c"># This is free software, licensed under the GNU General Public License v3.</span>
@@ -667,8 +667,8 @@ service_triggers<span class="o">()</span> <span class="o">{</span>
 </code></pre></div></div>
 
 <p>然后执行：</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x /etc/init.d/v2ray_chinadns_ng
-/etc/init.d/v2ray_chinadns_ng <span class="nb">enable</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x /etc/init.d/v2ray_chinadnsng
+/etc/init.d/v2ray_chinadnsng <span class="nb">enable</span>
 </code></pre></div></div>
 
 <p>3.调整dnsmasq，chinadns等配置，避免冲突。</p>
