@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-10-24T05:52:39+00:00</updated>
+ <updated>2025-12-04T04:01:27+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -2804,6 +2804,7 @@ option tls_auth &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/ta.key 0&apo
 &lt;span class=&quot;nv&quot;&gt;DOMAIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;SUB_DOMAIN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;.&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;MAIN_DOMAIN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;RECORD_ID&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;xxxxxx&quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#record_id is binding with sub_domain and main_domain, using following command to get record_id&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#curl -X POST https://dnsapi.cn/Domain.List -d &apos;login_token=${TOKEN}&amp;amp;format=json&apos;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#curl -X POST https://dnsapi.cn/Record.List -d &apos;login_token=${TOKEN}&amp;amp;format=json&amp;amp;domain_id=${DOMAIN_ID}&amp;amp;offset=0&amp;amp;length=3&apos;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#get domain ip from common dns&lt;/span&gt;
