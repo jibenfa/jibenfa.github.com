@@ -25,6 +25,7 @@ MAIN_DOMAIN="xxxx"
 DOMAIN=${SUB_DOMAIN}.${MAIN_DOMAIN}
 RECORD_ID="xxxxxx"
 #record_id is binding with sub_domain and main_domain, using following command to get record_id
+#curl -X POST https://dnsapi.cn/Domain.List -d 'login_token=${TOKEN}&format=json'
 #curl -X POST https://dnsapi.cn/Record.List -d 'login_token=${TOKEN}&format=json&domain_id=${DOMAIN_ID}&offset=0&length=3'
 
 #get domain ip from common dns
