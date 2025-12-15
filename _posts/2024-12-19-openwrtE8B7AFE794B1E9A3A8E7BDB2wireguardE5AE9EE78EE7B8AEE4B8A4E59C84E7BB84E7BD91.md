@@ -27,7 +27,7 @@ tags:
 ```bash
 
 opkg update
-opkg install luci-app-wireguard kmod-wireguard wireguard-tools
+opkg install luci-proto-wireguard kmod-wireguard wireguard-tools
 
 ```
 
