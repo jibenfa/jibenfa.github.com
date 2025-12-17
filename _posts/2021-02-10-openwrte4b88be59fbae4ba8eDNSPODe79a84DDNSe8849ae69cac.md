@@ -29,6 +29,7 @@ RECORD_ID="xxxxxx"
 #curl -X POST https://dnsapi.cn/Record.List -d 'login_token=${TOKEN}&format=json&domain_id=${DOMAIN_ID}&offset=0&length=3'
 
 #get domain ip from common dns
+#IP=$(dig AAAA $DOMAIN @114.114.114.114 +short | head -n1)
 IP=`dig ${DOMAIN} @114.114.114.114 | awk -F "[ ]+" '/IN/{print $1}' | awk 'NR==2 {print $5}'`
 echo "Ip of ${DOMAIN} is ---${IP}---"
 
@@ -39,7 +40,7 @@ echo "Local Ip is ---${LIP}---"
 #if domain ip and local ip are identical, dns is ok
 if [ "${LIP}" == "${IP}" ]; then
    echo "Doman IP not changed."
-   exit
+   exit 0
 fi
 
 #if not identical, check dns record from ddns service provider
@@ -51,7 +52,7 @@ query_result_sub_str=`echo "${query_result}" | grep ${LIP}`
 #if dns record is ok, there is no need to update
 if [ ${#query_result_sub_str} -gt 6 ]; then
    echo "IP record is OK, waiting for dns spread"
-   exit
+   exit 0
 fi
 
 #if dns record is not ok, start ddns refresh
