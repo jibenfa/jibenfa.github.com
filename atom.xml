@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-12-04T04:01:27+00:00</updated>
+ <updated>2025-12-17T07:19:22+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -2440,7 +2440,7 @@ start_chinadns 5361 180.76.76.76 5360
 &lt;p&gt;1）安装wireguard，这里使用的是openwrt 23.05.5版本&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 opkg update
-opkg &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;luci-app-wireguard kmod-wireguard wireguard-tools
+opkg &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;luci-proto-wireguard kmod-wireguard wireguard-tools
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -2808,6 +2808,7 @@ option tls_auth &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/ta.key 0&apo
 &lt;span class=&quot;c&quot;&gt;#curl -X POST https://dnsapi.cn/Record.List -d &apos;login_token=${TOKEN}&amp;amp;format=json&amp;amp;domain_id=${DOMAIN_ID}&amp;amp;offset=0&amp;amp;length=3&apos;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#get domain ip from common dns&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#IP=$(dig AAAA $DOMAIN @114.114.114.114 +short | head -n1)&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;IP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;dig &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DOMAIN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; @114.114.114.114 | &lt;span class=&quot;nb&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-F&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[ ]+&quot;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;/IN/{print $1}&apos;&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;NR==2 {print $5}&apos;&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Ip of &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DOMAIN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; is ---&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;---&quot;&lt;/span&gt;
 
@@ -2818,8 +2819,8 @@ option tls_auth &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/ta.key 0&apo
 &lt;span class=&quot;c&quot;&gt;#if domain ip and local ip are identical, dns is ok&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;LIP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;IP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Doman IP not changed.&quot;&lt;/span&gt;
-   &lt;span class=&quot;nb&quot;&gt;exit
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+   &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;0
+&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#if not identical, check dns record from ddns service provider&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;check dnspod dns record of &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;DOMAIN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
@@ -2830,8 +2831,8 @@ option tls_auth &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/ta.key 0&apo
 &lt;span class=&quot;c&quot;&gt;#if dns record is ok, there is no need to update&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${#&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;query_result_sub_str&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-gt&lt;/span&gt; 6 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;IP record is OK, waiting for dns spread&quot;&lt;/span&gt;
-   &lt;span class=&quot;nb&quot;&gt;exit
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+   &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;0
+&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#if dns record is not ok, start ddns refresh&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;start ddns refresh&quot;&lt;/span&gt;

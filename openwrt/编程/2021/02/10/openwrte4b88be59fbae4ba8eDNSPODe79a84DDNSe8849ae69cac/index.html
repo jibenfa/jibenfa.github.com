@@ -161,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="c">#curl -X POST https://dnsapi.cn/Record.List -d 'login_token=${TOKEN}&amp;format=json&amp;domain_id=${DOMAIN_ID}&amp;offset=0&amp;length=3'</span>
 
 <span class="c">#get domain ip from common dns</span>
+<span class="c">#IP=$(dig AAAA $DOMAIN @114.114.114.114 +short | head -n1)</span>
 <span class="nv">IP</span><span class="o">=</span><span class="sb">`</span>dig <span class="k">${</span><span class="nv">DOMAIN</span><span class="k">}</span> @114.114.114.114 | <span class="nb">awk</span> <span class="nt">-F</span> <span class="s2">"[ ]+"</span> <span class="s1">'/IN/{print $1}'</span> | <span class="nb">awk</span> <span class="s1">'NR==2 {print $5}'</span><span class="sb">`</span>
 <span class="nb">echo</span> <span class="s2">"Ip of </span><span class="k">${</span><span class="nv">DOMAIN</span><span class="k">}</span><span class="s2"> is ---</span><span class="k">${</span><span class="nv">IP</span><span class="k">}</span><span class="s2">---"</span>
 
@@ -171,8 +172,8 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="c">#if domain ip and local ip are identical, dns is ok</span>
 <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">LIP</span><span class="k">}</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"</span><span class="k">${</span><span class="nv">IP</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
    </span><span class="nb">echo</span> <span class="s2">"Doman IP not changed."</span>
-   <span class="nb">exit
-</span><span class="k">fi</span>
+   <span class="nb">exit </span>0
+<span class="k">fi</span>
 
 <span class="c">#if not identical, check dns record from ddns service provider</span>
 <span class="nb">echo</span> <span class="s2">"check dnspod dns record of </span><span class="k">${</span><span class="nv">DOMAIN</span><span class="k">}</span><span class="s2">"</span>
@@ -183,8 +184,8 @@ document.addEventListener("DOMContentLoaded", () => {
 <span class="c">#if dns record is ok, there is no need to update</span>
 <span class="k">if</span> <span class="o">[</span> <span class="k">${#</span><span class="nv">query_result_sub_str</span><span class="k">}</span> <span class="nt">-gt</span> 6 <span class="o">]</span><span class="p">;</span> <span class="k">then
    </span><span class="nb">echo</span> <span class="s2">"IP record is OK, waiting for dns spread"</span>
-   <span class="nb">exit
-</span><span class="k">fi</span>
+   <span class="nb">exit </span>0
+<span class="k">fi</span>
 
 <span class="c">#if dns record is not ok, start ddns refresh</span>
 <span class="nb">echo</span> <span class="s2">"start ddns refresh"</span>
