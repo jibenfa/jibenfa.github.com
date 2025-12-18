@@ -613,7 +613,8 @@ enable_nft_rules<span class="o">(){</span>
     <span class="k">if</span> <span class="o">[</span> x<span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span> <span class="o">=</span> x<span class="k">${</span><span class="nv">running_v2ray_mode</span><span class="k">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
         </span><span class="nb">echo</span> <span class="s2">"[+] v2ray模式未变化"</span>
     <span class="k">else
-        </span>add_v2ray_domain_to_direct_group
+        </span>disable_nft_rules
+        add_v2ray_domain_to_direct_group
         <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"outlands"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
             </span><span class="nb">echo</span> <span class="s2">"[+] 设置</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">（境外全局代理模式）模式中"</span>
             append_chnroute_list
@@ -630,8 +631,7 @@ enable_nft_rules<span class="o">(){</span>
         
         <span class="k">elif</span> <span class="o">[</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"ingfw"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
             </span><span class="nb">echo</span> <span class="s2">"[+] 设置墙内访问模式"</span>
-            set_multi_domestic_dns
-            <span class="nb">echo</span> <span class="s2">"ingfw"</span> <span class="o">&gt;</span> /tmp/v2raymode.txt   
+            set_multi_domestic_dns 
         <span class="k">fi
         </span><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">v2ray_mode</span><span class="k">}</span><span class="s2">"</span> <span class="o">&gt;</span> /tmp/v2raymode.txt
     <span class="k">fi</span>
