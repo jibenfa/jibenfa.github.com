@@ -482,8 +482,6 @@ disable_nft_rules() {
     nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_CHNROUTE6_NFT_NAME} 2>/dev/null
     nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_GFWIP_NFT_NAME} 2>/dev/null
     nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_GFWIP6_NFT_NAME} 2>/dev/null
-    set_multi_domestic_dns
-    echo "ingfw" > /tmp/v2raymode.txt   
 }
 
 stop_service()  {
@@ -498,7 +496,6 @@ enable_nft_rules(){
     if [ x${v2ray_mode} = x${running_v2ray_mode} ]; then
         echo "[+] v2ray模式未变化"
     else
-        disable_nft_rules
         add_v2ray_domain_to_direct_group
         if [ "${v2ray_mode}" = "outlands" ]; then
             echo "[+] 设置${v2ray_mode}（境外全局代理模式）模式中"
@@ -516,6 +513,8 @@ enable_nft_rules(){
         
         elif [ "${v2ray_mode}" = "ingfw" ]; then
             echo "[+] 设置墙内访问模式"
+            set_multi_domestic_dns
+            echo "ingfw" > /tmp/v2raymode.txt   
         fi
         echo "${v2ray_mode}" > /tmp/v2raymode.txt
     fi
