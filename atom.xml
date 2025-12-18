@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-12-18T02:39:38+00:00</updated>
+ <updated>2025-12-18T03:20:16+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -1649,7 +1649,6 @@ disable_nft_rules&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=
 
 stop_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 停止 v2ray 服务&quot;&lt;/span&gt;
-    disable_nft_rules
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 enable_nft_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
