@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-12-18T09:09:51+00:00</updated>
+ <updated>2025-12-18T09:22:08+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -1480,7 +1480,7 @@ verdict&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cache &lt;span class=&quot;
 &lt;span class=&quot;c&quot;&gt;# See /LICENSE for more information.&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# To use this file, install chinadns-ng,v2ray,zoneinfo-asia,knot-dig(only for test) first&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# ln -sf /usr/share/zoneinfo/Asia/Macau /etc/localtime&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;START&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;90
