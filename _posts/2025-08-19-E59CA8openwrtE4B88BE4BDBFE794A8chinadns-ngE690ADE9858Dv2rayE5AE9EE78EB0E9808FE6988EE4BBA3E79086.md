@@ -486,7 +486,6 @@ disable_nft_rules() {
 
 stop_service()  {
     echo "[+] 停止 v2ray 服务"
-    disable_nft_rules
 }
 
 enable_nft_rules(){
