@@ -503,11 +503,13 @@ enable_nft_rules(){
         if [ "${v2ray_mode}" = "outlands" ]; then
             echo "[+] 设置${v2ray_mode}（境外全局代理模式）模式中"
             append_chnroute_list
+            append_gfwip_list
             enable_chnroute_nft_rules
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "gfwlist" ]; then
             echo "[+] 设置${v2ray_mode}（白名单代理模式）模式中"
+            append_chnroute_list
             append_gfwip_list
             enable_gfwip_nft_rules
             set_multi_foreign_dns
@@ -525,7 +527,7 @@ start_service()  {
     procd_open_instance
     procd_set_param command $CHINADNSNG_BIN -C $CHINADNSNG_CONF
     procd_set_param respawn
-    procd_set_param stdout 1
+    #procd_set_param stdout 1
     procd_set_param stderr 1
     procd_close_instance
     sleep 2
@@ -537,7 +539,7 @@ start_service()  {
     procd_set_param command $V2RAY_BIN run -config $V2RAY_CONF
     procd_set_param file $V2RAY_CONF
     procd_set_param respawn
-    procd_set_param stdout 1
+    #procd_set_param stdout 1
     procd_set_param stderr 1
     procd_set_param pidfile /var/run/v2ray.pid
     procd_close_instance
