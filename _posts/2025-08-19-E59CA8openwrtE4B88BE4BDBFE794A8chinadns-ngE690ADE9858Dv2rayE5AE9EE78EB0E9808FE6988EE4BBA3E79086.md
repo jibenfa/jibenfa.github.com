@@ -317,7 +317,7 @@ verdict-cache 4096
 # See /LICENSE for more information.
 #
 # To use this file, install chinadns-ng,v2ray,zoneinfo-asia,knot-dig(only for test) first
-# ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime
+# ln -sf /usr/share/zoneinfo/Asia/Macau /etc/localtime
 #
 
 START=90
