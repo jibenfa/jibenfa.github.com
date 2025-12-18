@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2025-12-17T07:19:22+00:00</updated>
+ <updated>2025-12-18T02:05:54+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -1666,11 +1666,13 @@ enable_nft_rules&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;outlands&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
             &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;（境外全局代理模式）模式中&quot;&lt;/span&gt;
             append_chnroute_list
+            append_gfwip_list
             enable_chnroute_nft_rules
             set_multi_foreign_dns
         
         &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;gfwlist&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
             &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 设置&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;v2ray_mode&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;（白名单代理模式）模式中&quot;&lt;/span&gt;
+            append_chnroute_list
             append_gfwip_list
             enable_gfwip_nft_rules
             set_multi_foreign_dns
@@ -1688,7 +1690,7 @@ start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&qu
     procd_open_instance
     procd_set_param &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CHINADNSNG_BIN&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-C&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CHINADNSNG_CONF&lt;/span&gt;
     procd_set_param respawn
-    procd_set_param stdout 1
+    &lt;span class=&quot;c&quot;&gt;#procd_set_param stdout 1&lt;/span&gt;
     procd_set_param stderr 1
     procd_close_instance
     &lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;2
@@ -1700,7 +1702,7 @@ start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&qu
     procd_set_param &lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$V2RAY_BIN&lt;/span&gt; run &lt;span class=&quot;nt&quot;&gt;-config&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$V2RAY_CONF&lt;/span&gt;
     procd_set_param file &lt;span class=&quot;nv&quot;&gt;$V2RAY_CONF&lt;/span&gt;
     procd_set_param respawn
-    procd_set_param stdout 1
+    &lt;span class=&quot;c&quot;&gt;#procd_set_param stdout 1&lt;/span&gt;
     procd_set_param stderr 1
     procd_set_param pidfile /var/run/v2ray.pid
     procd_close_instance
