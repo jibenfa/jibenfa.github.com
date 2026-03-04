@@ -149,7 +149,7 @@ Authorization: Bearer $CF_TOKEN"
 
 <img src="https://jibenfa.github.io/uploads/2026/03/lucky_webhook_success.png" width="1390" height="398" alt="lucky的webhook执行成功" />
 
-6）使用如下python脚本wg.py打包生成一个wireguard客户端，搭配config.ini配置文件和原版wireguard的windows客户端使用。exe文件需要和config.ini文件放到同一个目录下。
+6.使用如下python脚本wg.py打包生成一个wireguard客户端，搭配config.ini配置文件和原版wireguard的windows客户端使用。exe文件需要和config.ini文件放到同一个目录下。
 
 config.ini文件如下：其中wg1.conf就是windows下wireguard客户端使用的配置文件，里面的endpoint会自动由wg.py替换成真实的ip和端口，其他配置可按真实情况填写：
 ```
