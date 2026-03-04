@@ -23,9 +23,9 @@ tags:
 
 1.在openwrt上部署lucky，并用lucky的stun内网穿透功能获取外网ipv4地址和端口；
 
-2.通过lucky的webhook把ip和端口更新到cloudflare的ddns的TXT记录（哪里都有cloudflare大善人的身影）；
+2.通过lucky的webhook把ip和端口更新到cloudflare下托管域名的TXT记录（哪里都有cloudflare大善人的身影）；
 
-3.windows客户端通过python脚本（打包成exe）读取TXT记录，并替换wireguard配置文件中的endpoint的ip和端口，然后发起连接，并轮询相关TXT记录，发生变化时重新连接。
+3.windows客户端运行python脚本（打包成exe直接执行）通过域名DNS查询TXT记录，并替换wireguard配置文件中的endpoint的ip和端口，然后发起连接，并轮询相关TXT记录，发生变化时重新连接。
 
 详细步骤如下：
 
