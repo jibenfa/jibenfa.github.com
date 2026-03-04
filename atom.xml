@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-04T03:12:49+00:00</updated>
+ <updated>2026-03-04T03:15:41+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -119,10 +119,10 @@ Authorization: Bearer $CF_TOKEN&quot;
 
 &lt;p&gt;其中：&lt;/p&gt;
 
-&lt;p&gt;1) “接口地址”填写上一步中复制的网址，形如如下的字符串（$变量替换为真实的值）：&lt;/p&gt;
+&lt;p&gt;1）“接口地址”填写上一步中复制的网址，形如如下的字符串（$变量替换为真实的值）：&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;2) “请求方法”选择“put”&lt;/p&gt;
+&lt;p&gt;2）”请求方法”选择“put”&lt;/p&gt;
 
 &lt;p&gt;3）“请求头”填写上一步中复制的token，形如如下的字符串（$变量替换为真实的值）：&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Authorization: Bearer $CF_TOKEN&quot;
