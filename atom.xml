@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-04T03:06:11+00:00</updated>
+ <updated>2026-03-04T03:12:49+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -19,7 +19,7 @@
    <id>https://jibenfa.github.io/openwrt/2026/03/03/wireguardE59CA8E7A7BBE58AA8nat1E7BD91E7BB9CE4B88BE79A84E983A8E7BDB2E4B88EE8BF9EE68EA5</id>
    <content type="html">&lt;p&gt;最近碰到这么两个场景，网络环境是中国移动家庭宽带，分配的是动态ipv6公网地址和ipv4内网地址（nat1），光猫拨号，openwrt路由位于光猫之后，想通过wireguard连回家（使用windows客户端）。&lt;/p&gt;
 
-&lt;p&gt;场景一：wireguard直连openwrt的ipv6地址即可，这里就不多说了，毫无压力。当然光猫上需要把v6的防火墙关闭。&lt;/p&gt;
+&lt;p&gt;场景一：wireguard直连openwrt的ipv6地址即可，这里就不多说了，毫无压力。当然需要把光猫上的v6的防火墙关闭。&lt;/p&gt;
 
 &lt;p&gt;场景二：光猫上居然没有ipv6的防火墙选项，而且ipv6的入站连接除了ICMP包外都是阻断的，折腾很久都没成功。研究了一下，最后采用了如下办法成功实现了wireguard连回家：&lt;/p&gt;
 
