@@ -122,11 +122,11 @@ Authorization: Bearer $CF_TOKEN"
 
 其中：
 
-1) “接口地址”填写上一步中复制的网址，形如如下的字符串（$变量替换为真实的值）：
+1）“接口地址”填写上一步中复制的网址，形如如下的字符串（$变量替换为真实的值）：
 ```
 https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID
 ```
-2) "请求方法"选择“put”
+2）"请求方法"选择“put”
 
 3）“请求头”填写上一步中复制的token，形如如下的字符串（$变量替换为真实的值）：
 ```
