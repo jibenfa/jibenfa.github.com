@@ -575,6 +575,14 @@
         "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2025/09/02/E69E81E7AE80v2rayE6B581E9878FE7BB9FE8AEA1E99DA2E69DBF/"
       },
     
+      {
+        "title": "wireguard在移动nat1网络下的部署与连接",
+        "date": "2026 年 03 月",
+        "excerpt": "最近碰到这么两个场景，网络环境是中国移动家庭宽带，分配的是动态ipv6公网地址和ipv4内网地址（nat1），光猫拨号，openwrt路由位于光猫之后，想通过wireguard连回家（使用windows客户端）。\n",
+        
+        "url": "/openwrt/2026/03/03/wireguardE59CA8E7A7BBE58AA8nat1E7BD91E7BB9CE4B88BE79A84E983A8E7BDB2E4B88EE8BF9EE68EA5/"
+      },
+    
   
   
   
@@ -824,6 +832,38 @@
     "excerpt": "\n",
     
     "url": "/tags/nginx/"
+  },
+  
+  {
+    "title": "标签：wireguard",
+    "date": " ",
+    "excerpt": "\n",
+    
+    "url": "/tags/wireguard/"
+  },
+  
+  {
+    "title": "标签：lucky",
+    "date": " ",
+    "excerpt": "\n",
+    
+    "url": "/tags/lucky/"
+  },
+  
+  {
+    "title": "标签：stun",
+    "date": " ",
+    "excerpt": "\n",
+    
+    "url": "/tags/stun/"
+  },
+  
+  {
+    "title": "标签：ddns",
+    "date": " ",
+    "excerpt": "\n",
+    
+    "url": "/tags/ddns/"
   }
   
 ]
