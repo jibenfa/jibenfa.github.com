@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-04T06:45:12+00:00</updated>
+ <updated>2026-03-09T09:22:42+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -3294,7 +3294,7 @@ option tls_auth &lt;span class=&quot;s1&quot;&gt;&apos;/etc/openvpn/ta.key 0&apo
 
 &lt;p&gt;1.v2ray服务器端配置参考：&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://wallsee.org/2019/06/14/v2ray2bLetsEncrypt2bcdne983a8e7bdb2.html&quot;&gt;配置的一至三小节&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://wallsee.org/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/14/v2ray2bLetsEncrypt2bcdne983a8e7bdb2/&quot;&gt;配置的一至三小节&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;2.chinadns在openwrt的配置参考：&lt;/p&gt;
 
