@@ -279,7 +279,7 @@ add <span class="nb">set </span>inet global localnet6 <span class="o">{</span> <
 
 <p>1）创建并修改配置文件/etc/config/chinadns-ng:</p>
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-# 监听地址和端口
+# 监听地址和端口，建议通过防火墙设置把来自wan口的目的端口是bind<span class="p">-</span>port的进行阻断
 bind<span class="p">-</span>addr <span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span><span class="p">.</span><span class="m">0</span>
 bind<span class="p">-</span>port <span class="m">5353</span>
 
