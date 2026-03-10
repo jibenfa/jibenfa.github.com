@@ -160,7 +160,7 @@ add set inet global localnet6 { type ipv6_addr; flags interval; elements = $ipv6
 1）创建并修改配置文件/etc/config/chinadns-ng:
 ```vim
 
-# 监听地址和端口
+# 监听地址和端口，建议通过防火墙设置把来自wan口的目的端口是bind-port的进行阻断
 bind-addr 0.0.0.0
 bind-port 5353
 
