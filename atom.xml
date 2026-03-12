@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-12T03:57:55+00:00</updated>
+ <updated>2026-03-12T06:00:21+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -177,12 +177,6 @@ verdict&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cache &lt;span class=&quot;
 
 &lt;p&gt;1）修改配置文件（/etc/config/v2ray.json）&lt;/p&gt;
 &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;c&quot;&gt;&quot;log&quot;: {&lt;/span&gt;
-      &lt;span class=&quot;c&quot;&gt;&quot;access&quot;: &quot;/var/log/v2ray/access.log&quot;,&lt;/span&gt;
-      &lt;span class=&quot;c&quot;&gt;&quot;error&quot;: &quot;/var/log/v2ray/error.log&quot;,&lt;/span&gt;
-      &lt;span class=&quot;c&quot;&gt;&quot;loglevel&quot;: &quot;info&quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-
   &lt;span class=&quot;c&quot;&gt;&quot;inbounds&quot;: [&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;    
       &lt;span class=&quot;c&quot;&gt;&quot;protocol&quot;: &quot;dokodemo-door&quot;,&lt;/span&gt;
