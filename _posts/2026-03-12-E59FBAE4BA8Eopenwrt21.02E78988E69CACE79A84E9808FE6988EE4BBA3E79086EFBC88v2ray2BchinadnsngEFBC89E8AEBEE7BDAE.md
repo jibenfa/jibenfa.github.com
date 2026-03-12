@@ -188,12 +188,6 @@ verdict-cache 4096
 1）修改配置文件（/etc/config/v2ray.json）
 ```vim
 {
-  "log": {
-      "access": "/var/log/v2ray/access.log",
-      "error": "/var/log/v2ray/error.log",
-      "loglevel": "info"
-    },
-
   "inbounds": [
     {    
       "protocol": "dokodemo-door",
