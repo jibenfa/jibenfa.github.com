@@ -78,11 +78,13 @@ flush chnroute6
 d) gfwip.ipset内容为：
 ```bash
 create gfwip hash:net family inet hashsize 1024 maxelem 65535 -exist
+flush gfwip
 ```
 
 e) gfwip6.ipset内容为：
 ```bash
 create gfwip6 hash:net family inet hashsize 1024 maxelem 65535 -exist
+flush gfwip6
 ```
 
 f) disable_gfwip.ipset内容为：
@@ -92,12 +94,13 @@ flush gfwip
 
 g) disable_gfwip6.ipset内容为：
 ```bash
-flush gfwip
+flush gfwip6
 ```
 
 h) reservedip.ipset内容为：
 ```bash
 create localnet hash:net family inet hashsize 1024 maxelem 65535 -exist
+flush localnet
 add localnet 0.0.0.0/8
 add localnet 10.0.0.0/8
 add localnet 100.64.0.0/10
@@ -119,6 +122,7 @@ add localnet 240.0.0.0/4
 i) reservedip6.ipset内容为：
 ```bash
 create localnet6 hash:net family inet6 hashsize 1024 maxelem 65535 -exist
+flush localnet6
 add localnet6 ::/128
 add localnet6 ::1/128
 add localnet6 ::ffff:0:0/96
@@ -137,6 +141,7 @@ create chnroute hash:net family inet
 修改为：
 ```bash
 create chnroute hash:net family inet -exist
+flush chnroute
 ```
 避免因chnroute已经存在导致后面语句不执行。
 
@@ -147,6 +152,7 @@ create chnroute6 hash:net family inet
 修改为：
 ```bash
 create chnroute6 hash:net family inet -exist
+flush chnroute6
 ```
 避免因chnroute已经存在导致后面语句不执行。
 
