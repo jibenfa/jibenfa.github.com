@@ -583,6 +583,14 @@
         "url": "/openwrt/2026/03/03/wireguardE59CA8E7A7BBE58AA8nat1E7BD91E7BB9CE4B88BE79A84E983A8E7BDB2E4B88EE8BF9EE68EA5/"
       },
     
+      {
+        "title": "基于openwrt21.02版本的透明代理（v2ray+chinadnsng）设置",
+        "date": "2026 年 03 月",
+        "excerpt": "最近买了个5G CPE设备，原厂系统是基于openwrt21.02-snapshot改的，不能安装ipk，白瞎了这么好的硬件。为了能够充分利用，我在原厂系统上部署了v2ray+chinadns-ng的透明代理\n",
+        
+        "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/03/12/E59FBAE4BA8Eopenwrt21.02E78988E69CACE79A84E9808FE6988EE4BBA3E79086EFBC88v2ray2BchinadnsngEFBC89E8AEBEE7BDAE/"
+      },
+    
   
   
   
@@ -864,6 +872,22 @@
     "excerpt": "\n",
     
     "url": "/tags/ddns/"
+  },
+  
+  {
+    "title": "标签：iptables",
+    "date": " ",
+    "excerpt": "\n",
+    
+    "url": "/tags/iptables/"
+  },
+  
+  {
+    "title": "标签：ipset",
+    "date": " ",
+    "excerpt": "\n",
+    
+    "url": "/tags/ipset/"
   }
   
 ]
