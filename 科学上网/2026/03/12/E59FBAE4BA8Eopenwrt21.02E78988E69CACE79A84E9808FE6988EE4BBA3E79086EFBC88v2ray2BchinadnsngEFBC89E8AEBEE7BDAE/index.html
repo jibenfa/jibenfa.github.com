@@ -202,10 +202,12 @@ xxx<span class="p">.</span><span class="k">com</span>
 </code></pre></div></div>
 <p>d) gfwip.ipset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create gfwip <span class="nb">hash</span>:net family inet hashsize 1024 maxelem 65535 <span class="nt">-exist</span>
+flush gfwip
 </code></pre></div></div>
 
 <p>e) gfwip6.ipset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create gfwip6 <span class="nb">hash</span>:net family inet hashsize 1024 maxelem 65535 <span class="nt">-exist</span>
+flush gfwip6
 </code></pre></div></div>
 
 <p>f) disable_gfwip.ipset内容为：</p>
@@ -213,11 +215,12 @@ xxx<span class="p">.</span><span class="k">com</span>
 </code></pre></div></div>
 
 <p>g) disable_gfwip6.ipset内容为：</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush gfwip
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>flush gfwip6
 </code></pre></div></div>
 
 <p>h) reservedip.ipset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create localnet <span class="nb">hash</span>:net family inet hashsize 1024 maxelem 65535 <span class="nt">-exist</span>
+flush localnet
 add localnet 0.0.0.0/8
 add localnet 10.0.0.0/8
 add localnet 100.64.0.0/10
@@ -238,6 +241,7 @@ add localnet 240.0.0.0/4
 
 <p>i) reservedip6.ipset内容为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create localnet6 <span class="nb">hash</span>:net family inet6 hashsize 1024 maxelem 65535 <span class="nt">-exist</span>
+flush localnet6
 add localnet6 ::/128
 add localnet6 ::1/128
 add localnet6 ::ffff:0:0/96
@@ -254,6 +258,7 @@ add localnet6 ff00::/8
 </code></pre></div></div>
 <p>修改为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create chnroute <span class="nb">hash</span>:net family inet <span class="nt">-exist</span>
+flush chnroute
 </code></pre></div></div>
 <p>避免因chnroute已经存在导致后面语句不执行。</p>
 
@@ -262,6 +267,7 @@ add localnet6 ff00::/8
 </code></pre></div></div>
 <p>修改为：</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create chnroute6 <span class="nb">hash</span>:net family inet <span class="nt">-exist</span>
+flush chnroute6
 </code></pre></div></div>
 <p>避免因chnroute已经存在导致后面语句不执行。</p>
 
