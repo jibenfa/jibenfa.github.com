@@ -1,7 +1,7 @@
 ---
 id: 829
 title: 基于openwrt21.02版本的透明代理（v2ray+chinadnsng）设置
-date: 2026-03-12 03:12:13+00:00
+date: 2026-03-12 00:15:13+00:00
 author: coffeecat
 layout: post
 categories:
