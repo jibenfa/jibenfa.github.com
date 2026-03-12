@@ -461,7 +461,7 @@ create_chain_rules(){
     ip6tables -t nat -A GLOBAL_OUTPUT -m set --match-set localnet6 dst -j RETURN
 }
 
-enable_chnroute_IPT_rules(){
+enable_chnroute_ip_rules(){
     create_chain_rules
     #如果表中没有添加保留地址，则退出，避免无法连接路由器本机
     if ! ipset list localnet | grep -q "127.0.0.0"; then
@@ -475,7 +475,7 @@ enable_chnroute_IPT_rules(){
     ip6tables -t nat -A GLOBAL_OUTPUT -p tcp -m set ! --match-set chnroute6 dst -j REDIRECT --to-port ${V2RAY_PORT} 1>/dev/null 2>&1
 }
 
-enable_gfwip_IPT_rules(){
+enable_gfwip_ip_rules(){
     create_chain_rules
     iptables -t nat -A GLOBAL_PREROUTING -p tcp -m set --match-set gfwip dst -j REDIRECT --to-port ${V2RAY_PORT} 1>/dev/null 2>&1
     iptables -t nat -A GLOBAL_OUTPUT -p tcp -m set --match-set gfwip dst -j REDIRECT --to-port ${V2RAY_PORT} 1>/dev/null 2>&1
@@ -483,7 +483,7 @@ enable_gfwip_IPT_rules(){
     ip6tables -t nat -A GLOBAL_OUTPUT -p tcp -m set --match-set gfwip6 dst -j REDIRECT --to-port ${V2RAY_PORT} 1>/dev/null 2>&1
 }
 
-disable_IPT_rules() {
+disable_ip_rules() {
     create_empty_chain
     ipset -R <${CHINADNSNG_FILES_PATH}${DISABLE_CHNROUTE_IPT_NAME} 2>/dev/null
     ipset -R <${CHINADNSNG_FILES_PATH}${DISABLE_CHNROUTE6_IPT_NAME} 2>/dev/null
@@ -495,28 +495,28 @@ disable_IPT_rules() {
 
 stop_service()  {
     echo "[+] 停止 v2ray 服务"
-    disable_IPT_rules
+    disable_ip_rules
 }
 
-enable_IPT_rules(){
+enable_ip_rules(){
     running_v2ray_mode=$(cat /tmp/v2raymode.txt 2>/dev/null | tr -d '\r')
     v2ray_mode=`uci get advancedconfig.@rules[0].v2raymode 2>/dev/null`
 
     if [ x${v2ray_mode} = x${running_v2ray_mode} ]; then
         echo "[+] v2ray模式未变化"
     else
-        disable_IPT_rules
+        disable_ip_rules
         add_v2ray_domain_to_direct_group
         if [ "${v2ray_mode}" = "outlands" ]; then
             echo "[+] 设置${v2ray_mode}（境外全局代理模式）模式中"
             append_chnroute_list
-            enable_chnroute_IPT_rules
+            enable_chnroute_ip_rules
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "gfwlist" ]; then
             echo "[+] 设置${v2ray_mode}（白名单代理模式）模式中"
             append_gfwip_list
-            enable_gfwip_IPT_rules
+            enable_gfwip_ip_rules
             set_multi_foreign_dns
         
         elif [ "${v2ray_mode}" = "ingfw" ]; then
@@ -527,7 +527,7 @@ enable_IPT_rules(){
 }
 
 start_service()  {
-    enable_IPT_rules
+    enable_ip_rules
     echo "[+] 启动 chinadns-ng 服务"
     procd_open_instance
     procd_set_param command $CHINADNSNG_BIN -C $CHINADNSNG_CONF
