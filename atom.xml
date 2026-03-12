@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-12T06:01:43+00:00</updated>
+ <updated>2026-03-12T07:34:29+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -73,11 +73,11 @@ xxx&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;flush chnroute6
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;d) gfwip.ipset内容为：&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create gfwip &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet hashsize 1024 maxelem 65535
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create gfwip &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet hashsize 1024 maxelem 65535 &lt;span class=&quot;nt&quot;&gt;-exist&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;e) gfwip6.ipset内容为：&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create gfwip6 &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet hashsize 1024 maxelem 65535
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create gfwip6 &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet hashsize 1024 maxelem 65535 &lt;span class=&quot;nt&quot;&gt;-exist&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;f) disable_gfwip.ipset内容为：&lt;/p&gt;
@@ -89,7 +89,7 @@ xxx&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;h) reservedip.ipset内容为：&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create localnet &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet hashsize 1024 maxelem 65535
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create localnet &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet hashsize 1024 maxelem 65535 &lt;span class=&quot;nt&quot;&gt;-exist&lt;/span&gt;
 add localnet 0.0.0.0/8
 add localnet 10.0.0.0/8
 add localnet 100.64.0.0/10
@@ -109,7 +109,7 @@ add localnet 240.0.0.0/4
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;i) reservedip6.ipset内容为：&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create localnet6 &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet6 hashsize 1024 maxelem 65535
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create localnet6 &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet6 hashsize 1024 maxelem 65535 &lt;span class=&quot;nt&quot;&gt;-exist&lt;/span&gt;
 add localnet6 ::/128
 add localnet6 ::1/128
 add localnet6 ::ffff:0:0/96
@@ -120,6 +120,22 @@ add localnet6 fe80::/10
 add localnet6 ff00::/8
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;j)打开官方的chnroute.ipset，把第一行：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create chnroute &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;修改为：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create chnroute &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet &lt;span class=&quot;nt&quot;&gt;-exist&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;避免因chnroute已经存在导致后面语句不执行。&lt;/p&gt;
+
+&lt;p&gt;k)打开官方的chnroute6.ipset，把第一行：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create chnroute6 &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;修改为：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create chnroute6 &lt;span class=&quot;nb&quot;&gt;hash&lt;/span&gt;:net family inet &lt;span class=&quot;nt&quot;&gt;-exist&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;避免因chnroute已经存在导致后面语句不执行。&lt;/p&gt;
 
 &lt;p&gt;2.配置chinadns-ng&lt;/p&gt;
 
