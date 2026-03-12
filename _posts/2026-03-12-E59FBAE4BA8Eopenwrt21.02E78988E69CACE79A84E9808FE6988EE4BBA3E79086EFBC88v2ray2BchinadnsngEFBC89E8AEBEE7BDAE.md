@@ -77,12 +77,12 @@ flush chnroute6
 ```
 d) gfwip.ipset内容为：
 ```bash
-create gfwip hash:net family inet hashsize 1024 maxelem 65535
+create gfwip hash:net family inet hashsize 1024 maxelem 65535 -exist
 ```
 
 e) gfwip6.ipset内容为：
 ```bash
-create gfwip6 hash:net family inet hashsize 1024 maxelem 65535
+create gfwip6 hash:net family inet hashsize 1024 maxelem 65535 -exist
 ```
 
 f) disable_gfwip.ipset内容为：
@@ -97,7 +97,7 @@ flush gfwip
 
 h) reservedip.ipset内容为：
 ```bash
-create localnet hash:net family inet hashsize 1024 maxelem 65535
+create localnet hash:net family inet hashsize 1024 maxelem 65535 -exist
 add localnet 0.0.0.0/8
 add localnet 10.0.0.0/8
 add localnet 100.64.0.0/10
@@ -118,7 +118,7 @@ add localnet 240.0.0.0/4
 
 i) reservedip6.ipset内容为：
 ```bash
-create localnet6 hash:net family inet6 hashsize 1024 maxelem 65535
+create localnet6 hash:net family inet6 hashsize 1024 maxelem 65535 -exist
 add localnet6 ::/128
 add localnet6 ::1/128
 add localnet6 ::ffff:0:0/96
@@ -129,6 +129,26 @@ add localnet6 fe80::/10
 add localnet6 ff00::/8
 
 ```
+
+j)打开官方的chnroute.ipset，把第一行：
+```bash
+create chnroute hash:net family inet
+```
+修改为：
+```bash
+create chnroute hash:net family inet -exist
+```
+避免因chnroute已经存在导致后面语句不执行。
+
+k)打开官方的chnroute6.ipset，把第一行：
+```bash
+create chnroute6 hash:net family inet
+```
+修改为：
+```bash
+create chnroute6 hash:net family inet -exist
+```
+避免因chnroute已经存在导致后面语句不执行。
 
 2.配置chinadns-ng
 
