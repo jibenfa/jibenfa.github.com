@@ -458,7 +458,7 @@ create_chain_rules(){
 enable_chnroute_nft_rules(){
     create_chain_rules
     #抽检，如果表中没有添加保留地址，则退出，避免无法连接路由器本机
-    if ! nft list table inet global | grep -q "0.0.0.0"; then
+    if ! nft list table inet global | grep -q "127.0.0.0"; then
         echo "[!] 致命错误，保留地址集添加失败，设置失败，请检查${CHINADNSNG_FILES_PATH}${RESERVEDIP_NFT_NAME}"
         return 1
     fi
