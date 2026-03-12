@@ -151,7 +151,7 @@ china-dns 120.53.53.53
 
 # 国外 DNS
 trust-dns 127.0.0.1#5354
-trust-dns 127.0.0.1#5356
+trust-dns tcp://127.0.0.1#5356
 trust-dns 127.0.0.1#5358
 trust-dns 127.0.0.1#5360
 
