@@ -594,6 +594,7 @@ chmod +x /etc/init.d/v2ray_chinadnsng
 3.在http://cpe管理地址/cgi-bin/luci/admin/network/dhcp中，把“dns转发”改成“127.0.0.1#5353”，保存后重启cpe路由。
 
 4.如果要在厂商的luci界面中增加配置功能，可以新增2个文件：
+
 1）/usr/lib/lua/luci/model/cbi/厂商配置路径/scinet.lua
 
 ```bash
