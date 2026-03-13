@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-13T06:53:17+00:00</updated>
+ <updated>2026-03-13T08:14:51+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -575,8 +575,9 @@ service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&
 
 &lt;p&gt;3.在http://cpe管理地址/cgi-bin/luci/admin/network/dhcp中，把“dns转发”改成“127.0.0.1#5353”，保存后重启cpe路由。&lt;/p&gt;
 
-&lt;p&gt;4.如果要在厂商的luci界面中增加配置功能，可以新增2个文件：
-1）/usr/lib/lua/luci/model/cbi/厂商配置路径/scinet.lua&lt;/p&gt;
+&lt;p&gt;4.如果要在厂商的luci界面中增加配置功能，可以新增2个文件：&lt;/p&gt;
+
+&lt;p&gt;1）/usr/lib/lua/luci/model/cbi/厂商配置路径/scinet.lua&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;uci &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; require &lt;span class=&quot;s2&quot;&gt;&quot;luci.model.uci&quot;&lt;/span&gt;.cursor&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;

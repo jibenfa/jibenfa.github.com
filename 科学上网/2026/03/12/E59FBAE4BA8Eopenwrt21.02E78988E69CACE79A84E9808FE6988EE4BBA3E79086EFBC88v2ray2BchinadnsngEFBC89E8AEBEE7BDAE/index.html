@@ -703,8 +703,9 @@ service_triggers<span class="o">()</span> <span class="o">{</span>
 
 <p>3.在http://cpe管理地址/cgi-bin/luci/admin/network/dhcp中，把“dns转发”改成“127.0.0.1#5353”，保存后重启cpe路由。</p>
 
-<p>4.如果要在厂商的luci界面中增加配置功能，可以新增2个文件：
-1）/usr/lib/lua/luci/model/cbi/厂商配置路径/scinet.lua</p>
+<p>4.如果要在厂商的luci界面中增加配置功能，可以新增2个文件：</p>
+
+<p>1）/usr/lib/lua/luci/model/cbi/厂商配置路径/scinet.lua</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="nb">local </span>uci <span class="o">=</span> require <span class="s2">"luci.model.uci"</span>.cursor<span class="o">()</span>
