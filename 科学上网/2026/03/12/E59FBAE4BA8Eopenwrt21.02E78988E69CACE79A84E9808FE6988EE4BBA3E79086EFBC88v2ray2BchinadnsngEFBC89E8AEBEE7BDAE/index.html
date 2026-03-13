@@ -323,7 +323,15 @@ verdict<span class="p">-</span>cache <span class="m">4096</span>
 
 </code></pre></div></div>
 
-<p>2.配置v2ray</p>
+<p>2.配置v2ray（v2ray的安装可以看<a href="https://wallsee.org/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2/">这里</a>）</p>
+
+<p>0)新建/etc/config/advancedconfig，内容为：</p>
+
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+config rules
+	option v2raymode <span class="s1">'outlands'</span>
+
+</code></pre></div></div>
 
 <p>1）修改配置文件（/etc/config/v2ray.json）</p>
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
@@ -693,7 +701,57 @@ service_triggers<span class="o">()</span> <span class="o">{</span>
 /etc/init.d/v2ray_chinadnsng <span class="nb">enable</span>
 </code></pre></div></div>
 
-<p>3.最后在http://cpe管理地址/cgi-bin/luci/admin/network/dhcp中，把“dns转发”改成“127.0.0.1#5353”，保存后重启cpe路由。</p>
+<p>3.在http://cpe管理地址/cgi-bin/luci/admin/network/dhcp中，把“dns转发”改成“127.0.0.1#5353”，保存后重启cpe路由。</p>
+
+<p>4.如果要在厂商的luci界面中增加配置功能，可以新增2个文件：
+1）/usr/lib/lua/luci/model/cbi/厂商配置路径/scinet.lua</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">local </span>uci <span class="o">=</span> require <span class="s2">"luci.model.uci"</span>.cursor<span class="o">()</span>
+
+<span class="nv">m</span><span class="o">=</span>Map<span class="o">(</span><span class="s2">"advancedconfig"</span>,translate<span class="o">(</span><span class="s2">"科学上网"</span><span class="o">)</span>, translate<span class="o">(</span><span class="s2">"必须提前安装v2ray，chinadns-ng，否则功能会不正常"</span><span class="o">))</span>
+<span class="nv">s2</span><span class="o">=</span>m:section<span class="o">(</span>TypedSection,<span class="s2">"rules"</span>,<span class="s2">""</span><span class="o">)</span>
+s2.addremove<span class="o">=</span><span class="nb">false
+</span>s2.anonymous<span class="o">=</span><span class="nb">true
+</span>s2:tab<span class="o">(</span><span class="s2">"config3"</span>, translate<span class="o">(</span><span class="s2">"选择v2ray的运行模式"</span><span class="o">)</span>,translate<span class="o">(</span><span class="s2">"&lt;p&gt;本模块是选择v2ray的运行模式，支持三种模式：白名单模式，境外全局代理模式，墙内上网模式。&lt;p&gt;"</span><span class="o">))</span>
+c <span class="o">=</span> s2:taboption<span class="o">(</span><span class="s2">"config3"</span>, ListValue, <span class="s2">"v2raymode"</span>,nil ,translate<span class="o">(</span><span class="s2">"代理模式：白名单模式速度较快，但未添加的被墙网站打不开，境外全局代理模式速度较慢，但所有网站都能打开"</span><span class="o">))</span>
+c:value<span class="o">(</span><span class="s2">"gfwlist"</span>, translate<span class="o">(</span><span class="s2">"白名单模式"</span><span class="o">))</span>
+c:value<span class="o">(</span><span class="s2">"outlands"</span>, translate<span class="o">(</span><span class="s2">"境外全局模式"</span><span class="o">))</span>
+c:value<span class="o">(</span><span class="s2">"ingfw"</span>, translate<span class="o">(</span><span class="s2">"墙内上网模式"</span><span class="o">))</span>
+
+<span class="k">function </span>c.write<span class="o">(</span>self, section, value<span class="o">)</span>   
+    ListValue.write<span class="o">(</span>self, section, value<span class="o">)</span>
+    <span class="nt">--</span> 设置值
+    uci:set<span class="o">(</span><span class="s2">"advancedconfig"</span>, <span class="s2">"rules"</span>, <span class="s2">"v2raymode"</span>, value<span class="o">)</span>
+    <span class="nt">--</span> 保存并提交
+    uci:save<span class="o">(</span><span class="s2">"advancedconfig"</span><span class="o">)</span>
+    uci:commit<span class="o">(</span><span class="s2">"advancedconfig"</span><span class="o">)</span>
+    <span class="k">if </span>value ~<span class="o">=</span> <span class="s2">"ingfw"</span> <span class="k">then
+        </span>luci.sys.call<span class="o">(</span><span class="s2">"(sleep 1; /etc/init.d/v2ray_chinadnsng restart &gt;/dev/null 2&gt;&amp;1) &amp;"</span><span class="o">)</span>
+    <span class="k">else
+        </span>luci.sys.call<span class="o">(</span><span class="s2">"(sleep 1; /etc/init.d/v2ray_chinadnsng stop &gt;/dev/null 2&gt;&amp;1) &amp;"</span><span class="o">)</span>
+    end
+end
+
+<span class="k">return </span>m
+
+</code></pre></div></div>
+
+<p>2）/usr/lib/lua/luci/controller/厂商配置路径/scinet.lua文件:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+module<span class="o">(</span><span class="s2">"luci.controller.厂商配置路径.scinet"</span>, package.seeall<span class="o">)</span>
+<span class="k">function </span>index<span class="o">()</span>
+        <span class="k">if </span>not nixio.fs.access<span class="o">(</span><span class="s2">"/etc/config/advancedconfig"</span><span class="o">)</span> <span class="k">then
+                return
+        </span>end
+        page <span class="o">=</span> entry<span class="o">({</span><span class="s2">"厂商配置路径"</span>, <span class="s2">"vpn"</span>,<span class="s2">"scinet"</span><span class="o">}</span>, cbi<span class="o">(</span><span class="s2">"厂商配置路径/scinet"</span><span class="o">)</span>, _<span class="o">(</span><span class="s2">"科学上网"</span><span class="o">)</span>, 20, <span class="nb">true</span><span class="o">)</span>
+        page.icon <span class="o">=</span> <span class="s1">'paper-plane'</span>
+	page.show <span class="o">=</span> <span class="nb">true
+
+</span>end
+
+</code></pre></div></div>
 
 <p>参考：</p>
 

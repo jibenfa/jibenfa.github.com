@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-12T07:55:44+00:00</updated>
+ <updated>2026-03-13T06:53:17+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -195,7 +195,15 @@ verdict&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cache &lt;span class=&quot;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;2.配置v2ray&lt;/p&gt;
+&lt;p&gt;2.配置v2ray（v2ray的安装可以看&lt;a href=&quot;https://wallsee.org/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2/&quot;&gt;这里&lt;/a&gt;）&lt;/p&gt;
+
+&lt;p&gt;0)新建/etc/config/advancedconfig，内容为：&lt;/p&gt;
+
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+config rules
+	option v2raymode &lt;span class=&quot;s1&quot;&gt;&apos;outlands&apos;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;1）修改配置文件（/etc/config/v2ray.json）&lt;/p&gt;
 &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -565,7 +573,57 @@ service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&
 /etc/init.d/v2ray_chinadnsng &lt;span class=&quot;nb&quot;&gt;enable&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;3.最后在http://cpe管理地址/cgi-bin/luci/admin/network/dhcp中，把“dns转发”改成“127.0.0.1#5353”，保存后重启cpe路由。&lt;/p&gt;
+&lt;p&gt;3.在http://cpe管理地址/cgi-bin/luci/admin/network/dhcp中，把“dns转发”改成“127.0.0.1#5353”，保存后重启cpe路由。&lt;/p&gt;
+
+&lt;p&gt;4.如果要在厂商的luci界面中增加配置功能，可以新增2个文件：
+1）/usr/lib/lua/luci/model/cbi/厂商配置路径/scinet.lua&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;uci &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; require &lt;span class=&quot;s2&quot;&gt;&quot;luci.model.uci&quot;&lt;/span&gt;.cursor&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Map&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;advancedconfig&quot;&lt;/span&gt;,translate&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;科学上网&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, translate&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;必须提前安装v2ray，chinadns-ng，否则功能会不正常&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;m:section&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;TypedSection,&lt;span class=&quot;s2&quot;&gt;&quot;rules&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+s2.addremove&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false
+&lt;/span&gt;s2.anonymous&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true
+&lt;/span&gt;s2:tab&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;config3&quot;&lt;/span&gt;, translate&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;选择v2ray的运行模式&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,translate&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;p&amp;gt;本模块是选择v2ray的运行模式，支持三种模式：白名单模式，境外全局代理模式，墙内上网模式。&amp;lt;p&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+c &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; s2:taboption&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;config3&quot;&lt;/span&gt;, ListValue, &lt;span class=&quot;s2&quot;&gt;&quot;v2raymode&quot;&lt;/span&gt;,nil ,translate&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;代理模式：白名单模式速度较快，但未添加的被墙网站打不开，境外全局代理模式速度较慢，但所有网站都能打开&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+c:value&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gfwlist&quot;&lt;/span&gt;, translate&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;白名单模式&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+c:value&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;outlands&quot;&lt;/span&gt;, translate&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;境外全局模式&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+c:value&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ingfw&quot;&lt;/span&gt;, translate&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;墙内上网模式&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;c.write&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;self, section, value&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;   
+    ListValue.write&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;self, section, value&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; 设置值
+    uci:set&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;advancedconfig&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;rules&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;v2raymode&quot;&lt;/span&gt;, value&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt; 保存并提交
+    uci:save&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;advancedconfig&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    uci:commit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;advancedconfig&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;value ~&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ingfw&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+        &lt;/span&gt;luci.sys.call&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;(sleep 1; /etc/init.d/v2ray_chinadnsng restart &amp;gt;/dev/null 2&amp;gt;&amp;amp;1) &amp;amp;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else
+        &lt;/span&gt;luci.sys.call&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;(sleep 1; /etc/init.d/v2ray_chinadnsng stop &amp;gt;/dev/null 2&amp;gt;&amp;amp;1) &amp;amp;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    end
+end
+
+&lt;span class=&quot;k&quot;&gt;return &lt;/span&gt;m
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;2）/usr/lib/lua/luci/controller/厂商配置路径/scinet.lua文件:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+module&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;luci.controller.厂商配置路径.scinet&quot;&lt;/span&gt;, package.seeall&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;index&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;not nixio.fs.access&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/etc/config/advancedconfig&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then
+                return
+        &lt;/span&gt;end
+        page &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; entry&lt;span class=&quot;o&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;厂商配置路径&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;vpn&quot;&lt;/span&gt;,&lt;span class=&quot;s2&quot;&gt;&quot;scinet&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;, cbi&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;厂商配置路径/scinet&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, _&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;科学上网&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, 20, &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        page.icon &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;paper-plane&apos;&lt;/span&gt;
+	page.show &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true
+
+&lt;/span&gt;end
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;参考：&lt;/p&gt;
 
