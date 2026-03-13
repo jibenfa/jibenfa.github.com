@@ -209,7 +209,16 @@ verdict-cache 4096
 
 ```
 
-2.配置v2ray
+2.配置v2ray（v2ray的安装可以看<a href="https://wallsee.org/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2/">这里</a>）
+
+0)新建/etc/config/advancedconfig，内容为：
+
+```vim
+
+config rules
+	option v2raymode 'outlands'
+
+```
 
 1）修改配置文件（/etc/config/v2ray.json）
 ```vim
@@ -582,7 +591,59 @@ chmod +x /etc/init.d/v2ray_chinadnsng
 /etc/init.d/v2ray_chinadnsng enable
 ```
 
-3.最后在http://cpe管理地址/cgi-bin/luci/admin/network/dhcp中，把“dns转发”改成“127.0.0.1#5353”，保存后重启cpe路由。
+3.在http://cpe管理地址/cgi-bin/luci/admin/network/dhcp中，把“dns转发”改成“127.0.0.1#5353”，保存后重启cpe路由。
+
+4.如果要在厂商的luci界面中增加配置功能，可以新增2个文件：
+1）/usr/lib/lua/luci/model/cbi/厂商配置路径/scinet.lua
+
+```bash
+
+local uci = require "luci.model.uci".cursor()
+
+m=Map("advancedconfig",translate("科学上网"), translate("必须提前安装v2ray，chinadns-ng，否则功能会不正常"))
+s2=m:section(TypedSection,"rules","")
+s2.addremove=false
+s2.anonymous=true
+s2:tab("config3", translate("选择v2ray的运行模式"),translate("<p>本模块是选择v2ray的运行模式，支持三种模式：白名单模式，境外全局代理模式，墙内上网模式。<p>"))
+c = s2:taboption("config3", ListValue, "v2raymode",nil ,translate("代理模式：白名单模式速度较快，但未添加的被墙网站打不开，境外全局代理模式速度较慢，但所有网站都能打开"))
+c:value("gfwlist", translate("白名单模式"))
+c:value("outlands", translate("境外全局模式"))
+c:value("ingfw", translate("墙内上网模式"))
+
+function c.write(self, section, value)   
+    ListValue.write(self, section, value)
+    -- 设置值
+    uci:set("advancedconfig", "rules", "v2raymode", value)
+    -- 保存并提交
+    uci:save("advancedconfig")
+    uci:commit("advancedconfig")
+    if value ~= "ingfw" then
+        luci.sys.call("(sleep 1; /etc/init.d/v2ray_chinadnsng restart >/dev/null 2>&1) &")
+    else
+        luci.sys.call("(sleep 1; /etc/init.d/v2ray_chinadnsng stop >/dev/null 2>&1) &")
+    end
+end
+
+return m
+
+```
+
+2）/usr/lib/lua/luci/controller/厂商配置路径/scinet.lua文件:
+
+```bash
+
+module("luci.controller.厂商配置路径.scinet", package.seeall)
+function index()
+        if not nixio.fs.access("/etc/config/advancedconfig") then
+                return
+        end
+        page = entry({"厂商配置路径", "vpn","scinet"}, cbi("厂商配置路径/scinet"), _("科学上网"), 20, true)
+        page.icon = 'paper-plane'
+	page.show = true
+
+end
+
+```
 
 
 参考：
