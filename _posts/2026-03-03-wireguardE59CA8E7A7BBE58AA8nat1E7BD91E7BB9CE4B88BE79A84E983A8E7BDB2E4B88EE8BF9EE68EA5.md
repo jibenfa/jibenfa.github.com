@@ -13,6 +13,7 @@ tags:
 - stun
 - cloudflare
 - ddns
+- natmap
 ---
 
 最近碰到这么两个场景，网络环境是中国移动家庭宽带，分配的是动态ipv6公网地址和ipv4内网地址（nat1），光猫拨号，openwrt路由位于光猫之后，想通过wireguard连回家（使用windows客户端）。
@@ -21,9 +22,9 @@ tags:
 
 场景二：光猫上居然没有ipv6的防火墙选项，而且ipv6的入站连接除了ICMP包外都是阻断的，折腾很久都没成功。研究了一下，最后采用了如下办法成功实现了wireguard连回家：
 
-1.在openwrt上部署lucky，并用lucky的stun内网穿透功能获取外网ipv4地址和端口；
+1.在openwrt上部署lucky（2026-03-23改为natmap），并用lucky的stun内网穿透功能获取外网ipv4地址和端口；
 
-2.通过lucky的webhook把ip和端口更新到cloudflare下托管域名的TXT记录（哪里都有cloudflare大善人的身影）；
+2.通过lucky的webhook（2026-03-23改为sh脚本）把ip和端口更新到cloudflare下托管域名的TXT记录（哪里都有cloudflare大善人的身影）；
 
 3.windows客户端运行python脚本（打包成exe直接执行）通过域名DNS查询TXT记录，并替换wireguard配置文件中的endpoint的ip和端口，然后发起连接，并轮询相关TXT记录，发生变化时重新连接。
 
@@ -423,8 +424,81 @@ root.mainloop()
 
 
 2026-03-22 更新：
-使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改了一下配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
-<img src="https://jibenfa.github.io/uploads/2026/03/lucky_mainset_noportforward.png" width="1390" height="398" alt="关闭lucky自带端口映射" />
+使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改用natmap配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
+1.安装和配置natmap
+
+```bash
+opkg update
+opkg install natmap luci-app-natmap
+```
+
+```bash
+vi /etc/config/natmap
+```
+配置文件内容为：
+
+```vim
+config natmap
+        option enable '1'
+        option udp_mode '1'
+        list stun_server 'stun.l.google.com:19302'
+        list stun_server 'stun1.l.google.com:19302'
+        list stun_server 'stun2.l.google.com:19302'
+        list stun_server 'stun.cloudflare.com:3478'
+        option http_server 'baidu.com'
+        option port '5582'
+        option log_stdout '1'
+        option log_stderr '1'
+        option interface 'wan'
+        option interval '1'
+        option stun_cycle '60'
+        option forward_target '172.24.1.1'
+        option forward_port '53820'
+        option family 'ipv4'
+        option notify_script '/root/natmap_txt.sh'
+```
+
+然后创建/root/natmap_txt.sh:
+
+```bash
+touch /root/natmap_txt.sh
+chmod +x /root/natmap_txt.sh
+vi /root/natmap_txt.sh
+```
+
+natmap_txt.sh内容为（$ZONE_ID，$RECORD_ID，$CF_TOKEN替换为真实的内容）：
+
+```vim
+#!/bin/sh
+
+# 找 natmap json
+for f in /var/run/natmap/*.json; do
+    IP=$(jsonfilter -i "$f" -e '@.ip' 2>/dev/null)
+    [ -n "$IP" ] && NATMAP_JSON="$f" && break
+done
+
+[ -z "$NATMAP_JSON" ] && exit 1
+
+PORT=$(jsonfilter -i "$NATMAP_JSON" -e '@.port')
+
+TXT="${IP}:${PORT}"
+
+echo "NATMAP → $TXT"
+
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
+  -H "Authorization: Bearer $CF_TOKEN" \
+  -H "Content-Type: application/json" \
+  --data @- <<EOF
+{
+  "type": "TXT",
+  "name": "wg",
+  "content": "$TXT",
+  "ttl": 60
+}
+EOF
+```
+
+2.使用openwrt自带的端口转发
 <img src="https://jibenfa.github.io/uploads/2026/03/luci_firewall_port_forward.png" width="1390" height="398" alt="打开openwrt端口映射" />
 
 
