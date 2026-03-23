@@ -151,9 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <p>场景二：光猫上居然没有ipv6的防火墙选项，而且ipv6的入站连接除了ICMP包外都是阻断的，折腾很久都没成功。研究了一下，最后采用了如下办法成功实现了wireguard连回家：</p>
 
-<p>1.在openwrt上部署lucky，并用lucky的stun内网穿透功能获取外网ipv4地址和端口；</p>
+<p>1.在openwrt上部署lucky（2026-03-23改为natmap），并用lucky的stun内网穿透功能获取外网ipv4地址和端口；</p>
 
-<p>2.通过lucky的webhook把ip和端口更新到cloudflare下托管域名的TXT记录（哪里都有cloudflare大善人的身影）；</p>
+<p>2.通过lucky的webhook（2026-03-23改为sh脚本）把ip和端口更新到cloudflare下托管域名的TXT记录（哪里都有cloudflare大善人的身影）；</p>
 
 <p>3.windows客户端运行python脚本（打包成exe直接执行）通过域名DNS查询TXT记录，并替换wireguard配置文件中的endpoint的ip和端口，然后发起连接，并轮询相关TXT记录，发生变化时重新连接。</p>
 
@@ -542,8 +542,76 @@ ping_timeout_ms = 1000
 <p><img src="https://jibenfa.github.io/uploads/2026/03/wg_updater_3.png" width="1390" height="398" alt="客户端停止界面" /></p>
 
 <p>2026-03-22 更新：
-使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改了一下配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
-<img src="https://jibenfa.github.io/uploads/2026/03/lucky_mainset_noportforward.png" width="1390" height="398" alt="关闭lucky自带端口映射" />
+使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改用natmap配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
+1.安装和配置natmap</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
+opkg <span class="nb">install </span>natmap luci-app-natmap
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/config/natmap
+</code></pre></div></div>
+<p>配置文件内容为：</p>
+
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config natmap
+        option enable <span class="s1">'1'</span>
+        option udp_mode <span class="s1">'1'</span>
+        <span class="k">list</span> stun_server <span class="s1">'stun.l.google.com:19302'</span>
+        <span class="k">list</span> stun_server <span class="s1">'stun1.l.google.com:19302'</span>
+        <span class="k">list</span> stun_server <span class="s1">'stun2.l.google.com:19302'</span>
+        <span class="k">list</span> stun_server <span class="s1">'stun.cloudflare.com:3478'</span>
+        option http_server <span class="s1">'baidu.com'</span>
+        option port <span class="s1">'5582'</span>
+        option log_stdout <span class="s1">'1'</span>
+        option log_stderr <span class="s1">'1'</span>
+        option interface <span class="s1">'wan'</span>
+        option interval <span class="s1">'1'</span>
+        option stun_cycle <span class="s1">'60'</span>
+        option forward_target <span class="s1">'172.24.1.1'</span>
+        option forward_port <span class="s1">'53820'</span>
+        option family <span class="s1">'ipv4'</span>
+        option notify_script <span class="s1">'/root/natmap_txt.sh'</span>
+</code></pre></div></div>
+
+<p>然后创建/root/natmap_txt.sh:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch</span> /root/natmap_txt.sh
+<span class="nb">chmod</span> +x /root/natmap_txt.sh
+vi /root/natmap_txt.sh
+</code></pre></div></div>
+
+<p>natmap_txt.sh内容为（$ZONE_ID，$RECORD_ID，$CF_TOKEN替换为真实的内容）：</p>
+
+<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
+
+# 找 natmap json
+<span class="k">for</span> <span class="k">f</span> <span class="k">in</span> <span class="sr">/var/</span>run<span class="sr">/natmap/</span>*<span class="p">.</span>json; <span class="k">do</span>
+    IP<span class="p">=</span>$<span class="p">(</span>jsonfilter <span class="p">-</span><span class="k">i</span> <span class="s2">"$f"</span> <span class="p">-</span><span class="k">e</span> <span class="s1">'@.ip'</span> <span class="m">2</span><span class="p">&gt;</span><span class="sr">/dev/</span>null<span class="p">)</span>
+    <span class="p">[</span> <span class="p">-</span><span class="k">n</span> <span class="s2">"$IP"</span> <span class="p">]</span> &amp;&amp; NATMAP_JSON<span class="p">=</span><span class="s2">"$f"</span> &amp;&amp; <span class="k">break</span>
+done
+
+<span class="p">[</span> <span class="p">-</span>z <span class="s2">"$NATMAP_JSON"</span> <span class="p">]</span> &amp;&amp; <span class="k">exit</span> <span class="m">1</span>
+
+PORT<span class="p">=</span>$<span class="p">(</span>jsonfilter <span class="p">-</span><span class="k">i</span> <span class="s2">"$NATMAP_JSON"</span> <span class="p">-</span><span class="k">e</span> <span class="s1">'@.port'</span><span class="p">)</span>
+
+TXT<span class="p">=</span><span class="s2">"${IP}:${PORT}"</span>
+
+echo <span class="s2">"NATMAP → $TXT"</span>
+
+curl <span class="p">-</span>X PUT <span class="s2">"https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID"</span> \
+  <span class="p">-</span>H <span class="s2">"Authorization: Bearer $CF_TOKEN"</span> \
+  <span class="p">-</span>H <span class="s2">"Content-Type: application/json"</span> \
+  <span class="p">--</span>data @<span class="p">-</span> <span class="p">&lt;&lt;</span>EOF
+<span class="p">{</span>
+  <span class="c">"type": "TXT",</span>
+  <span class="c">"name": "wg",</span>
+  <span class="c">"content": "$TXT",</span>
+  <span class="c">"ttl": 60</span>
+<span class="p">}</span>
+EOF
+</code></pre></div></div>
+
+<p>2.使用openwrt自带的端口转发
 <img src="https://jibenfa.github.io/uploads/2026/03/luci_firewall_port_forward.png" width="1390" height="398" alt="打开openwrt端口映射" /></p>
 
 <p>参考：</p>
@@ -584,6 +652,9 @@ ping_timeout_ms = 1000
       
         
         <a href="/tags/ddns/">ddns</a>
+      
+        
+        <a href="/tags/natmap/">natmap</a>
       
     </div>
   
@@ -967,6 +1038,15 @@ ping_timeout_ms = 1000
       
         
         <li>
+          <a href="/tags/natmap/" title="natmap">
+            natmap<sup>1</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
           <a href="/tags/iptables/" title="iptables">
             iptables<sup>1</sup>
           </a>
@@ -1182,6 +1262,8 @@ $(document).ready(function() {
     { "name": "stun", "path": "/tags/stun/", "length": 1 },
     
     { "name": "ddns", "path": "/tags/ddns/", "length": 1 },
+    
+    { "name": "natmap", "path": "/tags/natmap/", "length": 1 },
     
     { "name": "iptables", "path": "/tags/iptables/", "length": 1 },
     

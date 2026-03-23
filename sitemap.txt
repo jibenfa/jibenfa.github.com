@@ -43,6 +43,7 @@
 /tags/lucky/
 /tags/stun/
 /tags/ddns/
+/tags/natmap/
 /tags/iptables/
 /tags/ipset/
 /page2/

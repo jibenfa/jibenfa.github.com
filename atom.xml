@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-23T01:43:06+00:00</updated>
+ <updated>2026-03-23T05:55:59+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -643,9 +643,9 @@ module&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot
 
 &lt;p&gt;场景二：光猫上居然没有ipv6的防火墙选项，而且ipv6的入站连接除了ICMP包外都是阻断的，折腾很久都没成功。研究了一下，最后采用了如下办法成功实现了wireguard连回家：&lt;/p&gt;
 
-&lt;p&gt;1.在openwrt上部署lucky，并用lucky的stun内网穿透功能获取外网ipv4地址和端口；&lt;/p&gt;
+&lt;p&gt;1.在openwrt上部署lucky（2026-03-23改为natmap），并用lucky的stun内网穿透功能获取外网ipv4地址和端口；&lt;/p&gt;
 
-&lt;p&gt;2.通过lucky的webhook把ip和端口更新到cloudflare下托管域名的TXT记录（哪里都有cloudflare大善人的身影）；&lt;/p&gt;
+&lt;p&gt;2.通过lucky的webhook（2026-03-23改为sh脚本）把ip和端口更新到cloudflare下托管域名的TXT记录（哪里都有cloudflare大善人的身影）；&lt;/p&gt;
 
 &lt;p&gt;3.windows客户端运行python脚本（打包成exe直接执行）通过域名DNS查询TXT记录，并替换wireguard配置文件中的endpoint的ip和端口，然后发起连接，并轮询相关TXT记录，发生变化时重新连接。&lt;/p&gt;
 
@@ -1034,8 +1034,76 @@ ping_timeout_ms = 1000
 &lt;p&gt;&lt;img src=&quot;https://jibenfa.github.io/uploads/2026/03/wg_updater_3.png&quot; width=&quot;1390&quot; height=&quot;398&quot; alt=&quot;客户端停止界面&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;2026-03-22 更新：
-使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改了一下配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
-&lt;img src=&quot;https://jibenfa.github.io/uploads/2026/03/lucky_mainset_noportforward.png&quot; width=&quot;1390&quot; height=&quot;398&quot; alt=&quot;关闭lucky自带端口映射&quot; /&gt;
+使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改用natmap配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
+1.安装和配置natmap&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;opkg update
+opkg &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;natmap luci-app-natmap
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vi /etc/config/natmap
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;配置文件内容为：&lt;/p&gt;
+
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config natmap
+        option enable &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
+        option udp_mode &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun.l.google.com:19302&apos;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun1.l.google.com:19302&apos;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun2.l.google.com:19302&apos;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun.cloudflare.com:3478&apos;&lt;/span&gt;
+        option http_server &lt;span class=&quot;s1&quot;&gt;&apos;baidu.com&apos;&lt;/span&gt;
+        option port &lt;span class=&quot;s1&quot;&gt;&apos;5582&apos;&lt;/span&gt;
+        option log_stdout &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
+        option log_stderr &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
+        option interface &lt;span class=&quot;s1&quot;&gt;&apos;wan&apos;&lt;/span&gt;
+        option interval &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
+        option stun_cycle &lt;span class=&quot;s1&quot;&gt;&apos;60&apos;&lt;/span&gt;
+        option forward_target &lt;span class=&quot;s1&quot;&gt;&apos;172.24.1.1&apos;&lt;/span&gt;
+        option forward_port &lt;span class=&quot;s1&quot;&gt;&apos;53820&apos;&lt;/span&gt;
+        option family &lt;span class=&quot;s1&quot;&gt;&apos;ipv4&apos;&lt;/span&gt;
+        option notify_script &lt;span class=&quot;s1&quot;&gt;&apos;/root/natmap_txt.sh&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;然后创建/root/natmap_txt.sh:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /root/natmap_txt.sh
+&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x /root/natmap_txt.sh
+vi /root/natmap_txt.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;natmap_txt.sh内容为（$ZONE_ID，$RECORD_ID，$CF_TOKEN替换为真实的内容）：&lt;/p&gt;
+
+&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#&lt;span class=&quot;p&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/bin/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
+
+# 找 natmap json
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/var/&lt;/span&gt;run&lt;span class=&quot;sr&quot;&gt;/natmap/&lt;/span&gt;*&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;json; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+    IP&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;$&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;jsonfilter &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;$f&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;@.ip&apos;&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/dev/&lt;/span&gt;null&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;$IP&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &amp;amp;&amp;amp; NATMAP_JSON&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;$f&quot;&lt;/span&gt; &amp;amp;&amp;amp; &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+done
+
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;z &lt;span class=&quot;s2&quot;&gt;&quot;$NATMAP_JSON&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &amp;amp;&amp;amp; &lt;span class=&quot;k&quot;&gt;exit&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+
+PORT&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;$&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;jsonfilter &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;$NATMAP_JSON&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;@.port&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+TXT&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;${IP}:${PORT}&quot;&lt;/span&gt;
+
+echo &lt;span class=&quot;s2&quot;&gt;&quot;NATMAP → $TXT&quot;&lt;/span&gt;
+
+curl &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;X PUT &lt;span class=&quot;s2&quot;&gt;&quot;https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID&quot;&lt;/span&gt; \
+  &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;H &lt;span class=&quot;s2&quot;&gt;&quot;Authorization: Bearer $CF_TOKEN&quot;&lt;/span&gt; \
+  &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;H &lt;span class=&quot;s2&quot;&gt;&quot;Content-Type: application/json&quot;&lt;/span&gt; \
+  &lt;span class=&quot;p&quot;&gt;--&lt;/span&gt;data @&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;EOF
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;&quot;type&quot;: &quot;TXT&quot;,&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;&quot;name&quot;: &quot;wg&quot;,&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;&quot;content&quot;: &quot;$TXT&quot;,&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;&quot;ttl&quot;: 60&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;2.使用openwrt自带的端口转发
 &lt;img src=&quot;https://jibenfa.github.io/uploads/2026/03/luci_firewall_port_forward.png&quot; width=&quot;1390&quot; height=&quot;398&quot; alt=&quot;打开openwrt端口映射&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;参考：&lt;/p&gt;
