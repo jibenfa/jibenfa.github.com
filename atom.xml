@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-23T06:06:46+00:00</updated>
+ <updated>2026-03-23T06:33:04+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -1049,8 +1049,9 @@ vi /etc/config/natmap
         option udp_mode &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun.l.google.com:19302&apos;&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun1.l.google.com:19302&apos;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun2.l.google.com:19302&apos;&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun.cloudflare.com:3478&apos;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun.miwifi.com:3478&apos;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;list&lt;/span&gt; stun_server &lt;span class=&quot;s1&quot;&gt;&apos;stun.chat.bilibili.com:3478&apos;&lt;/span&gt;
         option http_server &lt;span class=&quot;s1&quot;&gt;&apos;baidu.com&apos;&lt;/span&gt;
         option port &lt;span class=&quot;s1&quot;&gt;&apos;5582&apos;&lt;/span&gt;
         option log_stdout &lt;span class=&quot;s1&quot;&gt;&apos;1&apos;&lt;/span&gt;
