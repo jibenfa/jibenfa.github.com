@@ -422,17 +422,14 @@ root.mainloop()
 
 <img src="https://jibenfa.github.io/uploads/2026/03/wg_updater_3.png" width="1390" height="398" alt="客户端停止界面" />
 
-
+----------------------------------------------------------------------------------------------------------------------
 2026-03-22 更新：
-使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改用natmap配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
+使用过程中发现lucky内置的端口转发似乎不太稳定，于是，弃用lucky，改用natmap，并使用opewnrt自带的端口转发。如图：
 1.安装和配置natmap
 
 ```bash
 opkg update
 opkg install natmap luci-app-natmap
-```
-
-```bash
 vi /etc/config/natmap
 ```
 配置文件内容为：
@@ -466,7 +463,7 @@ chmod +x /root/natmap_txt.sh
 vi /root/natmap_txt.sh
 ```
 
-natmap_txt.sh内容为（$ZONE_ID，$RECORD_ID，$CF_TOKEN替换为真实的内容）：
+natmap_txt.sh内容为（ZONE_ID，RECORD_ID，CF_TOKEN替换为真实的值）：
 
 ```vim
 #!/bin/sh
