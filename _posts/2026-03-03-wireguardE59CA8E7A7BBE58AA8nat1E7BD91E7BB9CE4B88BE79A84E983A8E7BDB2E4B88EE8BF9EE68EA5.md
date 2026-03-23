@@ -422,6 +422,12 @@ root.mainloop()
 <img src="https://jibenfa.github.io/uploads/2026/03/wg_updater_3.png" width="1390" height="398" alt="客户端停止界面" />
 
 
+2026-03-22 更新：
+使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改了一下配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
+<img src="https://jibenfa.github.io/uploads/2026/03/lucky_mainset_noportforward.png" width="1390" height="398" alt="关闭lucky自带端口映射" />
+<img src="https://jibenfa.github.io/uploads/2026/03/luci_firewall_port_forward.png" width="1390" height="398" alt="打开openwrt端口映射" />
+
+
 参考：
 
 1.chatgpt
