@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-03-23T05:55:59+00:00</updated>
+ <updated>2026-03-23T06:06:46+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -1033,15 +1033,14 @@ ping_timeout_ms = 1000
 
 &lt;p&gt;&lt;img src=&quot;https://jibenfa.github.io/uploads/2026/03/wg_updater_3.png&quot; width=&quot;1390&quot; height=&quot;398&quot; alt=&quot;客户端停止界面&quot; /&gt;&lt;/p&gt;
 
+&lt;hr /&gt;
 &lt;p&gt;2026-03-22 更新：
-使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改用natmap配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
+使用过程中发现lucky内置的端口转发似乎不太稳定，于是，弃用lucky，改用natmap，并使用opewnrt自带的端口转发。如图：
 1.安装和配置natmap&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;opkg update
 opkg &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;natmap luci-app-natmap
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vi /etc/config/natmap
+vi /etc/config/natmap
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;配置文件内容为：&lt;/p&gt;
 
@@ -1072,7 +1071,7 @@ opkg &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;natmap luci-app-natma
 vi /root/natmap_txt.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;natmap_txt.sh内容为（$ZONE_ID，$RECORD_ID，$CF_TOKEN替换为真实的内容）：&lt;/p&gt;
+&lt;p&gt;natmap_txt.sh内容为（ZONE_ID，RECORD_ID，CF_TOKEN替换为真实的值）：&lt;/p&gt;
 
 &lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#&lt;span class=&quot;p&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/bin/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sh&lt;/span&gt;
 

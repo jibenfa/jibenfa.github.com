@@ -541,15 +541,14 @@ ping_timeout_ms = 1000
 
 <p><img src="https://jibenfa.github.io/uploads/2026/03/wg_updater_3.png" width="1390" height="398" alt="客户端停止界面" /></p>
 
+<hr />
 <p>2026-03-22 更新：
-使用过程中发现lucky内置的端口转发似乎不太稳定，于是，改用natmap配置：关闭lucky内置的端口转发，使用opewnrt自带的端口转发。如图：
+使用过程中发现lucky内置的端口转发似乎不太稳定，于是，弃用lucky，改用natmap，并使用opewnrt自带的端口转发。如图：
 1.安装和配置natmap</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opkg update
 opkg <span class="nb">install </span>natmap luci-app-natmap
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /etc/config/natmap
+vi /etc/config/natmap
 </code></pre></div></div>
 <p>配置文件内容为：</p>
 
@@ -580,7 +579,7 @@ opkg <span class="nb">install </span>natmap luci-app-natmap
 vi /root/natmap_txt.sh
 </code></pre></div></div>
 
-<p>natmap_txt.sh内容为（$ZONE_ID，$RECORD_ID，$CF_TOKEN替换为真实的内容）：</p>
+<p>natmap_txt.sh内容为（ZONE_ID，RECORD_ID，CF_TOKEN替换为真实的值）：</p>
 
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#<span class="p">!</span><span class="sr">/bin/</span><span class="k">sh</span>
 
