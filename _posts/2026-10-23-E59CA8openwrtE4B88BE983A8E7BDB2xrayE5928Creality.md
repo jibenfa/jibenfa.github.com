@@ -362,13 +362,14 @@ add_xray_server_bypass() {
 add_xray_domain_to_direct_group() {
     direct_file=${CHINADNSNG_FILES_PATH}${DIRECT_GROUP_FILE}
     . /usr/share/libubox/jshn.sh
-    json_load_file "${XRAY_CONF}"
-    json_select outbounds
-    json_select 1
-    json_select settings
-    json_select vnext
-    json_select 1
+    json_load_file "${XRAY_CONF}"  || return 1
+    json_select outbounds || return 1
+    json_select 1 || return 1
+    json_select settings || return 1
+    json_select vnext || return 1
+    json_select 1 || return 1
     json_get_var addr address
+    [ -n "${addr}" ] || return 1
     case "${addr}" in
         *:*) echo "[+] Xray服务器是IPv6地址，不写入域名 direct.txt"; return 0 ;;
         *[!0-9.]* ) ;;
