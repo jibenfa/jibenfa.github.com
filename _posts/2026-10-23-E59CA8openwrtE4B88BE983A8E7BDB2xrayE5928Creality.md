@@ -40,7 +40,8 @@ install -m 644 /tmp/xray-release/geoip.dat /tmp/xray-release/geosite.dat /usr/lo
 openssl rand -hex 8
 ```
 
-结果是：
+结果是类似这样的，把以下信息记录下来，特别是私钥：
+
 ```vim
 uuuu-uuuu-uuuu-uuuuuu         #这是uuid
 PrivateKey: *******************************  #这是私钥
@@ -113,7 +114,8 @@ chmod 640 /usr/local/etc/xray/config.json
 /usr/local/bin/xray run -test -config /usr/local/etc/xray/config.json
 ```
 
-若最后显示 Configuration OK.，创建自启动服务：
+若最后显示 Configuration OK.，说明成功了，接下来创建自启动服务：
+
 
 ```bash
 cat >/etc/systemd/system/xray.service <<'EOF'
@@ -144,7 +146,8 @@ ss -lntp | grep ':443'
 
 ```
 
-如果出现类似以下输出，则说明成功：
+如果出现类似以下输出，则说明xray成功运行了：
+
 ```bash
 LISTEN 0      4096               *:443             :    users:(("xray",pid=2081,fd=4))
 ```
