@@ -170,7 +170,8 @@ unzip <span class="nt">-oq</span> /root/Xray-linux-64.zip <span class="nt">-d</s
 openssl rand <span class="nt">-hex</span> 8
 </code></pre></div></div>
 
-<p>结果是：</p>
+<p>结果是类似这样的，把以下信息记录下来，特别是私钥：</p>
+
 <div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uuuu<span class="p">-</span>uuuu<span class="p">-</span>uuuu<span class="p">-</span>uuuuuu         #这是uuid
 PrivateKey<span class="p">:</span> *******************************  #这是私钥
 Password <span class="p">(</span>PublicKey<span class="p">):</span> xxxxxxxxxxxxxxxxxxx    #这是公钥
@@ -238,7 +239,7 @@ iiiiiiii    #这是shortid
 /usr/local/bin/xray run <span class="nt">-test</span> <span class="nt">-config</span> /usr/local/etc/xray/config.json
 </code></pre></div></div>
 
-<p>若最后显示 Configuration OK.，创建自启动服务：</p>
+<p>若最后显示 Configuration OK.，说明成功了，接下来创建自启动服务：</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&gt;</span>/etc/systemd/system/xray.service <span class="o">&lt;&lt;</span><span class="sh">'</span><span class="no">EOF</span><span class="sh">'
 [Unit]
@@ -268,7 +269,8 @@ ss <span class="nt">-lntp</span> | <span class="nb">grep</span> <span class="s1"
 
 </code></pre></div></div>
 
-<p>如果出现类似以下输出，则说明成功：</p>
+<p>如果出现类似以下输出，则说明xray成功运行了：</p>
+
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LISTEN 0      4096               <span class="k">*</span>:443             :    <span class="nb">users</span>:<span class="o">((</span><span class="s2">"xray"</span>,pid<span class="o">=</span>2081,fd<span class="o">=</span>4<span class="o">))</span>
 </code></pre></div></div>
 
