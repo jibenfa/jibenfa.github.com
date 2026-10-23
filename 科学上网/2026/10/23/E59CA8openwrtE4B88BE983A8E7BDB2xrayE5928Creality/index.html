@@ -479,13 +479,14 @@ add_xray_server_bypass<span class="o">()</span> <span class="o">{</span>
 add_xray_domain_to_direct_group<span class="o">()</span> <span class="o">{</span>
     <span class="nv">direct_file</span><span class="o">=</span><span class="k">${</span><span class="nv">CHINADNSNG_FILES_PATH</span><span class="k">}${</span><span class="nv">DIRECT_GROUP_FILE</span><span class="k">}</span>
     <span class="nb">.</span> /usr/share/libubox/jshn.sh
-    json_load_file <span class="s2">"</span><span class="k">${</span><span class="nv">XRAY_CONF</span><span class="k">}</span><span class="s2">"</span>
-    json_select outbounds
-    json_select 1
-    json_select settings
-    json_select vnext
-    json_select 1
+    json_load_file <span class="s2">"</span><span class="k">${</span><span class="nv">XRAY_CONF</span><span class="k">}</span><span class="s2">"</span>  <span class="o">||</span> <span class="k">return </span>1
+    json_select outbounds <span class="o">||</span> <span class="k">return </span>1
+    json_select 1 <span class="o">||</span> <span class="k">return </span>1
+    json_select settings <span class="o">||</span> <span class="k">return </span>1
+    json_select vnext <span class="o">||</span> <span class="k">return </span>1
+    json_select 1 <span class="o">||</span> <span class="k">return </span>1
     json_get_var addr address
+    <span class="o">[</span> <span class="nt">-n</span> <span class="s2">"</span><span class="k">${</span><span class="nv">addr</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span> <span class="o">||</span> <span class="k">return </span>1
     <span class="k">case</span> <span class="s2">"</span><span class="k">${</span><span class="nv">addr</span><span class="k">}</span><span class="s2">"</span> <span class="k">in</span>
         <span class="k">*</span>:<span class="k">*</span><span class="p">)</span> <span class="nb">echo</span> <span class="s2">"[+] Xray服务器是IPv6地址，不写入域名 direct.txt"</span><span class="p">;</span> <span class="k">return </span>0 <span class="p">;;</span>
         <span class="k">*</span><span class="o">[!</span>0-9.]<span class="k">*</span> <span class="p">)</span> <span class="p">;;</span>
