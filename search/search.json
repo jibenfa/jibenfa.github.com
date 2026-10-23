@@ -594,7 +594,7 @@
       {
         "title": "在openwrt下部署xray和reality",
         "date": "2026 年 10 月",
-        "excerpt": "最近研究了一下Xray+Reality，比起v2ray+ws+cdn+tls模式，可以免去维护域名的麻烦和费用。速度也能快一丢丢。于是尝试进行了部署：\n",
+        "excerpt": "最近研究了一下Xray+Reality，比起v2ray+ws+cdn+tls模式，可以免去维护域名的麻烦和费用。速度也能快一丢丢，缺点是有可能会被封ip。于是尝试进行了部署：\n",
         
         "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/10/23/E59CA8openwrtE4B88BE983A8E7BDB2xrayE5928Creality/"
       },
