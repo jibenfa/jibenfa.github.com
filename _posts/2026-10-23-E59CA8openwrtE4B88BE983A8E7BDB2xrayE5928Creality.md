@@ -286,6 +286,9 @@ https://github.com/XTLS/Xray-core/releases/download/v26.10.21/Xray-linux-arm64-v
 ```
 
 2）调整启动脚本（/etc/init.d/xray_chinadnsng）
+
+a) 以下是iptables的版本：
+
 ```bash
 #!/bin/sh /etc/rc.common
 #
@@ -592,6 +595,290 @@ chmod 755 /etc/init.d/xray_chinadnsng
 /etc/init.d/v2ray_chinadnsng disable
 /etc/init.d/xray_chinadnsng enable
 /etc/init.d/xray_chinadnsng start
+```
+
+b) 以下是nftables版本（还未测试）：
+
+```bash
+#!/bin/sh /etc/rc.common
+#
+# This is free software, licensed under the GNU General Public License v3.
+# See /LICENSE for more information.
+#
+# To use this file, install chinadns-ng,xray,zoneinfo-asia,knot-dig(only for test) first
+# ln -sf /usr/share/zoneinfo/Asia/Macau /etc/localtime
+#
+
+START=90
+USE_PROCD=1
+
+XRAY_BIN="/usr/bin/xray/xray"
+XRAY_CONF="/etc/config/xray.json"
+XRAY_PORT="1060"
+
+CHINADNSNG_PORT="5353"
+CHINADNSNG_FILES_PATH="/etc/chinadns-ng/"
+CHINADNSNG_BIN="/usr/bin/chinadns-ng"
+CHINADNSNG_CONF="/etc/config/chinadns-ng"
+
+DEFAULT_DNS_SERVER="223.6.6.6"
+LOCAL_IP="127.0.0.1"
+
+# 本配置文件中NFT默认参数为：
+# family:inet
+# table:global
+# set:chnroute,chnroute6,gfwip,gfwip6
+# 上述值需与chinadnsng配置文件中的一致，否则无法生效：
+# add-taggfw-ip inet@global@gfwip,inet@global@gfwip6
+# ipset-name4 inet@global@chnroute
+# ipset-name6 inet@global@chnroute6
+# 且下列NFTSET文件中相关 family，table，set名称要也与chinadnsng配置文件中的一致，否则无法生效
+CHNROUTE_NFT_NAME="chnroute.nftset"
+CHNROUTE6_NFT_NAME="chnroute6.nftset"
+CHAINS_NFT_NAME="chains.nftset"
+RESERVEDIP_NFT_NAME="reservedip.nftset"
+RESERVEDIP6_NFT_NAME="reservedip6.nftset"
+GFWIP_NFT_NAME="gfwip.nftset"
+GFWIP6_NFT_NAME="gfwip6.nftset"
+DISABLE_CHNROUTE_NFT_NAME="disable_chnroute.nftset"
+DISABLE_CHNROUTE6_NFT_NAME="disable_chnroute6.nftset"
+DISABLE_GFWIP_NFT_NAME="disable_gfwip.nftset"
+DISABLE_GFWIP6_NFT_NAME="disable_gfwip6.nftset"
+DIRECT_GROUP_FILE="direct.txt"
+
+# 服务器地址为 IP 时，在透明代理重定向前放行，防止 Xray 连接自身形成回环。
+add_xray_server_bypass() {
+    . /usr/share/libubox/jshn.sh
+    json_load_file "${XRAY_CONF}" || return 1
+    json_select outbounds || return 1
+    json_select 1 || return 1
+    json_select settings || return 1
+    json_select vnext || return 1
+    json_select 1 || return 1
+    json_get_var addr address
+    json_get_var port port
+    [ -n "${addr}" ] && [ -n "${port}" ] || return 1
+
+    case "${addr}" in
+        *:*)
+            nft add rule inet global prerouting ip6 daddr "${addr}" tcp dport "${port}" return 2>/dev/null
+            nft add rule inet global output ip6 daddr "${addr}" tcp dport "${port}" return 2>/dev/null
+            echo "[+] 已为 Xray IPv6 服务器地址 ${addr}:${port} 添加 nftables 直连旁路"
+            ;;
+        *[!0-9.]* )
+            echo "[+] Xray服务器地址是域名，依靠 direct.txt 直连解析：${addr}"
+            ;;
+        *)
+            nft add rule inet global prerouting ip daddr "${addr}" tcp dport "${port}" return 2>/dev/null
+            nft add rule inet global output ip daddr "${addr}" tcp dport "${port}" return 2>/dev/null
+            echo "[+] 已为 Xray IPv4 服务器地址 ${addr}:${port} 添加 nftables 直连旁路"
+            ;;
+    esac
+}
+
+# 域名形式的 Xray 服务器地址加入 ChinaDNS-NG direct group，避免解析走代理造成回环。
+add_xray_domain_to_direct_group() {
+    direct_file="${CHINADNSNG_FILES_PATH}${DIRECT_GROUP_FILE}"
+    . /usr/share/libubox/jshn.sh
+    json_load_file "${XRAY_CONF}" || return 1
+    json_select outbounds || return 1
+    json_select 1 || return 1
+    json_select settings || return 1
+    json_select vnext || return 1
+    json_select 1 || return 1
+    json_get_var addr address
+    json_get_var port port
+    [ -n "${addr}" ] && [ -n "${port}" ] || return 1
+
+    case "${addr}" in
+        *:*) echo "[+] Xray服务器是IPv6地址，无需写入域名 direct.txt"; return 0 ;;
+        *[!0-9.]* ) ;;
+        *) echo "[+] Xray服务器是IPv4地址，无需写入域名 direct.txt"; return 0 ;;
+    esac
+
+    if [ -s "${direct_file}" ]; then
+        if grep -Fxq "${addr}" "${direct_file}"; then
+            echo "[+] Xray域名已经存在于 ${direct_file}"
+        else
+            echo "[+] 将Xray域名添加到 ${direct_file}"
+            [ -z "$(tail -c 1 "${direct_file}")" ] || printf '\n' >> "${direct_file}"
+            printf '%s\n' "${addr}" >> "${direct_file}"
+        fi
+    else
+        echo "[+] 创建 ${direct_file} 并添加Xray域名"
+        printf '%s\n' "${addr}" > "${direct_file}"
+    fi
+}
+
+set_multi_domestic_dns() {
+    current_dns_servers_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
+    min_len=$(( ${#DEFAULT_DNS_SERVER} < ${#current_dns_servers_list} ? ${#DEFAULT_DNS_SERVER} : ${#current_dns_servers_list} ))
+    if [ x${DEFAULT_DNS_SERVER:0:$min_len} != x${current_dns_servers_list:0:$min_len} ]; then
+        echo "[+] 设置使用国内DNS服务器"
+        uci -q delete dhcp.@dnsmasq[0].server
+        uci add_list dhcp.@dnsmasq[0].server=${DEFAULT_DNS_SERVER}
+        uci set dhcp.@dnsmasq[0].noresolv=0
+        uci set dhcp.@dnsmasq[0].nohosts=0
+        uci commit dhcp
+        echo "[+] 重启dnsmasq服务"
+        /etc/init.d/dnsmasq restart 1>/dev/null 2>&1
+    fi
+}
+
+set_multi_foreign_dns() {
+    current_dns_servers_list=`uci get dhcp.@dnsmasq[0].server 2>/dev/null`
+    min_len=$(( ${#LOCAL_IP} < ${#current_dns_servers_list} ? ${#LOCAL_IP} : ${#current_dns_servers_list} ))
+    if [ x${LOCAL_IP:0:$min_len} != x${current_dns_servers_list:0:$min_len} ]; then
+        echo "[+] 设置使用ChinaDNSNG DNS服务器"
+        chinadnsng_addr_port=${LOCAL_IP}"#"${CHINADNSNG_PORT}
+        uci -q delete dhcp.@dnsmasq[0].server
+        uci add_list dhcp.@dnsmasq[0].server=${chinadnsng_addr_port}
+        uci set dhcp.@dnsmasq[0].noresolv=1
+        uci set dhcp.@dnsmasq[0].nohosts=1
+        uci commit dhcp
+        echo "[+] 重启dnsmasq服务"
+        /etc/init.d/dnsmasq restart 1>/dev/null 2>&1
+    fi
+}
+
+append_chnroute_list() {
+    # 创建 set：chnroute
+    echo "[*] 创建 inet global 表和 chnroute 集合"
+    nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE_NFT_NAME} 2>/dev/null
+
+    # 创建 set：chnroute6
+    echo "[*] 创建 inet global 表和 chnroute6 集合"
+    nft -f ${CHINADNSNG_FILES_PATH}${CHNROUTE6_NFT_NAME} 2>/dev/null
+
+}
+
+append_gfwip_list(){
+    # 创建 set：gfwip
+    echo "[*] 创建 inet global 表和 gfwip 集合"
+    nft -f ${CHINADNSNG_FILES_PATH}${GFWIP_NFT_NAME} 2>/dev/null
+
+    # 创建 set：gfwip6
+    echo "[*] 创建 inet global 表和 gfwip6 集合"
+    nft -f ${CHINADNSNG_FILES_PATH}${GFWIP6_NFT_NAME} 2>/dev/null
+
+}
+
+create_empty_chain(){
+    # 创建 prerouting output 链
+    echo "[*] 创建 inet global 表和 prerouting output 链"
+    nft -f ${CHINADNSNG_FILES_PATH}${CHAINS_NFT_NAME} 2>/dev/null
+}
+
+create_chain_rules(){
+    create_empty_chain
+    echo "[*] 创建 inet global 表和 保留地址 @localnet @localnet6 集"
+    nft -f ${CHINADNSNG_FILES_PATH}${RESERVEDIP_NFT_NAME} 
+    nft -f ${CHINADNSNG_FILES_PATH}${RESERVEDIP6_NFT_NAME} 
+    nft add rule inet global prerouting ip daddr @localnet return
+    nft add rule inet global prerouting ip6 daddr @localnet6 return
+    nft add rule inet global output ip daddr @localnet return
+    nft add rule inet global output ip6 daddr @localnet6 return
+}
+
+enable_chnroute_nft_rules(){
+    create_chain_rules
+    add_xray_server_bypass || return 1
+    #如果表中没有添加保留地址，则退出，避免无法连接路由器本机
+    if ! nft list table inet global | grep -q "0.0.0.0"; then
+        echo "[!] 致命错误，保留地址集添加失败，设置失败，请检查${CHINADNSNG_FILES_PATH}${RESERVED_NFT_NAME}"
+        return 1
+    fi
+    nft add rule inet global prerouting ip daddr != @chnroute tcp dport 0-65535 counter redirect to :${XRAY_PORT} 2>/dev/null
+    nft add rule inet global output ip daddr != @chnroute tcp dport 0-65535 counter redirect to :${XRAY_PORT} 2>/dev/null
+    nft add rule inet global prerouting ip6 daddr != @chnroute6 tcp dport 0-65535 counter redirect to :${XRAY_PORT} 2>/dev/null
+    nft add rule inet global output ip6 daddr != @chnroute6 tcp dport 0-65535 counter redirect to :${XRAY_PORT} 2>/dev/null
+}
+
+enable_gfwip_nft_rules(){
+    create_chain_rules
+    add_xray_server_bypass || return 1
+    nft add rule inet global prerouting ip daddr @gfwip tcp dport 0-65535 counter redirect to :${XRAY_PORT} 2>/dev/null
+    nft add rule inet global output ip daddr @gfwip tcp dport 0-65535 counter redirect to :${XRAY_PORT} 2>/dev/null
+    nft add rule inet global prerouting ip6 daddr @gfwip6 tcp dport 0-65535 counter redirect to :${XRAY_PORT} 2>/dev/null
+    nft add rule inet global output ip6 daddr @gfwip6 tcp dport 0-65535 counter redirect to :${XRAY_PORT} 2>/dev/null
+}
+
+disable_nft_rules() {
+    create_empty_chain
+    nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_CHNROUTE_NFT_NAME} 2>/dev/null
+    nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_CHNROUTE6_NFT_NAME} 2>/dev/null
+    nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_GFWIP_NFT_NAME} 2>/dev/null
+    nft -f ${CHINADNSNG_FILES_PATH}${DISABLE_GFWIP6_NFT_NAME} 2>/dev/null
+    #set_multi_domestic_dns
+    #echo "ingfw" > /tmp/xraymode.txt   
+}
+
+stop_service()  {
+    echo "[+] 停止 xray 服务"
+}
+
+enable_nft_rules(){
+    running_xray_mode=$(cat /tmp/xraymode.txt 2>/dev/null | tr -d '\r')
+    xray_mode=`uci get advancedconfig.@rules[0].v2raymode 2>/dev/null`
+
+    if [ x${xray_mode} = x${running_xray_mode} ]; then
+        echo "[+] xray模式未变化"
+    else
+        disable_nft_rules
+		add_xray_domain_to_direct_group
+		if [ "${xray_mode}" = "outlands" ]; then
+            echo "[+] 设置${xray_mode}（境外全局代理模式）模式中"
+            append_chnroute_list
+			append_gfwip_list
+            enable_chnroute_nft_rules
+            set_multi_foreign_dns
+        
+        elif [ "${xray_mode}" = "gfwlist" ]; then
+            echo "[+] 设置${xray_mode}（白名单代理模式）模式中"
+            append_chnroute_list
+			append_gfwip_list
+            enable_gfwip_nft_rules
+            set_multi_foreign_dns
+        
+        elif [ "${xray_mode}" = "ingfw" ]; then
+            echo "[+] 设置墙内访问模式"
+		    set_multi_domestic_dns 
+		fi
+        echo "${xray_mode}" > /tmp/xraymode.txt
+    fi
+}
+
+start_service()  {
+    enable_nft_rules
+    echo "[+] 启动 chinadns-ng 服务"
+    procd_open_instance
+    procd_set_param command $CHINADNSNG_BIN -C $CHINADNSNG_CONF
+    procd_set_param respawn
+    #procd_set_param stdout 1
+    procd_set_param stderr 1
+	#procd_set_param file /var/log/xray/procd.log
+	procd_close_instance
+    sleep 2
+
+    echo "[+] 启动 xray 服务"
+    mkdir -p /var/log/xray
+    ulimit -n 65535
+    procd_open_instance
+    procd_set_param command $XRAY_BIN run -config $XRAY_CONF
+    procd_set_param file $XRAY_CONF
+    procd_set_param respawn
+    #procd_set_param env TZ=Asia/Shanghai
+	#procd_set_param stdout 1
+    procd_set_param stderr 1
+    #procd_set_param file /var/log/chinands-ng/procd.log
+	procd_set_param pidfile /var/run/xray.pid
+    procd_close_instance
+}
+
+service_triggers() {
+    procd_add_reload_trigger "advancedconfig"
+}
+
 ```
 
 参考：
