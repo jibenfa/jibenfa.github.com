@@ -127,6 +127,84 @@ document.addEventListener("DOMContentLoaded", () => {
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/openwrt/2018/02/28/e59ca8openwrt-ledee8b7afe794b1e4b88ae5ae9ee78eb0e59fbae4ba8ename-com-v4e78988e69cacapie79a84ddns/" title="在Openwrt/Lede路由上实现基于Name.com V4版本API的快速更新的DDNS" itemprop="url">在Openwrt/Lede路由上实现基于Name.com V4版本API的快速更新的DDNS</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-28 22:21:35 +0000" itemprop="datePublished">  2018-02-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>之前一直用花生壳的免费DDNS，但是最近一周不知道为啥，服务老是抽风，dns更新速度明显下降，甚至达到1-2天。于是研究了一下，发现name.com最近发布了v4版本的api，看了文档以后，果断写了个脚本，一旦ip变更，新dns可以马上更新，消耗时间无限接近0。。。于是ddns更新时间只基于计划任务的间隔时间了。。。<br />
+使用此脚本的前提：<br />
+1.域名必须是由name.com购买的，并且生成一个生产的Token。<br />
+2.登陆账户必须没有开启二次验证，否则api会提示错误：Accout has Namesafe enabled. （注意这里account拼写还是错的。。已发ticket给name.com）。<br />
+3.路由上需要安装curl和ca-certificates和ca-bundle,以便解析https。<br />
+4.首次需要手动添加一次域名，以便获取ID号码，例如为www.examle.com添加第一个dns记录：<br />
+<!--more--></p>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/openwrt/2018/02/28/e59ca8openwrt-ledee8b7afe794b1e4b88ae5ae9ee78eb0e59fbae4ba8ename-com-v4e78988e69cacapie79a84ddns/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+  
+    <div class="article-categories">
+      <span></span>
+      
+        
+        <a href="/categories/openwrt/">openwrt</a>
+      
+    </div>
+  
+
+  
+    <div class="article-tags">
+      <span></span>
+      
+        
+        <a href="/tags/openwrt/">openwrt</a>
+      
+    </div>
+  
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/openwrt/2018/01/30/e4bdbfe794a8ledeopenwrt-e8b7afe794b1e599a8e887aae58aa8e58f91e98081e982aee4bbb6/" title="使用LEDE/OPENWRT 路由器自动发送邮件" itemprop="url">使用LEDE/OPENWRT 路由器自动发送邮件</a>
   </h1>
   <p class="article-author">By
@@ -1530,78 +1608,6 @@ Let’s Encrypt 是一个将于2015年末推出的数字证书认证机构，将
 
 
 
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/openwrt/2015/11/29/e59ca8esxie4b88ae5ae89e8a385openwrtefbc8ce5ae9ee78eb0e8b7afe794b1e8999ae68b9fe58c96/" title="在HP GEN8上安装openwrt，实现“万兆”虚拟路由器。。。" itemprop="url">在HP GEN8上安装openwrt，实现“万兆”虚拟路由器。。。</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
-		
-  <p class="article-time">
-    <time datetime="2015-11-29 20:54:28 +0000" itemprop="datePublished">  2015-11-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>最近搞了一台HP Gen8 microserver，升级cpu，内存，Intel I350-T4口千兆网卡以后就装了个esxi，自己用ESXi-Customizer-v2.7.2把最新版的网卡驱动集成了进去，网卡驱动为igb-5.3.1-1331820-3123166，之前网友说kmod-igb支持I350，所以这次才入的I350-T4，据说转发小包性能强于I340-T4，价格还比I340便宜。。。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/openwrt/2015/11/29/e59ca8esxie4b88ae5ae89e8a385openwrtefbc8ce5ae9ee78eb0e8b7afe794b1e8999ae68b9fe58c96/#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-  
-    <div class="article-categories">
-      <span></span>
-      
-        
-        <a href="/categories/openwrt/">openwrt</a>
-      
-    </div>
-  
-
-  
-    <div class="article-tags">
-      <span></span>
-      
-        
-        <a href="/tags/openwrt/">openwrt</a>
-      
-    </div>
-  
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
@@ -1676,7 +1682,7 @@ Let’s Encrypt 是一个将于2015年末推出的数字证书认证机构，将
         
         <li>
           <a href="/categories/科学上网/" title="科学上网">
-            科学上网<sup>21</sup>
+            科学上网<sup>22</sup>
           </a>
         </li>
       
@@ -1758,7 +1764,7 @@ Let’s Encrypt 是一个将于2015年末推出的数字证书认证机构，将
         
         <li>
           <a href="/tags/openwrt/" title="openwrt">
-            openwrt<sup>49</sup>
+            openwrt<sup>50</sup>
           </a>
         </li>
       
@@ -1988,6 +1994,24 @@ Let’s Encrypt 是一个将于2015年末推出的数字证书认证机构，将
         </li>
       
     
+      
+        
+        <li>
+          <a href="/tags/reality/" title="reality">
+            reality<sup>1</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/xray/" title="xray">
+            xray<sup>1</sup>
+          </a>
+        </li>
+      
+    
   </ul>
 </div>
 
@@ -2141,7 +2165,7 @@ $(document).ready(function() {
     
     { "name": "插件", "path": "/tags/插件/", "length": 1 },
     
-    { "name": "openwrt", "path": "/tags/openwrt/", "length": 49 },
+    { "name": "openwrt", "path": "/tags/openwrt/", "length": 50 },
     
     { "name": "Microsoft", "path": "/tags/microsoft/", "length": 1 },
     
@@ -2192,6 +2216,10 @@ $(document).ready(function() {
     { "name": "iptables", "path": "/tags/iptables/", "length": 1 },
     
     { "name": "ipset", "path": "/tags/ipset/", "length": 1 },
+    
+    { "name": "reality", "path": "/tags/reality/", "length": 1 },
+    
+    { "name": "xray", "path": "/tags/xray/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));
