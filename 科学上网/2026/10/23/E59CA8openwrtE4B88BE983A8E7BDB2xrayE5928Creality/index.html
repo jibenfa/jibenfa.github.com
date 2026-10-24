@@ -703,17 +703,7 @@ service_triggers<span class="o">()</span> <span class="o">{</span>
 
 </code></pre></div></div>
 
-<p>3）启动服务：</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>755 /etc/init.d/xray_chinadnsng
-
-/etc/init.d/v2ray_chinadnsng stop
-/etc/init.d/v2ray_chinadnsng disable
-/etc/init.d/xray_chinadnsng <span class="nb">enable</span>
-/etc/init.d/xray_chinadnsng start
-</code></pre></div></div>
-
-<p>b) 以下是nftables版本（还未测试）：</p>
+<p>b) 以下是nftables版本：</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh /etc/rc.common</span>
 <span class="c">#</span>
@@ -995,6 +985,34 @@ service_triggers<span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 
 </code></pre></div></div>
+
+<p>3）启动服务：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>755 /etc/init.d/xray_chinadnsng
+
+/etc/init.d/v2ray_chinadnsng stop
+/etc/init.d/v2ray_chinadnsng disable
+/etc/init.d/xray_chinadnsng <span class="nb">enable</span>
+/etc/init.d/xray_chinadnsng start
+</code></pre></div></div>
+
+<p>4）开启bbr：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>bash <span class="nt">-c</span> <span class="s1">'cat &gt; /etc/sysctl.d/99-bbr.conf &lt;&lt;EOF
+net.core.default_qdisc=fq
+net.ipv4.tcp_congestion_control=bbr
+EOF'</span>
+
+<span class="nb">sudo </span>sysctl <span class="nt">--system</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sysctl net.ipv4.tcp_congestion_control
+</code></pre></div></div>
+<p>期望输出：net.ipv4.tcp_congestion_control = bbr</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsmod | <span class="nb">grep </span>bbr
+</code></pre></div></div>
+<p>如果输出了bbr相关信息就是正常运行了。</p>
 
 <p>参考：</p>
 
