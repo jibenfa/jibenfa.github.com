@@ -586,18 +586,9 @@ service_triggers() {
 
 ```
 
-3）启动服务：
 
-```bash
-chmod 755 /etc/init.d/xray_chinadnsng
 
-/etc/init.d/v2ray_chinadnsng stop
-/etc/init.d/v2ray_chinadnsng disable
-/etc/init.d/xray_chinadnsng enable
-/etc/init.d/xray_chinadnsng start
-```
-
-b) 以下是nftables版本（还未测试）：
+b) 以下是nftables版本：
 
 ```bash
 #!/bin/sh /etc/rc.common
@@ -880,6 +871,39 @@ service_triggers() {
 }
 
 ```
+
+3）启动服务：
+
+```bash
+chmod 755 /etc/init.d/xray_chinadnsng
+
+/etc/init.d/v2ray_chinadnsng stop
+/etc/init.d/v2ray_chinadnsng disable
+/etc/init.d/xray_chinadnsng enable
+/etc/init.d/xray_chinadnsng start
+```
+
+4）开启bbr：
+
+```bash
+sudo bash -c 'cat > /etc/sysctl.d/99-bbr.conf <<EOF
+net.core.default_qdisc=fq
+net.ipv4.tcp_congestion_control=bbr
+EOF'
+
+sudo sysctl --system
+```
+
+```bash
+sysctl net.ipv4.tcp_congestion_control
+```
+期望输出：net.ipv4.tcp_congestion_control = bbr
+
+```bash
+lsmod | grep bbr
+```
+如果输出了bbr相关信息就是正常运行了。
+
 
 参考：
 
