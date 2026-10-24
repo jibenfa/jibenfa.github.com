@@ -1,7 +1,7 @@
 ---
 id: 830
 title: 在openwrt下部署xray和reality
-date: 2026-10-23 00:15:13+00:00
+date: 2026-10-24 00:15:13+00:00
 author: coffeecat
 layout: post
 categories:
