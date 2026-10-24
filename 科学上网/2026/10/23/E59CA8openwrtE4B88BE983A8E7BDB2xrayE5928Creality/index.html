@@ -405,7 +405,7 @@ opkg print-architecture 2&gt;/dev/null <span class="o">||</span> apk <span class
 
 <p>2）调整启动脚本（/etc/init.d/xray_chinadnsng）</p>
 
-<p>a) 以下是iptables的版本：</p>
+<p>a) 以下是iptables的版本适用于openwrt 23及更低版本：</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh /etc/rc.common</span>
 <span class="c">#</span>
@@ -703,7 +703,7 @@ service_triggers<span class="o">()</span> <span class="o">{</span>
 
 </code></pre></div></div>
 
-<p>b) 以下是nftables版本：</p>
+<p>b) 以下是nftables版本（适用于openwrt 24及更高版本）：</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh /etc/rc.common</span>
 <span class="c">#</span>
@@ -996,7 +996,7 @@ service_triggers<span class="o">()</span> <span class="o">{</span>
 /etc/init.d/xray_chinadnsng start
 </code></pre></div></div>
 
-<p>4）开启bbr：</p>
+<p>4）开启bbr（不开的话很慢，还不如v2ray+ws+cdn+tls）：</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>bash <span class="nt">-c</span> <span class="s1">'cat &gt; /etc/sysctl.d/99-bbr.conf &lt;&lt;EOF
 net.core.default_qdisc=fq

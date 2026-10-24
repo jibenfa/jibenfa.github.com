@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-10-24T08:59:11+00:00</updated>
+ <updated>2026-10-24T10:04:29+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -277,7 +277,7 @@ opkg print-architecture 2&amp;gt;/dev/null &lt;span class=&quot;o&quot;&gt;||&lt
 
 &lt;p&gt;2）调整启动脚本（/etc/init.d/xray_chinadnsng）&lt;/p&gt;
 
-&lt;p&gt;a) 以下是iptables的版本：&lt;/p&gt;
+&lt;p&gt;a) 以下是iptables的版本适用于openwrt 23及更低版本：&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
@@ -575,7 +575,7 @@ service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;b) 以下是nftables版本：&lt;/p&gt;
+&lt;p&gt;b) 以下是nftables版本（适用于openwrt 24及更高版本）：&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh /etc/rc.common&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
@@ -868,7 +868,7 @@ service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&
 /etc/init.d/xray_chinadnsng start
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;4）开启bbr：&lt;/p&gt;
+&lt;p&gt;4）开启bbr（不开的话很慢，还不如v2ray+ws+cdn+tls）：&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;cat &amp;gt; /etc/sysctl.d/99-bbr.conf &amp;lt;&amp;lt;EOF
 net.core.default_qdisc=fq
