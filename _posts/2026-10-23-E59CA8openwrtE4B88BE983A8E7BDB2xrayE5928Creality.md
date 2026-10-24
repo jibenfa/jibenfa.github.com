@@ -287,7 +287,7 @@ https://github.com/XTLS/Xray-core/releases/download/v26.10.21/Xray-linux-arm64-v
 
 2）调整启动脚本（/etc/init.d/xray_chinadnsng）
 
-a) 以下是iptables的版本：
+a) 以下是iptables的版本适用于openwrt 23及更低版本：
 
 ```bash
 #!/bin/sh /etc/rc.common
@@ -588,7 +588,7 @@ service_triggers() {
 
 
 
-b) 以下是nftables版本：
+b) 以下是nftables版本（适用于openwrt 24及更高版本）：
 
 ```bash
 #!/bin/sh /etc/rc.common
@@ -883,7 +883,7 @@ chmod 755 /etc/init.d/xray_chinadnsng
 /etc/init.d/xray_chinadnsng start
 ```
 
-4）开启bbr：
+4）开启bbr（不开的话很慢，还不如v2ray+ws+cdn+tls）：
 
 ```bash
 sudo bash -c 'cat > /etc/sysctl.d/99-bbr.conf <<EOF
