@@ -44,7 +44,7 @@ openssl rand -hex 8
 
 ```vim
 uuuu-uuuu-uuuu-uuuuuu         #这是uuid
-PrivateKey: *******************************  #这是私钥
+PrivateKey: xxxxxxxxxxxxxxxx  #这是私钥
 Password (PublicKey): xxxxxxxxxxxxxxxxxxx    #这是公钥
 Hash32: xxxxxxxxxxxxxxx   
 iiiiiiii    #这是shortid
