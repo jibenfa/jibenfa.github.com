@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-10-24T10:04:29+00:00</updated>
+ <updated>2026-10-24T10:04:51+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>在openwrt下部署xray和reality</title>
-   <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/10/23/E59CA8openwrtE4B88BE983A8E7BDB2xrayE5928Creality/"/>
-   <updated>2026-10-23T00:15:13+00:00</updated>
-   <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/10/23/E59CA8openwrtE4B88BE983A8E7BDB2xrayE5928Creality</id>
+   <link href="https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/10/24/E59CA8openwrtE4B88BE983A8E7BDB2xrayE5928Creality/"/>
+   <updated>2026-10-24T00:15:13+00:00</updated>
+   <id>https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/10/24/E59CA8openwrtE4B88BE983A8E7BDB2xrayE5928Creality</id>
    <content type="html">&lt;p&gt;最近研究了一下Xray+Reality，比起v2ray+ws+cdn+tls模式，可以免去维护域名的麻烦和费用。速度也能快一丢丢，缺点是有可能会被封ip。于是尝试进行了部署：&lt;/p&gt;
 
 &lt;p&gt;1.服务器端部署xray&lt;/p&gt;
