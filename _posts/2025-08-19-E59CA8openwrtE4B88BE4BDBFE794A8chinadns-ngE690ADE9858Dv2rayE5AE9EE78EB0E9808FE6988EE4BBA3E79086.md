@@ -532,9 +532,10 @@ start_service()  {
 
     echo "[+] 启动 v2ray 服务"
     mkdir -p /var/log/v2ray
-    ulimit -n 65535
+    #ulimit -n 65535
     procd_open_instance
     procd_set_param command $V2RAY_BIN run -config $V2RAY_CONF
+    procd_set_param limits nofile="65536 65536"
     procd_set_param file $V2RAY_CONF
     procd_set_param respawn
     #procd_set_param stdout 1
