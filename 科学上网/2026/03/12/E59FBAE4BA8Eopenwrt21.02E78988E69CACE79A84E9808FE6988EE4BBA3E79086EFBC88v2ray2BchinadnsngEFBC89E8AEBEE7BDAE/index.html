@@ -679,9 +679,10 @@ start_service<span class="o">()</span>  <span class="o">{</span>
 
     <span class="nb">echo</span> <span class="s2">"[+] 启动 v2ray 服务"</span>
     <span class="nb">mkdir</span> <span class="nt">-p</span> /var/log/v2ray
-    <span class="nb">ulimit</span> <span class="nt">-n</span> 65535
+    <span class="c">#ulimit -n 65535</span>
     procd_open_instance
     procd_set_param <span class="nb">command</span> <span class="nv">$V2RAY_BIN</span> run <span class="nt">-config</span> <span class="nv">$V2RAY_CONF</span>
+	procd_set_param limits <span class="nv">nofile</span><span class="o">=</span><span class="s2">"65536 65536"</span>
     procd_set_param file <span class="nv">$V2RAY_CONF</span>
     procd_set_param respawn
     procd_set_param stdout 1
