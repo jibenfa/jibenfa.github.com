@@ -208,12 +208,14 @@ curl <span class="nt">--socks5</span> 127.0.0.1:40000 https://www.cloudflare.com
 <p>b.编辑warp-proxy.service</p>
 <div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[Unit]</span>
 <span class="py">Description</span><span class="p">=</span><span class="s">Cloudflare WARP Proxy Mode</span>
-<span class="py">After</span><span class="p">=</span><span class="s">network.target</span>
+<span class="py">Requires</span><span class="p">=</span><span class="s">warp-svc.service</span>
+<span class="py">After</span><span class="p">=</span><span class="s">network-online.target warp-svc.service</span>
+<span class="py">Wants</span><span class="p">=</span><span class="s">network-online.target</span>
 
 <span class="nn">[Service]</span>
 <span class="py">Type</span><span class="p">=</span><span class="s">oneshot</span>
-<span class="py">ExecStart</span><span class="p">=</span><span class="s">/usr/bin/warp-cli mode proxy</span>
-<span class="py">ExecStartPost</span><span class="p">=</span><span class="s">/usr/bin/warp-cli connect</span>
+<span class="py">ExecStart</span><span class="p">=</span><span class="s">/bin/bash -c 'for i in {1..15}; do /usr/bin/warp-cli mode proxy &amp;&amp; exit 0; echo "Waiting for Cloudflare WARP daemon ($i/15)"; sleep 2; done; exit 1'</span>
+<span class="py">ExecStartPost</span><span class="p">=</span><span class="s">/bin/bash -c 'for i in {1..15}; do /usr/bin/warp-cli connect &amp;&amp; exit 0; echo "Waiting for WARP connection ($i/15)"; sleep 2; done; exit 1'</span>
 <span class="py">RemainAfterExit</span><span class="p">=</span><span class="s">yes</span>
 
 <span class="nn">[Install]</span>

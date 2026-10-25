@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-10-24T10:19:29+00:00</updated>
+ <updated>2026-10-25T07:05:54+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -3783,12 +3783,14 @@ curl &lt;span class=&quot;nt&quot;&gt;--socks5&lt;/span&gt; 127.0.0.1:40000 http
 &lt;p&gt;b.编辑warp-proxy.service&lt;/p&gt;
 &lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[Unit]&lt;/span&gt;
 &lt;span class=&quot;py&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Cloudflare WARP Proxy Mode&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;After&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;network.target&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Requires&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;warp-svc.service&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;After&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;network-online.target warp-svc.service&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;Wants&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;network-online.target&lt;/span&gt;
 
 &lt;span class=&quot;nn&quot;&gt;[Service]&lt;/span&gt;
 &lt;span class=&quot;py&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;oneshot&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/usr/bin/warp-cli mode proxy&lt;/span&gt;
-&lt;span class=&quot;py&quot;&gt;ExecStartPost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/usr/bin/warp-cli connect&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/bin/bash -c &apos;for i in {1..15}; do /usr/bin/warp-cli mode proxy &amp;amp;&amp;amp; exit 0; echo &quot;Waiting for Cloudflare WARP daemon ($i/15)&quot;; sleep 2; done; exit 1&apos;&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;ExecStartPost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/bin/bash -c &apos;for i in {1..15}; do /usr/bin/warp-cli connect &amp;amp;&amp;amp; exit 0; echo &quot;Waiting for WARP connection ($i/15)&quot;; sleep 2; done; exit 1&apos;&lt;/span&gt;
 &lt;span class=&quot;py&quot;&gt;RemainAfterExit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;yes&lt;/span&gt;
 
 &lt;span class=&quot;nn&quot;&gt;[Install]&lt;/span&gt;
