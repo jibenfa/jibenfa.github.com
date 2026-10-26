@@ -974,8 +974,6 @@ start_service<span class="o">()</span>  <span class="o">{</span>
     procd_set_param limits <span class="nv">nofile</span><span class="o">=</span><span class="s2">"65536 65536"</span>
     procd_set_param file <span class="nv">$XRAY_CONF</span>
     procd_set_param respawn
-    <span class="c">#procd_set_param env TZ=Asia/Shanghai</span>
-	<span class="c">#procd_set_param stdout 1</span>
     procd_set_param stderr 1
     <span class="c">#procd_set_param file /var/log/chinands-ng/procd.log</span>
 	procd_set_param pidfile /var/run/xray.pid
