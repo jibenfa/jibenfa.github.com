@@ -572,7 +572,7 @@ start_service()  {
     #ulimit -n 65535
     procd_open_instance
     procd_set_param command $XRAY_BIN run -config $XRAY_CONF
-	procd_set_param limits nofile="65536 65536"
+    procd_set_param limits nofile="65536 65536"
     procd_set_param file $XRAY_CONF
     procd_set_param respawn
     procd_set_param stdout 1
