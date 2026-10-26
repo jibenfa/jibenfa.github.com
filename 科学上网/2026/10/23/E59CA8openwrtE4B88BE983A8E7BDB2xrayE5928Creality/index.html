@@ -963,7 +963,7 @@ start_service<span class="o">()</span>  <span class="o">{</span>
     <span class="c">#procd_set_param stdout 1</span>
     procd_set_param stderr 1
 	<span class="c">#procd_set_param file /var/log/xray/procd.log</span>
-	procd_close_instance
+    procd_close_instance
     <span class="nb">sleep </span>2
 
     <span class="nb">echo</span> <span class="s2">"[+] 启动 xray 服务"</span>
@@ -975,8 +975,7 @@ start_service<span class="o">()</span>  <span class="o">{</span>
     procd_set_param file <span class="nv">$XRAY_CONF</span>
     procd_set_param respawn
     procd_set_param stderr 1
-    <span class="c">#procd_set_param file /var/log/chinands-ng/procd.log</span>
-	procd_set_param pidfile /var/run/xray.pid
+    procd_set_param pidfile /var/run/xray.pid
     procd_close_instance
 <span class="o">}</span>
 

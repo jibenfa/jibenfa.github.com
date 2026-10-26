@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-10-26T00:32:24+00:00</updated>
+ <updated>2026-10-26T00:36:43+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -835,7 +835,7 @@ start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&qu
     &lt;span class=&quot;c&quot;&gt;#procd_set_param stdout 1&lt;/span&gt;
     procd_set_param stderr 1
 	&lt;span class=&quot;c&quot;&gt;#procd_set_param file /var/log/xray/procd.log&lt;/span&gt;
-	procd_close_instance
+    procd_close_instance
     &lt;span class=&quot;nb&quot;&gt;sleep &lt;/span&gt;2
 
     &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;[+] 启动 xray 服务&quot;&lt;/span&gt;
@@ -847,8 +847,7 @@ start_service&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;  &lt;span class=&qu
     procd_set_param file &lt;span class=&quot;nv&quot;&gt;$XRAY_CONF&lt;/span&gt;
     procd_set_param respawn
     procd_set_param stderr 1
-    &lt;span class=&quot;c&quot;&gt;#procd_set_param file /var/log/chinands-ng/procd.log&lt;/span&gt;
-	procd_set_param pidfile /var/run/xray.pid
+    procd_set_param pidfile /var/run/xray.pid
     procd_close_instance
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
