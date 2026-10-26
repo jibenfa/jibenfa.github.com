@@ -860,8 +860,6 @@ start_service()  {
     procd_set_param limits nofile="65536 65536"
     procd_set_param file $XRAY_CONF
     procd_set_param respawn
-    #procd_set_param env TZ=Asia/Shanghai
-	#procd_set_param stdout 1
     procd_set_param stderr 1
     #procd_set_param file /var/log/chinands-ng/procd.log
 	procd_set_param pidfile /var/run/xray.pid
