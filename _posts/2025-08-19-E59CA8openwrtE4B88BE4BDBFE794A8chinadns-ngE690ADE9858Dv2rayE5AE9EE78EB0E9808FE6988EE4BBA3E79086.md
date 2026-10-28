@@ -206,7 +206,7 @@ cache-refresh 20
 # verdict 缓存 (用于 tag:none 域名)
 verdict-cache 4096
 
-# 如果vps不支持ipv6，建议启用此项，过滤所有域名组中解析结果为 '非大陆 IPv6' 的 AAAA 查询
+# 如果vps或者本地路由不支持ipv6，建议启用此项，过滤所有域名组中解析结果为 '非大陆 IPv6' 的 AAAA 查询
 no-ipv6 ip:non_china
 
 ```

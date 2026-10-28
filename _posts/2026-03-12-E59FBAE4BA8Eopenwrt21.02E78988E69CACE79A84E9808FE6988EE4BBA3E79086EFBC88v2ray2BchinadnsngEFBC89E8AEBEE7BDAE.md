@@ -207,6 +207,9 @@ cache-refresh 20
 # verdict 缓存 (用于 tag:none 域名)
 verdict-cache 4096
 
+# 如果vps或者本地路由不支持ipv6，建议启用此项，过滤所有域名组中解析结果为 '非大陆 IPv6' 的 AAAA 查询
+no-ipv6 ip:non_china
+
 ```
 
 2.配置v2ray（v2ray的安装可以看<a href="https://wallsee.org/openwrt/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2019/06/09/v2raye59ca8openwrte4b88be79a84e5ae89e8a385e983a8e7bdb2/">这里</a>）
