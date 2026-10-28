@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-10-28T00:58:51+00:00</updated>
+ <updated>2026-10-28T01:40:30+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -52,7 +52,7 @@ iiiiiiii    #这是shortid
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;3)配置文件：&lt;/p&gt;
+&lt;p&gt;3)新建和修改xray配置文件：&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nano /usr/local/etc/xray/config.json
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -111,7 +111,9 @@ iiiiiiii    #这是shortid
 /usr/local/bin/xray run &lt;span class=&quot;nt&quot;&gt;-test&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-config&lt;/span&gt; /usr/local/etc/xray/config.json
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;若最后显示 Configuration OK.，说明成功了，接下来创建自启动服务：&lt;/p&gt;
+&lt;p&gt;若最后显示 Configuration OK.，说明成功了。&lt;/p&gt;
+
+&lt;p&gt;4）接下来创建自启动服务：&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;/etc/systemd/system/xray.service &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;EOF&lt;/span&gt;&lt;span class=&quot;sh&quot;&gt;&apos;
 [Unit]
@@ -145,6 +147,24 @@ ss &lt;span class=&quot;nt&quot;&gt;-lntp&lt;/span&gt; | &lt;span class=&quot;nb
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;LISTEN 0      4096               &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;:443             :    &lt;span class=&quot;nb&quot;&gt;users&lt;/span&gt;:&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;xray&quot;&lt;/span&gt;,pid&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2081,fd&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;4&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;5）开启bbr（不开的话很慢，还不如v2ray+ws+cdn+tls）：&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;cat &amp;gt; /etc/sysctl.d/99-bbr.conf &amp;lt;&amp;lt;EOF
+net.core.default_qdisc=fq
+net.ipv4.tcp_congestion_control=bbr
+EOF&apos;&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sysctl &lt;span class=&quot;nt&quot;&gt;--system&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sysctl net.ipv4.tcp_congestion_control
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;期望输出：net.ipv4.tcp_congestion_control = bbr&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lsmod | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;bbr
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;如果输出了bbr相关信息就是正常运行了。&lt;/p&gt;
 
 &lt;p&gt;2.客户端（openwrt）配置&lt;/p&gt;
 
@@ -866,24 +886,6 @@ service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&
 /etc/init.d/xray_chinadnsng &lt;span class=&quot;nb&quot;&gt;enable&lt;/span&gt;
 /etc/init.d/xray_chinadnsng start
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;4）开启bbr（不开的话很慢，还不如v2ray+ws+cdn+tls）：&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;bash &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;cat &amp;gt; /etc/sysctl.d/99-bbr.conf &amp;lt;&amp;lt;EOF
-net.core.default_qdisc=fq
-net.ipv4.tcp_congestion_control=bbr
-EOF&apos;&lt;/span&gt;
-
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;sysctl &lt;span class=&quot;nt&quot;&gt;--system&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sysctl net.ipv4.tcp_congestion_control
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;期望输出：net.ipv4.tcp_congestion_control = bbr&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lsmod | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;bbr
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;如果输出了bbr相关信息就是正常运行了。&lt;/p&gt;
 
 &lt;p&gt;参考：&lt;/p&gt;
 

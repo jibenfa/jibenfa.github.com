@@ -1,11 +1,11 @@
 
 /404/
 /atom.xml
-/categories/
-/archives/
-/search/
-/tags/
 /about/
+/archives/
+/categories/
+/tags/
+/search/
 /
 /search/search.json
 /sitemap.txt
