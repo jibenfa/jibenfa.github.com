@@ -324,6 +324,10 @@ cache<span class="p">-</span>refresh <span class="m">20</span>
 
 # verdict 缓存 <span class="p">(</span>用于 <span class="k">tag</span><span class="p">:</span>none 域名<span class="p">)</span>
 verdict<span class="p">-</span>cache <span class="m">4096</span>
+
+# 如果vps不支持ipv6，建议启用此项，过滤所有域名组中解析结果为 <span class="s1">'非大陆 IPv6'</span> 的 AAAA 查询
+no<span class="p">-</span>ipv6 ip<span class="p">:</span>non_china
+
 </code></pre></div></div>
 
 <p>2.配置v2ray</p>

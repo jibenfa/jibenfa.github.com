@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-10-26T04:23:23+00:00</updated>
+ <updated>2026-10-28T00:34:15+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -3350,6 +3350,10 @@ cache&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;refresh &lt;span class=&quot;
 
 # verdict 缓存 &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;用于 &lt;span class=&quot;k&quot;&gt;tag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;none 域名&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 verdict&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;cache &lt;span class=&quot;m&quot;&gt;4096&lt;/span&gt;
+
+# 如果vps不支持ipv6，建议启用此项，过滤所有域名组中解析结果为 &lt;span class=&quot;s1&quot;&gt;&apos;非大陆 IPv6&apos;&lt;/span&gt; 的 AAAA 查询
+no&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;ipv6 ip&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;non_china
+
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;2.配置v2ray&lt;/p&gt;
