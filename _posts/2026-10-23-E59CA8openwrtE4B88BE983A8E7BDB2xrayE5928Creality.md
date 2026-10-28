@@ -52,7 +52,7 @@ iiiiiiii    #这是shortid
 ```
 
 
-3)配置文件：
+3)新建和修改xray配置文件：
 
 ```bash
 nano /usr/local/etc/xray/config.json
@@ -114,7 +114,9 @@ chmod 640 /usr/local/etc/xray/config.json
 /usr/local/bin/xray run -test -config /usr/local/etc/xray/config.json
 ```
 
-若最后显示 Configuration OK.，说明成功了，接下来创建自启动服务：
+若最后显示 Configuration OK.，说明成功了。
+
+4）接下来创建自启动服务：
 
 
 ```bash
@@ -151,6 +153,28 @@ ss -lntp | grep ':443'
 ```bash
 LISTEN 0      4096               *:443             :    users:(("xray",pid=2081,fd=4))
 ```
+
+5）开启bbr（不开的话很慢，还不如v2ray+ws+cdn+tls）：
+
+```bash
+sudo bash -c 'cat > /etc/sysctl.d/99-bbr.conf <<EOF
+net.core.default_qdisc=fq
+net.ipv4.tcp_congestion_control=bbr
+EOF'
+
+sudo sysctl --system
+```
+
+```bash
+sysctl net.ipv4.tcp_congestion_control
+```
+期望输出：net.ipv4.tcp_congestion_control = bbr
+
+```bash
+lsmod | grep bbr
+```
+如果输出了bbr相关信息就是正常运行了。
+
 
 2.客户端（openwrt）配置
 
@@ -882,26 +906,7 @@ chmod 755 /etc/init.d/xray_chinadnsng
 /etc/init.d/xray_chinadnsng start
 ```
 
-4）开启bbr（不开的话很慢，还不如v2ray+ws+cdn+tls）：
 
-```bash
-sudo bash -c 'cat > /etc/sysctl.d/99-bbr.conf <<EOF
-net.core.default_qdisc=fq
-net.ipv4.tcp_congestion_control=bbr
-EOF'
-
-sudo sysctl --system
-```
-
-```bash
-sysctl net.ipv4.tcp_congestion_control
-```
-期望输出：net.ipv4.tcp_congestion_control = bbr
-
-```bash
-lsmod | grep bbr
-```
-如果输出了bbr相关信息就是正常运行了。
 
 
 参考：
