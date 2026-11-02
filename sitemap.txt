@@ -3,9 +3,9 @@
 /atom.xml
 /about/
 /archives/
-/search/
-/tags/
 /categories/
+/tags/
+/search/
 /
 /search/search.json
 /sitemap.txt
