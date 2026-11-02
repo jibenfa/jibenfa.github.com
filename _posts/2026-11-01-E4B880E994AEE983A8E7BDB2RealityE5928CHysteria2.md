@@ -631,7 +631,16 @@ fi
 
 ```
 
+注意：两个xray默认 "listen": "0.0.0.0"，如果vps支持双栈可以改成 "listen": "::" 。
 
+可以通过在vps上运行如下命令判断：
+```bash
+sysctl net.ipv6.bindv6only
+```
+
+如果是：
+- 0：IPv6 socket 通常也接受 IPv4 连接。那只需一个 "listen": "::" ，同时接受v4和v6。
+- 1：只接受 IPv6 连接。则需另外建一个inbounds，加上"listen": "::" ，单独处理v6。
 
 
 参考：
