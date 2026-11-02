@@ -3,9 +3,9 @@
 /atom.xml
 /about/
 /archives/
-/categories/
-/tags/
 /search/
+/tags/
+/categories/
 /
 /search/search.json
 /sitemap.txt
@@ -48,10 +48,12 @@
 /tags/ipset/
 /tags/reality/
 /tags/xray/
+/tags/hysteria-2/
 /page2/
 /page3/
 /page4/
 
+https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/11/01/E4B880E994AEE983A8E7BDB2RealityE5928CHysteria2/
 https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/10/23/E59CA8openwrtE4B88BE983A8E7BDB2xrayE5928Creality/
 https://jibenfa.github.io/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/03/12/E59FBAE4BA8Eopenwrt21.02E78988E69CACE79A84E9808FE6988EE4BBA3E79086EFBC88v2ray2BchinadnsngEFBC89E8AEBEE7BDAE/
 https://jibenfa.github.io/openwrt/2026/03/03/wireguardE59CA8E7A7BBE58AA8nat1E7BD91E7BB9CE4B88BE79A84E983A8E7BDB2E4B88EE8BF9EE68EA5/

@@ -127,6 +127,79 @@ document.addEventListener("DOMContentLoaded", () => {
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/openwrt/2015/11/30/e8a7a3e586b3openwrt-readonly-file-systeme69687e4bbb6e7b3bbe7bb9fe58faae8afbbe79a84e997aee9a298/" title="解决Openwrt Readonly file system文件系统只读的问题" itemprop="url">解决Openwrt Readonly file system文件系统只读的问题</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-30 21:29:59 +0000" itemprop="datePublished">  2015-11-30</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>由于Openwrt关闭不好的问题，重启进入openwrt，发现luci 配置无法写入，进入ssh发现remounting file system is read only…但是又不想重装。。。由于这是根文件系统已挂载，所以e2fs无法在该系统里面修复文件系统错误。<br />
+于是机智的我在esxi里面又开了个openwrt虚拟机，其实用linux发行版也行啦，挂载上述出问题的openwrt的盘，但不要mount，进入系统后，因为出问题的盘是sdb的sdb2,运行：</p>
+
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/openwrt/2015/11/30/e8a7a3e586b3openwrt-readonly-file-systeme69687e4bbb6e7b3bbe7bb9fe58faae8afbbe79a84e997aee9a298/#more">Read More</a>
+          
+       </p>
+    </div>
+    
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+  
+    <div class="article-categories">
+      <span></span>
+      
+        
+        <a href="/categories/openwrt/">openwrt</a>
+      
+    </div>
+  
+
+  
+    <div class="article-tags">
+      <span></span>
+      
+        
+        <a href="/tags/openwrt/">openwrt</a>
+      
+    </div>
+  
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+    </article>
+
+
+
+
+
+
+  
+  
+  
+  
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/openwrt/2015/11/29/e59ca8esxie4b88ae5ae89e8a385openwrtefbc8ce5ae9ee78eb0e8b7afe794b1e8999ae68b9fe58c96/" title="在HP GEN8上安装openwrt，实现“万兆”虚拟路由器。。。" itemprop="url">在HP GEN8上安装openwrt，实现“万兆”虚拟路由器。。。</a>
   </h1>
   <p class="article-author">By
@@ -1523,79 +1596,6 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
 
 
 
-  
-  
-  
-  
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/openwrt/2015/03/20/openwrt-e8aebee7bdaee4b8ade585b4-zte-mf190-e88194e9809a-3ge68ba8e58fb7e4b88ae7bd91e694bbe795a5/" title="Openwrt 设置中兴 ZTE MF190 联通 3G拨号上网攻略" itemprop="url">Openwrt 设置中兴 ZTE MF190 联通 3G拨号上网攻略</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Coffeecat" target="_blank" itemprop="author">Coffeecat</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-20 15:27:52 +0000" itemprop="datePublished">  2015-03-20</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>首先沉痛哀悼我的tplink wr720n，因为我换ram的时候，弄断了3根电路板上的焊盘引脚，导致挂了。。。<br />
-后来买了gl-inet 16M版本的小路由，直接ssh登陆mtd -r write刷了720n的op，完全好用。折腾成功在其上的3G上网，记录一下：</p>
-
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/openwrt/2015/03/20/openwrt-e8aebee7bdaee4b8ade585b4-zte-mf190-e88194e9809a-3ge68ba8e58fb7e4b88ae7bd91e694bbe795a5/#more">Read More</a>
-          
-       </p>
-    </div>
-    
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-  
-    <div class="article-categories">
-      <span></span>
-      
-        
-        <a href="/categories/openwrt/">openwrt</a>
-      
-    </div>
-  
-
-  
-    <div class="article-tags">
-      <span></span>
-      
-        
-        <a href="/tags/openwrt/">openwrt</a>
-      
-    </div>
-  
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
   <nav id="page-nav" class="clearfix">
@@ -1670,7 +1670,7 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
         
         <li>
           <a href="/categories/科学上网/" title="科学上网">
-            科学上网<sup>22</sup>
+            科学上网<sup>23</sup>
           </a>
         </li>
       
@@ -1752,7 +1752,7 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
         
         <li>
           <a href="/tags/openwrt/" title="openwrt">
-            openwrt<sup>50</sup>
+            openwrt<sup>51</sup>
           </a>
         </li>
       
@@ -1986,7 +1986,7 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
         
         <li>
           <a href="/tags/reality/" title="reality">
-            reality<sup>1</sup>
+            reality<sup>2</sup>
           </a>
         </li>
       
@@ -1995,7 +1995,16 @@ vlan1是lan，vlan2是wan，port5为cpu也就是eth0，port6为eth1，与eth0相
         
         <li>
           <a href="/tags/xray/" title="xray">
-            xray<sup>1</sup>
+            xray<sup>2</sup>
+          </a>
+        </li>
+      
+    
+      
+        
+        <li>
+          <a href="/tags/hysteria-2/" title="hysteria 2">
+            hysteria 2<sup>1</sup>
           </a>
         </li>
       
@@ -2153,7 +2162,7 @@ $(document).ready(function() {
     
     { "name": "插件", "path": "/tags/插件/", "length": 1 },
     
-    { "name": "openwrt", "path": "/tags/openwrt/", "length": 50 },
+    { "name": "openwrt", "path": "/tags/openwrt/", "length": 51 },
     
     { "name": "Microsoft", "path": "/tags/microsoft/", "length": 1 },
     
@@ -2205,9 +2214,11 @@ $(document).ready(function() {
     
     { "name": "ipset", "path": "/tags/ipset/", "length": 1 },
     
-    { "name": "reality", "path": "/tags/reality/", "length": 1 },
+    { "name": "reality", "path": "/tags/reality/", "length": 2 },
     
-    { "name": "xray", "path": "/tags/xray/", "length": 1 },
+    { "name": "xray", "path": "/tags/xray/", "length": 2 },
+    
+    { "name": "hysteria 2", "path": "/tags/hysteria-2/", "length": 1 },
     
   ];
   $("#tagcloud").html(tagcloudHelper(tags));

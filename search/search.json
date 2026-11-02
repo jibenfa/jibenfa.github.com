@@ -599,6 +599,14 @@
         "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/10/23/E59CA8openwrtE4B88BE983A8E7BDB2xrayE5928Creality/"
       },
     
+      {
+        "title": "一键部署Reality和Hysteria2",
+        "date": "2026 年 11 月",
+        "excerpt": "最近让chatgpt给写了一个在vps上一键部署xray+Reality和xray+Hysteria2的脚本。\n",
+        
+        "url": "/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/2026/11/01/E4B880E994AEE983A8E7BDB2RealityE5928CHysteria2/"
+      },
+    
   
   
   
@@ -920,6 +928,14 @@
     "excerpt": "\n",
     
     "url": "/tags/xray/"
+  },
+  
+  {
+    "title": "标签：hysteria 2",
+    "date": " ",
+    "excerpt": "\n",
+    
+    "url": "/tags/hysteria-2/"
   }
   
 ]
