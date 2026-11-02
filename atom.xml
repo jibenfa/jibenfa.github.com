@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-11-02T09:17:33+00:00</updated>
+ <updated>2026-11-02T09:19:36+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -634,16 +634,16 @@ systemctl is-active &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;quiet &lt;spa
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;注意：两个xray默认 “listen”: “0.0.0.0”，如果vps支持双栈可以改成 “listen”: “::” 。&lt;/p&gt;
+&lt;p&gt;注意：两个xray默认只监听ipv4的端口（”listen”: “0.0.0.0”），如果vps支持ipv4和ipv6双栈可以改成 “listen”: “::” 。&lt;/p&gt;
 
-&lt;p&gt;可以通过在vps上运行如下命令判断：&lt;/p&gt;
+&lt;p&gt;是否直接改可以通过在vps上运行如下命令判断：&lt;/p&gt;
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sysctl net.ipv6.bindv6only
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;如果是：&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;0：IPv6 socket 通常也接受 IPv4 连接。那只需一个 “listen”: “::” ，同时接受v4和v6。&lt;/li&gt;
-  &lt;li&gt;1：只接受 IPv6 连接。则需另外建一个inbounds，加上”listen”: “::” ，单独处理v6。&lt;/li&gt;
+  &lt;li&gt;0：IPv6 socket 通常也接受 IPv4 连接。那只需改成 “listen”: “::” ，同时接收v4和v6。&lt;/li&gt;
+  &lt;li&gt;1：只接受 IPv6 连接。则需另外建一个inbounds，加上”listen”: “::” ，单独接收v6。&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;参考：&lt;/p&gt;
