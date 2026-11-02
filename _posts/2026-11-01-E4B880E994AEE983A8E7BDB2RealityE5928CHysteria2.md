@@ -13,7 +13,7 @@ tags:
 - xray
 ---
 
-最近让chatgpt给写了一个在vps上一键部署xray+Reality和xray+Hysteria2的脚本。
+最近让chatgpt写了一个在vps上一键部署xray+Reality和xray+Hysteria2的脚本。
 
 如果要配置Hysteria2，首先需要申请一个域名，然后在dns配置的地方将域名指向vps的ipv4节点，并开启vps防火墙的tcp 80（用于let'sencrypt证书申请），tcp 443（默认给reality）、udp 8443（默认给hy2）等端口。
 
