@@ -38,7 +38,7 @@ tags:
 set -Eeuo pipefail
 umask 077
 
-XRAY_VERSION="v26.10.21"
+XRAY_VERSION="v26.10.31"
 XRAY_BIN="/usr/local/bin/xray"
 XRAY_SHARE="/usr/local/share/xray"
 BASE_DIR="/usr/local/etc/xray"
