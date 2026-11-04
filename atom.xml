@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-11-02T09:19:36+00:00</updated>
+ <updated>2026-11-04T04:03:55+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -41,7 +41,7 @@
 &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Eeuo&lt;/span&gt; pipefail
 &lt;span class=&quot;nb&quot;&gt;umask &lt;/span&gt;077
 
-&lt;span class=&quot;nv&quot;&gt;XRAY_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;v26.10.21&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;XRAY_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;v26.10.31&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;XRAY_BIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/local/bin/xray&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;XRAY_SHARE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/local/share/xray&quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;BASE_DIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/local/etc/xray&quot;&lt;/span&gt;
