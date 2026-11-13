@@ -906,7 +906,7 @@ chmod 755 /etc/init.d/xray_chinadnsng
 /etc/init.d/xray_chinadnsng start
 ```
 
-
+4）然后在luci界面中，把“网络->dhcp/dns->转发”菜单下的dns转发改成“127.0.0.1#5353”，保存后重启openwrt。
 
 
 参考：
