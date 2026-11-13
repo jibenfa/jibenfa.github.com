@@ -4,7 +4,7 @@
  <title>Welcome to Coffeecat‘s Blog</title>
  <link href="https://jibenfa.github.io/atom.xml" rel="self"/>
  <link href="https://jibenfa.github.io"/>
- <updated>2026-11-04T04:03:55+00:00</updated>
+ <updated>2026-11-13T03:57:06+00:00</updated>
  <id>https://jibenfa.github.io</id>
  <author>
    <name>Coffeecat</name>
@@ -1527,6 +1527,8 @@ service_triggers&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&
 /etc/init.d/xray_chinadnsng start
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;p&gt;4）然后在luci界面中，把“网络-&amp;gt;dhcp/dns-&amp;gt;转发”菜单下的dns转发改成“127.0.0.1#5353”，保存后重启openwrt。&lt;/p&gt;
+
 &lt;p&gt;参考：&lt;/p&gt;
 
 &lt;p&gt;1.chatgpt&lt;/p&gt;
@@ -2150,6 +2152,8 @@ module&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot
 &lt;/span&gt;end
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;5.然后在luci界面中，把“网络-&amp;gt;dhcp/dns-&amp;gt;转发”菜单下的dns转发改成“127.0.0.1#5353”，保存后重启openwrt。&lt;/p&gt;
 
 &lt;p&gt;参考：&lt;/p&gt;
 
@@ -3799,6 +3803,7 @@ define ipv4_localnet &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span cla
 
 add &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;inet global localnet_without_127 &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;ipv4_addr&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; flags interval&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; elements &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$ipv4_localnet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;5.然后在luci界面中，把“网络-&amp;gt;dhcp/dns-&amp;gt;转发”菜单下的dns转发改成“127.0.0.1#5353”，保存后重启openwrt。&lt;/p&gt;
 
 &lt;p&gt;其他配置参考上一篇《在openwrt下使用chinadns-ng搭配v2ray实现透明代理》&lt;/p&gt;
 

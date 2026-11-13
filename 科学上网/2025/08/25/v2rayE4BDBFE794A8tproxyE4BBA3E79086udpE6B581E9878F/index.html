@@ -617,6 +617,7 @@ define ipv4_localnet <span class="o">=</span> <span class="o">{</span>
 
 add <span class="nb">set </span>inet global localnet_without_127 <span class="o">{</span> <span class="nb">type </span>ipv4_addr<span class="p">;</span> flags interval<span class="p">;</span> elements <span class="o">=</span> <span class="nv">$ipv4_localnet</span><span class="p">;</span> <span class="o">}</span>
 </code></pre></div></div>
+<p>5.然后在luci界面中，把“网络-&gt;dhcp/dns-&gt;转发”菜单下的dns转发改成“127.0.0.1#5353”，保存后重启openwrt。</p>
 
 <p>其他配置参考上一篇《在openwrt下使用chinadns-ng搭配v2ray实现透明代理》</p>
 
